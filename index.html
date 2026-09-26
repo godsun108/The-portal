@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050507">
+  <meta name="description" content="Welcome to the other internet. Pick a door.">
+  <title>THE PORTAL</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <main>
+    <header class="hero">
+      <p class="eyebrow">YOU FOUND IT</p>
+      <h1>THE<br><span>PORTAL</span></h1>
+      <p class="lede">Welcome to the other internet.<br>Pick a door.</p>
+    </header>
+
+    <section class="portal-grid" aria-label="Portals">
+      <a class="portal earth" href="https://github.com/godsun108/earth-now" target="_blank" rel="noreferrer">
+        <span class="glyph">◉</span><strong>EARTH NOW</strong><small>the planet is doing things</small>
+      </a>
+      <a class="portal window" href="https://github.com/godsun108/window-earth" target="_blank" rel="noreferrer">
+        <span class="glyph">▣</span><strong>WINDOW</strong><small>look somewhere else</small>
+      </a>
+      <button class="portal chaos" id="chaosDoor" type="button">
+        <span class="glyph">✦</span><strong>CHAOS</strong><small>absolutely do not press</small>
+      </button>
+      <a class="portal oracle" href="https://github.com/godsun108/-oracle-options-lab" target="_blank" rel="noreferrer">
+        <span class="glyph">◇</span><strong>ORACLE</strong><small>probability, not prophecy</small>
+      </a>
+      <button class="portal locked" type="button" data-secret>
+        <span class="glyph">?</span><strong>???</strong><small>not yet</small>
+      </button>
+    </section>
+
+    <footer><span id="visitorLine">NO MAP. NO FEED. JUST DOORS.</span></footer>
+  </main>
+
+  <dialog id="chaos">
+    <div class="chaos-shell">
+      <button class="close" id="closeChaos" aria-label="Close">×</button>
+      <p class="eyebrow">CHAOS ENGINE // <span id="chaosCount">000</span></p>
+      <div id="chaosStage">
+        <div class="warning-mark">!</div>
+        <h2>DO NOT<br>PRESS</h2>
+        <p>Nothing useful will happen.</p>
+      </div>
+      <button id="chaosButton" class="big-red" type="button">PRESS ANYWAY</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
