@@ -10,6 +10,7 @@
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
+  <div id="cursorGlow" aria-hidden="true"></div>
   <main>
     <header class="hero">
       <p class="eyebrow">YOU FOUND IT</p>
@@ -35,7 +36,7 @@
       </button>
     </section>
 
-    <footer><span id="visitorLine">NO MAP. NO FEED. JUST DOORS.</span></footer>
+    <footer><span id="visitorLine">NO MAP. NO FEED. JUST DOORS.</span><br><button id="transmission" type="button">RECEIVE TRANSMISSION</button></footer>
   </main>
 
   <dialog id="chaos">
@@ -51,6 +52,19 @@
     </div>
   </dialog>
 
+  <dialog id="secretRoom">
+    <div class="secret-room">
+      <button class="close" id="closeSecret" aria-label="Close">×</button>
+      <p class="eyebrow">UNLISTED ROOM 000</p>
+      <div class="sigil">◌</div>
+      <h2>YOU KEPT<br>KNOCKING.</h2>
+      <p>Most doors open because they are useful.<br>This one opened because you were curious.</p>
+      <button id="leaveMark" class="ghost-button" type="button">LEAVE A MARK</button>
+      <small id="markStatus"></small>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
