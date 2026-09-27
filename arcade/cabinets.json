@@ -148,6 +148,15 @@
       "href": "../games/star-swarm/",
       "tagline": "MOVE // AIM // SURVIVE THE SWARM",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "pulse-4",
+      "title": "PULSE//4",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/pulse-4/",
+      "tagline": "D F J K // TAP THE SIGNAL",
+      "world_key": "portal-game-history"
     }
   ]
 }
