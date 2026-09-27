@@ -382,3 +382,13 @@ assert(seam.includes('need=["repair-mark","backstep","sideways-script"]'),"seam 
 assert(seam.includes('grantArtifact("seam-found")'),"opening seam records discovery");
 assert(!seam.toLowerCase().includes("workshop"),"seam does not expose Workshop");
 assert(arcadeWithSeam.includes("./seam.js"),"Arcade loads architectural seam");
+
+// BEHIND service layer
+const behind=fs.readFileSync("./behind/index.html","utf8");
+const seamTraversal=fs.readFileSync("./arcade/seam.js","utf8");
+assert(behind.includes('hasArtifact("seam-found")'),"BEHIND verifies genuine seam discovery");
+assert(behind.includes("Knowing the address is not the same as finding the seam"),"direct URL without discovery renders WALL");
+assert(behind.includes("artifacts()")&&behind.includes("scars()"),"BEHIND exposes truthful local machine state");
+assert(behind.includes('grantArtifact("service-layer-seen")'),"legitimate service-layer entry is remembered");
+assert(behind.includes("WORK SURFACE")&&behind.includes("NO INTERFACE"),"service layer hints at work surface without exposing it");
+assert(seamTraversal.includes('location.href="../behind/"'),"opened Arcade seam becomes traversable");
