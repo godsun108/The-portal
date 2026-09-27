@@ -44,6 +44,18 @@
         "physics"
       ],
       "entry": "colorfall/"
+    },
+    {
+      "id": "drift",
+      "title": "DRIFT",
+      "status": "live",
+      "entry": "drift/",
+      "mechanic": "survive a falling hazard field with world-state-dependent trajectories",
+      "effects": [
+        "artifact",
+        "scar",
+        "physics"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
