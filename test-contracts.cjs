@@ -27,6 +27,7 @@ const convergence = read("convergence/index.html");
 const arcade = read("arcade/index.html");
 const cabinets = JSON.parse(read("arcade/cabinets.json"));
 const maze = read("maze/index.html");
+const echoRunRoom = read("echo-run/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -90,5 +91,8 @@ assert(maze.includes("portal-release-made") && maze.includes("portal-orbit-found
 assert(maze.includes('localStorage.setItem("portal-maze-escaped","1")') && world.includes("maze-escaped"), "MAZE escape must become persistent Portal world history");
 assert(arcade.includes('fetch("cabinets.json"') && arcade.includes("SOURCE MISSING // RECOVERY REQUIRED"), "Arcade UI must consume registry and tell the truth about unavailable cabinets");
 assert(arcade.includes("const powered=g=>") && arcade.includes("NO POWER // SOMETHING ELSE MUST HAPPEN FIRST"), "Arcade must derive cabinet power from canonical unlock rules");
-const echoRun=cabinets.cabinets.find(g=>g.id==="echo-run");assert(echoRun&&echoRun.status==="locked"&&echoRun.unlock.all.includes("portal-blackbox-signal")&&echoRun.unlock.all.includes("portal-maze-escaped"), "ECHO RUN must remain dark until genuine cross-room history powers it");
+const echoRun=cabinets.cabinets.find(g=>g.id==="echo-run");assert(echoRun&&echoRun.status==="playable"&&echoRun.unlock.all.includes("portal-blackbox-signal")&&echoRun.unlock.all.includes("portal-maze-escaped"), "ECHO RUN must be playable only when genuine cross-room history powers it");
+assert(echoRunRoom.includes('portal-blackbox-signal')&&echoRunRoom.includes('portal-maze-escaped')&&echoRunRoom.includes("NO<br>POWER."), "ECHO RUN itself must reject direct unearned entry");
+assert(echoRunRoom.includes('portal-echo-run-complete')&&echoRunRoom.includes('portal-item-signal-shard'), "ECHO RUN completion must mint only a local world artifact, not a financial token");
+assert(world.includes('inventory.push("signal-shard")')&&world.includes('echo-carried'), "World Engine must carry the earned signal shard and remember its scar");
 console.log("Portal canonical integration contracts verified.");
