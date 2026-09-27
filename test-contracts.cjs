@@ -366,3 +366,11 @@ assert(signalWar.includes('function orbitalPull()'),"orbital mode introduces a r
 assert(signalWar.includes('event(run,"orbital-shift"'),"orbital field movement is recorded in the game run");
 assert(signalWar.includes('well=nodes[turn%nodes.length]'),"gravity well migrates deterministically through territory nodes");
 assert(signalWar.includes("TERRITORY NOW HAS GRAVITY"),"qualified traveler receives in-world orbital field signal");
+
+// MOVING SIGHT Void consequence
+const movingSight=fs.readFileSync("./void/moving-sight.js","utf8");
+const voidPage=fs.readFileSync("./void/index.html","utf8");
+assert(movingSight.includes('capability("movingSight")'),"Void stair derives from movement plus perception mastery");
+assert(movingSight.includes("dx*lookX+dy*lookY<0"),"stair manifestation requires moving away from attention");
+assert(movingSight.includes('grantArtifact("backstep")'),"discovering the impossible stair records backstep");
+assert(voidPage.includes("moving-sight.js"),"Void loads MOVING SIGHT consequence");
