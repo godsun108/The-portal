@@ -4,4 +4,11 @@ function artifactCount(){return artifactKeys.filter(k=>localStorage.getItem(k)==
 function secretHint(){const n=artifactCount(),small=document.querySelector("[data-secret] small");if(n===3){small.textContent="the lock recognizes you";return}const hints=["three pieces. somewhere.","one piece found. two remain.","two pieces found. one remains."];small.textContent=hints[n]}
 document.querySelector("[data-secret]").onclick=()=>{knocks++;const n=artifactCount();if(n<3){secretHint();if(knocks%3===0)toast("THE LOCK REMEMBERS WHERE YOU HAVE BEEN.");return}document.querySelector("#visitorLine").textContent="THE INTERNET REWARDS CURIOSITY.";localStorage.setItem("portal-secret-unlocked","1");secretRoom.showModal()};
 if(localStorage.getItem("portal-secret-unlocked")==="1")document.querySelector("[data-secret] small").textContent="unlisted room 000";
+if(localStorage.getItem("portal-radio-888")==="1"){
+  const radio=document.querySelector(".portal.radio small");
+  if(radio)radio.textContent="88.8 remembers you";
+  document.querySelector("#visitorLine").textContent="SOMETHING FOLLOWED YOU BACK FROM THE RADIO.";
+  const locked=document.querySelector("[data-secret] .glyph");
+  if(locked)locked.textContent="88.8";
+}
 document.querySelector("#leaveMark").onclick=()=>{const n=Number(localStorage.getItem("portal-mark")||0)+1;localStorage.setItem("portal-mark",n);document.querySelector("#markStatus").textContent="MARK "+String(n).padStart(3,"0")+" SAVED TO THIS DEVICE.";toast("THE ROOM REMEMBERS.")};const transmissions=["YOU ARE HERE. THAT IS ALREADY STATISTICALLY RIDICULOUS.","SOMEWHERE, A STAR JUST DID SOMETHING WITHOUT AN AUDIENCE.","CURIOSITY IS A PERFECTLY VALID NAVIGATION SYSTEM.","THE MAP IS NOT THE TERRITORY. THE LINK IS NOT THE PLACE.","BUILD THE RULES. LET REALITY SURPRISE YOU."];document.querySelector("#transmission").onclick=()=>{document.body.classList.add("glitch");setTimeout(()=>document.body.classList.remove("glitch"),500);toast(transmissions[Math.floor(Math.random()*transmissions.length)])};
