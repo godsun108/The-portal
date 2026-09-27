@@ -31,3 +31,5 @@ const curious=Number(localStorage.getItem("portal-chaos")||0)>=3||artifactCount(
 if(!found&&curious){f.hidden=false}
 f.onclick=()=>{localStorage.setItem("portal-fonzi-found","1");localStorage.setItem("portal-fonzi-first-contact",new Date().toISOString());localStorage.setItem("portal-fonzi-form",travelForm);f.hidden=true;document.body.classList.add("fonzi-broke");setTimeout(()=>document.body.classList.remove("fonzi-broke"),900);toast("NICK AND TURBO DIDN'T PUT ME HERE. — FONZI");window.PortalWorld?.event?.("fonzi-first-contact","SOMETHING THAT WAS NOT A DOOR INTRODUCED ITSELF.");window.PortalWorld?.save?.()};
 })();
+
+;(()=>{const e=window.PortalEvents?.active;if(e?.id==="resonance"){document.body.classList.add("glitch");setTimeout(()=>document.body.classList.remove("glitch"),420);const line=document.querySelector("#visitorLine");if(line)line.textContent="SOMETHING IS RESONATING ACROSS ROOMS.";const m=document.querySelector(".portal.machine small");if(m)m.textContent="the rules are vibrating";const s=document.querySelector(".portal.signal small");if(s)s.textContent="the receiver will not go quiet"}})();
