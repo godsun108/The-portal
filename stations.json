@@ -1,12 +1,162 @@
 {
-  "schema":"portal.stations.v1",
-  "stations":[
-    {"id":"threshold","label":"THRESHOLD","glyph":"◌","line":"the other internet begins here","rooms":[["EARTH NOW","earth/"],["WINDOW","window/"],["CHAOS","#chaos"],["ORACLE","oracle/"]]},
-    {"id":"reality","label":"REALITY","glyph":"◉","line":"things that do not need your belief","rooms":[["EARTH NOW","earth/"],["WINDOW","window/"],["EARTH PULSE","pulse/"],["WEATHER ELSEWHERE","weather/"],["SKY","sky/"]]},
-    {"id":"art","label":"ART","glyph":"✧","line":"make, feel, release","rooms":[["COLOR","color/"],["RELEASE","release/"],["DREAM","dream/"],["MARKS","marks/"]]},
-    {"id":"play","label":"PLAY","glyph":"♜","line":"curiosity has physics","rooms":[["ORBIT","orbit/"],["ARCADE","arcade/"],["MAZE","maze/"],["CHAOS","#chaos"]]},
-    {"id":"world","label":"WORLD","glyph":"∆","line":"rooms remember each other","rooms":[["MACHINE","machine/"],["SIGNAL","signal/"],["VOID","void/"],["BLACK BOX","blackbox/"],["CAPSULE","capsule/"],["RADIO","radio/"]]},
-    {"id":"connection","label":"CONNECTION","glyph":"♨","line":"no imaginary humans","rooms":[["CAMPFIRE","campfire/"]]},
-    {"id":"intelligence","label":"INTELLIGENCE","glyph":"◇","line":"real minds only","status":"dormant","rooms":[]}
+  "schema": "portal.stations.v1",
+  "stations": [
+    {
+      "id": "threshold",
+      "label": "THRESHOLD",
+      "glyph": "◌",
+      "line": "the other internet begins here",
+      "rooms": [
+        [
+          "EARTH NOW",
+          "earth/"
+        ],
+        [
+          "WINDOW",
+          "window/"
+        ],
+        [
+          "CHAOS",
+          "#chaos"
+        ],
+        [
+          "ORACLE",
+          "oracle/"
+        ]
+      ]
+    },
+    {
+      "id": "reality",
+      "label": "REALITY",
+      "glyph": "◉",
+      "line": "things that do not need your belief",
+      "rooms": [
+        [
+          "EARTH NOW",
+          "earth/"
+        ],
+        [
+          "WINDOW",
+          "window/"
+        ],
+        [
+          "EARTH PULSE",
+          "pulse/"
+        ],
+        [
+          "WEATHER ELSEWHERE",
+          "weather/"
+        ],
+        [
+          "SKY",
+          "sky/"
+        ]
+      ]
+    },
+    {
+      "id": "art",
+      "label": "ART",
+      "glyph": "✧",
+      "line": "make, feel, release",
+      "rooms": [
+        [
+          "COLOR",
+          "color/"
+        ],
+        [
+          "RELEASE",
+          "release/"
+        ],
+        [
+          "DREAM",
+          "dream/"
+        ],
+        [
+          "MARKS",
+          "marks/"
+        ]
+      ]
+    },
+    {
+      "id": "play",
+      "label": "PLAY",
+      "glyph": "♜",
+      "line": "curiosity has physics",
+      "rooms": [
+        [
+          "ORBIT",
+          "orbit/"
+        ],
+        [
+          "ARCADE",
+          "arcade/"
+        ],
+        [
+          "MAZE",
+          "maze/"
+        ],
+        [
+          "CHAOS",
+          "#chaos"
+        ]
+      ]
+    },
+    {
+      "id": "world",
+      "label": "WORLD",
+      "glyph": "∆",
+      "line": "rooms remember each other",
+      "rooms": [
+        [
+          "MACHINE",
+          "machine/"
+        ],
+        [
+          "SIGNAL",
+          "signal/"
+        ],
+        [
+          "VOID",
+          "void/"
+        ],
+        [
+          "BLACK BOX",
+          "blackbox/"
+        ],
+        [
+          "CAPSULE",
+          "capsule/"
+        ],
+        [
+          "RADIO",
+          "radio/"
+        ]
+      ]
+    },
+    {
+      "id": "connection",
+      "label": "CONNECTION",
+      "glyph": "♨",
+      "line": "no imaginary humans",
+      "rooms": [
+        [
+          "CAMPFIRE",
+          "campfire/"
+        ]
+      ]
+    },
+    {
+      "id": "intelligence",
+      "label": "INTELLIGENCE",
+      "glyph": "◇",
+      "line": "choose a mind // leave through a real door",
+      "status": "live",
+      "rooms": [
+        [
+          "AI INTERCHANGE",
+          "intelligence/"
+        ]
+      ]
+    }
   ]
 }
