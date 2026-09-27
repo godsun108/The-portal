@@ -8,6 +8,10 @@ const pulse = read("pulse/index.html");
 const home = read("index.html");
 const script = read("script.js");
 const oracle = read("oracle/index.html");
+const passport = read("passport/index.html");
+const blackbox = read("blackbox/index.html");
+const voidRoom = read("void/index.html");
+const world = read("world.js");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -30,5 +34,9 @@ assert(oracle.includes("You are the Oracle"), "Portal Oracle must make the user-
 assert(oracle.includes("COMMIT") && oracle.includes("RESOLVE") && oracle.includes("CALIBRATE"), "Portal Oracle must expose its calibration loop");
 assert(oracle.includes("(pr-(y?1:0))**2"), "Portal Oracle must preserve Brier scoring");
 assert(home.includes("THE DEEPER NETWORK"), "Portal homepage must distinguish threshold experiences from deeper rooms");
+assert(passport.includes("../world.js") && passport.includes("WORLD PRESSURE") && passport.includes("THINGS THE WORLD REMEMBERS"), "Passport must surface persistent Portal world state");
+assert(blackbox.includes("portal-blackbox-echo"), "Black Box must leave a persistent consequence");
+assert(voidRoom.includes("portal-blackbox-echo") && voidRoom.includes("FOREIGN HASH"), "Void must be able to receive the Black Box consequence");
+assert(world.includes("blackbox-fed"), "World Engine must remember that the Black Box was fed");
 
 console.log("Portal canonical integration contracts verified.");
