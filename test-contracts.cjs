@@ -234,3 +234,12 @@ const negativeWindow=fs.readFileSync("./window/negative.js","utf8");
 assert(negativeWindow.includes('hasArtifact("negative-address")'),"WINDOW requires negative address");
 assert(negativeWindow.includes("LOCAL PORTAL LAYER"),"WINDOW contradiction labels itself local");
 assert(negativeWindow.includes('grantArtifact("outside-looking-in")'),"WINDOW can derive outside-looking-in");
+
+// DEEP//RUN singularity gate
+const deepRun=fs.readFileSync("./games/deep-run/index.html","utf8");
+assert(deepRun.includes('hasArtifact("arcade-singularity")'),"DEEP RUN independently requires Arcade Singularity");
+assert(deepRun.includes("THE ARCADE HAS NOT FOLDED YET."),"DEEP RUN direct URL remains sealed");
+assert(deepRun.includes('grantArtifact("black-token")'),"DEEP RUN clear grants black token");
+const arcadeRegistry=JSON.parse(fs.readFileSync("./arcade/cabinets.json","utf8"));
+const deepCab=arcadeRegistry.cabinets.find(x=>x.id==="deep-run");
+assert(deepCab&&deepCab.artifactUnlock.all.includes("arcade-singularity"),"Arcade only powers sublevel after Singularity");
