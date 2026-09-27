@@ -123,4 +123,8 @@ assert(!creature.match(/\b(hunger|health|xp|feed)\b/i), "Creature model must not
 assert(home.includes("creature.js")&&machine.includes("creature.js")&&maze.includes("creature.js")&&signal.includes("creature.js"), "Creature evidence must consume one canonical emergence model");
 assert(machine.includes('PortalCreature.seen("machine")')&&maze.includes('PortalCreature.seen("maze")')&&signal.includes('PortalCreature.seen("signal")'), "Independent rooms must reveal bounded creature sightings");
 assert(script.includes('PortalCreature')&&script.includes("SOMETHING MOVED BETWEEN TWO DOORS."), "Homepage may rarely reveal creature evidence without advertising it");
+assert(voidRoom.includes("../creature.js")&&voidRoom.includes("THERE IS LESS NOTHING HERE")&&voidRoom.includes('>OPEN<')&&voidRoom.includes('>CLOSE<'), "VOID must present the creature-linked choice without moral labels");
+assert(voidRoom.includes('portal-creature-void-choice')&&!voidRoom.includes("save creature")&&!voidRoom.includes("harm creature"), "VOID choice must persist without explaining creature consequence");
+assert(creature.includes('choice==="open"')&&creature.includes('fork==="left"')&&creature.includes('fork==="right"'), "Creature ecology must interpret the same VOID action differently across world forks");
+assert(world.includes('voidChoice:localStorage.getItem("portal-creature-void-choice")')&&world.includes('"void-"+facts.voidChoice'), "World Engine must remember the unlabeled ecological consequence");
 console.log("Portal canonical integration contracts verified.");
