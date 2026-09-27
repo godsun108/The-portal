@@ -257,3 +257,11 @@ assert(parallax.includes('beginRun("parallax")'),"PARALLAX uses shared run proto
 assert(parallax.includes("powered()"),"PARALLAX evaluates connected signal graph");
 assert(parallax.includes('grantArtifact(mastery?"parallax-lens":"signal-glass")'),"PARALLAX has clear and mastery rewards");
 assert(parallax.includes("total<=42"),"PARALLAX mastery derives from move efficiency");
+
+// VECTOR//BREAK action cabinet
+const vectorBreak=fs.readFileSync("./games/vector-break/index.html","utf8");
+assert(vectorBreak.includes('beginRun("vector-break")'),"VECTOR BREAK uses shared run protocol");
+assert(vectorBreak.includes("wave>7"),"VECTOR BREAK requires seven-wave clear");
+assert(vectorBreak.includes("lives>=3&&score>=1800"),"VECTOR BREAK mastery requires clean high-score clear");
+assert(vectorBreak.includes('grantArtifact(clean?"vector-core":"broken-vector")'),"VECTOR BREAK grants performance-derived artifact");
+assert(vectorBreak.includes('scar("vector-burn")'),"VECTOR BREAK failure records scar");
