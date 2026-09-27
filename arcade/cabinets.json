@@ -1,0 +1,12 @@
+{
+  "schema":"portal.arcade.v1",
+  "cabinets":[
+    {"id":"moon","title":"DON'T TOUCH THE MOON","kind":"native","status":"playable","world_key":"portal-moon-touched"},
+    {"id":"button","title":"THE BUTTON","kind":"native","status":"playable","world_key":"portal-button"},
+    {"id":"one-life","title":"ONE LIFE","kind":"native","status":"playable","world_key":"portal-one-life"},
+    {"id":"orbit","title":"ORBIT","kind":"external-room","status":"playable","href":"../orbit/","world_key":"portal-orbit-found"},
+    {"id":"turbo-turtle","title":"TURBO TURTLE","kind":"recovered-game","status":"awaiting-recovery","note":"Original source must be recovered. Do not rebuild from memory."},
+    {"id":"maze","title":"MAZE","kind":"native","status":"planned"},
+    {"id":"campfire-coop","title":"TWO KEYS","kind":"networked","status":"dormant","requires":"verified CAMPFIRE connection"}
+  ]
+}
