@@ -157,6 +157,15 @@
       "href": "../games/pulse-4/",
       "tagline": "D F J K // TAP THE SIGNAL",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "up-void",
+      "title": "UP//VOID",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/up-void/",
+      "tagline": "CLIMB // FALL // FIND THE WHITE DOOR",
+      "world_key": "portal-game-history"
     }
   ]
 }
