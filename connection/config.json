@@ -1,0 +1,5 @@
+{
+  "schema": "portal.connection-config.v0",
+  "endpoint": null,
+  "note": "Set only after the canonical CAMPFIRE presence service is deployed and verified."
+}
