@@ -37,12 +37,13 @@
     {
       "id": "colorfall",
       "title": "COLORFALL",
-      "status": "planned",
-      "mechanic": "interactive color physics tied to COLOR state",
+      "status": "live",
+      "mechanic": "catch chroma under world-state-dependent gravity",
       "effects": [
         "artifact",
-        "world-event"
-      ]
+        "physics"
+      ],
+      "entry": "colorfall/"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
