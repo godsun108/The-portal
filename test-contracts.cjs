@@ -18,6 +18,8 @@ const capsule = read("capsule/index.html");
 const release = read("release/index.html");
 const orbit = read("orbit/index.html");
 const constitution = read("CREATIVE_CONSTITUTION.md");
+const connection = read("CONNECTION_CONTRACT.md");
+const campfire = read("campfire/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -55,7 +57,12 @@ assert(release.includes("portal-release-made") && world.includes("art-released")
 assert(home.includes('href="orbit/"') && home.includes("play with gravity until it makes sense"), "Portal must expose ORBIT as play-to-learn");
 assert(orbit.includes("G/r2") && orbit.includes("body.vx") && orbit.includes("body.vy"), "ORBIT must simulate gravity rather than present trivia");
 assert(orbit.includes("continuous falling without hitting") && orbit.includes("portal-orbit-found"), "ORBIT must reveal the learned concept after experiential success");
-for(const pillar of ["REALITY","ART","PLAY","WORLD","LEARNING"]) assert(constitution.includes("### "+pillar), "Creative constitution missing "+pillar);
+for(const pillar of ["REALITY","ART","PLAY","WORLD","LEARNING","CONNECTION"]) assert(constitution.includes("### "+pillar), "Creative constitution missing "+pillar);
 assert(constitution.includes("Curiosity is progression"), "Portal constitution must protect curiosity-led progression");
+assert(connection.includes("No remote human is ever fabricated"), "Connection contract must prohibit fabricated humans");
+assert(connection.includes("presence(room)") && connection.includes("drop(room, payload)") && connection.includes("session(room)"), "Connection substrate must define room-neutral primitives");
+assert(home.includes('href="campfire/"'), "Portal must expose CAMPFIRE connection surface");
+assert(campfire.includes("THIS ROOM REFUSES TO INVENT COMPANY") && campfire.includes(">0<"), "Dormant CAMPFIRE must truthfully show zero remote visitors");
+assert(!campfire.includes("Math.random"), "CAMPFIRE must not fabricate activity");
 
 console.log("Portal canonical integration contracts verified.");
