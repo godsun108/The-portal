@@ -183,6 +183,19 @@
           "void-feather"
         ]
       }
+    },
+    {
+      "id": "deep-run",
+      "title": "SUBLEVEL",
+      "kind": "singularity-cabinet",
+      "status": "playable",
+      "href": "../games/deep-run/",
+      "tagline": "THE ARCADE CONTINUES BELOW",
+      "artifactUnlock": {
+        "all": [
+          "arcade-singularity"
+        ]
+      }
     }
   ]
 }
