@@ -214,6 +214,15 @@
       "href": "../games/parallax/",
       "tagline": "ROTATE THE FIELD // COMPLETE THE SIGNAL",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "vector-break",
+      "title": "VECTOR//BREAK",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/vector-break/",
+      "tagline": "BREAK THE FIELD // HOLD THE COMBO",
+      "world_key": "portal-game-history"
     }
   ]
 }
