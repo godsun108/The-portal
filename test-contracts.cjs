@@ -12,6 +12,9 @@ const passport = read("passport/index.html");
 const blackbox = read("blackbox/index.html");
 const voidRoom = read("void/index.html");
 const world = read("world.js");
+const signal = read("signal/index.html");
+const radio = read("radio/index.html");
+const capsule = read("capsule/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -38,5 +41,9 @@ assert(passport.includes("../world.js") && passport.includes("WORLD PRESSURE") &
 assert(blackbox.includes("portal-blackbox-echo"), "Black Box must leave a persistent consequence");
 assert(voidRoom.includes("portal-blackbox-echo") && voidRoom.includes("FOREIGN HASH"), "Void must be able to receive the Black Box consequence");
 assert(world.includes("blackbox-fed"), "World Engine must remember that the Black Box was fed");
+assert(signal.includes("portal-blackbox-echo-seen") && signal.includes("RETURN SIGNAL"), "Signal must receive a Black Box echo only after Void sees it");
+assert(capsule.includes("portal-capsule-echo") && capsule.includes("../world.js"), "Opened Capsule must create a temporal world consequence");
+assert(radio.includes("portal-capsule-echo") && radio.includes("TEMPORAL ECHO"), "Radio 99.9 must be able to receive an opened Capsule echo");
+assert(world.includes("echo-crossed") && world.includes("time-capsule-opened"), "World Engine must preserve spatial and temporal echo scars");
 
 console.log("Portal canonical integration contracts verified.");
