@@ -34,6 +34,9 @@ const split = read("split/index.html");
 const creature = read("creature.js");
 const dream = read("dream/index.html");
 const reality = read("reality.js");
+const stations = JSON.parse(read("stations.json"));
+const stationRoom = read("stations/index.html");
+const colorRoom = read("color/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -156,4 +159,10 @@ assert(JSON.parse(campfireConfig).endpoint===null, "Human phenomena must remain 
 assert(home.includes("the fire refuses imaginary company")&&!home.includes("there will be other people here"), "Dormant CAMPFIRE must not promise remote humans");
 assert(campfireServer.includes('RATE_MAX=12')&&campfireServer.includes('"/healthz"')&&campfireServer.includes("rate limited"), "CAMPFIRE reference service must expose health and bound presence writes before deployment");
 assert(read("style.css").includes("FINAL MOBILE INTEGRITY")&&read("style.css").includes("env(safe-area-inset-bottom)")&&read("style.css").includes("touch-action:manipulation"), "Portal homepage must preserve phone safe areas and touch semantics");
+assert(stations.schema==="portal.stations.v1"&&stations.stations.some(s=>s.id==="reality")&&stations.stations.some(s=>s.id==="art")&&stations.stations.some(s=>s.id==="play")&&stations.stations.some(s=>s.id==="world")&&stations.stations.some(s=>s.id==="connection"), "Stations must organize the six-pillar world without duplicating rooms");
+const aiStation=stations.stations.find(s=>s.id==="intelligence");assert(aiStation&&aiStation.status==="dormant"&&aiStation.rooms.length===0, "AI station must remain dormant until a real intelligence endpoint exists");
+assert(stationRoom.includes('overflow:hidden')&&stationRoom.includes("pointerdown")&&stationRoom.includes("ArrowRight")&&stationRoom.includes('fetch("../stations.json")'), "Station transit must be non-scrolling, touchable, keyboard accessible, and registry-driven");
+assert(home.includes('href="stations/"')&&home.includes("ENTER THE STATIONS"), "Homepage must make Station transit primary");
+assert(colorRoom.includes("TOUCH THE LIGHT")&&colorRoom.includes("createRadialGradient")&&colorRoom.includes("globalCompositeOperation=\"screen\""), "COLOR must be an interactive additive-light artwork");
+assert(colorRoom.includes('localStorage.setItem("portal-color","1")')&&world.includes("touched-light"), "COLOR must leave a truthful local world scar");
 console.log("Portal canonical integration contracts verified.");
