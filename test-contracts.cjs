@@ -197,3 +197,10 @@ assert(stationUI.includes("secretRoutes()"),"transit materializes earned secrets
 const undertone=fs.readFileSync("./undertone/index.html","utf8");
 assert(undertone.includes('hasArtifact("deep-signal")'),"UNDERTONE verifies access itself");
 assert(undertone.includes("undertone-frequency"),"UNDERTONE grants persistent frequency artifact");
+
+// Bounded Game Master contracts
+const gm=fs.readFileSync("./intelligence/game-master.js","utf8");
+assert(gm.includes("portal.gm-proposal.v1"),"GM proposals require explicit schema");
+assert(gm.includes("allowedRoutes"),"GM routes are allowlisted");
+assert(gm.includes("allowedEvents"),"GM events are allowlisted");
+assert(gm.includes("accepted-intelligence-proposal"),"GM events require accepted proposal path");
