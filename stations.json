@@ -124,6 +124,10 @@
       "line": "rooms remember each other",
       "rooms": [
         [
+          "WORLD CLOCK",
+          "clock/"
+        ],
+        [
           "MACHINE",
           "machine/"
         ],
