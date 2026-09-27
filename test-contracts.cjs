@@ -23,6 +23,7 @@ const campfire = read("campfire/index.html");
 const campfireApi = read("connection/CAMPFIRE_API.md");
 const campfireConfig = read("connection/config.json");
 const campfireServer = read("connection/service/server.mjs");
+const convergence = read("convergence/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -71,5 +72,9 @@ assert(campfire.includes("../connection/config.json") && campfire.includes("leas
 assert(campfireApi.includes("excludes the caller") && campfireApi.includes("No fabricated seed users"), "CAMPFIRE API must preserve real-human counting semantics");
 assert(JSON.parse(campfireConfig).endpoint===null, "Connection endpoint must remain dormant until a real service is deployed");
 assert(campfireServer.includes("MAX_LEASE=60") && campfireServer.includes("leases.size-1"), "Reference service must enforce bounded leases and exclude the caller");
+assert(world.includes("facts.released&&facts.orbitFound&&facts.machine&&facts.blackboxSignal"), "CONVERGENCE must emerge from independent cross-room histories");
+assert(home.includes('id="convergenceDoor"') && home.includes("hidden"), "CONVERGENCE must not begin as an ordinary visible door");
+assert(script.includes('portal-convergence') && script.includes('#convergenceDoor'), "Homepage must reveal CONVERGENCE from earned world state");
+assert(convergence.includes('THIS ROOM HAS NOT HAPPENED TO YOU') && convergence.includes('portal-convergence-seen'), "CONVERGENCE must reject direct unearned entry and remember genuine arrival");
 
 console.log("Portal canonical integration contracts verified.");
