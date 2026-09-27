@@ -30,6 +30,7 @@ const maze = read("maze/index.html");
 const echoRunRoom = read("echo-run/index.html");
 const machine = read("machine/index.html");
 const worldEvents = read("world-events.js");
+const split = read("split/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -108,4 +109,11 @@ assert(worldEvents.includes('portal-signal-shard-resonance')&&worldEvents.includ
 assert(worldEvents.includes("prior.ends")&&worldEvents.includes("state.history"), "World events must preserve real start/end history across reloads");
 assert(home.includes("world-events.js")&&signal.includes("world-events.js")&&machine.includes("world-events.js")&&maze.includes("world-events.js"), "Participating rooms must consume the one canonical World Event Engine");
 assert(script.includes('PortalEvents?.active')&&signal.includes('PortalEvents?.active')&&machine.includes('PortalEvents?.active')&&maze.includes('PortalEvents?.active'), "RESONANCE must be interpreted differently across rooms");
+assert(home.includes('id="splitDoor"')&&home.includes("hidden"), "THE SPLIT must begin hidden rather than as an ordinary room");
+assert(script.includes('e?.id==="resonance"')&&script.includes('!localStorage.getItem("portal-world-fork")'), "THE SPLIT must surface only during RESONANCE before a fork exists");
+assert(split.includes('PortalEvents?.active?.id==="resonance"')&&split.includes('location.replace("../")'), "Direct unearned SPLIT entry must be rejected");
+assert(split.includes('localStorage.setItem("portal-world-fork",fork)')&&split.includes('if(localStorage.getItem("portal-world-fork"))return'), "World fork must be one-time and browser-persistent");
+assert(!split.includes('removeItem("portal-world-fork")'), "THE SPLIT must not provide a reset path");
+assert(world.includes('fork:localStorage.getItem("portal-world-fork")')&&world.includes('"fork-"+facts.fork'), "World Engine must preserve the chosen branch as a scar");
+assert(script.includes('dataset.worldFork=fork')&&script.includes('fork==="left"')&&script.includes('fork==="right"'), "Existing Portal surfaces must interpret forked histories differently");
 console.log("Portal canonical integration contracts verified.");
