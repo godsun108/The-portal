@@ -153,4 +153,7 @@ assert(dream.includes("historyDream")&&dream.includes("W?.scars")&&dream.include
 assert(script.includes("portal-fonzi-crossed-fork")&&script.includes("FONZI REFERENCED A BRANCH THIS WORLD DID NOT TAKE."), "Fonzi may uniquely remember the road not taken");
 assert(campfire.includes("d.others>0")&&campfire.includes("portal-campfire-overlap")&&world.includes("shared-fire"), "Human world phenomena must require verified remote overlap");
 assert(JSON.parse(campfireConfig).endpoint===null, "Human phenomena must remain dormant while canonical connection endpoint is unavailable");
+assert(home.includes("the fire refuses imaginary company")&&!home.includes("there will be other people here"), "Dormant CAMPFIRE must not promise remote humans");
+assert(campfireServer.includes('RATE_MAX=12')&&campfireServer.includes('"/healthz"')&&campfireServer.includes("rate limited"), "CAMPFIRE reference service must expose health and bound presence writes before deployment");
+assert(read("style.css").includes("FINAL MOBILE INTEGRITY")&&read("style.css").includes("env(safe-area-inset-bottom)")&&read("style.css").includes("touch-action:manipulation"), "Portal homepage must preserve phone safe areas and touch semantics");
 console.log("Portal canonical integration contracts verified.");
