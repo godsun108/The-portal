@@ -6,3 +6,4 @@ async function lease(){try{const r=await fetch(endpoint+"/v0/presence/campfire",
 (async()=>{try{const r=await fetch("../connection/config.json?ts="+Date.now(),{cache:"no-store"}),cfg=await r.json();if(cfg.schema!=="portal.connection-config.v0"||!cfg.endpoint){unavailable();return}endpoint=String(cfg.endpoint).replace(/\/$/,"");await lease()}catch(e){unavailable()}})();
 addEventListener("pagehide",()=>{if(timer)clearTimeout(timer);if(endpoint)fetch(endpoint+"/v0/presence/campfire/"+encodeURIComponent(visitor),{method:"DELETE",keepalive:true}).catch(()=>{})});
 </script></body></html>
+<script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("campfire");</script>
