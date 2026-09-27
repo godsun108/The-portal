@@ -250,3 +250,10 @@ assert(house.includes('beginRun("house-edge")'),"HOUSE EDGE uses shared run prot
 assert(house.includes('grantArtifact("house-mark")'),"HOUSE EDGE clear grants house mark");
 assert(house.includes('scar("house-took-its-cut")'),"HOUSE EDGE failure leaves canonical scar");
 assert(house.includes("CHOOSE ONE CARD FOR THIS RUN"),"HOUSE EDGE drafts cards during a run");
+
+// PARALLAX spatial puzzle
+const parallax=fs.readFileSync("./games/parallax/index.html","utf8");
+assert(parallax.includes('beginRun("parallax")'),"PARALLAX uses shared run protocol");
+assert(parallax.includes("powered()"),"PARALLAX evaluates connected signal graph");
+assert(parallax.includes('grantArtifact(mastery?"parallax-lens":"signal-glass")'),"PARALLAX has clear and mastery rewards");
+assert(parallax.includes("total<=42"),"PARALLAX mastery derives from move efficiency");
