@@ -7,6 +7,7 @@ const windowRoom = read("window/index.html");
 const pulse = read("pulse/index.html");
 const home = read("index.html");
 const script = read("script.js");
+const oracle = read("oracle/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -24,5 +25,10 @@ assert(script.includes('portal-fonzi-found'), "Fonzi first contact must persist 
 assert(script.includes('SOMETHING THAT WAS NOT A DOOR'), "Fonzi must enter through the world layer rather than door taxonomy");
 assert(!home.includes('<strong>FONZI</strong>'), "Fonzi must not be advertised as a Portal door");
 assert(script.includes('fonzi-travel-v0'), "Portal Fonzi must identify itself as a travel-form prototype");
+
+assert(oracle.includes("You are the Oracle"), "Portal Oracle must make the user-as-forecaster mechanic legible");
+assert(oracle.includes("COMMIT") && oracle.includes("RESOLVE") && oracle.includes("CALIBRATE"), "Portal Oracle must expose its calibration loop");
+assert(oracle.includes("(pr-(y?1:0))**2"), "Portal Oracle must preserve Brier scoring");
+assert(home.includes("THE DEEPER NETWORK"), "Portal homepage must distinguish threshold experiences from deeper rooms");
 
 console.log("Portal canonical integration contracts verified.");
