@@ -11,7 +11,7 @@ const defs=[
 ["000","ROOM 000","CURIOSITY ACCEPTED","portal-secret-unlocked"],
 ["⌬","UNDERNET","BELOW-SURFACE CLEARANCE","portal-undernet"],
 ["◉","LISTENER","IT REMEMBERS YOU","portal-listener"],
-["13","CHAOS XIII","THE MACHINE NOTICED",null]
+["13","CHAOS XIII","THE MACHINE NOTICED",null],["97.3","NUMBERS","7 1 9 0","portal-numbers"],["✣","RARE DAY","THE PORTAL NOTICED FIRST","portal-rare"],["⌖","CARTOGRAPHER","BOUNDARY OBSERVED","portal-cartographer"],[".","THE END","YOU LEFT","portal-end"]
 ];
 const chaos=Number(localStorage.getItem("portal-chaos")||0);let unlocked=0;
 document.querySelector("#stamps").innerHTML=defs.map(([sym,name,note,key])=>{const ok=key?localStorage.getItem(key)==="1":chaos>=13;if(ok)unlocked++;return '<article class="stamp '+(ok?'':'locked')+'"><span class="symbol">'+(ok?sym:'?')+'</span><div><b>'+(ok?name:'UNDISCOVERED')+'</b><br><small>'+(ok?note:'NO RECORD')+'</small></div></article>'}).join("");
