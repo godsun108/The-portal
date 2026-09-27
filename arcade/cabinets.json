@@ -166,6 +166,23 @@
       "href": "../games/up-void/",
       "tagline": "CLIMB // FALL // FIND THE WHITE DOOR",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "fifth-machine",
+      "title": "CABINET ?",
+      "kind": "mastery-cabinet",
+      "status": "playable",
+      "href": "../games/fifth-machine/",
+      "tagline": "FIVE SIGNALS REQUIRED",
+      "artifactUnlock": {
+        "all": [
+          "gravity-pearl",
+          "null-compass",
+          "swarm-heart",
+          "phase-chord",
+          "void-feather"
+        ]
+      }
     }
   ]
 }
