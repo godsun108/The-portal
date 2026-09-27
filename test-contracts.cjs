@@ -280,3 +280,10 @@ assert(afterimage.includes('beginRun("afterimage")'),"AFTERIMAGE uses shared run
 assert(afterimage.includes("falsePos"),"AFTERIMAGE penalizes false selections");
 assert(afterimage.includes('ratio>=.95?"perfect-memory":"afterimage"'),"AFTERIMAGE mastery derives from recall accuracy");
 assert(afterimage.includes('scar("memory-static")'),"AFTERIMAGE failure records scar");
+
+// GLYPH//LOCK deduction cabinet
+const glyphLock=fs.readFileSync("./games/glyph-lock/index.html","utf8");
+assert(glyphLock.includes('beginRun("glyph-lock")'),"GLYPH LOCK uses shared run protocol");
+assert(glyphLock.includes("makeRules()"),"GLYPH LOCK remaps its hidden grammar each run");
+assert(glyphLock.includes('score===9?"grammar-key":"glyph-fragment"'),"GLYPH LOCK perfect mastery grants grammar key");
+assert(glyphLock.includes('scar("syntax-burn")'),"GLYPH LOCK failure records scar");
