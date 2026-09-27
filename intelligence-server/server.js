@@ -16,9 +16,9 @@ const cors={"access-control-allow-origin":ORIGIN,"access-control-allow-methods":
 const send=(res,n,obj)=>{res.writeHead(n,cors);res.end(JSON.stringify(obj))};
 http.createServer(async(req,res)=>{
  if(req.method==="OPTIONS")return send(res,204,{});
- if(req.url==="/health")return send(res,200,{ok:true,schema:"portal.intelligence.health.v1",engine:!!MODEL_URL});
+ if(req.url==="/health")return send(res,200,{ok:true,schema:"portal.intelligence.health.v1",engine:!!MODEL_URL&&!!MODEL_KEY,model:MODEL_NAME||null,credential:MODEL_KEY?"configured":"pending"});
  if(req.url!=="/chat"||req.method!=="POST")return send(res,404,{error:"not_found"});
- if(!MODEL_URL)return send(res,503,{schema:"portal.chat.v1",verified:false,error:"engine_dormant"});
+ if(!MODEL_URL)return send(res,503,{schema:"portal.chat.v1",verified:false,error:"engine_dormant"});\n if(!MODEL_KEY)return send(res,503,{schema:"portal.chat.v1",verified:false,error:"credential_pending"});
  let raw="";for await(const x of req)raw+=x;if(raw.length>100000)return send(res,413,{error:"too_large"});
  try{
   const body=JSON.parse(raw),mind=minds[body.mind]?body.mind:"portal";
