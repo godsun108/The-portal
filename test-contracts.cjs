@@ -33,6 +33,7 @@ const worldEvents = read("world-events.js");
 const split = read("split/index.html");
 const creature = read("creature.js");
 const dream = read("dream/index.html");
+const reality = read("reality.js");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -143,4 +144,13 @@ assert(maze.includes("PortalWorld?.divergence?.mazeSalt")&&maze.includes("passpo
 assert(machine.includes("PortalWorld?.divergence?.machineSurvival")&&machine.includes("forkSurvival===3")&&machine.includes("forkSurvival===4"), "Forked worlds must alter MACHINE base survival physics");
 assert(dream.includes("PortalWorld?.divergence")&&dream.includes("room you remember choosing not to enter")&&dream.includes("a door used to be"), "DREAM must interpret fork divergence differently by branch");
 assert(!dream.includes("portal-arcade-unlocked"), "DREAM must not revive deprecated Arcade state");
+assert(reality.includes("https://godsun108.github.io/earth-now/dynamic/latest.json")&&reality.includes('earth-now.atlas.v1')&&reality.includes('semantic==="observed"'), "Reality Bridge must consume only canonical observed Earth Now state");
+assert(reality.includes("Number(strong.mag)>=5")&&reality.includes("<=6*HOUR")&&!reality.includes("earthquake.usgs.gov/earthquakes/feed"), "Portal reality phenomena must be fresh and must not duplicate Earth ingestion");
+assert(home.includes("reality.js")&&dream.includes("../reality.js"), "Portal surfaces must consume one canonical Reality Bridge");
+assert(creature.includes('destination=rooms[s.afterAbsence.outcome]')&&creature.includes('evidence:(room)'), "Creature ecology must own absence migration topology");
+assert(maze.includes('evidence?.("maze")')&&signal.includes('evidence?.("signal")'), "Creature migration evidence must cross existing rooms");
+assert(dream.includes("historyDream")&&dream.includes("W?.scars")&&dream.includes("This part is real."), "DREAM must remix genuine history and distinguish real Earth observations");
+assert(script.includes("portal-fonzi-crossed-fork")&&script.includes("FONZI REFERENCED A BRANCH THIS WORLD DID NOT TAKE."), "Fonzi may uniquely remember the road not taken");
+assert(campfire.includes("d.others>0")&&campfire.includes("portal-campfire-overlap")&&world.includes("shared-fire"), "Human world phenomena must require verified remote overlap");
+assert(JSON.parse(campfireConfig).endpoint===null, "Human phenomena must remain dormant while canonical connection endpoint is unavailable");
 console.log("Portal canonical integration contracts verified.");
