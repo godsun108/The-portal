@@ -259,6 +259,15 @@
       "href": "../games/time-loop/",
       "tagline": "YOUR LAST ATTEMPT IS YOUR NEXT PARTNER",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "blind-spot",
+      "title": "BLIND//SPOT",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/blind-spot/",
+      "tagline": "LOOK AWAY // SEE THE PATH",
+      "world_key": "portal-game-history"
     }
   ]
 }
