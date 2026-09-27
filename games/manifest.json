@@ -163,6 +163,14 @@
       "kind": "visual-memory",
       "reward": "afterimage",
       "masteryReward": "perfect-memory"
+    },
+    {
+      "id": "glyph-lock",
+      "title": "GLYPH//LOCK",
+      "href": "./glyph-lock/",
+      "kind": "symbolic-deduction",
+      "reward": "glyph-fragment",
+      "masteryReward": "grammar-key"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
