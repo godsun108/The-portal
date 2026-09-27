@@ -358,3 +358,11 @@ assert(worldClock.includes('capability("echoTime")'),"World Clock exposes ECHO T
 assert(worldClock.includes("const h=history()"),"ECHO TIME reads genuine local game history");
 assert(worldClock.includes("NO RECORDED GAME HISTORY EXISTS IN THIS BROWSER"),"ECHO TIME refuses to fabricate missing history");
 assert(worldClock.includes('grantArtifact("remembered-moment")'),"real recall records remembered moment");
+
+// ORBITAL TACTICS fusion
+const signalWar=fs.readFileSync("./games/signal-war/index.html","utf8");
+assert(signalWar.includes('capability("orbitalTactics")'),"SIGNAL WAR derives orbital mode from strategy plus prediction mastery");
+assert(signalWar.includes('function orbitalPull()'),"orbital mode introduces a real gravity movement mechanic");
+assert(signalWar.includes('event(run,"orbital-shift"'),"orbital field movement is recorded in the game run");
+assert(signalWar.includes('well=nodes[turn%nodes.length]'),"gravity well migrates deterministically through territory nodes");
+assert(signalWar.includes("TERRITORY NOW HAS GRAVITY"),"qualified traveler receives in-world orbital field signal");
