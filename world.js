@@ -14,6 +14,7 @@ if(facts.button>=13)event("thirteen","SOMETHING COUGHED BEHIND THE WALLS.");
 if(facts.life==="dead")event("death","ONE LIFE ENDED. THE WORLD DID NOT RESET.");
 if(facts.windowAnomaly)event("watched","THE WINDOW SAW SOMETHING BACK.");if(facts.glassSeed)event("glass-seed","SOMETHING CROSSED THROUGH THE WINDOW.");
 if(w.pressure>=8)event("awake","THE PORTAL IS NO LONGER ASLEEP.");
-localStorage.setItem(K,JSON.stringify(w));window.PortalWorld={state:w,has,flag,event,save:()=>localStorage.setItem(K,JSON.stringify(w))};
+const divergence=facts.fork?{branch:facts.fork,mazeSalt:facts.fork==="left"?"REMEMBER":"FORGET",machineSurvival:facts.fork==="left"?3:4,dreamTone:facts.fork==="left"?"familiar":"missing",signalBias:facts.fork==="left"?"return":"distance"}:null;w.divergence=divergence;
+localStorage.setItem(K,JSON.stringify(w));window.PortalWorld={state:w,has,flag,event,divergence,save:()=>localStorage.setItem(K,JSON.stringify(w))};
 document.documentElement.dataset.worldPressure=String(w.pressure);
 })();
