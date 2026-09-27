@@ -295,3 +295,11 @@ assert(timeLoop.includes("ghosts.push(record.slice())"),"TIME LOOP replays recor
 assert(timeLoop.includes("actors.some(p=>near(p,a))"),"TIME LOOP lets ghosts satisfy anchors");
 assert(timeLoop.includes('mastery?"chronokey":"loop-thread"'),"TIME LOOP rewards low-loop mastery");
 assert(timeLoop.includes('scar("time-fray")'),"TIME LOOP failure records scar");
+
+// BLIND//SPOT perception cabinet
+const blindSpot=fs.readFileSync("./games/blind-spot/index.html","utf8");
+assert(blindSpot.includes('beginRun("blind-spot")'),"BLIND SPOT uses shared run protocol");
+assert(blindSpot.includes("attention=Math.hypot"),"BLIND SPOT visibility derives from pointer attention distance");
+assert(blindSpot.includes("hits>=4"),"BLIND SPOT enforces off-path contact limit");
+assert(blindSpot.includes('mastery?"peripheral-eye":"blind-thread"'),"BLIND SPOT rewards clean fast mastery");
+assert(blindSpot.includes('scar("attention-burn")'),"BLIND SPOT failure records scar");
