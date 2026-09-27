@@ -11,12 +11,12 @@ const defs=[
 ["000","ROOM 000","CURIOSITY ACCEPTED","portal-secret-unlocked"],
 ["⌬","UNDERNET","BELOW-SURFACE CLEARANCE","portal-undernet"],
 ["◉","LISTENER","IT REMEMBERS YOU","portal-listener"],
-["13","CHAOS XIII","THE MACHINE NOTICED",null],["97.3","NUMBERS","7 1 9 0","portal-numbers"],["✣","RARE DAY","THE PORTAL NOTICED FIRST","portal-rare"],["⌖","CARTOGRAPHER","BOUNDARY OBSERVED","portal-cartographer"],[".","THE END","YOU LEFT","portal-end"]
+["13","CHAOS XIII","THE MACHINE NOTICED",null],["97.3","NUMBERS","7 1 9 0","portal-numbers"],["✣","RARE DAY","THE PORTAL NOTICED FIRST","portal-rare"],["⌖","CARTOGRAPHER","BOUNDARY OBSERVED","portal-cartographer"],[".","THE END","YOU LEFT","portal-end"],["✧","RELEASE","BEAUTY LET GO","portal-release-made"],["◎","ORBIT","CONTINUOUS FALL","portal-orbit-found"],["∆","MACHINE","LIFE SEEDED","portal-machine"],["♜","ARCADE","MACHINE BELOW","portal-arcade"],["⌁","ECHO RUN","SIGNAL CARRIED","portal-echo-run-complete"],["∴","CONVERGENCE","ROOMS CROSSED","portal-convergence"],["◐","THE SPLIT","WORLD FORKED","portal-world-fork"],["◦","ECOLOGY","VOID CHANGED","portal-creature-void-choice"],["◆","FONZI","FIRST CONTACT","portal-fonzi-found"]
 ];
 const chaos=Number(localStorage.getItem("portal-chaos")||0);let unlocked=0;
 document.querySelector("#stamps").innerHTML=defs.map(([sym,name,note,key])=>{const ok=key?localStorage.getItem(key)!==null:chaos>=13;if(ok)unlocked++;return '<article class="stamp '+(ok?'':'locked')+'"><span class="symbol">'+(ok?sym:'?')+'</span><div><b>'+(ok?name:'UNDISCOVERED')+'</b><br><small>'+(ok?note:'NO RECORD')+'</small></div></article>'}).join("");
 document.querySelector("#count").textContent=unlocked+" STAMPS RECORDED // "+chaos+" CHAOS INTERACTIONS";
-const W=window.PortalWorld?.state||{},age=Math.max(0,Date.now()-(W.born||Date.now())),days=Math.floor(age/86400000),hours=Math.floor(age/36e5)%24;
+const W=window.PortalWorld?.state||{},eventState=(()=>{try{return JSON.parse(localStorage.getItem("portal-world-events-v1")||"null")}catch(e){return null}})(),creatureState=(()=>{try{return JSON.parse(localStorage.getItem("portal-creature-v1")||"null")}catch(e){return null}})(),age=Math.max(0,Date.now()-(W.born||Date.now())),days=Math.floor(age/86400000),hours=Math.floor(age/36e5)%24;
 const scars=(W.scars||[]).map(x=>String(x).replaceAll("-"," ").toUpperCase());
 const inventory=(W.inventory||[]).map(x=>String(x).replaceAll("-"," ").toUpperCase());
 document.querySelector("#telemetry").innerHTML=
@@ -24,5 +24,5 @@ document.querySelector("#telemetry").innerHTML=
 '<div><small>PORTAL VISITS</small><b>'+(W.visits||1)+'</b></div>'+
 '<div><small>WORLD PRESSURE</small><b>'+(W.pressure||0)+'</b></div>'+
 '<div><small>CARRYING</small><b>'+(inventory.length?inventory.join(" · "):"NOTHING")+'</b></div>'+
-'<div class="scarline"><small>THINGS THE WORLD REMEMBERS</small><b>'+(scars.length?scars.join(" // "):"NO SCARS YET")+'</b></div>';
+'<div class="scarline"><small>THINGS THE WORLD REMEMBERS</small><b>'+(scars.length?scars.join(" // "):"NO SCARS YET")+'</b></div>'+ '<div class="scarline"><small>WORLD HISTORY</small><b>'+((eventState?.history||[]).length?eventState.history.map(e=>String(e.id).toUpperCase()).join(" // "):"NO WORLD EVENTS RECORDED")+'</b></div>'+ '<div class="scarline"><small>UNCLASSIFIED EVIDENCE</small><b>'+(creatureState?.stage?"STAGE "+creatureState.stage+" // "+(creatureState.sightings||0)+" SIGHTING"+((creatureState.sightings||0)===1?"":"S")+(creatureState.afterAbsence?" // CHANGE AFTER ABSENCE":""):"NONE RECORDED")+'</b></div>';
 </script></body></html>
