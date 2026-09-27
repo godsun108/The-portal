@@ -11,4 +11,10 @@ if(localStorage.getItem("portal-radio-888")==="1"){
   const locked=document.querySelector("[data-secret] .glyph");
   if(locked)locked.textContent="88.8";
 }
+const undernetReady=artifactCount()===3&&localStorage.getItem("portal-radio-888")==="1";
+if(undernetReady){
+  const door=document.querySelector("#undernetDoor");
+  if(door)door.hidden=false;
+  document.querySelector("#visitorLine").textContent="A NEW LAYER HAS BECOME VISIBLE.";
+}
 document.querySelector("#leaveMark").onclick=()=>{const n=Number(localStorage.getItem("portal-mark")||0)+1;localStorage.setItem("portal-mark",n);document.querySelector("#markStatus").textContent="MARK "+String(n).padStart(3,"0")+" SAVED TO THIS DEVICE.";toast("THE ROOM REMEMBERS.")};const transmissions=["YOU ARE HERE. THAT IS ALREADY STATISTICALLY RIDICULOUS.","SOMEWHERE, A STAR JUST DID SOMETHING WITHOUT AN AUDIENCE.","CURIOSITY IS A PERFECTLY VALID NAVIGATION SYSTEM.","THE MAP IS NOT THE TERRITORY. THE LINK IS NOT THE PLACE.","BUILD THE RULES. LET REALITY SURPRISE YOU."];document.querySelector("#transmission").onclick=()=>{document.body.classList.add("glitch");setTimeout(()=>document.body.classList.remove("glitch"),500);toast(transmissions[Math.floor(Math.random()*transmissions.length)])};
