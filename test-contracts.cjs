@@ -76,7 +76,7 @@ assert(constitution.includes("Curiosity is progression"), "Portal constitution m
 assert(connection.includes("No remote human is ever fabricated"), "Connection contract must prohibit fabricated humans");
 assert(connection.includes("presence(room)") && connection.includes("drop(room, payload)") && connection.includes("session(room)"), "Connection substrate must define room-neutral primitives");
 assert(home.includes('href="campfire/"'), "Portal must expose CAMPFIRE connection surface");
-assert(campfire.includes("THIS ROOM REFUSES TO INVENT COMPANY") && campfire.includes('count.textContent="0"'), "Unavailable CAMPFIRE must truthfully fall back to zero remote visitors");
+assert(campfire.includes("THIS ROOM REFUSES TO INVENT COMPANY") && campfire.includes('count.textContent="—"'), "Unavailable CAMPFIRE must not masquerade as a verified zero");
 assert(campfire.includes("verified!==true") && campfire.includes("portal.presence.v0"), "CAMPFIRE must require verified canonical presence responses");
 assert(campfire.includes("../connection/config.json") && campfire.includes("lease_seconds:45"), "CAMPFIRE must consume the canonical connection configuration and lease contract");
 assert(campfireApi.includes("excludes the caller") && campfireApi.includes("No fabricated seed users"), "CAMPFIRE API must preserve real-human counting semantics");
