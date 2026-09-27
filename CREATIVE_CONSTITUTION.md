@@ -2,7 +2,7 @@
 
 The Portal is not a directory of projects. It is a living artwork made through the internet.
 
-## Five pillars
+## Six pillars
 
 ### REALITY
 Let the visitor encounter something that is actually happening.
@@ -27,17 +27,26 @@ Teach by experience whenever possible.
 Let the visitor manipulate a system, make a prediction, fail, observe, retry, and discover the underlying idea.
 Do not disguise unsupported claims as education.
 
+### CONNECTION
+Let visitors encounter evidence of other real humans: collaborate, play, exchange, leave gifts, or briefly share a place.
+Presence must be real. Never fabricate people, messages, activity, or online counts.
+Prefer meaningful encounters over followers, feeds, popularity metrics, and engagement loops.
+
 ## Creative law
 
 SEE SOMETHING REAL.
 MAKE SOMETHING BEAUTIFUL.
 PLAY WITH SOMETHING STRANGE.
 LEARN SOMETHING TRUE.
+FIND ANOTHER HUMAN.
 LEAVE THE WORLD DIFFERENT THAN YOU FOUND IT.
+LEAVE SOMETHING FOR SOMEONE YOU MAY NEVER MEET.
 
 ## Boundaries
 
-- Browser-local state by default.
+- Browser-local state by default; shared state exists only where real human connection requires it.
+- Human-to-human features use one canonical connection substrate. Rooms consume it rather than inventing separate social backends.
+- Never simulate another visitor when no verified remote human event exists.
 - No account required for the core world.
 - No analytics required to make the experience work.
 - Do not claim a source is live when it cannot be verified as live.
