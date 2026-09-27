@@ -277,6 +277,24 @@
       "href": "../games/signal-war/",
       "tagline": "THREE UNITS // THREE NODES // HOLD THE FIELD",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "forge",
+      "title": "FORGE",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/forge/",
+      "tagline": "BUILD IT // THEN MAKE IT PROVE ITSELF",
+      "world_key": "portal-game-history"
+    },
+    {
+      "id": "tower-zero",
+      "title": "TOWER//ZERO",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/tower-zero/",
+      "tagline": "TWENTY FLOORS // KEEP CLIMBING",
+      "world_key": "portal-game-history"
     }
   ]
 }
