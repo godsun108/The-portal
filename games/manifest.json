@@ -179,6 +179,14 @@
       "kind": "temporal-coordination",
       "reward": "loop-thread",
       "masteryReward": "chronokey"
+    },
+    {
+      "id": "blind-spot",
+      "title": "BLIND//SPOT",
+      "href": "./blind-spot/",
+      "kind": "inverse-attention-navigation",
+      "reward": "blind-thread",
+      "masteryReward": "peripheral-eye"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
