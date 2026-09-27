@@ -1,0 +1,10 @@
+{
+  "schema":"sovereign.intelligence.v1",
+  "core":{"protocol":"sovereign.chat.v1","provenance_required":true},
+  "bodies":{
+    "portal":{"status":"building","path":"../intelligence/","network":"server-inference"},
+    "online":{"status":"scaffolded","path":"online/","network":"online"},
+    "offline":{"status":"scaffolded","path":"offline/","network":"offline-by-default"}
+  },
+  "ownership":{"product":"ours","fine_tunes":"future","base_weights":"not_yet_selected","from_scratch_weights":false}
+}
