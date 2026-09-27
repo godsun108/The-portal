@@ -176,3 +176,13 @@ assert(Array.isArray(intelligenceConfig.discovery.allowed_destinations)&&!intell
 assert(intelligenceRoom.includes("acceptDiscoveries")&&intelligenceRoom.includes("portal-intelligence-discoveries"), "Native Intelligence must surface verified discoveries");
 assert(intelligenceApi.includes("arbitrary URLs, scripts, provider links, and invented rooms are rejected"), "Discovery contract must reject invented exits");
 }
+
+// Portal Games cross-world contracts
+const gameManifest=require("./games/manifest.json");
+assert(gameManifest.schema==="portal.games.v1","Portal Games manifest schema");
+assert(gameManifest.games.some(g=>g.id==="rift"),"RIFT remains registered");
+assert(gameManifest.games.some(g=>g.id==="echo-maze"),"ECHO MAZE remains registered");
+const gameState=fs.readFileSync("./games/state.js","utf8");
+assert(gameState.includes("portal-game-artifacts"),"game artifacts persist across rooms");
+const echo=fs.readFileSync("./games/echo-maze/index.html","utf8");
+assert(echo.includes('hasArtifact("rift-key")'),"ECHO MAZE reacts to RIFT KEY");
