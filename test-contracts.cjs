@@ -80,7 +80,7 @@ assert(home.includes('id="convergenceDoor"') && home.includes("hidden"), "CONVER
 assert(script.includes('portal-convergence') && script.includes('#convergenceDoor'), "Homepage must reveal CONVERGENCE from earned world state");
 assert(convergence.includes('THIS ROOM HAS NOT HAPPENED TO YOU') && convergence.includes('portal-convergence-seen'), "CONVERGENCE must reject direct unearned entry and remember genuine arrival");
 
-assert(cabinets.schema==="portal.arcade.v1", "Arcade must have one canonical cabinet registry");
+assert(cabinets.schema==="portal.arcade.v2", "Arcade must have one canonical cabinet registry with unlock rules");
 assert(cabinets.cabinets.some(g=>g.id==="orbit"&&g.status==="playable"), "ORBIT must plug into the canonical Arcade");
 assert(cabinets.cabinets.some(g=>g.id==="turbo-turtle"&&g.status==="awaiting-recovery"), "Turbo Turtle must remain recovery-only until original source is found");
 assert(cabinets.cabinets.some(g=>g.id==="campfire-coop"&&g.status==="dormant"), "Networked games must remain dormant before verified connection exists");
@@ -89,4 +89,6 @@ assert(maze.includes("portal-passport-id") && maze.includes("Math.floor(Date.now
 assert(maze.includes("portal-release-made") && maze.includes("portal-orbit-found") && maze.includes("portal-blackbox-signal"), "MAZE whispers must derive from genuine prior Portal history");
 assert(maze.includes('localStorage.setItem("portal-maze-escaped","1")') && world.includes("maze-escaped"), "MAZE escape must become persistent Portal world history");
 assert(arcade.includes('fetch("cabinets.json"') && arcade.includes("SOURCE MISSING // RECOVERY REQUIRED"), "Arcade UI must consume registry and tell the truth about unavailable cabinets");
+assert(arcade.includes("const powered=g=>") && arcade.includes("NO POWER // SOMETHING ELSE MUST HAPPEN FIRST"), "Arcade must derive cabinet power from canonical unlock rules");
+const echoRun=cabinets.cabinets.find(g=>g.id==="echo-run");assert(echoRun&&echoRun.status==="locked"&&echoRun.unlock.all.includes("portal-blackbox-signal")&&echoRun.unlock.all.includes("portal-maze-escaped"), "ECHO RUN must remain dark until genuine cross-room history powers it");
 console.log("Portal canonical integration contracts verified.");
