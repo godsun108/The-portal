@@ -265,3 +265,11 @@ assert(vectorBreak.includes("wave>7"),"VECTOR BREAK requires seven-wave clear");
 assert(vectorBreak.includes("lives>=3&&score>=1800"),"VECTOR BREAK mastery requires clean high-score clear");
 assert(vectorBreak.includes('grantArtifact(clean?"vector-core":"broken-vector")'),"VECTOR BREAK grants performance-derived artifact");
 assert(vectorBreak.includes('scar("vector-burn")'),"VECTOR BREAK failure records scar");
+
+// GRAVITY//WELL precision cabinet
+const gravityWell=fs.readFileSync("./games/gravity-well/index.html","utf8");
+assert(gravityWell.includes('beginRun("gravity-well")'),"GRAVITY WELL uses shared run protocol");
+assert(gravityWell.includes("impulses=6"),"GRAVITY WELL limits impulses");
+assert(gravityWell.includes("speed<150"),"GRAVITY WELL requires controlled landing speed");
+assert(gravityWell.includes('grantArtifact(mastery?"gravity-seal":"orbit-dust")'),"GRAVITY WELL grants performance-derived artifact");
+assert(gravityWell.includes('scar("lost-probe")'),"GRAVITY WELL failure records scar");
