@@ -24,6 +24,8 @@ const campfireApi = read("connection/CAMPFIRE_API.md");
 const campfireConfig = read("connection/config.json");
 const campfireServer = read("connection/service/server.mjs");
 const convergence = read("convergence/index.html");
+const arcade = read("arcade/index.html");
+const cabinets = JSON.parse(read("arcade/cabinets.json"));
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -77,4 +79,9 @@ assert(home.includes('id="convergenceDoor"') && home.includes("hidden"), "CONVER
 assert(script.includes('portal-convergence') && script.includes('#convergenceDoor'), "Homepage must reveal CONVERGENCE from earned world state");
 assert(convergence.includes('THIS ROOM HAS NOT HAPPENED TO YOU') && convergence.includes('portal-convergence-seen'), "CONVERGENCE must reject direct unearned entry and remember genuine arrival");
 
+assert(cabinets.schema==="portal.arcade.v1", "Arcade must have one canonical cabinet registry");
+assert(cabinets.cabinets.some(g=>g.id==="orbit"&&g.status==="playable"), "ORBIT must plug into the canonical Arcade");
+assert(cabinets.cabinets.some(g=>g.id==="turbo-turtle"&&g.status==="awaiting-recovery"), "Turbo Turtle must remain recovery-only until original source is found");
+assert(cabinets.cabinets.some(g=>g.id==="campfire-coop"&&g.status==="dormant"), "Networked games must remain dormant before verified connection exists");
+assert(arcade.includes('fetch("cabinets.json"') && arcade.includes("SOURCE MISSING // RECOVERY REQUIRED"), "Arcade UI must consume registry and tell the truth about unavailable cabinets");
 console.log("Portal canonical integration contracts verified.");
