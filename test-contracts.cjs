@@ -204,3 +204,8 @@ assert(gm.includes("portal.gm-proposal.v1"),"GM proposals require explicit schem
 assert(gm.includes("allowedRoutes"),"GM routes are allowlisted");
 assert(gm.includes("allowedEvents"),"GM events are allowlisted");
 assert(gm.includes("accepted-intelligence-proposal"),"GM events require accepted proposal path");
+
+// Arcade mastery circuit
+const mastery=fs.readFileSync("./arcade/mastery.js","utf8");
+for(const id of ["gravity-pearl","null-compass","swarm-heart","phase-chord","void-feather"])assert(mastery.includes(id),"mastery requires "+id);
+assert(mastery.includes("have.length===MASTERY.length"),"mastery derives completion from all five artifacts");
