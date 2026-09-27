@@ -209,3 +209,9 @@ assert(gm.includes("accepted-intelligence-proposal"),"GM events require accepted
 const mastery=fs.readFileSync("./arcade/mastery.js","utf8");
 for(const id of ["gravity-pearl","null-compass","swarm-heart","phase-chord","void-feather"])assert(mastery.includes(id),"mastery requires "+id);
 assert(mastery.includes("have.length===MASTERY.length"),"mastery derives completion from all five artifacts");
+
+// Arcade circuit truth
+const circuit=fs.readFileSync("./arcade/circuit.js","utf8");
+assert(circuit.includes("portal.arcade.circuit.v1"),"arcade circuit schema explicit");
+assert(circuit.includes("portal-game-history"),"arcade circuit derives played state from run history");
+assert(circuit.includes("portal-game-artifacts"),"arcade circuit derives mastery from artifacts");
