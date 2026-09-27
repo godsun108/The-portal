@@ -13,7 +13,8 @@
   <meta name="twitter:title" content="THE PORTAL">
   <meta name="twitter:description" content="Welcome to the other internet. Pick a door.">
   <title>THE PORTAL</title>
-  <link rel="stylesheet" href="style.css">\n  <script src="world.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="world.js"></script>
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
@@ -25,6 +26,7 @@
       <p class="lede">Welcome to the other internet.<br>Pick a door.</p>
     </header>
 
+    <p class="threshold-label">THE FIRST FOUR DOORS ARE ALREADY AWAKE.</p>
     <section class="portal-grid" aria-label="Portals">
       <a class="portal earth" href="earth/">
         <span class="glyph">◉</span><strong>EARTH NOW</strong><small>if it glows, it happened</small>
@@ -38,6 +40,7 @@
       <a class="portal oracle" href="oracle/">
         <span class="glyph">◇</span><strong>ORACLE</strong><small>probability, not prophecy</small>
       </a>
+      <div class="deeper"><span>THE DEEPER NETWORK</span><small>Nothing below this line needs you yet.</small></div>
       <a class="portal signal" href="signal/">
         <span class="glyph">⌁</span><strong>SIGNAL</strong><small>listen to the dark</small>
       </a>
@@ -67,12 +70,14 @@
       <button class="portal locked" type="button" data-secret>
         <span class="glyph">?</span><strong>???</strong><small>not yet</small>
       </button>
-      <a class="portal arcade" id="arcadeDoor" href="arcade/" hidden><span class="glyph">♜</span><strong>ARCADE</strong><small>this machine was not plugged in</small></a>\n      <a class="portal undernet" id="undernetDoor" href="undernet/" hidden>
+      <a class="portal arcade" id="arcadeDoor" href="arcade/" hidden><span class="glyph">♜</span><strong>ARCADE</strong><small>this machine was not plugged in</small></a>
+      <a class="portal undernet" id="undernetDoor" href="undernet/" hidden>
         <span class="glyph">⌬</span><strong>THE UNDERNET</strong><small>this door was not here before</small>
       </a>
     </section>
 
-    <div id="carried" hidden aria-live="polite"><span>⌁</span> CARRYING: BLACK FEATHER</div>\n    <footer><span id="visitorLine">NO MAP. NO FEED. JUST DOORS.</span><br><button id="transmission" type="button">RECEIVE TRANSMISSION</button><button id="fonzi" type="button" aria-label="Something is hiding here" title="?" hidden><span class="fonzi-hat">◆</span><span class="fonzi-face">•</span></button></footer>
+    <div id="carried" hidden aria-live="polite"><span>⌁</span> CARRYING: BLACK FEATHER</div>
+    <footer><span id="visitorLine">NO MAP. NO FEED. JUST DOORS.</span><br><button id="transmission" type="button">RECEIVE TRANSMISSION</button><button id="fonzi" type="button" aria-label="Something is hiding here" title="?" hidden><span class="fonzi-hat">◆</span><span class="fonzi-face">•</span></button></footer>
   </main>
 
   <dialog id="chaos">
@@ -100,7 +105,8 @@
     </div>
   </dialog>
 
-  <div id="worldEvent" hidden aria-live="polite"><span id="worldEventGlyph">◌</span><p id="worldEventText"></p></div>\n  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="worldEvent" hidden aria-live="polite"><span id="worldEventGlyph">◌</span><p id="worldEventText"></p></div>
+  <div id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
