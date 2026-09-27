@@ -5,3 +5,15 @@
 #worldEvent{position:fixed;z-index:30;left:50%;top:50%;width:min(520px,calc(100% - 36px));transform:translate(-50%,-50%) scale(.94);padding:30px;border:1px solid #55445f;background:#050408f2;box-shadow:0 0 120px #8b5cab22;text-align:center;opacity:0;transition:.45s;pointer-events:none}#worldEvent.awake{opacity:1;transform:translate(-50%,-50%) scale(1)}#worldEventGlyph{display:block;font-size:52px;margin-bottom:18px;filter:drop-shadow(0 0 18px #b98adb)}#worldEvent p{margin:0;color:#b9a9c1;font-size:10px;line-height:1.9;letter-spacing:.15em}.world-awake #stars{opacity:.85}.world-awake .hero h1 span{text-shadow:0 0 45px #8f68ad33}html[data-world-pressure="0"]{}@media(prefers-reduced-motion:reduce){#worldEvent{transition:none}}
 /* FONZI // first incursion. Not a door. */
 #fonzi{position:absolute;right:2px;bottom:0;width:20px;height:24px;border:0;background:transparent;color:#292933;opacity:.18;cursor:pointer;padding:0;font:10px ui-monospace,monospace;transition:opacity .2s,transform .2s}#fonzi:hover,#fonzi:focus-visible{opacity:.8;transform:translateY(-2px)}#fonzi .fonzi-hat{display:block;font-size:11px;line-height:8px;transform:rotate(12deg)}#fonzi .fonzi-face{display:block;width:10px;height:9px;margin:2px auto 0;border:1px solid currentColor;border-radius:50%;font-size:6px;line-height:6px}body.fonzi-broke main{animation:fonziBreak .16s steps(2) 4}body.fonzi-broke .hero h1 span{-webkit-text-stroke-color:#fff;text-shadow:3px 0 #fff,-3px 0 #777}@keyframes fonziBreak{25%{transform:translate(-2px,1px)}50%{transform:translate(3px,-1px)}75%{transform:translate(-1px,-2px)}}@media(prefers-reduced-motion:reduce){body.fonzi-broke main{animation:none}}
+
+/* COHESION PASS // threshold before directory */
+.threshold-label{margin:0 0 13px;text-align:center;color:#565662;font-size:8px;letter-spacing:.22em}
+.deeper{grid-column:1/-1;margin:28px 0 2px;padding:18px 4px 8px;border-top:1px solid #24242c;display:flex;justify-content:space-between;gap:18px;align-items:end;color:#777784;font-size:9px;letter-spacing:.2em}
+.deeper small{color:#464650;font-size:8px;letter-spacing:.08em}
+.portal.earth,.portal.window,.portal.oracle{min-height:235px}
+.portal.earth{background:radial-gradient(circle at 85% 5%,#163329aa,transparent 46%),rgba(10,10,14,.78)}
+.portal.window{background:radial-gradient(circle at 85% 5%,#15313aaa,transparent 46%),rgba(10,10,14,.78)}
+.portal.oracle{background:radial-gradient(circle at 85% 5%,#30163caa,transparent 46%),rgba(10,10,14,.78)}
+.portal.earth strong,.portal.window strong,.portal.oracle strong{font-size:18px}
+@media(min-width:700px){.portal-grid{grid-template-columns:repeat(6,1fr)}.portal{grid-column:span 2}.portal.earth,.portal.window,.portal.oracle{grid-column:span 2}.portal.chaos{grid-column:span 6;min-height:150px}.deeper{grid-column:1/-1}}
+@media(max-width:699px){.threshold-label{text-align:left;margin-left:4px}.deeper{display:block}.deeper small{display:block;margin-top:7px}.portal.earth,.portal.window,.portal.oracle{min-height:205px}}
