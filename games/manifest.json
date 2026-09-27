@@ -56,6 +56,18 @@
         "scar",
         "physics"
       ]
+    },
+    {
+      "id": "null-racer",
+      "title": "NULL RACER",
+      "status": "live",
+      "entry": "null-racer/",
+      "mechanic": "three-lane endless racer with accelerating gate patterns",
+      "effects": [
+        "artifact",
+        "scar",
+        "physics"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
