@@ -211,6 +211,14 @@
       "kind": "vertical-platformer",
       "reward": "tower-shard",
       "masteryReward": "zero-crown"
+    },
+    {
+      "id": "echo-duel",
+      "title": "ECHO//DUEL",
+      "href": "./echo-duel/",
+      "kind": "asynchronous-self-duel",
+      "reward": "self-rival",
+      "masteryReward": "echo-breaker"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
