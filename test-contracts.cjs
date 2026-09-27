@@ -31,6 +31,7 @@ const echoRunRoom = read("echo-run/index.html");
 const machine = read("machine/index.html");
 const worldEvents = read("world-events.js");
 const split = read("split/index.html");
+const creature = read("creature.js");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -116,4 +117,10 @@ assert(split.includes('localStorage.setItem("portal-world-fork",fork)')&&split.i
 assert(!split.includes('removeItem("portal-world-fork")'), "THE SPLIT must not provide a reset path");
 assert(world.includes('fork:localStorage.getItem("portal-world-fork")')&&world.includes('"fork-"+facts.fork'), "World Engine must preserve the chosen branch as a scar");
 assert(script.includes('dataset.worldFork=fork')&&script.includes('fork==="left"')&&script.includes('fork==="right"'), "Existing Portal surfaces must interpret forked histories differently");
+assert(creature.includes('portal-machine')&&creature.includes('portal-machine-shard-exposure')&&creature.includes('portal-world-fork')&&creature.includes('portal-signal-shard-resonance')&&creature.includes('portal-convergence'), "Creature emergence must derive only from truthful Portal history");
+assert(creature.includes("score>=5?3:score>=4?2:score>=3?1:0"), "Creature must emerge in evidence stages rather than gamified XP");
+assert(!creature.match(/hunger|health|xp|feed/i), "Creature model must not become a pet meter");
+assert(home.includes("creature.js")&&machine.includes("creature.js")&&maze.includes("creature.js")&&signal.includes("creature.js"), "Creature evidence must consume one canonical emergence model");
+assert(machine.includes('PortalCreature.seen("machine")')&&maze.includes('PortalCreature.seen("maze")')&&signal.includes('PortalCreature.seen("signal")'), "Independent rooms must reveal bounded creature sightings");
+assert(script.includes('PortalCreature')&&script.includes("SOMETHING MOVED BETWEEN TWO DOORS."), "Homepage may rarely reveal creature evidence without advertising it");
 console.log("Portal canonical integration contracts verified.");
