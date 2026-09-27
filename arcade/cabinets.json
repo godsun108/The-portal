@@ -121,6 +121,15 @@
       "href": "../games/colorfall/",
       "tagline": "CATCH CHROMA UNDER ALTERED GRAVITY",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "drift",
+      "title": "DRIFT",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/drift/",
+      "tagline": "MOVE THE SIGNAL // SURVIVE THE FIELD",
+      "world_key": "portal-game-history"
     }
   ]
 }
