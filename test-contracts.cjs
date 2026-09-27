@@ -32,6 +32,7 @@ const machine = read("machine/index.html");
 const worldEvents = read("world-events.js");
 const split = read("split/index.html");
 const creature = read("creature.js");
+const dream = read("dream/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -137,4 +138,9 @@ assert(campfire.includes('count.textContent="—"')&&campfire.includes('sessionS
 assert(campfire.includes('localStorage.setItem("portal-campfire-verified","1")'), "CAMPFIRE network unlock must follow a verified canonical presence response");
 assert(passport.includes('"THE SPLIT"')&&passport.includes('"ECOLOGY"')&&passport.includes('"FONZI"')&&passport.includes('"CONVERGENCE"'), "Passport must cover current deep-world milestones");
 assert(passport.includes("portal-world-events-v1")&&passport.includes("portal-creature-v1"), "Passport must surface canonical event history and unexplained creature evidence");
+assert(world.includes("const divergence=facts.fork")&&world.includes("mazeSalt")&&world.includes("machineSurvival")&&world.includes("dreamTone"), "World Engine must own one canonical fork-divergence interpretation");
+assert(maze.includes("PortalWorld?.divergence?.mazeSalt")&&maze.includes("passport+forkSalt"), "Forked worlds must generate physically different MAZE geometry");
+assert(machine.includes("PortalWorld?.divergence?.machineSurvival")&&machine.includes("forkSurvival===3")&&machine.includes("forkSurvival===4"), "Forked worlds must alter MACHINE base survival physics");
+assert(dream.includes("PortalWorld?.divergence")&&dream.includes("room you remember choosing not to enter")&&dream.includes("a door used to be"), "DREAM must interpret fork divergence differently by branch");
+assert(!dream.includes("portal-arcade-unlocked"), "DREAM must not revive deprecated Arcade state");
 console.log("Portal canonical integration contracts verified.");
