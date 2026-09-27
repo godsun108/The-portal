@@ -311,3 +311,15 @@ assert(signalWar.includes("nodes.filter(n=>you.includes(n))"),"SIGNAL WAR scores
 assert(signalWar.includes("pulseUnit"),"SIGNAL WAR supports tactical displacement");
 assert(signalWar.includes('mastery?"field-crown":"signal-banner"'),"SIGNAL WAR rewards dominant mastery");
 assert(signalWar.includes('scar("lost-ground")'),"SIGNAL WAR failure records scar");
+
+// FORGE construction cabinet
+const forge=fs.readFileSync("./games/forge/index.html","utf8");
+assert(forge.includes('beginRun("forge")'),"FORGE uses shared run protocol");
+assert(forge.includes("function connects"),"FORGE validates reciprocal machine connectivity");
+assert(forge.includes('mastery?"maker-sigil":"forged-path"'),"FORGE rewards efficient first-test mastery");
+// TOWER//ZERO vertical cabinet
+const towerZero=fs.readFileSync("./games/tower-zero/index.html","utf8");
+assert(towerZero.includes('beginRun("tower-zero")'),"TOWER ZERO uses shared run protocol");
+assert(towerZero.includes("floor>=20"),"TOWER ZERO requires twenty-floor ascent");
+assert(towerZero.includes('mastery?"zero-crown":"tower-shard"'),"TOWER ZERO rewards fast clean mastery");
+assert(towerZero.includes('scar("tower-fall")'),"TOWER ZERO failure records scar");
