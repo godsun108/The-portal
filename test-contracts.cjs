@@ -28,6 +28,7 @@ const arcade = read("arcade/index.html");
 const cabinets = JSON.parse(read("arcade/cabinets.json"));
 const maze = read("maze/index.html");
 const echoRunRoom = read("echo-run/index.html");
+const machine = read("machine/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -97,4 +98,8 @@ const echoRun=cabinets.cabinets.find(g=>g.id==="echo-run");assert(echoRun&&echoR
 assert(echoRunRoom.includes('portal-blackbox-signal')&&echoRunRoom.includes('portal-maze-escaped')&&echoRunRoom.includes("NO<br>POWER."), "ECHO RUN itself must reject direct unearned entry");
 assert(echoRunRoom.includes('portal-echo-run-complete')&&echoRunRoom.includes('portal-item-signal-shard'), "ECHO RUN completion must mint only a local world artifact, not a financial token");
 assert(world.includes('inventory.push("signal-shard")')&&world.includes('echo-carried'), "World Engine must carry the earned signal shard and remember its scar");
+assert(machine.includes('portal-item-signal-shard')&&machine.includes('portal-machine-shard-exposure'), "MACHINE must react to the carried shard without consuming it");
+assert(machine.includes("q===2||q===4")&&machine.includes('shard?"#d7c4ff":"#b7dfc8"'), "Signal Shard must alter MACHINE ecology rather than merely unlock content");
+assert(!machine.includes('removeItem("portal-item-signal-shard")'), "MACHINE must not consume the Signal Shard");
+assert(world.includes("machine-mutated")&&world.includes("machine-shard"), "World Engine must remember that carried history changed MACHINE physics");
 console.log("Portal canonical integration contracts verified.");
