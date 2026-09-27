@@ -15,6 +15,7 @@ const world = read("world.js");
 const signal = read("signal/index.html");
 const radio = read("radio/index.html");
 const capsule = read("capsule/index.html");
+const release = read("release/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -45,5 +46,9 @@ assert(signal.includes("portal-blackbox-echo-seen") && signal.includes("RETURN S
 assert(capsule.includes("portal-capsule-echo") && capsule.includes("../world.js"), "Opened Capsule must create a temporal world consequence");
 assert(radio.includes("portal-capsule-echo") && radio.includes("TEMPORAL ECHO"), "Radio 99.9 must be able to receive an opened Capsule echo");
 assert(world.includes("echo-crossed") && world.includes("time-capsule-opened"), "World Engine must preserve spatial and temporal echo scars");
+assert(home.includes('href="release/"') && home.includes("make something you cannot keep"), "Portal must expose RELEASE as an art experience");
+assert(release.includes('id="art"') && release.includes("destination-out"), "RELEASE must create and destroy browser-canvas art");
+assert(!release.includes("toDataURL") && !release.includes("toBlob"), "RELEASE must not serialize the artwork");
+assert(release.includes("portal-release-made") && world.includes("art-released"), "Portal may remember release occurred without preserving the artwork");
 
 console.log("Portal canonical integration contracts verified.");
