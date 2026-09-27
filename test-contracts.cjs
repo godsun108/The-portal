@@ -342,3 +342,12 @@ assert(caps.includes('workshop:c.infer&&c.time&&c.build&&c.perceive&&c.surpass')
 assert(capConsequence.includes('if(!capability("repair"))return null'),"broken cabinet only manifests for repair-capable traveler");
 assert(capConsequence.includes('grantArtifact("repair-mark")'),"repair interaction leaves persistent artifact consequence");
 assert(arcadePage.includes("capability-consequence.js"),"Arcade loads capability consequence layer");
+
+// READ SIDEWAYS Window consequence
+const sideways=fs.readFileSync("./window/sideways.js","utf8");
+const windowPage=fs.readFileSync("./window/index.html","utf8");
+assert(sideways.includes('capability("readSideways")'),"sideways transmission requires perception plus inference capability");
+assert(sideways.includes("d=Math.hypot"),"sideways transmission visibility derives from attention distance");
+assert(sideways.includes('grantArtifact("sideways-script")'),"sustained peripheral reading records sideways script");
+assert(sideways.includes("THE CENTER IS NOT THE WHOLE IMAGE"),"sideways transmission has stable message contract");
+assert(windowPage.includes("sideways.js"),"Window loads sideways capability consequence");
