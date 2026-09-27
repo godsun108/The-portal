@@ -287,3 +287,11 @@ assert(glyphLock.includes('beginRun("glyph-lock")'),"GLYPH LOCK uses shared run 
 assert(glyphLock.includes("makeRules()"),"GLYPH LOCK remaps its hidden grammar each run");
 assert(glyphLock.includes('score===9?"grammar-key":"glyph-fragment"'),"GLYPH LOCK perfect mastery grants grammar key");
 assert(glyphLock.includes('scar("syntax-burn")'),"GLYPH LOCK failure records scar");
+
+// TIME//LOOP temporal cabinet
+const timeLoop=fs.readFileSync("./games/time-loop/index.html","utf8");
+assert(timeLoop.includes('beginRun("time-loop")'),"TIME LOOP uses shared run protocol");
+assert(timeLoop.includes("ghosts.push(record.slice())"),"TIME LOOP replays recorded traveler movement");
+assert(timeLoop.includes("actors.some(p=>near(p,a))"),"TIME LOOP lets ghosts satisfy anchors");
+assert(timeLoop.includes('mastery?"chronokey":"loop-thread"'),"TIME LOOP rewards low-loop mastery");
+assert(timeLoop.includes('scar("time-fray")'),"TIME LOOP failure records scar");
