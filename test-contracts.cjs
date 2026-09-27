@@ -273,3 +273,10 @@ assert(gravityWell.includes("impulses=6"),"GRAVITY WELL limits impulses");
 assert(gravityWell.includes("speed<150"),"GRAVITY WELL requires controlled landing speed");
 assert(gravityWell.includes('grantArtifact(mastery?"gravity-seal":"orbit-dust")'),"GRAVITY WELL grants performance-derived artifact");
 assert(gravityWell.includes('scar("lost-probe")'),"GRAVITY WELL failure records scar");
+
+// AFTERIMAGE memory cabinet
+const afterimage=fs.readFileSync("./games/afterimage/index.html","utf8");
+assert(afterimage.includes('beginRun("afterimage")'),"AFTERIMAGE uses shared run protocol");
+assert(afterimage.includes("falsePos"),"AFTERIMAGE penalizes false selections");
+assert(afterimage.includes('ratio>=.95?"perfect-memory":"afterimage"'),"AFTERIMAGE mastery derives from recall accuracy");
+assert(afterimage.includes('scar("memory-static")'),"AFTERIMAGE failure records scar");
