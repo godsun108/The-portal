@@ -166,3 +166,13 @@ assert(home.includes('href="stations/"')&&home.includes("ENTER THE STATIONS"), "
 assert(colorRoom.includes("TOUCH THE LIGHT")&&colorRoom.includes("createRadialGradient")&&colorRoom.includes("globalCompositeOperation=\"screen\""), "COLOR must be an interactive additive-light artwork");
 assert(colorRoom.includes('localStorage.setItem("portal-color","1")')&&world.includes("touched-light"), "COLOR must leave a truthful local world scar");
 console.log("Portal canonical integration contracts verified.");
+
+{
+const intelligenceConfig=JSON.parse(read("intelligence/config.json"));
+const intelligenceRoom=read("intelligence/index.html");
+const intelligenceApi=read("intelligence/API.md");
+assert(intelligenceConfig.discovery?.protocol==="portal.discovery.v1"&&intelligenceConfig.discovery.max_per_response<=3, "Intelligence discovery must remain bounded");
+assert(Array.isArray(intelligenceConfig.discovery.allowed_destinations)&&!intelligenceConfig.discovery.allowed_destinations.some(x=>/^https?:/.test(x)), "Mind discoveries must stay inside the Portal");
+assert(intelligenceRoom.includes("acceptDiscoveries")&&intelligenceRoom.includes("portal-intelligence-discoveries"), "Native Intelligence must surface verified discoveries");
+assert(intelligenceApi.includes("arbitrary URLs, scripts, provider links, and invented rooms are rejected"), "Discovery contract must reject invented exits");
+}
