@@ -195,6 +195,22 @@
       "kind": "turn-based-territory",
       "reward": "signal-banner",
       "masteryReward": "field-crown"
+    },
+    {
+      "id": "forge",
+      "title": "FORGE",
+      "href": "./forge/",
+      "kind": "construction-puzzle",
+      "reward": "forged-path",
+      "masteryReward": "maker-sigil"
+    },
+    {
+      "id": "tower-zero",
+      "title": "TOWER//ZERO",
+      "href": "./tower-zero/",
+      "kind": "vertical-platformer",
+      "reward": "tower-shard",
+      "masteryReward": "zero-crown"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
