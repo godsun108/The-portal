@@ -422,3 +422,13 @@ assert(workshop.includes("portal.workshop.object.v1"),"Workshop object has expli
 assert(workshop.includes("builtAt:Date.now()"),"Workshop records real local commit time");
 assert(workshop.includes('grantArtifact("first-construction")'),"first successful build becomes world history");
 assert(operatorToWorkshop.includes('../workshop/'),"confirmed Operator receives Workshop entrance");
+
+// Workshop machine world manifestation
+const machineNature=fs.readFileSync("./workshop/machine.js","utf8");
+const earthMachine=fs.readFileSync("./earth/workshop-machine.js","utf8");
+const earthRoom=fs.readFileSync("./earth/index.html","utf8");
+assert(machineNature.includes('"ANCHOR"')&&machineNature.includes('"BEACON"')&&machineNature.includes('"BRIDGE"')&&machineNature.includes('"SEED"'),"Workshop geometry derives deterministic machine nature");
+assert(machineNature.includes("portal-workshop-object-v1"),"machine nature reads actual committed Workshop object");
+assert(earthMachine.includes('from"../workshop/machine.js"'),"Earth manifestation derives from Workshop machine engine");
+assert(earthMachine.includes("BUILT IN WORKSHOP // LOCAL"),"Earth labels construction as local Portal state");
+assert(earthRoom.includes("workshop-machine.js"),"Earth loads traveler construction manifestation");
