@@ -92,6 +92,18 @@
         "scar",
         "physics"
       ]
+    },
+    {
+      "id": "up-void",
+      "title": "UP//VOID",
+      "status": "live",
+      "entry": "up-void/",
+      "mechanic": "vertical platform climb with limited falls",
+      "effects": [
+        "artifact",
+        "scar",
+        "physics"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
