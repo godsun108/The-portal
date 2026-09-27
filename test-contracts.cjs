@@ -215,3 +215,12 @@ const circuit=fs.readFileSync("./arcade/circuit.js","utf8");
 assert(circuit.includes("portal.arcade.circuit.v1"),"arcade circuit schema explicit");
 assert(circuit.includes("portal-game-history"),"arcade circuit derives played state from run history");
 assert(circuit.includes("portal-game-artifacts"),"arcade circuit derives mastery from artifacts");
+
+// Impossible wire discovery
+const wire=fs.readFileSync("./arcade/wire.js","utf8");
+assert(wire.includes("portal.arcade.wire.v1"),"wire schema explicit");
+assert(wire.includes("masteryLit.length>=3||c.singularity"),"wire derives eligibility from earned circuit state");
+assert(wire.includes("portal-wire-discovery"),"wire discovery persists locally");
+const wall=fs.readFileSync("./arcade/behind-wall.html","utf8");
+assert(wall.includes("Knowing the address is not the same as finding the wire."),"direct URL does not bypass discovery");
+assert(wall.includes("impossible-coordinate"),"legitimate wall discovery grants impossible coordinate");
