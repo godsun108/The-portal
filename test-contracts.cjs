@@ -374,3 +374,11 @@ assert(movingSight.includes('capability("movingSight")'),"Void stair derives fro
 assert(movingSight.includes("dx*lookX+dy*lookY<0"),"stair manifestation requires moving away from attention");
 assert(movingSight.includes('grantArtifact("backstep")'),"discovering the impossible stair records backstep");
 assert(voidPage.includes("moving-sight.js"),"Void loads MOVING SIGHT consequence");
+
+// Architectural seam consequence
+const seam=fs.readFileSync("./arcade/seam.js","utf8");
+const arcadeWithSeam=fs.readFileSync("./arcade/index.html","utf8");
+assert(seam.includes('need=["repair-mark","backstep","sideways-script"]'),"seam requires three actually discovered world consequences");
+assert(seam.includes('grantArtifact("seam-found")'),"opening seam records discovery");
+assert(!seam.toLowerCase().includes("workshop"),"seam does not expose Workshop");
+assert(arcadeWithSeam.includes("./seam.js"),"Arcade loads architectural seam");
