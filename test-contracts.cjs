@@ -323,3 +323,11 @@ assert(towerZero.includes('beginRun("tower-zero")'),"TOWER ZERO uses shared run 
 assert(towerZero.includes("floor>=20"),"TOWER ZERO requires twenty-floor ascent");
 assert(towerZero.includes('mastery?"zero-crown":"tower-shard"'),"TOWER ZERO rewards fast clean mastery");
 assert(towerZero.includes('scar("tower-fall")'),"TOWER ZERO failure records scar");
+
+// ECHO//DUEL self-rival cabinet
+const echoDuel=fs.readFileSync("./games/echo-duel/index.html","utf8");
+assert(echoDuel.includes('beginRun("echo-duel")'),"ECHO DUEL uses shared run protocol");
+assert(echoDuel.includes('KEY="portal-echo-duel-best"'),"ECHO DUEL rival is persisted local run data");
+assert(echoDuel.includes("record.push({x:p.x/W,y:p.y/H})"),"ECHO DUEL records normalized traveler input path");
+assert(echoDuel.includes('mastery?"echo-breaker":"self-rival"'),"ECHO DUEL mastery requires beating an existing self echo");
+assert(echoDuel.includes('scar("outpaced-by-self")'),"ECHO DUEL loss records self-rival scar");
