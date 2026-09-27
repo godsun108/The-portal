@@ -1,0 +1,6 @@
+/* PORTAL WORLD EVENTS v1 — derived states, never fabricated activity */
+(()=>{"use strict";const now=Date.now(),HOUR=3600000,key="portal-world-events-v1";let state;try{state=JSON.parse(localStorage.getItem(key)||"null")}catch(e){}if(!state||typeof state!=="object")state={history:[]};
+const flag=k=>localStorage.getItem(k)==="1",rules=[{id:"resonance",duration:6*HOUR,eligible:()=>flag("portal-signal-shard-resonance")&&flag("portal-machine-shard-exposure"),text:"SOMETHING IS RESONATING ACROSS ROOMS."}];
+let active=null;for(const r of rules){let prior=state.history.find(e=>e.id===r.id);if(prior&&now<prior.ends){active={...r,started:prior.started,ends:prior.ends};break}if(!prior&&r.eligible()){prior={id:r.id,started:now,ends:now+r.duration};state.history.push(prior);active={...r,...prior};break}}
+state.history=state.history.slice(-16);localStorage.setItem(key,JSON.stringify(state));if(active){document.documentElement.dataset.worldEvent=active.id;localStorage.setItem("portal-event-"+active.id,"1")}window.PortalEvents={active,state};
+})();
