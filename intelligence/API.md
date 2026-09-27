@@ -47,3 +47,21 @@ A verified intelligence may return up to the configured maximum number of discov
 Discovery is deliberately bounded. The browser accepts only destinations present in `config.json.discovery.allowed_destinations`; arbitrary URLs, scripts, provider links, and invented rooms are rejected. A discovery is a proposal from a verified mind, not proof that the destination contains the mind's claimed interpretation.
 
 Accepted discoveries are stored locally as `portal-intelligence-discoveries` with the discovering mind and timestamp. This lets intelligences reveal connections in the existing Portal without granting them uncontrolled navigation or repository mutation.
+
+
+## Optional bounded Game Master proposal
+
+A verified response may include at most one `proposal` object. The browser treats it as untrusted model output until deterministic validation succeeds.
+
+```json
+{
+  "schema": "portal.gm-proposal.v1",
+  "type": "challenge",
+  "title": "Stabilize the redshift",
+  "reason": "A local REDSHIFT event is active.",
+  "destination": "games/rift/",
+  "objective": "Complete a RIFT run before the event expires."
+}
+```
+
+Types are `challenge`, `route`, or `event`. Destinations and event IDs must be browser-allowlisted. Acceptance is always a separate traveler action. Proposals cannot grant artifacts, scars, secrets, physics, external capabilities, or claim that an action already occurred.
