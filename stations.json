@@ -150,6 +150,10 @@
         [
           "RADIO",
           "radio/"
+        ],
+        [
+          "WONDER",
+          "wonder/"
         ]
       ]
     },
