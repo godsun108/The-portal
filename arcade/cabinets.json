@@ -205,6 +205,15 @@
       "href": "../games/house-edge/",
       "tagline": "BUILD THE HAND // BEAT THE HOUSE",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "parallax",
+      "title": "PARALLAX",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/parallax/",
+      "tagline": "ROTATE THE FIELD // COMPLETE THE SIGNAL",
+      "world_key": "portal-game-history"
     }
   ]
 }
