@@ -186,3 +186,14 @@ const gameState=fs.readFileSync("./games/state.js","utf8");
 assert(gameState.includes("portal-game-artifacts"),"game artifacts persist across rooms");
 const echo=fs.readFileSync("./games/echo-maze/index.html","utf8");
 assert(echo.includes('hasArtifact("rift-key")'),"ECHO MAZE reacts to RIFT KEY");
+
+// Earned secret station contracts
+const stationMap=JSON.parse(fs.readFileSync("./stations.json","utf8"));
+assert(!stationMap.stations.some(s=>s.id==="secret"),"SECRET station is not statically exposed");
+const secretLogic=fs.readFileSync("./games/secret.js","utf8");
+assert(secretLogic.includes('hasArtifact("deep-signal")'),"SECRET requires DEEP SIGNAL");
+const stationUI=fs.readFileSync("./stations/index.html","utf8");
+assert(stationUI.includes("secretRoutes()"),"transit materializes earned secrets");
+const undertone=fs.readFileSync("./undertone/index.html","utf8");
+assert(undertone.includes('hasArtifact("deep-signal")'),"UNDERTONE verifies access itself");
+assert(undertone.includes("undertone-frequency"),"UNDERTONE grants persistent frequency artifact");
