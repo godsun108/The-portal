@@ -232,6 +232,15 @@
       "href": "../games/gravity-well/",
       "tagline": "BEND THE TRAJECTORY // LAND THE PROBE",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "afterimage",
+      "title": "AFTERIMAGE",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/afterimage/",
+      "tagline": "LOOK // LOSE IT // REBUILD IT",
+      "world_key": "portal-game-history"
     }
   ]
 }
