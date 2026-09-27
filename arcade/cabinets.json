@@ -139,6 +139,15 @@
       "href": "../games/null-racer/",
       "tagline": "THREAD THE GATES // OUTRUN THE NULL",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "star-swarm",
+      "title": "STAR//SWARM",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/star-swarm/",
+      "tagline": "MOVE // AIM // SURVIVE THE SWARM",
+      "world_key": "portal-game-history"
     }
   ]
 }
