@@ -223,6 +223,15 @@
       "href": "../games/vector-break/",
       "tagline": "BREAK THE FIELD // HOLD THE COMBO",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "gravity-well",
+      "title": "GRAVITY//WELL",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/gravity-well/",
+      "tagline": "BEND THE TRAJECTORY // LAND THE PROBE",
+      "world_key": "portal-game-history"
     }
   ]
 }
