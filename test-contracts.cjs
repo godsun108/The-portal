@@ -16,6 +16,8 @@ const signal = read("signal/index.html");
 const radio = read("radio/index.html");
 const capsule = read("capsule/index.html");
 const release = read("release/index.html");
+const orbit = read("orbit/index.html");
+const constitution = read("CREATIVE_CONSTITUTION.md");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -50,5 +52,10 @@ assert(home.includes('href="release/"') && home.includes("make something you can
 assert(release.includes('id="art"') && release.includes("destination-out"), "RELEASE must create and destroy browser-canvas art");
 assert(!release.includes("toDataURL") && !release.includes("toBlob"), "RELEASE must not serialize the artwork");
 assert(release.includes("portal-release-made") && world.includes("art-released"), "Portal may remember release occurred without preserving the artwork");
+assert(home.includes('href="orbit/"') && home.includes("play with gravity until it makes sense"), "Portal must expose ORBIT as play-to-learn");
+assert(orbit.includes("G/r2") && orbit.includes("body.vx") && orbit.includes("body.vy"), "ORBIT must simulate gravity rather than present trivia");
+assert(orbit.includes("continuous falling without hitting") && orbit.includes("portal-orbit-found"), "ORBIT must reveal the learned concept after experiential success");
+for(const pillar of ["REALITY","ART","PLAY","WORLD","LEARNING"]) assert(constitution.includes("### "+pillar), "Creative constitution missing "+pillar);
+assert(constitution.includes("Curiosity is progression"), "Portal constitution must protect curiosity-led progression");
 
 console.log("Portal canonical integration contracts verified.");
