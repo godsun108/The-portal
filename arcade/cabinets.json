@@ -130,6 +130,15 @@
       "href": "../games/drift/",
       "tagline": "MOVE THE SIGNAL // SURVIVE THE FIELD",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "null-racer",
+      "title": "NULL RACER",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/null-racer/",
+      "tagline": "THREAD THE GATES // OUTRUN THE NULL",
+      "world_key": "portal-game-history"
     }
   ]
 }
