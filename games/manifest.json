@@ -131,6 +131,14 @@
       "href": "./house-edge/",
       "kind": "roguelike-deckbuilder",
       "reward": "house-mark"
+    },
+    {
+      "id": "parallax",
+      "title": "PARALLAX",
+      "href": "./parallax/",
+      "kind": "spatial-puzzle",
+      "reward": "signal-glass",
+      "masteryReward": "parallax-lens"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
