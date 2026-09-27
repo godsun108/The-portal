@@ -411,3 +411,14 @@ assert(operatorTrial.includes("touchesTop&&touchesBottom&&branches>=1"),"operato
 assert(operatorTrial.includes('grantArtifact("operator")'),"valid construction grants operator authorization");
 assert(!operatorTrial.includes("location.href"),"operator trial does not itself reveal Workshop route");
 assert(behindOperator.includes("./operator.js"),"BEHIND mounts operator construction trial");
+
+// THE WORKSHOP persistent construction
+const workshop=fs.readFileSync("./workshop/index.html","utf8");
+const operatorToWorkshop=fs.readFileSync("./behind/operator.js","utf8");
+assert(workshop.includes('hasArtifact("operator")'),"Workshop independently verifies Operator authorization");
+assert(workshop.includes("Power is not permission."),"direct unauthorized access refuses interface");
+assert(workshop.includes("portal-workshop-object-v1"),"Workshop persists committed construction locally");
+assert(workshop.includes("portal.workshop.object.v1"),"Workshop object has explicit schema");
+assert(workshop.includes("builtAt:Date.now()"),"Workshop records real local commit time");
+assert(workshop.includes('grantArtifact("first-construction")'),"first successful build becomes world history");
+assert(operatorToWorkshop.includes('../workshop/'),"confirmed Operator receives Workshop entrance");
