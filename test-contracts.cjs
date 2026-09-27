@@ -20,6 +20,9 @@ const orbit = read("orbit/index.html");
 const constitution = read("CREATIVE_CONSTITUTION.md");
 const connection = read("CONNECTION_CONTRACT.md");
 const campfire = read("campfire/index.html");
+const campfireApi = read("connection/CAMPFIRE_API.md");
+const campfireConfig = read("connection/config.json");
+const campfireServer = read("connection/service/server.mjs");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -63,6 +66,10 @@ assert(connection.includes("No remote human is ever fabricated"), "Connection co
 assert(connection.includes("presence(room)") && connection.includes("drop(room, payload)") && connection.includes("session(room)"), "Connection substrate must define room-neutral primitives");
 assert(home.includes('href="campfire/"'), "Portal must expose CAMPFIRE connection surface");
 assert(campfire.includes("THIS ROOM REFUSES TO INVENT COMPANY") && campfire.includes(">0<"), "Dormant CAMPFIRE must truthfully show zero remote visitors");
-assert(!campfire.includes("Math.random"), "CAMPFIRE must not fabricate activity");
+assert(campfire.includes("verified!==true") && campfire.includes("portal.presence.v0"), "CAMPFIRE must require verified canonical presence responses");
+assert(campfire.includes("../connection/config.json") && campfire.includes("lease_seconds:45"), "CAMPFIRE must consume the canonical connection configuration and lease contract");
+assert(campfireApi.includes("others excludes the caller") && campfireApi.includes("No fabricated seed users"), "CAMPFIRE API must preserve real-human counting semantics");
+assert(JSON.parse(campfireConfig).endpoint===null, "Connection endpoint must remain dormant until a real service is deployed");
+assert(campfireServer.includes("MAX_LEASE=60") && campfireServer.includes("leases.size-1"), "Reference service must enforce bounded leases and exclude the caller");
 
 console.log("Portal canonical integration contracts verified.");
