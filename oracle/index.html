@@ -12,3 +12,5 @@ function done(y){const f=getF();if(!f)return;const pr=f.p/100,b=(pr-(y?1:0))**2,
 <script type="module">import{collectSignal}from"../games/signal.js";const s=collectSignal("oracle");if(s){const n=document.createElement("div");n.textContent="⌁ SIGNAL ORACLE // "+s.count+"/"+s.total;n.style.cssText="position:fixed;right:12px;bottom:12px;z-index:99999;padding:7px 9px;border:1px solid #9ff6;background:#001d;color:#dff;font:11px ui-monospace,monospace;letter-spacing:.08em;opacity:.8";n.onclick=()=>location.href="../games/signal-hunt/";document.body.append(n)}</script>
 
 <script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("oracle");</script>
+
+<script type="module">import{installPhysics}from"../physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
