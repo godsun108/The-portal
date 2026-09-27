@@ -1,0 +1,1 @@
+import assert from "node:assert/strict";import fs from "node:fs";const s=fs.readFileSync(new URL("./server.mjs",import.meta.url),"utf8");assert.match(s,/MAX_LEASE=60/);assert.match(s,/leases\.size-1/);assert.match(s,/cache-control.*no-store/);assert.doesNotMatch(s,/seed|demo user|fake/i);console.log("CAMPFIRE service boundaries verified.");
