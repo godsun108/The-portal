@@ -400,3 +400,14 @@ assert(behindPowered.includes("SEAT BLACK TOKEN"),"black token can be physically
 assert(behindPowered.includes('grantArtifact("surface-powered")'),"powering the surface is persistently remembered");
 assert(behindPowered.includes("POWER // NO INTERFACE"),"power alone does not expose a work interface");
 assert(!behindPowered.includes("WORKSHOP"),"BLACK TOKEN does not reveal Workshop");
+
+// Work Surface operator trial
+const operatorTrial=fs.readFileSync("./behind/operator.js","utf8");
+const behindOperator=fs.readFileSync("./behind/index.html","utf8");
+assert(operatorTrial.includes('capability("workshop")'),"operator trial requires five-discipline mastery combination");
+assert(operatorTrial.includes('portal-work-surface-power')&&operatorTrial.includes('==="1"'),"operator trial requires powered Work Surface");
+assert(operatorTrial.includes("xs.length<7||xs.length>11"),"operator glyph enforces construction size bounds");
+assert(operatorTrial.includes("touchesTop&&touchesBottom&&branches>=1"),"operator glyph requires span and branch structure");
+assert(operatorTrial.includes('grantArtifact("operator")'),"valid construction grants operator authorization");
+assert(!operatorTrial.includes("location.href"),"operator trial does not itself reveal Workshop route");
+assert(behindOperator.includes("./operator.js"),"BEHIND mounts operator construction trial");
