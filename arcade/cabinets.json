@@ -241,6 +241,15 @@
       "href": "../games/afterimage/",
       "tagline": "LOOK // LOSE IT // REBUILD IT",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "glyph-lock",
+      "title": "GLYPH//LOCK",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/glyph-lock/",
+      "tagline": "OBSERVE THE MACHINE // INFER THE LANGUAGE",
+      "world_key": "portal-game-history"
     }
   ]
 }
