@@ -331,3 +331,14 @@ assert(echoDuel.includes('KEY="portal-echo-duel-best"'),"ECHO DUEL rival is pers
 assert(echoDuel.includes("record.push({x:p.x/W,y:p.y/H})"),"ECHO DUEL records normalized traveler input path");
 assert(echoDuel.includes('mastery?"echo-breaker":"self-rival"'),"ECHO DUEL mastery requires beating an existing self echo");
 assert(echoDuel.includes('scar("outpaced-by-self")'),"ECHO DUEL loss records self-rival scar");
+
+// Portal capability combination engine
+const caps=fs.readFileSync("./capabilities.js","utf8");
+const capConsequence=fs.readFileSync("./arcade/capability-consequence.js","utf8");
+const arcadePage=fs.readFileSync("./arcade/index.html","utf8");
+assert(caps.includes('CAPABILITY_SCHEMA="portal.capabilities.v1"'),"capability schema is explicit");
+assert(caps.includes('repair:c.build&&c.execute'),"repair derives from demonstrated build and execution mastery");
+assert(caps.includes('workshop:c.infer&&c.time&&c.build&&c.perceive&&c.surpass'),"workshop predicate derives from five mastery disciplines");
+assert(capConsequence.includes('if(!capability("repair"))return null'),"broken cabinet only manifests for repair-capable traveler");
+assert(capConsequence.includes('grantArtifact("repair-mark")'),"repair interaction leaves persistent artifact consequence");
+assert(arcadePage.includes("capability-consequence.js"),"Arcade loads capability consequence layer");
