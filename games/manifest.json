@@ -1,1 +1,49 @@
-{"schema":"portal.games.v1","games":[{"id":"rift","title":"RIFT","status":"live","entry":"rift/","mechanic":"navigate a shifting field and stabilize anomalies","effects":["artifact","scar","discovery"]},{"id":"signal-hunt","title":"SIGNAL HUNT","status":"planned","mechanic":"decode signals distributed across Portal rooms","effects":["discovery","world-event"]},{"id":"echo-maze","title":"ECHO MAZE","status":"planned","mechanic":"a maze altered by the traveler's prior Portal history","effects":["scar","artifact"]},{"id":"colorfall","title":"COLORFALL","status":"planned","mechanic":"interactive color physics tied to COLOR state","effects":["artifact","world-event"]}],"rule":"games may change Portal state but must not fabricate remote players, rewards, or external events"}
+{
+  "schema": "portal.games.v1",
+  "games": [
+    {
+      "id": "rift",
+      "title": "RIFT",
+      "status": "live",
+      "entry": "rift/",
+      "mechanic": "navigate a shifting field and stabilize anomalies",
+      "effects": [
+        "artifact",
+        "scar",
+        "discovery"
+      ]
+    },
+    {
+      "id": "signal-hunt",
+      "title": "SIGNAL HUNT",
+      "status": "live",
+      "mechanic": "decode signals distributed across Portal rooms",
+      "effects": [
+        "discovery",
+        "world-event"
+      ],
+      "entry": "signal-hunt/"
+    },
+    {
+      "id": "echo-maze",
+      "title": "ECHO MAZE",
+      "status": "planned",
+      "mechanic": "a maze altered by the traveler's prior Portal history",
+      "effects": [
+        "scar",
+        "artifact"
+      ]
+    },
+    {
+      "id": "colorfall",
+      "title": "COLORFALL",
+      "status": "planned",
+      "mechanic": "interactive color physics tied to COLOR state",
+      "effects": [
+        "artifact",
+        "world-event"
+      ]
+    }
+  ],
+  "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
+}
