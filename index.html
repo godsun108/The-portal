@@ -17,7 +17,7 @@
   <script src="world.js"></script>
   <script src="world-events.js"></script><script src="reality.js"></script><script src="creature.js"></script>
 <link rel="stylesheet" href="portal-atmosphere.css"><link rel="stylesheet" href="portal-magic.css"></head>
-<body>
+<body><script id="portal-entry-failsafe">document.body.classList.add("portal-arrived");</script>
   <canvas id="stars" aria-hidden="true"></canvas>
   <div id="cursorGlow" aria-hidden="true"></div>
   <main>
@@ -116,8 +116,8 @@
   <script src="script.js"></script>
 </body>
 </html>
-<script type="module">import{installPhysics}from"physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
+<script type="module">import{installPhysics}from"./physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
 
-<script type="module">import{installTravelerHUD}from"traveler-hud.js";installTravelerHUD();</script>
+<script type="module">import{installTravelerHUD}from"./traveler-hud.js";installTravelerHUD();</script>
 
-<script type="module">import{installTransitions}from"transitions.js";installTransitions("portal");</script>
+<script type="module">import{installTransitions}from"./transitions.js";installTransitions("portal");</script>
