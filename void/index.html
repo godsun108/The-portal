@@ -20,3 +20,5 @@ function render(){const W=window.PortalWorld?.state;if(window.PortalCreature?.st
 <script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("void");</script>
 
 <script type="module">import{installPhysics}from"../physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
+
+<script type="module">import{installEventLayer}from"../event-layer.js";installEventLayer("void");</script>
