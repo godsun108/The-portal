@@ -1,14 +1,67 @@
 {
-  "schema":"portal.intelligence.v1",
-  "endpoint":null,
-  "mode":"dormant",
-  "transport":"portal.chat.v1",
-  "memory":"browser-local",
-  "minds":[
-    {"id":"portal","label":"PORTAL","glyph":"◇","purpose":"navigate, understand, and converse with the world"},
-    {"id":"oracle","label":"ORACLE","glyph":"◉","purpose":"reason about uncertainty without pretending certainty"},
-    {"id":"muse","label":"MUSE","glyph":"✧","purpose":"create, remix, and imagine"},
-    {"id":"architect","label":"ARCHITECT","glyph":"∆","purpose":"design systems, rooms, and possible worlds"},
-    {"id":"archivist","label":"ARCHIVIST","glyph":"□","purpose":"interpret the traveler's local Portal history"}
-  ]
+  "schema": "portal.intelligence.v1",
+  "endpoint": null,
+  "mode": "dormant",
+  "transport": "portal.chat.v1",
+  "memory": "browser-local",
+  "minds": [
+    {
+      "id": "portal",
+      "label": "PORTAL",
+      "glyph": "◇",
+      "purpose": "navigate, understand, and converse with the world"
+    },
+    {
+      "id": "oracle",
+      "label": "ORACLE",
+      "glyph": "◉",
+      "purpose": "reason about uncertainty without pretending certainty"
+    },
+    {
+      "id": "muse",
+      "label": "MUSE",
+      "glyph": "✧",
+      "purpose": "create, remix, and imagine"
+    },
+    {
+      "id": "architect",
+      "label": "ARCHITECT",
+      "glyph": "∆",
+      "purpose": "design systems, rooms, and possible worlds"
+    },
+    {
+      "id": "archivist",
+      "label": "ARCHIVIST",
+      "glyph": "□",
+      "purpose": "interpret the traveler's local Portal history"
+    }
+  ],
+  "discovery": {
+    "enabled": true,
+    "protocol": "portal.discovery.v1",
+    "max_per_response": 3,
+    "allowed_destinations": [
+      "earth/",
+      "window/",
+      "oracle/",
+      "color/",
+      "pulse/",
+      "weather/",
+      "sky/",
+      "release/",
+      "dream/",
+      "marks/",
+      "orbit/",
+      "arcade/",
+      "maze/",
+      "machine/",
+      "signal/",
+      "void/",
+      "blackbox/",
+      "capsule/",
+      "radio/",
+      "campfire/",
+      "stations/"
+    ]
+  }
 }
