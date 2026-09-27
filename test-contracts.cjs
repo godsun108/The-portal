@@ -29,6 +29,7 @@ const cabinets = JSON.parse(read("arcade/cabinets.json"));
 const maze = read("maze/index.html");
 const echoRunRoom = read("echo-run/index.html");
 const machine = read("machine/index.html");
+const worldEvents = read("world-events.js");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -102,4 +103,9 @@ assert(machine.includes('portal-item-signal-shard')&&machine.includes('portal-ma
 assert(machine.includes("q===2||q===4")&&machine.includes('shard?"#d7c4ff":"#b7dfc8"'), "Signal Shard must alter MACHINE ecology rather than merely unlock content");
 assert(!machine.includes('removeItem("portal-item-signal-shard")'), "MACHINE must not consume the Signal Shard");
 assert(world.includes("machine-mutated")&&world.includes("machine-shard"), "World Engine must remember that carried history changed MACHINE physics");
+assert(worldEvents.includes('id:"resonance"')&&worldEvents.includes("6*HOUR"), "RESONANCE must be a bounded canonical world event");
+assert(worldEvents.includes('portal-signal-shard-resonance')&&worldEvents.includes('portal-machine-shard-exposure'), "RESONANCE must derive only from genuine cross-room history");
+assert(worldEvents.includes("prior.ends")&&worldEvents.includes("state.history"), "World events must preserve real start/end history across reloads");
+assert(home.includes("world-events.js")&&signal.includes("world-events.js")&&machine.includes("world-events.js")&&maze.includes("world-events.js"), "Participating rooms must consume the one canonical World Event Engine");
+assert(script.includes('PortalEvents?.active')&&signal.includes('PortalEvents?.active')&&machine.includes('PortalEvents?.active')&&maze.includes('PortalEvents?.active'), "RESONANCE must be interpreted differently across rooms");
 console.log("Portal canonical integration contracts verified.");
