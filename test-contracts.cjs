@@ -23,5 +23,6 @@ assert(home.includes('id="fonzi"'), "Fonzi must remain a hidden homepage incursi
 assert(script.includes('portal-fonzi-found'), "Fonzi first contact must persist locally");
 assert(script.includes('SOMETHING THAT WAS NOT A DOOR'), "Fonzi must enter through the world layer rather than door taxonomy");
 assert(!home.includes('<strong>FONZI</strong>'), "Fonzi must not be advertised as a Portal door");
+assert(script.includes('fonzi-travel-v0'), "Portal Fonzi must identify itself as a travel-form prototype");
 
 console.log("Portal canonical integration contracts verified.");
