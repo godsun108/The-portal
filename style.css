@@ -17,3 +17,20 @@
 .portal.earth strong,.portal.window strong,.portal.oracle strong{font-size:18px}
 @media(min-width:700px){.portal-grid{grid-template-columns:repeat(6,1fr)}.portal{grid-column:span 2}.portal.earth,.portal.window,.portal.oracle{grid-column:span 2}.portal.chaos{grid-column:span 6;min-height:150px}.deeper{grid-column:1/-1}}
 @media(max-width:699px){.threshold-label{text-align:left;margin-left:4px}.deeper{display:block}.deeper small{display:block;margin-top:7px}.portal.earth,.portal.window,.portal.oracle{min-height:205px}}
+
+/* FINAL MOBILE INTEGRITY */
+button,a{touch-action:manipulation}
+@media(max-width:699px){
+ main{width:min(100% - 24px,920px);padding-top:max(46px,calc(env(safe-area-inset-top) + 28px));padding-bottom:max(34px,env(safe-area-inset-bottom))}
+ .portal{min-height:156px;padding:18px;border-radius:18px}
+ .portal .glyph{top:18px;left:18px}
+ .portal strong{font-size:13px}.portal small{font-size:9px;line-height:1.45}
+ .portal.earth,.portal.window,.portal.oracle{min-height:184px}
+ .chaos{min-height:175px}
+ .close{top:max(14px,env(safe-area-inset-top));right:14px;min-width:44px;min-height:44px}
+ #transmission{min-height:44px;padding:10px}
+ #fonzi{min-width:32px;min-height:32px}
+ #carried{bottom:max(12px,env(safe-area-inset-bottom))}
+ #toast{bottom:max(18px,env(safe-area-inset-bottom))}
+}
+@media(max-height:500px) and (orientation:landscape){.hero{margin-bottom:28px}.hero h1{font-size:64px;margin:16px 0 22px}.portal{min-height:132px}}
