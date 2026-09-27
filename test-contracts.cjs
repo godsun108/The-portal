@@ -55,6 +55,8 @@ assert(blackbox.includes("portal-blackbox-echo"), "Black Box must leave a persis
 assert(voidRoom.includes("portal-blackbox-echo") && voidRoom.includes("FOREIGN HASH"), "Void must be able to receive the Black Box consequence");
 assert(world.includes("blackbox-fed"), "World Engine must remember that the Black Box was fed");
 assert(signal.includes("portal-blackbox-echo-seen") && signal.includes("RETURN SIGNAL"), "Signal must receive a Black Box echo only after Void sees it");
+assert(signal.includes("portal-item-signal-shard") && signal.includes("YOU BROUGHT IT BACK.") && signal.includes("portal-signal-shard-resonance"), "SIGNAL must recognize the earned shard returning from the Arcade");
+assert(world.includes("signal-returned") && world.includes("signal-shard-resonance"), "World Engine must remember shard resonance without consuming the shard");
 assert(capsule.includes("portal-capsule-echo") && capsule.includes("../world.js"), "Opened Capsule must create a temporal world consequence");
 assert(radio.includes("portal-capsule-echo") && radio.includes("TEMPORAL ECHO"), "Radio 99.9 must be able to receive an opened Capsule echo");
 assert(world.includes("echo-crossed") && world.includes("time-capsule-opened"), "World Engine must preserve spatial and temporal echo scars");
