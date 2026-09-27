@@ -26,6 +26,7 @@ const campfireServer = read("connection/service/server.mjs");
 const convergence = read("convergence/index.html");
 const arcade = read("arcade/index.html");
 const cabinets = JSON.parse(read("arcade/cabinets.json"));
+const maze = read("maze/index.html");
 
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
@@ -83,5 +84,9 @@ assert(cabinets.schema==="portal.arcade.v1", "Arcade must have one canonical cab
 assert(cabinets.cabinets.some(g=>g.id==="orbit"&&g.status==="playable"), "ORBIT must plug into the canonical Arcade");
 assert(cabinets.cabinets.some(g=>g.id==="turbo-turtle"&&g.status==="awaiting-recovery"), "Turbo Turtle must remain recovery-only until original source is found");
 assert(cabinets.cabinets.some(g=>g.id==="campfire-coop"&&g.status==="dormant"), "Networked games must remain dormant before verified connection exists");
+assert(cabinets.cabinets.some(g=>g.id==="maze"&&g.status==="playable"&&g.href==="../maze/"), "MAZE must be a powered canonical Arcade cabinet");
+assert(maze.includes("portal-passport-id") && maze.includes("Math.floor(Date.now()/86400000)"), "MAZE must derive its daily world from browser identity and day");
+assert(maze.includes("portal-release-made") && maze.includes("portal-orbit-found") && maze.includes("portal-blackbox-signal"), "MAZE whispers must derive from genuine prior Portal history");
+assert(maze.includes('localStorage.setItem("portal-maze-escaped","1")') && world.includes("maze-escaped"), "MAZE escape must become persistent Portal world history");
 assert(arcade.includes('fetch("cabinets.json"') && arcade.includes("SOURCE MISSING // RECOVERY REQUIRED"), "Arcade UI must consume registry and tell the truth about unavailable cabinets");
 console.log("Portal canonical integration contracts verified.");
