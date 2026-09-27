@@ -104,6 +104,18 @@
         "scar",
         "physics"
       ]
+    },
+    {
+      "id": "fifth-machine",
+      "title": "THE FIFTH MACHINE",
+      "status": "live",
+      "entry": "fifth-machine/",
+      "mechanic": "five-artifact mastery cabinet with dodge/intercept depth run",
+      "effects": [
+        "artifact",
+        "scar",
+        "mastery"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
