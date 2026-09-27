@@ -139,6 +139,14 @@
       "kind": "spatial-puzzle",
       "reward": "signal-glass",
       "masteryReward": "parallax-lens"
+    },
+    {
+      "id": "vector-break",
+      "title": "VECTOR//BREAK",
+      "href": "./vector-break/",
+      "kind": "action-score-attack",
+      "reward": "broken-vector",
+      "masteryReward": "vector-core"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
