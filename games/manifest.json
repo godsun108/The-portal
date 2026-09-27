@@ -116,6 +116,14 @@
         "scar",
         "mastery"
       ]
+    },
+    {
+      "id": "deep-run",
+      "title": "DEEP//RUN",
+      "href": "./deep-run/",
+      "kind": "singularity-sublevel",
+      "requiresArtifact": "arcade-singularity",
+      "reward": "black-token"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
