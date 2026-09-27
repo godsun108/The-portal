@@ -68,6 +68,18 @@
         "scar",
         "physics"
       ]
+    },
+    {
+      "id": "star-swarm",
+      "title": "STAR//SWARM",
+      "status": "live",
+      "entry": "star-swarm/",
+      "mechanic": "arena survival with movement, aiming and automatic fire",
+      "effects": [
+        "artifact",
+        "scar",
+        "physics"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
