@@ -34,3 +34,5 @@ button,a{touch-action:manipulation}
  #toast{bottom:max(18px,env(safe-area-inset-bottom))}
 }
 @media(max-height:500px) and (orientation:landscape){.hero{margin-bottom:28px}.hero h1{font-size:64px;margin:16px 0 22px}.portal{min-height:132px}}
+
+.station-entry{display:inline-block;margin-top:22px;padding:14px 20px;border:1px solid #41414e;border-radius:999px;color:#d5d5dd;text-decoration:none;font-size:9px;letter-spacing:.18em;background:#0a0a0f99}.station-entry:hover,.station-entry:focus-visible{border-color:#77778a;background:#111119}
