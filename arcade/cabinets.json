@@ -295,6 +295,15 @@
       "href": "../games/tower-zero/",
       "tagline": "TWENTY FLOORS // KEEP CLIMBING",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "echo-duel",
+      "title": "ECHO//DUEL",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/echo-duel/",
+      "tagline": "OUTRUN THE PERSON YOU WERE",
+      "world_key": "portal-echo-duel-best"
     }
   ]
 }
