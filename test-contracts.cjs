@@ -243,3 +243,10 @@ assert(deepRun.includes('grantArtifact("black-token")'),"DEEP RUN clear grants b
 const arcadeRegistry=JSON.parse(fs.readFileSync("./arcade/cabinets.json","utf8"));
 const deepCab=arcadeRegistry.cabinets.find(x=>x.id==="deep-run");
 assert(deepCab&&deepCab.artifactUnlock.all.includes("arcade-singularity"),"Arcade only powers sublevel after Singularity");
+
+// HOUSE//EDGE roguelike
+const house=fs.readFileSync("./games/house-edge/index.html","utf8");
+assert(house.includes('beginRun("house-edge")'),"HOUSE EDGE uses shared run protocol");
+assert(house.includes('grantArtifact("house-mark")'),"HOUSE EDGE clear grants house mark");
+assert(house.includes('scar("house-took-its-cut")'),"HOUSE EDGE failure leaves canonical scar");
+assert(house.includes("CHOOSE ONE CARD FOR THIS RUN"),"HOUSE EDGE drafts cards during a run");
