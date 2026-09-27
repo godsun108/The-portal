@@ -351,3 +351,10 @@ assert(sideways.includes("d=Math.hypot"),"sideways transmission visibility deriv
 assert(sideways.includes('grantArtifact("sideways-script")'),"sustained peripheral reading records sideways script");
 assert(sideways.includes("THE CENTER IS NOT THE WHOLE IMAGE"),"sideways transmission has stable message contract");
 assert(windowPage.includes("sideways.js"),"Window loads sideways capability consequence");
+
+// WORLD CLOCK ECHO TIME consequence
+const worldClock=fs.readFileSync("./clock/index.html","utf8");
+assert(worldClock.includes('capability("echoTime")'),"World Clock exposes ECHO TIME only to temporal self-surpass mastery");
+assert(worldClock.includes("const h=history()"),"ECHO TIME reads genuine local game history");
+assert(worldClock.includes("NO RECORDED GAME HISTORY EXISTS IN THIS BROWSER"),"ECHO TIME refuses to fabricate missing history");
+assert(worldClock.includes('grantArtifact("remembered-moment")'),"real recall records remembered moment");
