@@ -224,3 +224,13 @@ assert(wire.includes("portal-wire-discovery"),"wire discovery persists locally")
 const wall=fs.readFileSync("./arcade/behind-wall.html","utf8");
 assert(wall.includes("Knowing the address is not the same as finding the wire."),"direct URL does not bypass discovery");
 assert(wall.includes("impossible-coordinate"),"legitimate wall discovery grants impossible coordinate");
+
+// Impossible-coordinate consequence chain
+const impossibleVoid=fs.readFileSync("./void/impossible.js","utf8");
+assert(impossibleVoid.includes("portal.impossible-void.v1"),"impossible VOID schema explicit");
+assert(impossibleVoid.includes('hasArtifact("impossible-coordinate")'),"VOID requires impossible coordinate");
+assert(impossibleVoid.includes('grantArtifact("negative-address")'),"VOID can derive negative address");
+const negativeWindow=fs.readFileSync("./window/negative.js","utf8");
+assert(negativeWindow.includes('hasArtifact("negative-address")'),"WINDOW requires negative address");
+assert(negativeWindow.includes("LOCAL PORTAL LAYER"),"WINDOW contradiction labels itself local");
+assert(negativeWindow.includes('grantArtifact("outside-looking-in")'),"WINDOW can derive outside-looking-in");
