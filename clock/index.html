@@ -2,3 +2,6 @@
 <script type="module">import{installTravelerHUD}from"../traveler-hud.js";installTravelerHUD();</script>
 
 <script type="module">import{installTransitions}from"../transitions.js";installTransitions("clock");</script>
+
+<section id="echoTime" hidden style="border:1px solid #ffffff28;padding:18px;margin:14px 0"><b>ECHO TIME // AVAILABLE</b><p class="dim">The clock can expose one moment this browser actually remembers.</p><button id="recallMoment">RECALL A MOMENT</button><div id="recalledMoment" class="event dim" hidden></div></section>
+<script type="module">import{capability}from"../capabilities.js";import{history}from"../games/protocol.js";import{grantArtifact}from"../games/state.js";const chamber=document.querySelector("#echoTime"),btn=document.querySelector("#recallMoment"),out=document.querySelector("#recalledMoment");if(capability("echoTime"))chamber.hidden=false;btn.onclick=()=>{const h=history();out.hidden=false;if(!h.length){out.textContent="NO RECORDED GAME HISTORY EXISTS IN THIS BROWSER.";return}const r=h[Math.floor(Math.random()*h.length)],when=new Date(r.finishedAt||r.startedAt),o=r.outcome||{};out.classList.remove("dim");out.innerHTML="<b>"+r.game.toUpperCase()+"</b><br>"+when.toLocaleString()+"<br>RESULT // "+String(o.result||"RECORDED").toUpperCase();grantArtifact("remembered-moment");btn.disabled=true;btn.textContent="MOMENT RECALLED"}</script>
