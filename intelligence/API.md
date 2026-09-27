@@ -26,3 +26,24 @@ The client accepts a response only when `schema` is exactly `portal.chat.v1`, `v
 - Provider/model choice belongs behind the endpoint; the Portal UI is provider-neutral.
 - Conversation memory is browser-local by default. A future server memory system requires an explicit contract and user-visible behavior.
 - A self-hosted open-weight model can replace any initial backend without changing the room protocol.
+
+
+## Discovery protocol
+
+A verified intelligence may return up to the configured maximum number of discoveries alongside its message:
+
+```json
+{
+  "schema":"portal.chat.v1",
+  "verified":true,
+  "mind":"architect",
+  "message":{"role":"assistant","content":"I found a relationship worth crossing."},
+  "discoveries":[
+    {"schema":"portal.discovery.v1","destination":"signal/","label":"FOLLOW THE SIGNAL","reason":"A carried shard changed what Signal can reveal."}
+  ]
+}
+```
+
+Discovery is deliberately bounded. The browser accepts only destinations present in `config.json.discovery.allowed_destinations`; arbitrary URLs, scripts, provider links, and invented rooms are rejected. A discovery is a proposal from a verified mind, not proof that the destination contains the mind's claimed interpretation.
+
+Accepted discoveries are stored locally as `portal-intelligence-discoveries` with the discovering mind and timestamp. This lets intelligences reveal connections in the existing Portal without granting them uncontrolled navigation or repository mutation.
