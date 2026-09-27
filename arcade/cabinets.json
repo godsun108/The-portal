@@ -196,6 +196,15 @@
           "arcade-singularity"
         ]
       }
+    },
+    {
+      "id": "house-edge",
+      "title": "HOUSE//EDGE",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/house-edge/",
+      "tagline": "BUILD THE HAND // BEAT THE HOUSE",
+      "world_key": "portal-game-history"
     }
   ]
 }
