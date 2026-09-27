@@ -85,6 +85,42 @@
       },
       "note": "Powered only after an echo crosses SIGNAL and the traveler escapes MAZE.",
       "world_key": "portal-echo-run-complete"
+    },
+    {
+      "id": "rift",
+      "title": "RIFT",
+      "kind": "portal-game",
+      "status": "playable",
+      "href": "../games/rift/",
+      "tagline": "STABILIZE THE ANOMALY",
+      "world_key": "portal-game-history"
+    },
+    {
+      "id": "echo-maze",
+      "title": "ECHO MAZE",
+      "kind": "portal-game",
+      "status": "playable",
+      "href": "../games/echo-maze/",
+      "tagline": "THE MAZE REMEMBERS WHAT YOU CARRY",
+      "world_key": "portal-game-history"
+    },
+    {
+      "id": "signal-hunt",
+      "title": "SIGNAL HUNT",
+      "kind": "world-game",
+      "status": "playable",
+      "href": "../games/signal-hunt/",
+      "tagline": "THE PORTAL ITSELF IS THE BOARD",
+      "world_key": "portal-signal-hunt"
+    },
+    {
+      "id": "colorfall",
+      "title": "COLORFALL",
+      "kind": "portal-game",
+      "status": "playable",
+      "href": "../games/colorfall/",
+      "tagline": "CATCH CHROMA UNDER ALTERED GRAVITY",
+      "world_key": "portal-game-history"
     }
   ]
 }
