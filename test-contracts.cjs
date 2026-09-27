@@ -392,3 +392,11 @@ assert(behind.includes("artifacts()")&&behind.includes("scars()"),"BEHIND expose
 assert(behind.includes('grantArtifact("service-layer-seen")'),"legitimate service-layer entry is remembered");
 assert(behind.includes("WORK SURFACE")&&behind.includes("NO INTERFACE"),"service layer hints at work surface without exposing it");
 assert(seamTraversal.includes('location.href="../behind/"'),"opened Arcade seam becomes traversable");
+
+// BLACK TOKEN Work Surface power
+const behindPowered=fs.readFileSync("./behind/index.html","utf8");
+assert(behindPowered.includes('hasArtifact("black-token")'),"BEHIND recognizes genuine BLACK TOKEN artifact");
+assert(behindPowered.includes("SEAT BLACK TOKEN"),"black token can be physically seated at dormant surface");
+assert(behindPowered.includes('grantArtifact("surface-powered")'),"powering the surface is persistently remembered");
+assert(behindPowered.includes("POWER // NO INTERFACE"),"power alone does not expose a work interface");
+assert(!behindPowered.includes("WORKSHOP"),"BLACK TOKEN does not reveal Workshop");
