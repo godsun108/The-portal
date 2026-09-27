@@ -303,3 +303,11 @@ assert(blindSpot.includes("attention=Math.hypot"),"BLIND SPOT visibility derives
 assert(blindSpot.includes("hits>=4"),"BLIND SPOT enforces off-path contact limit");
 assert(blindSpot.includes('mastery?"peripheral-eye":"blind-thread"'),"BLIND SPOT rewards clean fast mastery");
 assert(blindSpot.includes('scar("attention-burn")'),"BLIND SPOT failure records scar");
+
+// SIGNAL//WAR tactics cabinet
+const signalWar=fs.readFileSync("./games/signal-war/index.html","utf8");
+assert(signalWar.includes('beginRun("signal-war")'),"SIGNAL WAR uses shared run protocol");
+assert(signalWar.includes("nodes.filter(n=>you.includes(n))"),"SIGNAL WAR scores controlled objectives");
+assert(signalWar.includes("pulseUnit"),"SIGNAL WAR supports tactical displacement");
+assert(signalWar.includes('mastery?"field-crown":"signal-banner"'),"SIGNAL WAR rewards dominant mastery");
+assert(signalWar.includes('scar("lost-ground")'),"SIGNAL WAR failure records scar");
