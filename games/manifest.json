@@ -171,6 +171,14 @@
       "kind": "symbolic-deduction",
       "reward": "glyph-fragment",
       "masteryReward": "grammar-key"
+    },
+    {
+      "id": "time-loop",
+      "title": "TIME//LOOP",
+      "href": "./time-loop/",
+      "kind": "temporal-coordination",
+      "reward": "loop-thread",
+      "masteryReward": "chronokey"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
