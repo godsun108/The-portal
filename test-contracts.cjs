@@ -132,4 +132,9 @@ assert(creature.includes('outcome:relation==="sheltered"?"growth"')&&creature.in
 assert(machine.includes("PortalCreature?.afterAbsence")&&machine.includes("when you left")&&machine.includes("while you were gone"), "MACHINE must reveal ecological evidence after genuine absence");
 assert(script.includes("portal-creature-return-noticed")&&script.includes("SOMETHING GREW WHILE YOU WERE GONE."), "Homepage must acknowledge a return consequence only once");
 assert(!creature.includes("setInterval("), "Creature absence must be derived from wall-clock time, not fake background simulation");
+assert(script.includes('portal-arcade")==="1"')&&!script.includes('portal-arcade-unlocked'), "Homepage must use canonical Arcade discovery state");
+assert(campfire.includes('count.textContent="—"')&&campfire.includes('sessionStorage.getItem("portal-campfire-visitor")'), "CAMPFIRE must distinguish unavailable from verified zero and keep a session-stable visitor");
+assert(campfire.includes('localStorage.setItem("portal-campfire-verified","1")'), "CAMPFIRE network unlock must follow a verified canonical presence response");
+assert(passport.includes('"THE SPLIT"')&&passport.includes('"ECOLOGY"')&&passport.includes('"FONZI"')&&passport.includes('"CONVERGENCE"'), "Passport must cover current deep-world milestones");
+assert(passport.includes("portal-world-events-v1")&&passport.includes("portal-creature-v1"), "Passport must surface canonical event history and unexplained creature evidence");
 console.log("Portal canonical integration contracts verified.");
