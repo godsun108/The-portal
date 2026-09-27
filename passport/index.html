@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08090c"><title>PASSPORT // THE PORTAL</title><style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#08090c;color:#e7e3d9;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}body{min-height:100svh;background:radial-gradient(circle at 50% 0,#1b1b22,#08090c 45%)}.wrap{width:min(760px,calc(100% - 28px));margin:auto;padding:72px 0 50px}.back{position:absolute;top:22px;left:22px;color:#77736a;text-decoration:none;font-size:9px;letter-spacing:.18em}.eyebrow{font-size:9px;letter-spacing:.35em;color:#77736a}.head{border-bottom:1px solid #302f31;padding-bottom:28px}.head h1{font-family:Arial Black,Impact,sans-serif;font-size:clamp(58px,15vw,110px);line-height:.78;letter-spacing:-.06em;margin:18px 0}.id{color:#817d74;font-size:10px;line-height:1.8}.stamps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}.stamp{min-height:145px;border:1px dashed #3a3838;border-radius:18px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;background:#0b0b0e}.stamp .symbol{font-size:34px;color:#9a9180}.stamp b{font-size:11px;letter-spacing:.14em}.stamp small{color:#69665f;line-height:1.5}.locked{opacity:.28;filter:blur(.2px)}.foot{margin-top:28px;color:#55524d;font-size:9px;line-height:1.8}.count{color:#aaa293}@media(max-width:520px){.stamps{grid-template-columns:1fr}.stamp{min-height:115px}}</style></head><body><a class="back" href="../">← PORTAL</a><main class="wrap"><section class="head"><div class="eyebrow">LOCAL TRAVEL DOCUMENT // NOT AN ACCOUNT</div><h1>PORTAL<br>PASSPORT</h1><div class="id" id="id"></div></section><section class="stamps" id="stamps"></section><p class="foot">This document exists only in this browser. Clear browser storage and this traveler becomes new again.<br><br><span class="count" id="count"></span></p></main><script>
+const first=localStorage.getItem("portal-first-contact")||new Date().toISOString();localStorage.setItem("portal-first-contact",first);
+const pid=localStorage.getItem("portal-passport-id")||Math.random().toString(36).slice(2,10).toUpperCase();localStorage.setItem("portal-passport-id",pid);
+document.querySelector("#id").innerHTML="TRAVELER "+pid+"<br>FIRST CONTACT // "+new Date(first).toLocaleDateString();
+const defs=[
+["◉","EARTH","PLANETARY CONTACT","portal-artifact-earth"],
+["⌁","SIGNAL","RECEIVER ONLINE","portal-artifact-signal"],
+["◌","VOID","UNMAPPED ROOM","portal-artifact-void"],
+["88.8","UNKNOWN","ORIGIN UNRESOLVED","portal-radio-888"],
+["000","ROOM 000","CURIOSITY ACCEPTED","portal-secret-unlocked"],
+["⌬","UNDERNET","BELOW-SURFACE CLEARANCE","portal-undernet"],
+["◉","LISTENER","IT REMEMBERS YOU","portal-listener"],
+["13","CHAOS XIII","THE MACHINE NOTICED",null]
+];
+const chaos=Number(localStorage.getItem("portal-chaos")||0);let unlocked=0;
+document.querySelector("#stamps").innerHTML=defs.map(([sym,name,note,key])=>{const ok=key?localStorage.getItem(key)==="1":chaos>=13;if(ok)unlocked++;return '<article class="stamp '+(ok?'':'locked')+'"><span class="symbol">'+(ok?sym:'?')+'</span><div><b>'+(ok?name:'UNDISCOVERED')+'</b><br><small>'+(ok?note:'NO RECORD')+'</small></div></article>'}).join("");
+document.querySelector("#count").textContent=unlocked+" STAMPS RECORDED // "+chaos+" CHAOS INTERACTIONS";
+</script></body></html>
