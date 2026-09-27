@@ -268,6 +268,15 @@
       "href": "../games/blind-spot/",
       "tagline": "LOOK AWAY // SEE THE PATH",
       "world_key": "portal-game-history"
+    },
+    {
+      "id": "signal-war",
+      "title": "SIGNAL//WAR",
+      "kind": "arcade-game",
+      "status": "playable",
+      "href": "../games/signal-war/",
+      "tagline": "THREE UNITS // THREE NODES // HOLD THE FIELD",
+      "world_key": "portal-game-history"
     }
   ]
 }
