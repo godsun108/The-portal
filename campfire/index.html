@@ -7,3 +7,5 @@ async function lease(){try{const r=await fetch(endpoint+"/v0/presence/campfire",
 addEventListener("pagehide",()=>{if(timer)clearTimeout(timer);if(endpoint)fetch(endpoint+"/v0/presence/campfire/"+encodeURIComponent(visitor),{method:"DELETE",keepalive:true}).catch(()=>{})});
 </script></body></html>
 <script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("campfire");</script>
+
+<script type="module">import{installPhysics}from"../physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
