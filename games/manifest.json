@@ -124,6 +124,13 @@
       "kind": "singularity-sublevel",
       "requiresArtifact": "arcade-singularity",
       "reward": "black-token"
+    },
+    {
+      "id": "house-edge",
+      "title": "HOUSE//EDGE",
+      "href": "./house-edge/",
+      "kind": "roguelike-deckbuilder",
+      "reward": "house-mark"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
