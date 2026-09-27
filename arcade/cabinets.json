@@ -74,7 +74,7 @@
       "id": "echo-run",
       "title": "ECHO RUN",
       "kind": "native",
-      "status": "locked",
+      "status": "playable",
       "href": "../echo-run/",
       "unlock": {
         "all": [
@@ -83,7 +83,8 @@
         ],
         "mode": "world-history"
       },
-      "note": "A future cabinet powered only after an echo crosses the network and the traveler escapes MAZE."
+      "note": "Powered only after an echo crosses SIGNAL and the traveler escapes MAZE.",
+      "world_key": "portal-echo-run-complete"
     }
   ]
 }
