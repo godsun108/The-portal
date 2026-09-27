@@ -1,6 +1,8 @@
+> Architecture update: shared intelligence semantics now live in the private `godsun108/Sovereign-Core` repository. The Portal is a consumer/application of that core; this document remains as the original design record.
+
 # SOVEREIGN INTELLIGENCE
 
-One intelligence core. Three independent bodies.
+One intelligence lineage. Three independent bodies.
 
 ## 1. Portal Intelligence
 Embedded in The Portal. World-aware, station-aware, bounded discovery, five minds. It receives only explicitly supplied Portal state.
