@@ -147,6 +147,14 @@
       "kind": "action-score-attack",
       "reward": "broken-vector",
       "masteryReward": "vector-core"
+    },
+    {
+      "id": "gravity-well",
+      "title": "GRAVITY//WELL",
+      "href": "./gravity-well/",
+      "kind": "precision-orbital",
+      "reward": "orbit-dust",
+      "masteryReward": "gravity-seal"
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
