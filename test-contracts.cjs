@@ -127,4 +127,9 @@ assert(voidRoom.includes("../creature.js")&&voidRoom.includes("THERE IS LESS NOT
 assert(voidRoom.includes('portal-creature-void-choice')&&!voidRoom.includes("save creature")&&!voidRoom.includes("harm creature"), "VOID choice must persist without explaining creature consequence");
 assert(creature.includes('choice==="open"')&&creature.includes('fork==="left"')&&creature.includes('fork==="right"'), "Creature ecology must interpret the same VOID action differently across world forks");
 assert(world.includes('voidChoice:localStorage.getItem("portal-creature-void-choice")')&&world.includes('"void-"+facts.voidChoice'), "World Engine must remember the unlabeled ecological consequence");
+assert(creature.includes('portal-creature-last-seen')&&creature.includes("absence>=21600000")&&creature.includes("now-choiceAt>=21600000"), "Creature change after absence must require six real elapsed hours since both choice and last presence");
+assert(creature.includes('outcome:relation==="sheltered"?"growth"')&&creature.includes('relation==="released"?"migration"')&&creature.includes('relation==="hidden"?"trace"')&&creature.includes('relation==="contained"?"stillness"'), "Forked ecology must produce distinct return consequences");
+assert(machine.includes("PortalCreature?.afterAbsence")&&machine.includes("when you left")&&machine.includes("while you were gone"), "MACHINE must reveal ecological evidence after genuine absence");
+assert(script.includes("portal-creature-return-noticed")&&script.includes("SOMETHING GREW WHILE YOU WERE GONE."), "Homepage must acknowledge a return consequence only once");
+assert(!creature.includes("setInterval("), "Creature absence must be derived from wall-clock time, not fake background simulation");
 console.log("Portal canonical integration contracts verified.");
