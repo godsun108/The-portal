@@ -1,5 +1,5 @@
 {
-  "schema": "portal.arcade.v1",
+  "schema": "portal.arcade.v2",
   "cabinets": [
     {
       "id": "moon",
@@ -28,7 +28,13 @@
       "kind": "external-room",
       "status": "playable",
       "href": "../orbit/",
-      "world_key": "portal-orbit-found"
+      "world_key": "portal-orbit-found",
+      "unlock": {
+        "all": [
+          "portal-orbit-found"
+        ],
+        "mode": "discover-after-play"
+      }
     },
     {
       "id": "turbo-turtle",
@@ -43,14 +49,41 @@
       "kind": "native",
       "status": "playable",
       "href": "../maze/",
-      "world_key": "portal-maze-escaped"
+      "world_key": "portal-maze-escaped",
+      "unlock": {
+        "all": [
+          "portal-arcade"
+        ],
+        "mode": "powered-by-arcade"
+      }
     },
     {
       "id": "campfire-coop",
       "title": "TWO KEYS",
       "kind": "networked",
       "status": "dormant",
-      "requires": "verified CAMPFIRE connection"
+      "requires": "verified CAMPFIRE connection",
+      "unlock": {
+        "all": [
+          "portal-campfire-verified"
+        ],
+        "mode": "verified-network-only"
+      }
+    },
+    {
+      "id": "echo-run",
+      "title": "ECHO RUN",
+      "kind": "native",
+      "status": "locked",
+      "href": "../echo-run/",
+      "unlock": {
+        "all": [
+          "portal-blackbox-signal",
+          "portal-maze-escaped"
+        ],
+        "mode": "world-history"
+      },
+      "note": "A future cabinet powered only after an echo crosses the network and the traveler escapes MAZE."
     }
   ]
 }
