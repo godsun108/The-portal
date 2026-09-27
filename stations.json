@@ -149,11 +149,11 @@
       "id": "intelligence",
       "label": "INTELLIGENCE",
       "glyph": "◇",
-      "line": "choose a mind // leave through a real door",
+      "line": "a native mind is being given an engine",
       "status": "live",
       "rooms": [
         [
-          "AI INTERCHANGE",
+          "PORTAL INTELLIGENCE",
           "intelligence/"
         ]
       ]
