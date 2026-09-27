@@ -80,6 +80,18 @@
         "scar",
         "physics"
       ]
+    },
+    {
+      "id": "pulse-4",
+      "title": "PULSE//4",
+      "status": "live",
+      "entry": "pulse-4/",
+      "mechanic": "four-lane synthesized rhythm timing game",
+      "effects": [
+        "artifact",
+        "scar",
+        "physics"
+      ]
     }
   ],
   "rule": "games may change Portal state but must not fabricate remote players, rewards, or external events"
