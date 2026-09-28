@@ -477,3 +477,7 @@ for(const intent of ["see","make","play","ask","explore","remember"])assert(capa
 assert(capabilityHome.includes("portal-last-intent"),"Portal remembers the traveler's last intention locally");
 assert(capabilityHome.includes('make.href="workshop/"')&&capabilityHome.includes('has("operator")'),"MAKE adapts to earned Workshop access");
 assert(capabilityStyle.includes(".intent-grid")&&capabilityStyle.includes("repeat(2,1fr)"),"Capability routing has a mobile layout");
+
+const askUX=fs.readFileSync("./intelligence/index.html","utf8");
+assert(askUX.includes("THE MIND HAS A BODY BUT NO ENGINE YET")&&askUX.includes("PORTAL WILL NOT PRETEND TO ANSWER"),"Intelligence truthfully exposes unavailable engine state");
+assert(askUX.includes('id="fallbacks"')&&askUX.includes("../oracle/")&&askUX.includes("../passport/"),"ASK remains useful by routing to available instruments");
