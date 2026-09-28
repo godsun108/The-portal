@@ -193,6 +193,19 @@
           "clock/"
         ]
       ]
+    },
+    {
+      "id": "economy",
+      "label": "ECONOMY",
+      "glyph": "⌬",
+      "line": "agents build, test and measure — settlement is the truth",
+      "status": "live",
+      "rooms": [
+        [
+          "AI COMPANY",
+          "company/"
+        ]
+      ]
     }
   ]
 }
