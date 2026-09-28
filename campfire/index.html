@@ -5,8 +5,7 @@ function unavailable(){count.textContent="—";truth.innerHTML="<b>NO FIRE YET.<
 async function lease(){retryFire.hidden=true;try{const r=await fetch(endpoint+"/v0/presence/campfire",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({visitor_id:visitor,lease_seconds:45}),cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();if(d.schema!=="portal.presence.v0"||d.room!=="campfire"||d.verified!==true||!Number.isInteger(d.others)||d.others<0)throw 0;count.textContent=String(d.others);localStorage.setItem("portal-campfire-verified","1");if(d.others>0&&!localStorage.getItem("portal-campfire-overlap")){localStorage.setItem("portal-campfire-overlap","1");localStorage.setItem("portal-campfire-overlap-at",String(Date.now()));window.PortalWorld?.event?.("campfire-overlap","TWO OR MORE REAL REMOTE VISITORS SHARED THE CAMPFIRE.");window.PortalWorld?.save?.()}truth.innerHTML=d.others===0?"<b>YOU ARE THE ONLY VERIFIED WANDERER HERE.</b><br>The fire is listening.":"<b>"+d.others+" OTHER "+(d.others===1?"WANDERER IS":"WANDERERS ARE")+" HERE.</b><br>No names. No followers. Just shared presence.";timer=setTimeout(lease,20000)}catch(e){unavailable()}}
 async function connect(){try{const r=await fetch("../connection/config.json?ts="+Date.now(),{cache:"no-store"}),cfg=await r.json();if(cfg.schema!=="portal.connection-config.v0"||!cfg.endpoint){unavailable();return}endpoint=String(cfg.endpoint).replace(/\/$/,"");await lease()}catch(e){unavailable()}}retryFire.onclick=connect;connect();
 addEventListener("pagehide",()=>{if(timer)clearTimeout(timer);if(endpoint)fetch(endpoint+"/v0/presence/campfire/"+encodeURIComponent(visitor),{method:"DELETE",keepalive:true}).catch(()=>{})});
-</script></body></html>
-<script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("campfire");</script>
+</script><script type="module">import{manifestUndertone}from"../undertone/layer.js";manifestUndertone("campfire");</script>
 
 <script type="module">import{installPhysics}from"../physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
 
@@ -17,3 +16,4 @@ addEventListener("pagehide",()=>{if(timer)clearTimeout(timer);if(endpoint)fetch(
 <script type="module">import{manifestEncounter}from"../encounters.js";manifestEncounter("campfire");</script>
 
 <script type="module">import{installTransitions}from"../transitions.js";installTransitions("campfire");</script>
+</body></html>
