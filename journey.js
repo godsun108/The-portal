@@ -24,6 +24,6 @@ export function consequence(){
  return out;
 }
 export function record(kind,data={}){
- const key="portal-journey-v2-log",xs=json(key,[]),entry={kind,at:new Date().toISOString(),...data};xs.push(entry);localStorage.setItem(key,JSON.stringify(xs.slice(-100)));window.dispatchEvent(new CustomEvent("portal:journey",{detail:entry}));return entry;
+ const key="portal-journey-v2-log",stored=json(key,[]),xs=Array.isArray(stored)?stored:[],entry={kind,at:new Date().toISOString(),...data};xs.push(entry);localStorage.setItem(key,JSON.stringify(xs.slice(-100)));window.dispatchEvent(new CustomEvent("portal:journey",{detail:entry}));return entry;
 }
 export function journeyLog(){const xs=json("portal-journey-v2-log",[]);return Array.isArray(xs)?xs:[]}
