@@ -490,6 +490,6 @@ const navHome=fs.readFileSync("./index.html","utf8"),stationNav=fs.readFileSync(
 assert(navHome.includes('id="homeStations"')&&navHome.includes("CHOOSE A STATION."),"Portal home is the canonical station directory");
 assert(!navHome.includes("OR START WITH AN INTENTION.")&&!navHome.includes(">ALL STATIONS</strong>"),"Homepage no longer duplicates station navigation with arrival/intention layers");
 assert(navHome.includes("?station=")&&navHome.includes("← ALL STATIONS"),"Home opens station detail and returns to all stations");
-assert(stationNav.includes("stations.json")&&stationNav.includes("← "+parent.label"),"Public rooms can return to their parent station");
+assert(stationNav.includes("stations.json")&&stationNav.includes('"← "+parent.label'),"Public rooms can return to their parent station");
 assert(travelerNav.includes('import("./station-nav.js")'),"Shared traveler navigation installs station-aware room return");
 assert(legacyStations.includes("location.replace")&&legacyStations.includes("?station="),"Legacy Stations URLs redirect into canonical home hierarchy");
