@@ -70,8 +70,8 @@
       ]
     },
     {
-      "id": "create",
-      "label": "CREATE",
+      "id": "art",
+      "label": "ART",
       "glyph": "✧",
       "line": "make something — then let it change the world",
       "rooms": [
@@ -102,8 +102,8 @@
       ]
     },
     {
-      "id": "mystery",
-      "label": "MYSTERY",
+      "id": "world",
+      "label": "WORLD",
       "glyph": "⌁",
       "line": "listen inward — not every room explains itself",
       "rooms": [
@@ -191,6 +191,19 @@
         [
           "WORLD CLOCK",
           "clock/"
+        ]
+      ]
+    },
+    {
+      "id": "economy",
+      "label": "ECONOMY",
+      "glyph": "⌬",
+      "line": "agents build, test and measure — settlement is the truth",
+      "status": "live",
+      "rooms": [
+        [
+          "AI COMPANY",
+          "company/"
         ]
       ]
     }

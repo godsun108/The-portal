@@ -21,7 +21,7 @@ The client accepts a response only when `schema` is exactly `portal.chat.v1`, `v
 ## Truth rules
 
 - No fabricated model output.
-- No secret provider keys in GitHub Pages or browser storage.
+- No secret provider API keys in GitHub Pages, browser storage, client JavaScript, public snapshots, or Portal state.
 - `endpoint:null` means intelligence is visibly dormant.
 - Provider/model choice belongs behind the endpoint; the Portal UI is provider-neutral.
 - Conversation memory is browser-local by default. A future server memory system requires an explicit contract and user-visible behavior.
