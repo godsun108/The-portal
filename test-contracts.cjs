@@ -483,6 +483,6 @@ assert(askUX.includes("THE MIND HAS A BODY BUT NO ENGINE YET")&&askUX.includes("
 assert(askUX.includes('id="fallbacks"')&&askUX.includes("../oracle/")&&askUX.includes("../passport/"),"ASK remains useful by routing to available instruments");
 
 // Release closeout: persistent progression API
-const gameState=fs.readFileSync("./games/state.js","utf8");
-assert(gameState.includes('typeof a==="string"?{id:a}')&&gameState.includes("legacyId"),"Artifact state accepts existing string grants and recovers legacy records");
-assert(gameState.includes("legacyId(x)===id"),"Artifact checks use canonical or recovered IDs");
+const progressionState=fs.readFileSync("./games/state.js","utf8");
+assert(progressionState.includes('typeof a==="string"?{id:a}')&&progressionState.includes("legacyId"),"Artifact state accepts existing string grants and recovers legacy records");
+assert(progressionState.includes("legacyId(x)===id"),"Artifact checks use canonical or recovered IDs");
