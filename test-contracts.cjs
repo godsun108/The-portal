@@ -286,7 +286,7 @@ assert(afterimage.includes('scar("memory-static")'),"AFTERIMAGE failure records 
 const glyphLock=fs.readFileSync("./games/glyph-lock/index.html","utf8");
 assert(glyphLock.includes('beginRun("glyph-lock")'),"GLYPH LOCK uses shared run protocol");
 assert(glyphLock.includes("makeRules()"),"GLYPH LOCK remaps its hidden grammar each run");
-assert(glyphLock.includes('score===9?"grammar-key":"glyph-fragment"'),"GLYPH LOCK perfect mastery grants grammar key");
+assert(glyphLock.includes('const mastery=score===9')&&glyphLock.includes('mastery?"grammar-key":"glyph-fragment"'),"GLYPH LOCK perfect mastery grants grammar key");
 assert(glyphLock.includes('scar("syntax-burn")'),"GLYPH LOCK failure records scar");
 
 // TIME//LOOP temporal cabinet
