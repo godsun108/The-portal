@@ -478,8 +478,8 @@ assert(askUX.includes('id="fallbacks"')&&askUX.includes("../oracle/")&&askUX.inc
 
 // Release closeout: persistent progression API
 const progressionState=fs.readFileSync("./games/state.js","utf8");
-assert(progressionState.includes('typeof a==="string"?{id:a}')&&progressionState.includes("legacyId"),"Artifact state accepts existing string grants and recovers legacy records");
-assert(progressionState.includes("legacyId(x)===id"),"Artifact checks use canonical or recovered IDs");
+assert(progressionState.includes('typeof a==="string"?{id:a}')&&progressionState.includes("export function artifactId"),"Artifact state accepts existing string grants and exposes canonical legacy recovery");
+assert(progressionState.includes("artifactId(x)===id"),"Artifact checks use canonical or recovered IDs");
 
 // Public station route integrity
 const stationManifest=JSON.parse(fs.readFileSync("./stations.json","utf8"));
