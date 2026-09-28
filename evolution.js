@@ -11,11 +11,11 @@ function derive(j){
  return{depth,rhythm,memory,age};
 }
 export function evolution(){
- const j=journey(),prior=read()||{schema:"portal.evolution.v3",born:Date.now(),revision:0,changes:[]},traits=derive(j);
+ const j=journey(),stored=read(),prior=stored&&typeof stored==="object"&&!Array.isArray(stored)?stored:{schema:"portal.evolution.v3",born:Date.now(),revision:0,changes:[]},traits=derive(j);
  const signature=[traits.depth,traits.rhythm,traits.memory,traits.age,j.fork||"-",j.converged?1:0].join("|");
  if(prior.signature!==signature){
    const change={at:new Date().toISOString(),from:prior.signature||null,to:signature,traits};
-   prior.signature=signature;prior.traits=traits;prior.revision=(prior.revision||0)+1;prior.changes=[...(prior.changes||[]),change].slice(-24);save(prior);
+   prior.signature=signature;prior.traits=traits;prior.revision=(prior.revision||0)+1;prior.changes=[...(Array.isArray(prior.changes)?prior.changes:[]),change].slice(-24);save(prior);
    record("evolution",{revision:prior.revision,signature});
  }
  return Object.freeze({...prior,traits,journey:j});
