@@ -75,3 +75,5 @@ button,a{touch-action:manipulation}
 @media(min-width:700px){.home-stations{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:699px){.home-stations{grid-template-columns:1fr}.home-station{min-height:126px;padding:17px;border-radius:18px}.home-station b{bottom:17px}.station-skeleton{height:126px;border-radius:18px}.home-rooms{grid-template-columns:1fr}.detail-glyph{margin-top:26px}.home-station-detail h2{font-size:clamp(42px,15vw,66px)}}
 @media(prefers-reduced-motion:reduce){.station-skeleton{animation:none}}
+
+.home-secret-routes{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px;padding-top:22px;border-top:1px solid #292934}.home-secret-routes .threshold-label{grid-column:1/-1;color:#766a87}.home-station.secret{border-color:#4a365e;background:radial-gradient(circle at 80% 10%,#321b4938,transparent 50%),#09080d}.home-station.secret:before{box-shadow:0 0 70px #a06bd12c inset}
