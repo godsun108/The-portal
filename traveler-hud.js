@@ -1,5 +1,5 @@
 import{artifacts,scars}from"./games/state.js";import{physicsState}from"./physics.js";import{activeEvents}from"./events.js";import{soundEnabled,setSound,tone}from"./sound.js";
-const root=new URL("./",import.meta.url),go=p=>new URL(p,root).href;
+const root=new URL("./",import.meta.url),go=p=>new URL(p,root).href;import("./station-nav.js").catch(()=>{});
 export function installTravelerHUD(){
  if(document.querySelector("[data-traveler-hud]"))return;
  const a=artifacts(),s=scars(),p=physicsState(),e=activeEvents();
