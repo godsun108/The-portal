@@ -75,7 +75,7 @@
 
   <div id="worldEvent" hidden aria-live="polite"><span id="worldEventGlyph">◌</span><p id="worldEventText"></p></div>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script src="script.js"></script>
+  <script src="script.js?v=20260928-shine2"></script>
 <script>(()=>{const W=window.PortalWorld?.state,g=document.querySelector("#portalGreeting"),a=document.querySelector("#portalAtmosphere");if(W){if(W.visits>1&&g)g.innerHTML=W.returnBand==="long"?"YOU CAME BACK.<br>It noticed.":W.returnBand==="days"?"Welcome back.<br>Something continued while you were gone.":"Welcome to the other internet.<br>Choose a station.";if(a)a.textContent="PORTAL ATMOSPHERE // "+(W.atmosphere||"STILL")+(W.returnBand!=="present"?" // RETURN "+W.returnBand.toUpperCase():"")}const grid=document.querySelector("#homeStations"),hero=document.querySelector(".hero");let stationData=null;
 function roomHref(h){return h==="#chaos"?"./#chaos":h}
 function renderStations(){
