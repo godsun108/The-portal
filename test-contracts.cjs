@@ -456,3 +456,9 @@ assert(deadUX.includes("guestbook.txt")&&deadUX.includes("/private/"),"Dead Inte
 assert(marksUX.includes("LEAVE SELECTED SYMBOL")&&marksUX.includes("SELECTED //"),"Marks gives the traveler intentional authorship");
 assert(dailyUX.includes("portal-daily-complete")&&dailyUX.includes("I DID THIS"),"Daily Door supports explicit completion");
 assert(pulseUX.includes("OPEN ON EARTH"),"Earth Pulse events continue into Earth");
+
+// Traveler UX pass
+const mapUX=fs.readFileSync("./map/index.html","utf8"),wonderUX=fs.readFileSync("./wonder/index.html","utf8"),passportUX=fs.readFileSync("./passport/index.html","utf8");
+assert(mapUX.includes("↗ RETURN")&&mapUX.includes("undernet/cartographer/"),"Discovered Map nodes are navigable remembered territory");
+assert(wonderUX.includes("RETURN TO WHERE IT HAPPENED"),"Wonder can revisit rare encounter locations");
+assert(passportUX.includes("OPEN MY MAP")&&passportUX.includes("ATMOSPHERE"),"Passport acts as a traveler command surface");
