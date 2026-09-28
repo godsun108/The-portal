@@ -66,6 +66,78 @@
         [
           "CHAOS",
           "#chaos"
+        ],
+        [
+          "DRIFT",
+          "games/drift/"
+        ],
+        [
+          "NULL RACER",
+          "games/null-racer/"
+        ],
+        [
+          "STAR//SWARM",
+          "games/star-swarm/"
+        ],
+        [
+          "PULSE//4",
+          "games/pulse-4/"
+        ],
+        [
+          "UP//VOID",
+          "games/up-void/"
+        ],
+        [
+          "THE FIFTH MACHINE",
+          "games/fifth-machine/"
+        ],
+        [
+          "HOUSE//EDGE",
+          "games/house-edge/"
+        ],
+        [
+          "PARALLAX",
+          "games/parallax/"
+        ],
+        [
+          "VECTOR//BREAK",
+          "games/vector-break/"
+        ],
+        [
+          "GRAVITY//WELL",
+          "games/gravity-well/"
+        ],
+        [
+          "AFTERIMAGE",
+          "games/afterimage/"
+        ],
+        [
+          "GLYPH//LOCK",
+          "games/glyph-lock/"
+        ],
+        [
+          "TIME//LOOP",
+          "games/time-loop/"
+        ],
+        [
+          "BLIND//SPOT",
+          "games/blind-spot/"
+        ],
+        [
+          "SIGNAL//WAR",
+          "games/signal-war/"
+        ],
+        [
+          "FORGE",
+          "games/forge/"
+        ],
+        [
+          "TOWER//ZERO",
+          "games/tower-zero/"
+        ],
+        [
+          "ECHO//DUEL",
+          "games/echo-duel/"
         ]
       ]
     },
