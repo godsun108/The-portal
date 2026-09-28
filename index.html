@@ -80,8 +80,9 @@
 function roomHref(h){return h==="#chaos"?"./#chaos":h}
 function renderStations(){
  hero.hidden=false;grid.classList.remove("is-loading");grid.innerHTML=stationData.stations.map(s=>'<button class="home-station" type="button" data-id="'+s.id+'"><span class="glyph">'+s.glyph+'</span><strong>'+s.label+'</strong><small>'+s.line+'</small><b>'+s.rooms.length+' DOOR'+(s.rooms.length===1?"":"S")+'</b></button>').join("");
- grid.querySelectorAll("button").forEach(b=>b.onclick=()=>openStation(b.dataset.id))
+ grid.querySelectorAll("button").forEach(b=>b.onclick=()=>openStation(b.dataset.id));materializeSecrets()
 }
+async function materializeSecrets(){try{const{secretRoutes}=await import("./games/secret.js");const routes=secretRoutes();if(!routes.length)return;const wrap=document.createElement("section");wrap.className="home-secret-routes";wrap.setAttribute("aria-label","Earned routes");wrap.innerHTML='<div class="threshold-label">A STATION THAT WAS NOT ON THE MAP</div>'+routes.map(r=>'<a class="home-station secret" href="'+r.href+'"><span class="glyph">'+r.glyph+'</span><strong>'+r.label+'</strong><small>EARNED ROUTE // '+r.reason.toUpperCase()+'</small><b>ENTER →</b></a>').join("");grid.append(wrap)}catch{}}
 function renderStation(id){
  const s=stationData?.stations.find(x=>x.id===id);if(!s){renderStations();return false}
  hero.hidden=true;grid.innerHTML='<section class="home-station-detail"><button id="stationBack" type="button">← ALL STATIONS</button><div class="detail-glyph">'+s.glyph+'</div><h2 tabindex="-1">'+s.label+'</h2><p>'+s.line+'</p><div class="home-rooms">'+s.rooms.map(r=>'<a href="'+roomHref(r[1])+'"><span>'+r[0]+'</span><b>→</b></a>').join("")+'</div></section>';
