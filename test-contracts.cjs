@@ -437,3 +437,12 @@ assert(machineNature.includes("portal-workshop-object-v1"),"machine nature reads
 assert(earthMachine.includes('from"../workshop/machine.js"'),"Earth manifestation derives from Workshop machine engine");
 assert(earthMachine.includes("BUILT IN WORKSHOP // LOCAL"),"Earth labels construction as local Portal state");
 assert(earthRoom.includes("workshop-machine.js"),"Earth loads traveler construction manifestation");
+
+// Living Portal continuity
+const worldContinuity=fs.readFileSync("./world.js","utf8");
+const dreamContinuity=fs.readFileSync("./dream/index.html","utf8");
+const radioContinuity=fs.readFileSync("./radio/index.html","utf8");
+assert(worldContinuity.includes("returnBand")&&worldContinuity.includes("CONVERGING")&&worldContinuity.includes("portalAtmosphere"),"World engine derives local absence and Portal atmosphere");
+assert(dreamContinuity.includes("portal-numbers-last")&&dreamContinuity.includes("portal-numbers-dream"),"Dream can inherit an earned Numbers transmission");
+assert(radioContinuity.includes("portal-numbers-last")&&radioContinuity.includes("LOCAL SEQUENCE RECOVERED"),"Radio can recover the traveler Numbers sequence");
+assert(home.includes('id="portalAtmosphere"')&&home.includes("YOU CAME BACK."),"Homepage visibly acknowledges return and atmosphere");
