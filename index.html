@@ -92,8 +92,7 @@ function openStation(id){history.pushState({station:id},"","?station="+encodeURI
 function closeStation(){history.pushState({station:null},"",location.pathname);renderStations();grid.querySelector("button")?.focus?.()}
 function syncStation(){if(!stationData)return;const id=new URLSearchParams(location.search).get("station");id?renderStation(id):renderStations()}
 addEventListener("popstate",syncStation);
-fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{stationData=d;syncStation()}).catch(()=>{grid.classList.remove("is-loading");grid.innerHTML='<p class="threshold-label">THE STATION MAP COULD NOT BE VERIFIED. <button type="button" onclick="location.reload()">TRY AGAIN</button></p>'})})();</script></body>
-</html>
+fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{stationData=d;syncStation()}).catch(()=>{grid.classList.remove("is-loading");grid.innerHTML='<p class="threshold-label">THE STATION MAP COULD NOT BE VERIFIED. <button type="button" onclick="location.reload()">TRY AGAIN</button></p>'})})();</script>
 <script type="module">import{installEvolution}from"./evolution.js";const fx=installEvolution("home"),a=document.querySelector("#portalAtmosphere");if(a&&fx.message)a.textContent+=" // "+fx.message;</script>
 
 <script type="module">import{journey,consequence}from"./journey.js";const j=journey(),xs=consequence(),a=document.querySelector("#portalAtmosphere");document.documentElement.dataset.portalV2="journey";if(a&&xs.length)a.textContent="PORTAL ATMOSPHERE // "+j.atmosphere+" // "+xs[0].text;</script>
@@ -103,3 +102,5 @@ fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{stationData
 <script type="module">import{installTravelerHUD}from"./traveler-hud.js";installTravelerHUD();</script>
 
 <script type="module">import{installTransitions}from"./transitions.js";installTransitions("portal");</script>
+</body>
+</html>
