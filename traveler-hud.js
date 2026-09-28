@@ -16,7 +16,7 @@ export function installTravelerHUD(){
  const sb=panel.querySelector("[data-sound]");sb.onclick=()=>{const on=setSound(!soundEnabled());sb.textContent=on?"ON":"OFF";if(on)tone({freq:261.63,duration:.4,gain:.02})};
  };
  const historyBack=()=>{window.history.back()};
- render();window.addEventListener("portal:artifact",refreshBadge);window.addEventListener("storage",refreshBadge);hud.onclick=()=>{panel.hidden=!panel.hidden;hud.setAttribute("aria-expanded",String(!panel.hidden));if(!panel.hidden)render()};
+ render();window.addEventListener("portal:artifact",refreshBadge);window.addEventListener("portal:scar",refreshBadge);window.addEventListener("storage",refreshBadge);hud.onclick=()=>{panel.hidden=!panel.hidden;hud.setAttribute("aria-expanded",String(!panel.hidden));if(!panel.hidden)render()};
  document.addEventListener("keydown",x=>{if(x.key==="Escape"&&!panel.hidden){panel.hidden=true;hud.setAttribute("aria-expanded","false")}});
  document.body.append(panel,hud)
 }
