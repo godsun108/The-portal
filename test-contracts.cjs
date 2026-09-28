@@ -446,3 +446,13 @@ assert(worldContinuity.includes("returnBand")&&worldContinuity.includes("CONVERG
 assert(dreamContinuity.includes("portal-numbers-last")&&dreamContinuity.includes("portal-numbers-dream"),"Dream can inherit an earned Numbers transmission");
 assert(radioContinuity.includes("portal-numbers-last")&&radioContinuity.includes("LOCAL SEQUENCE RECOVERED"),"Radio can recover the traveler Numbers sequence");
 assert(home.includes('id="portalAtmosphere"')&&home.includes("YOU CAME BACK."),"Homepage visibly acknowledges return and atmosphere");
+
+// Experience upgrade pass
+const timeUX=fs.readFileSync("./time/index.html","utf8"),weatherUX=fs.readFileSync("./weather/index.html","utf8"),skyUX=fs.readFileSync("./sky/index.html","utf8"),deadUX=fs.readFileSync("./dead/index.html","utf8"),marksUX=fs.readFileSync("./marks/index.html","utf8"),dailyUX=fs.readFileSync("./daily/index.html","utf8"),pulseUX=fs.readFileSync("./pulse/index.html","utf8");
+assert(timeUX.includes("portal-time-marks")&&timeUX.includes('type="range"'),"Time Machine is an explorable, persistent timeline");
+assert(weatherUX.includes("OPEN EYES THERE")&&weatherUX.includes("FIND ON EARTH"),"Weather hands places into Window and Earth");
+assert(skyUX.includes("+ 1 DAY")&&skyUX.includes("render()"),"Sky supports temporal lunar exploration");
+assert(deadUX.includes("guestbook.txt")&&deadUX.includes("/private/"),"Dead Internet contains an explorable micro-web");
+assert(marksUX.includes("LEAVE SELECTED SYMBOL")&&marksUX.includes("SELECTED //"),"Marks gives the traveler intentional authorship");
+assert(dailyUX.includes("portal-daily-complete")&&dailyUX.includes("I DID THIS"),"Daily Door supports explicit completion");
+assert(pulseUX.includes("OPEN ON EARTH"),"Earth Pulse events continue into Earth");
