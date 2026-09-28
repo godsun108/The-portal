@@ -470,3 +470,10 @@ assert(creatorDream.includes("portal-workshop-nature")&&creatorDream.includes("h
 assert(creatorSignal.includes("BEACON DETECTED"),"Workshop beacons can surface in Signal");
 assert(creatorMap.includes("CONSTRUCTED BRIDGE"),"Workshop bridges become remembered territory");
 assert(colorCreator.includes("KEEP THIS COLOR")&&colorCreator.includes("portal-kept-color"),"Color can create a persistent traveler artifact");
+
+// Capability routing
+const capabilityHome=fs.readFileSync("./index.html","utf8"),capabilityStyle=fs.readFileSync("./style.css","utf8");
+for(const intent of ["see","make","play","ask","explore","remember"])assert(capabilityHome.includes('data-intent="'+intent+'"'),"Homepage exposes "+intent.toUpperCase()+" capability");
+assert(capabilityHome.includes("portal-last-intent"),"Portal remembers the traveler's last intention locally");
+assert(capabilityHome.includes('make.href="workshop/"')&&capabilityHome.includes('has("operator")'),"MAKE adapts to earned Workshop access");
+assert(capabilityStyle.includes(".intent-grid")&&capabilityStyle.includes("repeat(2,1fr)"),"Capability routing has a mobile layout");
