@@ -2,34 +2,10 @@
   "schema": "portal.stations.v1",
   "stations": [
     {
-      "id": "threshold",
-      "label": "THRESHOLD",
-      "glyph": "◌",
-      "line": "the other internet begins here",
-      "rooms": [
-        [
-          "EARTH NOW",
-          "earth/"
-        ],
-        [
-          "WINDOW",
-          "window/"
-        ],
-        [
-          "CHAOS",
-          "#chaos"
-        ],
-        [
-          "ORACLE",
-          "oracle/"
-        ]
-      ]
-    },
-    {
       "id": "reality",
       "label": "REALITY",
       "glyph": "◉",
-      "line": "things that do not need your belief",
+      "line": "look outward — things that do not need your belief",
       "rooms": [
         [
           "EARTH NOW",
@@ -54,35 +30,15 @@
       ]
     },
     {
-      "id": "art",
-      "label": "ART",
-      "glyph": "✧",
-      "line": "make, feel, release",
-      "rooms": [
-        [
-          "COLOR",
-          "color/"
-        ],
-        [
-          "RELEASE",
-          "release/"
-        ],
-        [
-          "DREAM",
-          "dream/"
-        ],
-        [
-          "MARKS",
-          "marks/"
-        ]
-      ]
-    },
-    {
       "id": "play",
       "label": "PLAY",
       "glyph": "♜",
-      "line": "curiosity has physics",
+      "line": "touch the world — curiosity has physics",
       "rooms": [
+        [
+          "ARCADE",
+          "arcade/"
+        ],
         [
           "RIFT",
           "games/rift/"
@@ -104,10 +60,6 @@
           "orbit/"
         ],
         [
-          "ARCADE",
-          "arcade/"
-        ],
-        [
           "MAZE",
           "maze/"
         ],
@@ -118,19 +70,43 @@
       ]
     },
     {
-      "id": "world",
-      "label": "WORLD",
-      "glyph": "∆",
-      "line": "rooms remember each other",
+      "id": "create",
+      "label": "CREATE",
+      "glyph": "✧",
+      "line": "make something — then let it change the world",
       "rooms": [
         [
-          "WORLD CLOCK",
-          "clock/"
+          "COLOR",
+          "color/"
         ],
         [
-          "MACHINE",
-          "machine/"
+          "RELEASE",
+          "release/"
         ],
+        [
+          "DREAM",
+          "dream/"
+        ],
+        [
+          "MARKS",
+          "marks/"
+        ],
+        [
+          "CAPSULE",
+          "capsule/"
+        ],
+        [
+          "BLACK BOX",
+          "blackbox/"
+        ]
+      ]
+    },
+    {
+      "id": "mystery",
+      "label": "MYSTERY",
+      "glyph": "⌁",
+      "line": "listen inward — not every room explains itself",
+      "rooms": [
         [
           "SIGNAL",
           "signal/"
@@ -140,20 +116,45 @@
           "void/"
         ],
         [
-          "BLACK BOX",
-          "blackbox/"
-        ],
-        [
-          "CAPSULE",
-          "capsule/"
-        ],
-        [
           "RADIO",
           "radio/"
         ],
         [
           "WONDER",
           "wonder/"
+        ],
+        [
+          "MACHINE",
+          "machine/"
+        ],
+        [
+          "TIME MACHINE",
+          "time/"
+        ],
+        [
+          "DEAD INTERNET",
+          "dead/"
+        ]
+      ]
+    },
+    {
+      "id": "intelligence",
+      "label": "INTELLIGENCE",
+      "glyph": "◇",
+      "line": "ask, reason, notice patterns — without pretending certainty",
+      "status": "live",
+      "rooms": [
+        [
+          "PORTAL INTELLIGENCE",
+          "intelligence/"
+        ],
+        [
+          "ORACLE",
+          "oracle/"
+        ],
+        [
+          "SOVEREIGN AI",
+          "sovereign-ai/"
         ]
       ]
     },
@@ -161,7 +162,7 @@
       "id": "connection",
       "label": "CONNECTION",
       "glyph": "♨",
-      "line": "no imaginary humans",
+      "line": "other people, only when they are actually there",
       "rooms": [
         [
           "CAMPFIRE",
@@ -170,15 +171,26 @@
       ]
     },
     {
-      "id": "intelligence",
-      "label": "INTELLIGENCE",
-      "glyph": "◇",
-      "line": "a native mind is being given an engine",
-      "status": "live",
+      "id": "traveler",
+      "label": "TRAVELER",
+      "glyph": "▤",
+      "line": "what this browser has carried, found and changed",
       "rooms": [
         [
-          "PORTAL INTELLIGENCE",
-          "intelligence/"
+          "PASSPORT",
+          "passport/"
+        ],
+        [
+          "MAP",
+          "map/"
+        ],
+        [
+          "DAILY DOOR",
+          "daily/"
+        ],
+        [
+          "WORLD CLOCK",
+          "clock/"
         ]
       ]
     }
