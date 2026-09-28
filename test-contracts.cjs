@@ -42,7 +42,7 @@ assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must emb
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
 assert(earth.includes("../window/?"), "EARTH must route EYES through Portal WINDOW");
 
-assert(windowRoom.includes("https://window-node-production.up.railway.app/"), "WINDOW must embed canonical live WINDOW service");
+assert(windowRoom.includes("https://window-node-production.up.railway.app/")&&windowRoom.includes("location.replace(target)"), "WINDOW must hand off directly to the canonical live WINDOW service");
 assert(windowRoom.includes("location.search"), "WINDOW must preserve handoff query parameters");
 assert(!windowRoom.includes("youtube-nocookie.com/embed/"), "Portal WINDOW must not fabricate camera embeds");
 
@@ -349,11 +349,13 @@ assert(arcadePage.includes("capability-consequence.js"),"Arcade loads capability
 // READ SIDEWAYS Window consequence
 const sideways=fs.readFileSync("./window/sideways.js","utf8");
 const windowPage=fs.readFileSync("./window/index.html","utf8");
+const voidWithSideways=fs.readFileSync("./void/index.html","utf8");
 assert(sideways.includes('capability("readSideways")'),"sideways transmission requires perception plus inference capability");
 assert(sideways.includes("d=Math.hypot"),"sideways transmission visibility derives from attention distance");
 assert(sideways.includes('grantArtifact("sideways-script")'),"sustained peripheral reading records sideways script");
 assert(sideways.includes("THE CENTER IS NOT THE WHOLE IMAGE"),"sideways transmission has stable message contract");
-assert(windowPage.includes("sideways.js"),"Window loads sideways capability consequence");
+assert(!windowPage.includes("<iframe"),"Canonical WINDOW handoff must not add a second iframe implementation");
+assert(voidWithSideways.includes("../window/sideways.js"),"READ SIDEWAYS remains discoverable inside Portal after canonical Window handoff");
 
 // WORLD CLOCK ECHO TIME consequence
 const worldClock=fs.readFileSync("./clock/index.html","utf8");
