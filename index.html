@@ -27,59 +27,43 @@
       <p class="lede">Welcome to the other internet.<br>Travel by portal.</p><a class="station-entry" href="stations/">ENTER THE STATIONS →</a>
     </header>
 
-    <p class="threshold-label">THE FIRST FOUR DOORS ARE ALREADY AWAKE.</p>
-    <section class="portal-grid" aria-label="Portals">
-      <a class="portal earth" href="earth/">
-        <span class="glyph">◉</span><strong>EARTH NOW</strong><small>if it glows, it happened</small>
-      </a>
-      <a class="portal window" href="window/">
-        <span class="glyph">▣</span><strong>WINDOW</strong><small>somewhere else on Earth, right now</small>
-      </a>
-      <button class="portal chaos" id="chaosDoor" type="button">
-        <span class="glyph">✦</span><strong>CHAOS</strong><small>absolutely do not press</small>
-      </button>
-      <a class="portal oracle" href="oracle/">
-        <span class="glyph">◇</span><strong>ORACLE</strong><small>probability, not prophecy</small>
-      </a>
-      <div class="deeper"><span>THE DEEPER NETWORK</span><small>Nothing below this line needs you yet.</small></div>
-      <a class="portal campfire-room" href="campfire/"><span class="glyph">♨</span><strong>CAMPFIRE</strong><small>the fire refuses imaginary company</small></a>
-      <a class="portal release-room" href="release/"><span class="glyph">✧</span><strong>RELEASE</strong><small>make something you cannot keep</small></a>
-      <a class="portal orbit-room" href="orbit/"><span class="glyph">◎</span><strong>ORBIT</strong><small>play with gravity until it makes sense</small></a>
-      <a class="portal signal" href="signal/">
-        <span class="glyph">⌁</span><strong>SIGNAL</strong><small>listen to the dark</small>
-      </a>
-      <a class="portal void" href="void/">
-        <span class="glyph">◌</span><strong>VOID</strong><small>there is nothing here</small>
-      </a>
-      <a class="portal radio" href="radio/">
-        <span class="glyph">⌁</span><strong>RADIO</strong><small>turn the dial</small>
-      </a>
-      <a class="portal passport" href="passport/">
-        <span class="glyph">▤</span><strong>PASSPORT</strong><small>your browser remembers</small>
-      </a>
-      <a class="portal daily" href="daily/">
-        <span class="glyph">☼</span><strong>DAILY DOOR</strong><small>different tomorrow</small>
-      </a>
-      <a class="portal time" href="time/"><span class="glyph">⌛</span><strong>TIME MACHINE</strong><small>jump somewhere else in time</small></a>
-      <a class="portal dream" href="dream/"><span class="glyph">☾</span><strong>DREAM</strong><small>this will not make sense</small></a>
-      <a class="portal machine" href="machine/"><span class="glyph">∆</span><strong>MACHINE</strong><small>seed a tiny world</small></a>
-      <a class="portal map" href="map/"><span class="glyph">✣</span><strong>MAP</strong><small>only what you have seen</small></a>
-      <a class="portal dead" href="dead/"><span class="glyph">404</span><strong>DEAD INTERNET</strong><small>best viewed at 800×600</small></a>
-      <a class="portal capsule" href="capsule/"><span class="glyph">▱</span><strong>CAPSULE</strong><small>leave something for later</small></a>
-      <a class="portal blackbox" href="blackbox/"><span class="glyph">■</span><strong>BLACK BOX</strong><small>input without explanation</small></a>
-      <a class="portal weather" href="weather/"><span class="glyph">☁</span><strong>WEATHER ELSEWHERE</strong><small>not your weather</small></a>
-      <a class="portal pulse" href="pulse/"><span class="glyph">♥</span><strong>EARTH PULSE</strong><small>the ground keeps moving</small></a>
-      <a class="portal sky" href="sky/"><span class="glyph">☾</span><strong>SKY</strong><small>look up, approximately</small></a>
-      <a class="portal marks" href="marks/"><span class="glyph">·</span><strong>MARKS</strong><small>leave evidence anyway</small></a>
-      <button class="portal locked" type="button" data-secret>
-        <span class="glyph">?</span><strong>???</strong><small>not yet</small>
-      </button>
-      <a class="portal arcade" id="arcadeDoor" href="arcade/" hidden><span class="glyph">♜</span><strong>ARCADE</strong><small>this machine was not plugged in</small></a>
-      <a class="portal split" id="splitDoor" href="split/" hidden><span class="glyph">◐</span><strong>THE SPLIT</strong><small>both ways continue</small></a>
-      <a class="portal convergence" id="convergenceDoor" href="convergence/" hidden><span class="glyph">∴</span><strong>CONVERGENCE</strong><small>this was not built as a room</small></a>
-      <a class="portal undernet" id="undernetDoor" href="undernet/" hidden>
-        <span class="glyph">⌬</span><strong>THE UNDERNET</strong><small>this door was not here before</small>
-      </a>
+    <section class="arrival" aria-label="Portal arrival">
+      <p class="threshold-label">CHOOSE HOW DEEP YOU WANT TO GO.</p>
+      <div class="arrival-grid">
+        <a class="arrival-card primary" href="stations/">
+          <span class="arrival-glyph">◎</span>
+          <span><strong>TRAVEL THE STATIONS</strong><small>the whole Portal, organized as places</small></span>
+          <b>ENTER →</b>
+        </a>
+        <a class="arrival-card" href="earth/">
+          <span class="arrival-glyph">◉</span>
+          <span><strong>EARTH NOW</strong><small>see what the planet is doing</small></span>
+          <b>OPEN →</b>
+        </a>
+        <a class="arrival-card" href="window/">
+          <span class="arrival-glyph">▣</span>
+          <span><strong>WINDOW</strong><small>look somewhere else on Earth</small></span>
+          <b>OPEN →</b>
+        </a>
+        <a class="arrival-card" href="arcade/">
+          <span class="arrival-glyph">♜</span>
+          <span><strong>PLAY</strong><small>games, experiments, consequences</small></span>
+          <b>ENTER →</b>
+        </a>
+      </div>
+      <div class="arrival-actions">
+        <button id="chaosDoor" type="button">✦ SURPRISE ME</button>
+        <a href="passport/">▤ MY PASSPORT</a>
+        <a href="map/">✣ MY MAP</a>
+      </div>
+      <p class="arrival-note">Everything else lives inside the stations. Some rooms only appear after you earn them.</p>
+      <div class="progression-doors" aria-label="Discovered Portal doors">
+        <button class="portal locked compact" type="button" data-secret><span class="glyph">?</span><strong>???</strong><small>not yet</small></button>
+        <a class="portal arcade compact" id="arcadeDoor" href="arcade/" hidden><span class="glyph">♜</span><strong>ARCADE</strong><small>this machine was not plugged in</small></a>
+        <a class="portal split compact" id="splitDoor" href="split/" hidden><span class="glyph">◐</span><strong>THE SPLIT</strong><small>both ways continue</small></a>
+        <a class="portal convergence compact" id="convergenceDoor" href="convergence/" hidden><span class="glyph">∴</span><strong>CONVERGENCE</strong><small>this was not built as a room</small></a>
+        <a class="portal undernet compact" id="undernetDoor" href="undernet/" hidden><span class="glyph">⌬</span><strong>THE UNDERNET</strong><small>this door was not here before</small></a>
+      </div>
     </section>
 
     <div id="carried" hidden aria-live="polite"><span>⌁</span> CARRYING: BLACK FEATHER</div>
