@@ -1,0 +1,77 @@
+{
+  "schema": "portal.agent-company.snapshot.v1",
+  "mode": "LOCAL_SNAPSHOT",
+  "liveBackend": false,
+  "updatedAt": "2026-09-27",
+  "workforce": {
+    "agents": 30,
+    "divisions": [
+      "Discovery",
+      "Intelligence",
+      "Production",
+      "Commerce",
+      "Media",
+      "Products",
+      "Finance",
+      "Control"
+    ]
+  },
+  "mission": {
+    "id": "001",
+    "name": "FIRST EVIDENCE-BACKED DOLLAR",
+    "stage": "WAITING_FOR_HUMAN_APPROVAL",
+    "candidate": "Lead Response Diagnostic",
+    "pipeline": [
+      [
+        "SCOUT",
+        "COMPLETE"
+      ],
+      [
+        "RESEARCH",
+        "COMPLETE"
+      ],
+      [
+        "ORACLE",
+        "COMPLETE"
+      ],
+      [
+        "BUILDER",
+        "COMPLETE"
+      ],
+      [
+        "MERCHANT",
+        "COMPLETE"
+      ],
+      [
+        "AUDITOR",
+        "COMPLETE"
+      ],
+      [
+        "GOVERNOR",
+        "WAITING"
+      ]
+    ]
+  },
+  "economics": {
+    "settledRevenue": 0,
+    "settledCustomers": 0,
+    "targetSettledRevenue": 49,
+    "experimentBudgetCeiling": 25
+  },
+  "approvals": [
+    "Offer wording",
+    "Price variant",
+    "Acquisition method",
+    "Production deployment"
+  ],
+  "truth": [
+    "This is a static Portal snapshot, not a live MINT connection.",
+    "No customer has paid yet.",
+    "No autonomous outreach is active.",
+    "Only verified settlement counts as revenue."
+  ],
+  "system": {
+    "halted": false,
+    "pilotGateLocked": true
+  }
+}
