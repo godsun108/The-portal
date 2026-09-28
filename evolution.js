@@ -2,7 +2,7 @@
 import{journey,journeyLog,record}from"./journey.js";
 const KEY="portal-evolution-v3",DAY=86400000;
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch{return null}};
-const save=s=>localStorage.setItem(KEY,JSON.stringify(s));
+const save=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));return true}catch{return false}};
 function derive(j){
  const depth=Math.min(4,(j.roomCount>=18?2:j.roomCount>=10?1:0)+(j.converged?1:0)+(j.fork?1:0));
  const rhythm=j.dailyCompleted>=7?"ritual":j.dailyCompleted>=3?"returning":"unformed";
