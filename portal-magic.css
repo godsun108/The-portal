@@ -1,1 +1,11 @@
 body{opacity:1;transform:scale(1.004);transition:opacity .42s ease,transform .42s ease,filter .18s ease}body:not(.portal-arrived){opacity:1;}body.portal-arrived{opacity:1;transform:none}body.portal-leaving{opacity:0;filter:blur(3px)}@media(prefers-reduced-motion:reduce){body,body.portal-arrived,body.portal-leaving{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+/* PORTAL ALIVE // room-family arrival signatures */
+@keyframes portal-arrive-reality{0%{filter:brightness(.55) saturate(.65);transform:scale(1.012)}55%{filter:brightness(1.08) saturate(1.08)}100%{filter:none;transform:none}}
+@keyframes portal-arrive-play{0%{filter:contrast(1.8) hue-rotate(18deg);transform:translateY(5px) scale(.996)}45%{filter:contrast(1.12) hue-rotate(-4deg)}100%{filter:none;transform:none}}
+@keyframes portal-arrive-deep{0%{filter:blur(5px) brightness(.3);transform:scale(1.025)}100%{filter:none;transform:none}}
+@keyframes portal-arrive-mind{0%{filter:brightness(.45);letter-spacing:.01em}60%{filter:brightness(1.08)}100%{filter:none}}
+html[data-portal-room="earth"] body.portal-arrived,html[data-portal-room="window"] body.portal-arrived,html[data-portal-room="weather"] body.portal-arrived,html[data-portal-room="sky"] body.portal-arrived,html[data-portal-room="pulse"] body.portal-arrived{animation:portal-arrive-reality .62s ease-out both}
+html[data-portal-room="arcade"] body.portal-arrived,html[data-portal-room="maze"] body.portal-arrived{animation:portal-arrive-play .48s steps(8,end) both}
+html[data-portal-room="undernet"] body.portal-arrived,html[data-portal-room="void"] body.portal-arrived,html[data-portal-room="dead"] body.portal-arrived,html[data-portal-room="blackbox"] body.portal-arrived{animation:portal-arrive-deep .7s cubic-bezier(.2,.7,.2,1) both}
+html[data-portal-room="oracle"] body.portal-arrived,html[data-portal-room="intelligence"] body.portal-arrived,html[data-portal-room="dream"] body.portal-arrived,html[data-portal-room="time"] body.portal-arrived{animation:portal-arrive-mind .55s ease-out both}
+@media(prefers-reduced-motion:reduce){body.portal-arrived{animation:none!important}}
