@@ -1,13 +1,13 @@
+import{artifactId}from"./games/state.js";
 /* PORTAL JOURNEY v2 — canonical read model over durable v1 browser history.
    V2 does not erase or rename v1 keys. It makes the existing world legible as one machine. */
 const DAY=86400000;
 const json=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key)||"null");return v??fallback}catch{return fallback}};
-const id=x=>x&&typeof x==="object"?(x.id||null):typeof x==="string"?x:null;
 const uniq=xs=>[...new Set(xs.filter(Boolean))];
 export function journey(){
  const world=json("portal-world-v1",{}),travel=json("portal-travel-history-v1",[]),art=json("portal-game-artifacts",[]),gameScars=json("portal-game-scars",[]),eventState=json("portal-world-events-v1",{history:[]});
  const rooms=uniq((Array.isArray(travel)?travel:[]).map(x=>x?.room));
- const artifacts=uniq((Array.isArray(art)?art:[]).map(id));
+ const artifacts=uniq((Array.isArray(art)?art:[]).map(artifactId));
  const scars=uniq([...(Array.isArray(world.scars)?world.scars:[]),...(Array.isArray(gameScars)?gameScars:[]).map(id)]);
  const events=uniq([...(Array.isArray(world.events)?world.events:[]).map(id),...(Array.isArray(eventState.history)?eventState.history:[]).map(id)]);
  const born=Number(world.born)||Date.now(),last=Number(world.last)||born,away=Math.max(0,Number(world.awayMs)||0);
