@@ -1,6 +1,7 @@
-import{artifacts,scars}from"./games/state.js";import{physicsState}from"./physics.js";import{activeEvents}from"./events.js";import{soundEnabled,setSound,tone}from"./sound.js";import{journey,consequence}from"./journey.js";
+import{artifacts,scars}from"./games/state.js";import{physicsState}from"./physics.js";import{activeEvents}from"./events.js";import{soundEnabled,setSound,tone}from"./sound.js";import{journey,consequence}from"./journey.js";import{installEvolution}from"./evolution.js";
 const root=new URL("./",import.meta.url),go=p=>new URL(p,root).href;import("./station-nav.js").catch(()=>{});
 export function installTravelerHUD(){
+ const fx=installEvolution();
  if(document.querySelector("[data-traveler-hud]"))return;
  const a=artifacts(),s=scars(),p=physicsState(),e=activeEvents();
  const hud=document.createElement("button");hud.dataset.travelerHud="";hud.type="button";hud.setAttribute("aria-label","Open Portal compass");hud.setAttribute("aria-expanded","false");
