@@ -471,12 +471,6 @@ assert(creatorSignal.includes("BEACON DETECTED"),"Workshop beacons can surface i
 assert(creatorMap.includes("CONSTRUCTED BRIDGE"),"Workshop bridges become remembered territory");
 assert(colorCreator.includes("KEEP THIS COLOR")&&colorCreator.includes("portal-kept-color"),"Color can create a persistent traveler artifact");
 
-// Capability routing
-const capabilityHome=fs.readFileSync("./index.html","utf8"),capabilityStyle=fs.readFileSync("./style.css","utf8");
-for(const intent of ["see","make","play","ask","explore","remember"])assert(capabilityHome.includes('data-intent="'+intent+'"'),"Homepage exposes "+intent.toUpperCase()+" capability");
-assert(capabilityHome.includes("portal-last-intent"),"Portal remembers the traveler's last intention locally");
-assert(capabilityHome.includes('make.href="workshop/"')&&capabilityHome.includes('has("operator")')&&capabilityHome.includes('portal-game-artifacts'),"MAKE adapts to canonical earned Workshop access");
-assert(capabilityStyle.includes(".intent-grid")&&capabilityStyle.includes("repeat(2,1fr)"),"Capability routing has a mobile layout");
 
 const askUX=fs.readFileSync("./intelligence/index.html","utf8");
 assert(askUX.includes("THE MIND HAS A BODY BUT NO ENGINE YET")&&askUX.includes("PORTAL WILL NOT PRETEND TO ANSWER"),"Intelligence truthfully exposes unavailable engine state");
@@ -490,3 +484,12 @@ assert(progressionState.includes("legacyId(x)===id"),"Artifact checks use canoni
 // Public station route integrity
 const stationManifest=JSON.parse(fs.readFileSync("./stations.json","utf8"));
 for(const station of stationManifest.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const route="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(route),"Station door must resolve: "+station.id+" / "+room[0]+" -> "+route)}
+
+// Canonical navigation hierarchy: HOME/STATIONS -> STATION -> ROOM -> STATION
+const navHome=fs.readFileSync("./index.html","utf8"),stationNav=fs.readFileSync("./station-nav.js","utf8"),legacyStations=fs.readFileSync("./stations/index.html","utf8"),travelerNav=fs.readFileSync("./traveler-hud.js","utf8");
+assert(navHome.includes('id="homeStations"')&&navHome.includes("CHOOSE A STATION."),"Portal home is the canonical station directory");
+assert(!navHome.includes("OR START WITH AN INTENTION.")&&!navHome.includes(">ALL STATIONS</strong>"),"Homepage no longer duplicates station navigation with arrival/intention layers");
+assert(navHome.includes("?station=")&&navHome.includes("← ALL STATIONS"),"Home opens station detail and returns to all stations");
+assert(stationNav.includes("stations.json")&&stationNav.includes("← "+parent.label"),"Public rooms can return to their parent station");
+assert(travelerNav.includes('import("./station-nav.js")'),"Shared traveler navigation installs station-aware room return");
+assert(legacyStations.includes("location.replace")&&legacyStations.includes("?station="),"Legacy Stations URLs redirect into canonical home hierarchy");
