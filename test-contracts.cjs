@@ -486,3 +486,7 @@ assert(askUX.includes('id="fallbacks"')&&askUX.includes("../oracle/")&&askUX.inc
 const progressionState=fs.readFileSync("./games/state.js","utf8");
 assert(progressionState.includes('typeof a==="string"?{id:a}')&&progressionState.includes("legacyId"),"Artifact state accepts existing string grants and recovers legacy records");
 assert(progressionState.includes("legacyId(x)===id"),"Artifact checks use canonical or recovered IDs");
+
+// Public station route integrity
+const stationManifest=JSON.parse(fs.readFileSync("./stations.json","utf8"));
+for(const station of stationManifest.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const route="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(route),"Station door must resolve: "+station.id+" / "+room[0]+" -> "+route)}
