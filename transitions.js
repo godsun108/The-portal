@@ -1,3 +1,4 @@
+import("./station-nav.js").catch(()=>{});
 import{roomTone}from"./sound.js";
 const HISTORY_KEY="portal-travel-history-v1";
 function rememberRoom(room){
