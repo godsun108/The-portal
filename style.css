@@ -48,3 +48,7 @@ button,a{touch-action:manipulation}
 .progression-doors{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}.portal.compact{min-height:118px}.portal.compact strong{font-size:11px}
 @media(min-width:700px){.arrival-grid{grid-template-columns:repeat(3,1fr)}.arrival-card.primary{grid-column:1/-1}.progression-doors{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:699px){.arrival-grid{grid-template-columns:1fr}.arrival-card.primary{grid-column:auto;min-height:158px}.arrival-card{min-height:128px;padding:17px}.arrival-card b{display:none}.progression-doors{grid-template-columns:1fr 1fr}}
+
+/* MOBILE UX POLISH // 2026-09-28 */
+.arrival-card,.station-entry,.arrival-actions a,.arrival-actions button{outline-offset:3px}.arrival-card:active,.station-entry:active,.arrival-actions a:active,.arrival-actions button:active{transform:scale(.985)}
+@media(max-width:699px){.hero{margin-bottom:38px}.hero h1{margin:20px 0 26px}.lede{font-size:11px;line-height:1.7}.station-entry{min-height:46px;display:inline-flex;align-items:center}.arrival-grid{gap:10px}.arrival-card{border-radius:19px;grid-template-columns:38px 1fr;gap:12px}.arrival-glyph{font-size:24px}.arrival-card strong{font-size:13px}.arrival-card small{font-size:9px}.arrival-actions a,.arrival-actions button{min-height:44px;display:inline-flex;align-items:center}.deeper{margin-top:24px;line-height:1.6}.progression-doors{gap:9px}}
