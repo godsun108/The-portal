@@ -4,12 +4,13 @@ import{artifactId}from"./games/state.js";
 const DAY=86400000;
 const json=(key,fallback)=>{try{const v=JSON.parse(localStorage.getItem(key)||"null");return v??fallback}catch{return fallback}};
 const uniq=xs=>[...new Set(xs.filter(Boolean))];
+const entryId=x=>typeof x==="string"?x:x&&typeof x==="object"?x.id||null:null;
 export function journey(){
  const world=json("portal-world-v1",{}),travel=json("portal-travel-history-v1",[]),art=json("portal-game-artifacts",[]),gameScars=json("portal-game-scars",[]),eventState=json("portal-world-events-v1",{history:[]});
  const rooms=uniq((Array.isArray(travel)?travel:[]).map(x=>x?.room));
  const artifacts=uniq((Array.isArray(art)?art:[]).map(artifactId));
- const scars=uniq([...(Array.isArray(world.scars)?world.scars:[]),...(Array.isArray(gameScars)?gameScars:[]).map(id)]);
- const events=uniq([...(Array.isArray(world.events)?world.events:[]).map(id),...(Array.isArray(eventState.history)?eventState.history:[]).map(id)]);
+ const scars=uniq([...(Array.isArray(world.scars)?world.scars:[]),...(Array.isArray(gameScars)?gameScars:[]).map(entryId)]);
+ const events=uniq([...(Array.isArray(world.events)?world.events:[]).map(entryId),...(Array.isArray(eventState.history)?eventState.history:[]).map(entryId)]);
  const born=Number(world.born)||Date.now(),last=Number(world.last)||born,away=Math.max(0,Number(world.awayMs)||0);
  const completedDaily=Object.keys(localStorage).filter(k=>k.startsWith("portal-daily-complete-")&&localStorage.getItem(k)==="1").length;
  return Object.freeze({schema:"portal.journey.v2",traveler:localStorage.getItem("portal-passport-id")||null,born,last,ageDays:Math.floor((Date.now()-born)/DAY),awayMs:away,returnBand:world.returnBand||"present",visits:Number(world.visits)||0,pressure:Number(world.pressure)||0,atmosphere:world.atmosphere||"STILL",rooms,roomCount:rooms.length,artifacts,scars,events,inventory:Array.isArray(world.inventory)?world.inventory:[],dailyCompleted:completedDaily,converged:localStorage.getItem("portal-convergence")==="1",fork:localStorage.getItem("portal-world-fork")||null});
