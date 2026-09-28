@@ -175,6 +175,14 @@
         [
           "WORLD CLOCK",
           "clock/"
+        ],
+        [
+          "TRACES",
+          "traces/"
+        ],
+        [
+          "TAKE SOMETHING",
+          "take/"
         ]
       ]
     },
