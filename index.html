@@ -89,7 +89,7 @@ function renderStation(id){
  document.querySelector("#stationBack").onclick=()=>closeStation();document.querySelector(".home-station-detail h2")?.focus?.();return true
 }
 function openStation(id){history.pushState({station:id},"","?station="+encodeURIComponent(id));renderStation(id)}
-function closeStation(){history.pushState({station:null},"",location.pathname);renderStations();grid.querySelector("button")?.focus?.()}
+function closeStation(){history.replaceState({station:null},"",location.pathname);renderStations();grid.querySelector("button")?.focus?.()}
 function syncStation(){if(!stationData)return;const id=new URLSearchParams(location.search).get("station");id?renderStation(id):renderStations()}
 addEventListener("popstate",syncStation);
 fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{stationData=d;syncStation()}).catch(()=>{grid.classList.remove("is-loading");grid.innerHTML='<p class="threshold-label">THE STATION MAP COULD NOT BE VERIFIED. <button type="button" onclick="location.reload()">TRY AGAIN</button></p>'})})();</script>
