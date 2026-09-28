@@ -27,12 +27,13 @@
     {
       "id": "echo-maze",
       "title": "ECHO MAZE",
-      "status": "planned",
+      "status": "live",
       "mechanic": "a maze altered by the traveler's prior Portal history",
       "effects": [
         "scar",
         "artifact"
-      ]
+      ],
+      "entry": "echo-maze/"
     },
     {
       "id": "colorfall",
