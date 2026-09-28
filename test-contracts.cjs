@@ -462,3 +462,11 @@ const mapUX=fs.readFileSync("./map/index.html","utf8"),wonderUX=fs.readFileSync(
 assert(mapUX.includes("↗ RETURN")&&mapUX.includes("undernet/cartographer/"),"Discovered Map nodes are navigable remembered territory");
 assert(wonderUX.includes("RETURN TO WHERE IT HAPPENED"),"Wonder can revisit rare encounter locations");
 assert(passportUX.includes("OPEN MY MAP")&&passportUX.includes("ATMOSPHERE"),"Passport acts as a traveler command surface");
+
+// Creator capability pass
+const workshopUX=fs.readFileSync("./workshop/index.html","utf8"),creatorDream=fs.readFileSync("./dream/index.html","utf8"),creatorSignal=fs.readFileSync("./signal/index.html","utf8"),creatorMap=fs.readFileSync("./map/index.html","utf8"),colorCreator=fs.readFileSync("./color/index.html","utf8");
+assert(workshopUX.includes("portal-workshop-nature")&&workshopUX.includes("SEED")&&workshopUX.includes("BEACON")&&workshopUX.includes("BRIDGE")&&workshopUX.includes("ANCHOR"),"Workshop interprets persistent constructions");
+assert(creatorDream.includes("portal-workshop-nature")&&creatorDream.includes("has taken root"),"Workshop seeds can grow into Dream");
+assert(creatorSignal.includes("BEACON DETECTED"),"Workshop beacons can surface in Signal");
+assert(creatorMap.includes("CONSTRUCTED BRIDGE"),"Workshop bridges become remembered territory");
+assert(colorCreator.includes("KEEP THIS COLOR")&&colorCreator.includes("portal-kept-color"),"Color can create a persistent traveler artifact");
