@@ -94,6 +94,8 @@ function syncStation(){if(!stationData)return;const id=new URLSearchParams(locat
 addEventListener("popstate",syncStation);
 fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{stationData=d;syncStation()}).catch(()=>{grid.classList.remove("is-loading");grid.innerHTML='<p class="threshold-label">THE STATION MAP COULD NOT BE VERIFIED. <button type="button" onclick="location.reload()">TRY AGAIN</button></p>'})})();</script></body>
 </html>
+<script type="module">import{installEvolution}from"./evolution.js";const fx=installEvolution("home"),a=document.querySelector("#portalAtmosphere");if(a&&fx.message)a.textContent+=" // "+fx.message;</script>
+
 <script type="module">import{journey,consequence}from"./journey.js";const j=journey(),xs=consequence(),a=document.querySelector("#portalAtmosphere");document.documentElement.dataset.portalV2="journey";if(a&&xs.length)a.textContent="PORTAL ATMOSPHERE // "+j.atmosphere+" // "+xs[0].text;</script>
 
 <script type="module">import{installPhysics}from"./physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
