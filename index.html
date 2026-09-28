@@ -24,52 +24,17 @@
     <header class="hero">
       <p class="eyebrow">YOU FOUND IT</p>
       <h1>THE<br><span>PORTAL</span></h1>
-      <p class="lede" id="portalGreeting">Welcome to the other internet.<br>Travel by portal.</p><p id="portalAtmosphere" style="margin:10px 0 0;color:#575764;font:7px ui-monospace,monospace;letter-spacing:.18em"></p><a class="station-entry" href="stations/">ALL STATIONS →</a>
+      <p class="lede" id="portalGreeting">Welcome to the other internet.<br>Choose a station.</p><p id="portalAtmosphere" style="margin:10px 0 0;color:#575764;font:7px ui-monospace,monospace;letter-spacing:.18em"></p>
     </header>
 
-    <section class="arrival" aria-label="Portal arrival">
-      <p class="threshold-label">CHOOSE HOW DEEP YOU WANT TO GO.</p>
-      <div class="arrival-grid">
-        <a class="arrival-card primary" href="stations/">
-          <span class="arrival-glyph">◎</span>
-          <span><strong>ALL STATIONS</strong><small>jump directly to any part of the Portal</small></span>
-          <b>ENTER →</b>
-        </a>
-        <a class="arrival-card" href="earth/">
-          <span class="arrival-glyph">◉</span>
-          <span><strong>EARTH NOW</strong><small>see what the planet is doing</small></span>
-          <b>OPEN →</b>
-        </a>
-        <a class="arrival-card" href="window/">
-          <span class="arrival-glyph">▣</span>
-          <span><strong>WINDOW</strong><small>look somewhere else on Earth</small></span>
-          <b>OPEN →</b>
-        </a>
-        <a class="arrival-card" href="stations/?s=play">
-          <span class="arrival-glyph">♜</span>
-          <span><strong>PLAY</strong><small>games, experiments, consequences</small></span>
-          <b>EXPLORE →</b>
-        </a>
-      </div>
-      <section class="intent" aria-label="Choose what you want to do">
-        <p class="threshold-label">OR START WITH AN INTENTION.</p>
-        <div class="intent-grid">
-          <a href="earth/" data-intent="see"><b>◉ SEE</b><small>real Earth, live views, weather, sky</small></a>
-          <a href="stations/?s=art" data-intent="make"><b>✧ MAKE</b><small>color, draw, dream, build, release</small></a>
-          <a href="stations/?s=play" data-intent="play"><b>♜ PLAY</b><small>games, physics, puzzles, chaos</small></a>
-          <a href="intelligence/" data-intent="ask"><b>◇ ASK</b><small>reason, investigate, notice patterns</small></a>
-          <a href="stations/?s=world" data-intent="explore"><b>⌁ EXPLORE</b><small>signals, time, strange rooms, dead web</small></a>
-          <a href="passport/" data-intent="remember"><b>▤ REMEMBER</b><small>your history, artifacts, map and scars</small></a>
-        </div>
-        <p class="intent-memory" id="intentMemory"></p>
-      </section>
+    <section class="arrival" aria-label="Portal stations">
+      <p class="threshold-label">CHOOSE A STATION.</p>
+      <div class="home-stations" id="homeStations"></div>
       <div class="arrival-actions">
         <button id="chaosDoor" type="button">✦ SURPRISE ME</button>
         <a href="passport/">▤ MY PASSPORT</a>
         <a href="map/">✣ MY MAP</a>
       </div>
-      <div class="deeper" aria-label="The deeper network"><span>THE DEEPER NETWORK</span><small>Everything else lives inside the stations. Some rooms only appear after you earn them.</small></div>
-      <div hidden aria-hidden="true" data-contract-thresholds><a href="release/">make something you cannot keep</a><a href="orbit/">play with gravity until it makes sense</a><a href="campfire/">verified human connection — the fire refuses imaginary company</a></div>
       <div class="progression-doors" aria-label="Discovered Portal doors">
         <button class="portal locked compact" type="button" data-secret><span class="glyph">?</span><strong>???</strong><small>not yet</small></button>
         <a class="portal arcade compact" id="arcadeDoor" href="arcade/" hidden><span class="glyph">♜</span><strong>ARCADE</strong><small>this machine was not plugged in</small></a>
@@ -111,7 +76,7 @@
   <div id="worldEvent" hidden aria-live="polite"><span id="worldEventGlyph">◌</span><p id="worldEventText"></p></div>
   <div id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
-<script>(()=>{const intents=[...document.querySelectorAll("[data-intent]")];const artifacts=(()=>{try{return JSON.parse(localStorage.getItem("portal-game-artifacts")||"[]")}catch(e){return[]}})();const artifactId=x=>x?.id||Object.keys(x||{}).filter(k=>/^\\d+$/.test(k)).sort((a,b)=>+a-+b).map(k=>x[k]).join("");const has=x=>artifacts.some(a=>artifactId(a)===x);const make=document.querySelector('[data-intent="make"]'),remember=document.querySelector('[data-intent="remember"]');if(make&&has("operator")){make.href="workshop/";make.querySelector("small").textContent="Workshop unlocked — build something that changes Portal"}if(remember&&localStorage.getItem("portal-cartographer")==="1")remember.querySelector("small").textContent="your mapped world, constructions, artifacts and scars";intents.forEach(a=>a.addEventListener("click",()=>localStorage.setItem("portal-last-intent",a.dataset.intent)));const last=localStorage.getItem("portal-last-intent"),m=document.querySelector("#intentMemory");if(last&&m)m.textContent="LAST INTENTION // "+last.toUpperCase();const W=window.PortalWorld?.state;if(!W)return;const g=document.querySelector("#portalGreeting"),a=document.querySelector("#portalAtmosphere");if(W.visits>1&&g)g.innerHTML=W.returnBand==="long"?"YOU CAME BACK.<br>It noticed.":W.returnBand==="days"?"Welcome back.<br>Something continued while you were gone.":"Welcome to the other internet.<br>Travel by portal.";if(a)a.textContent="PORTAL ATMOSPHERE // "+(W.atmosphere||"STILL")+(W.returnBand!=="present"?" // RETURN "+W.returnBand.toUpperCase():"");})();</script></body>
+<script>(()=>{const W=window.PortalWorld?.state,g=document.querySelector("#portalGreeting"),a=document.querySelector("#portalAtmosphere");if(W){if(W.visits>1&&g)g.innerHTML=W.returnBand==="long"?"YOU CAME BACK.<br>It noticed.":W.returnBand==="days"?"Welcome back.<br>Something continued while you were gone.":"Welcome to the other internet.<br>Choose a station.";if(a)a.textContent="PORTAL ATMOSPHERE // "+(W.atmosphere||"STILL")+(W.returnBand!=="present"?" // RETURN "+W.returnBand.toUpperCase():"")}const grid=document.querySelector("#homeStations");function openStation(id){location.href="?station="+encodeURIComponent(id)}fetch("stations.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{grid.innerHTML=d.stations.map(s=>'<button class="home-station" type="button" data-id="'+s.id+'"><span class="glyph">'+s.glyph+'</span><strong>'+s.label+'</strong><small>'+s.line+'</small><b>'+s.rooms.length+' DOOR'+(s.rooms.length===1?"":"S")+'</b></button>').join("");grid.querySelectorAll("button").forEach(b=>b.onclick=()=>openStation(b.dataset.id));const wanted=new URLSearchParams(location.search).get("station");if(wanted){const s=d.stations.find(x=>x.id===wanted);if(s){document.querySelector(".hero").hidden=true;grid.innerHTML='<section class="home-station-detail"><button id="allStations" type="button">← ALL STATIONS</button><div class="detail-glyph">'+s.glyph+'</div><h2>'+s.label+'</h2><p>'+s.line+'</p><div class="home-rooms">'+s.rooms.map(r=>'<a href="'+r[1]+'"><span>'+r[0]+'</span><b>→</b></a>').join("")+'</div></section>';document.querySelector("#allStations").onclick=()=>location.href="./"}}}}).catch(()=>grid.innerHTML='<p class="threshold-label">THE STATION MAP COULD NOT BE VERIFIED.</p>')})();</script></body>
 </html>
 <script type="module">import{installPhysics}from"./physics.js";const p=installPhysics();if(p.mode==="converged"){const target=document.querySelector("main,.shell,.stage,canvas");if(target)target.setAttribute("data-portal-depth","");}</script>
 
