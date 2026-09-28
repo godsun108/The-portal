@@ -6,3 +6,13 @@ html[data-world-event="cross-current"] body:before{background:linear-gradient(11
 html[data-world-event="return-signal"] body:before{box-shadow:inset 0 0 90px #9a845015}
 html[data-world-event="thirteen-doors"] body:before{background:repeating-linear-gradient(90deg,transparent 0 12vw,#ffffff05 12.1vw 12.2vw)}
 @media(prefers-reduced-motion:no-preference){html[data-world-event="cross-current"] body:before{animation:portal-event-drift 9s ease-in-out infinite alternate}@keyframes portal-event-drift{from{opacity:.12;filter:hue-rotate(-8deg)}to{opacity:.28;filter:hue-rotate(8deg)}}}
+
+/* PORTAL EVOLUTION v3 // earned visual age, never fabricated activity */
+html.portal-evolved-deep body:after{opacity:.82}
+html.portal-evolved-scarred body:after{filter:contrast(1.06) saturate(.92)}
+html.portal-evolved-ritual body{--portal-glow:rgba(164,142,255,.21)}
+html.portal-evolved-old body:before{box-shadow:inset 0 0 120px #8b7ca80b}
+@media(prefers-reduced-motion:no-preference){
+ html.portal-evolved-ritual body:after{animation:portal-v3-breathe 11s ease-in-out infinite alternate}
+ @keyframes portal-v3-breathe{from{opacity:.62}to{opacity:.86}}
+}
