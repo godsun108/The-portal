@@ -13,6 +13,6 @@ if(running){const dx=star.x-body.x,dy=star.y-body.y,r2=dx*dx+dy*dy,r=Math.sqrt(r
 if(trail.length>1){x.beginPath();trail.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.strokeStyle="#8ca9d944";x.lineWidth=1;x.stroke()}x.beginPath();x.arc(body.x,body.y,body.r,0,Math.PI*2);x.fillStyle="#b8d1ff";x.shadowColor="#91baff";x.shadowBlur=14;x.fill();x.shadowBlur=0;
 if(drag){x.beginPath();x.moveTo(body.x,body.y);x.lineTo(drag.x,drag.y);x.strokeStyle="#8ca9d9";x.setLineDash([4,5]);x.stroke();x.setLineDash([])}requestAnimationFrame(step)}
 document.querySelector("#again").onclick=()=>{lesson.classList.remove("show");reset(false)};resize();requestAnimationFrame(step);
-</script></body></html>
-<script type="module">import{installTravelerHUD}from"../traveler-hud.js";installTravelerHUD();</script>
+</script><script type="module">import{installTravelerHUD}from"../traveler-hud.js";installTravelerHUD();</script>
 <script type="module">import{installTransitions}from"../transitions.js";installTransitions("orbit");</script>
+</body></html>
