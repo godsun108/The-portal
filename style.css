@@ -52,3 +52,10 @@ button,a{touch-action:manipulation}
 /* MOBILE UX POLISH // 2026-09-28 */
 .arrival-card,.station-entry,.arrival-actions a,.arrival-actions button{outline-offset:3px}.arrival-card:active,.station-entry:active,.arrival-actions a:active,.arrival-actions button:active{transform:scale(.985)}
 @media(max-width:699px){.hero{margin-bottom:38px}.hero h1{margin:20px 0 26px}.lede{font-size:11px;line-height:1.7}.station-entry{min-height:46px;display:inline-flex;align-items:center}.arrival-grid{gap:10px}.arrival-card{border-radius:19px;grid-template-columns:38px 1fr;gap:12px}.arrival-glyph{font-size:24px}.arrival-card strong{font-size:13px}.arrival-card small{font-size:9px}.arrival-actions a,.arrival-actions button{min-height:44px;display:inline-flex;align-items:center}.deeper{margin-top:24px;line-height:1.6}.progression-doors{gap:9px}}
+
+/* INTENTION ROUTER // capability before taxonomy */
+.intent{margin:28px 0 4px;padding-top:22px;border-top:1px solid #24242c}
+.intent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.intent-grid a{min-height:92px;padding:15px;border:1px solid #292934;border-radius:17px;background:#09090dcc;color:#ddd;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;transition:.18s}
+.intent-grid a:hover,.intent-grid a:focus-visible{border-color:#666678;transform:translateY(-2px);background:#101017}.intent-grid b{font-size:11px;letter-spacing:.14em}.intent-grid small{margin-top:7px;color:#777784;font-size:8px;line-height:1.45}.intent-memory{text-align:center;min-height:12px;margin:11px 0 0;color:#4e4e59;font-size:7px;letter-spacing:.16em}
+@media(max-width:699px){.intent{margin-top:22px}.intent-grid{grid-template-columns:repeat(2,1fr)}.intent-grid a{min-height:88px;padding:13px}.intent-grid b{font-size:10px}}
