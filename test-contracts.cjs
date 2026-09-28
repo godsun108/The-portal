@@ -406,7 +406,7 @@ assert(!behindPowered.includes("WORKSHOP"),"BLACK TOKEN does not reveal Workshop
 const operatorTrial=fs.readFileSync("./behind/operator.js","utf8");
 const behindOperator=fs.readFileSync("./behind/index.html","utf8");
 assert(operatorTrial.includes('capability("workshop")'),"operator trial requires five-discipline mastery combination");
-assert(operatorTrial.includes('portal-work-surface-power')&&operatorTrial.includes('==="1"'),"operator trial requires powered Work Surface");
+assert(operatorTrial.includes('localStorage.getItem("portal-work-surface-power")!=="1"'),"operator trial requires powered Work Surface");
 assert(operatorTrial.includes("xs.length<7||xs.length>11"),"operator glyph enforces construction size bounds");
 assert(operatorTrial.includes("touchesTop&&touchesBottom&&branches>=1"),"operator glyph requires span and branch structure");
 assert(operatorTrial.includes('grantArtifact("operator")'),"valid construction grants operator authorization");
