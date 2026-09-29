@@ -9,7 +9,8 @@ assert(win.includes("https://window-earth-production.up.railway.app/"),"Window w
 assert(!win.includes("window-node-production"),"Window contains no deprecated service");
 for(const marker of ['data-g="life"','data-g="moon"','data-g="button"'])assert(arcade.includes(marker),marker+" remains mounted in Arcade");
 assert(arcade.includes(".stage.open{display:grid!important"),"Arcade native stage has a visible-open invariant");
-assert(!arcade.includes('id="stage" hidden'),"Arcade native stage must not depend on the hidden attribute");\nassert(arcade.includes('stage.style.setProperty("display","grid","important")'),"Arcade open path explicitly reveals the stage");
+assert(!arcade.includes('id="stage" hidden'),"Arcade native stage must not depend on the hidden attribute");
+assert(arcade.includes('stage.style.setProperty("display","grid","important")'),"Arcade open path explicitly reveals the stage");
 assert(pulse.includes("earth-now/dynamic/latest.json"),"Pulse reads canonical Earth snapshot");
 const stations=JSON.parse(read("./stations.json"));
 for(const station of stations.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const p="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(p),"Missing station destination: "+station.id+" / "+room[0]+" -> "+p)}
