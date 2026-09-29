@@ -7,7 +7,7 @@ assert(earth.includes("https://window-earth-production.up.railway.app"),"Earth h
 assert(!earth.includes("window-node-production"),"Earth contains no deprecated Window service");
 assert(win.includes("https://window-earth-production.up.railway.app/"),"Window wrapper uses canonical service");
 assert(!win.includes("window-node-production"),"Window contains no deprecated service");
-for(const label of ["ONE LIFE","DON’T TOUCH THE MOON","THE BUTTON"])assert(arcade.includes(label),label+" remains mounted in Arcade");
+for(const label of ["ONE LIFE","DON'T TOUCH THE MOON","THE BUTTON"])assert(arcade.includes(label),label+" remains mounted in Arcade");
 assert(arcade.includes(".stage.open{display:grid!important"),"Arcade native stage has a visible-open invariant");
 assert(arcade.includes("stage.hidden=false"),"Arcade open path explicitly reveals the stage");
 assert(pulse.includes("earth-now/dynamic/latest.json"),"Pulse reads canonical Earth snapshot");
