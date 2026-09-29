@@ -42,7 +42,7 @@ assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must emb
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
 assert(earth.includes("../window/?"), "EARTH must route EYES through Portal WINDOW");
 
-assert(windowRoom.includes("https://window-node-production.up.railway.app/")&&windowRoom.includes("location.replace(target)"), "WINDOW must hand off directly to the canonical live WINDOW service");
+assert(windowRoom.includes("https://window-earth-production.up.railway.app/")&&windowRoom.includes("location.replace(target)"), "WINDOW must hand off directly to the canonical live WINDOW service");
 assert(windowRoom.includes("location.search"), "WINDOW must preserve handoff query parameters");
 assert(!windowRoom.includes("youtube-nocookie.com/embed/"), "Portal WINDOW must not fabricate camera embeds");
 
