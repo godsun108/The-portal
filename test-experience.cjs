@@ -16,3 +16,7 @@ const stations=JSON.parse(read("./stations.json"));
 for(const station of stations.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const p="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(p),"Missing station destination: "+station.id+" / "+room[0]+" -> "+p)}
 for(const p of ["./index.html","./earth/index.html","./window/index.html","./arcade/index.html","./pulse/index.html"]){const s=read(p);assert(!s.includes("window-node-production"),p+" contains stale Window domain");assert(!s.includes("portal-arcade-unlocked"),p+" contains deprecated Arcade key")}
 console.log("Portal experience contracts passed.");
+
+// Cache/deployment regression sentinels: these stale identifiers previously served broken production code.
+assert(!earth.includes("20260928-4"),"Earth wrapper must not reintroduce stale 20260928-4 build identifiers");
+assert(!win.includes("window-node-production"),"Window wrapper must not reintroduce deprecated Railway service");
