@@ -41,6 +41,7 @@ const colorRoom = read("color/index.html");
 assert(earth.includes("https://godsun108.github.io/earth-now/"), "EARTH must embed canonical Earth Now");
 assert(earth.includes("earth-now:open-eyes"), "EARTH must listen for canonical OPEN EYES handoff");
 assert(earth.includes("../window/?"), "EARTH must route EYES through Portal WINDOW");
+assert(earth.includes("https://window-earth-production.up.railway.app")&&!earth.includes("https://window-node-production.up.railway.app"), "EARTH handoff allowlist must use canonical WINDOW service");
 
 assert(windowRoom.includes("https://window-earth-production.up.railway.app/")&&windowRoom.includes("location.replace(target)"), "WINDOW must hand off directly to the canonical live WINDOW service");
 assert(windowRoom.includes("location.search"), "WINDOW must preserve handoff query parameters");
