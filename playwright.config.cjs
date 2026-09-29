@@ -1,0 +1,1 @@
+const {defineConfig,devices}=require("@playwright/test");module.exports=defineConfig({testDir:"./e2e",timeout:45000,retries:1,use:{viewport:{width:390,height:844}},projects:[{name:"chromium",use:{...devices["Desktop Chrome"]}},{name:"webkit",use:{...devices["iPhone 15"]}}]});
