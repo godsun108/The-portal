@@ -20,4 +20,14 @@ jobs:
       - name: Chromium production journey
         run: npx playwright test --project=chromium
       - name: WebKit production journey
-        run: npx playwright test --project=webkit
+        if: always()\n        run: npx playwright test --project=webkit
+      - name: Upload browser failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-experience-evidence
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7
