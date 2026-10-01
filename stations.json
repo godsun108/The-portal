@@ -194,6 +194,10 @@
       "status": "live",
       "rooms": [
         [
+          "MARKETS NOW",
+          "markets/"
+        ],
+        [
           "AI COMPANY",
           "company/"
         ]
