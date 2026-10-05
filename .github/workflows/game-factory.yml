@@ -34,6 +34,8 @@ jobs:
         run: node game-factory/experiment-evaluator.test.cjs
       - name: Test nearest-good generational rollback
         run: node game-factory/rollback-resolver.test.cjs
+      - name: Test conservative sibling branch competition
+        run: node game-factory/branch-tournament.test.cjs
       - name: Test shared combat runtime
         run: node game-factory/qa/combat-runtime.test.cjs
       - name: Validate mechanic composition
