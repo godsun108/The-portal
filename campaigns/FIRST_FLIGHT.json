@@ -1,0 +1,14 @@
+{
+  "id":"first-flight",
+  "title":"First Flight",
+  "format":"campaign",
+  "design":"mobile-first, cross-device-ready",
+  "chapters":[
+    {"id":"home","fantasy":"ordinary life before the horizon","missions":["wake","street"]},
+    {"id":"city","fantasy":"freedom and discovery","missions":["drive","spaceport"]},
+    {"id":"launch","fantasy":"leave the world under your own control","missions":["board","liftoff","atmosphere"]},
+    {"id":"orbit","fantasy":"the universe opens","missions":["first_orbit"]}
+  ],
+  "continuity":["apartment","street","vehicle","spaceport","spacecraft","atmosphere","orbit"],
+  "principles":["real progression","checkpoints","resume quickly","story plus exploration","no paywall on core campaign"]
+}
