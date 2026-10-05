@@ -1,5 +1,5 @@
 const fs=require("fs"),path=require("path");
-const root=path.resolve(__dirname,".."),examples=path.join(__dirname,"examples"),out=path.join(__dirname,"reports");
+const root=path.resolve(__dirname,".."),examples=path.join(__dirname,"examples"),batches=path.join(__dirname,"batches"),out=path.join(__dirname,"reports");
 fs.mkdirSync(out,{recursive:true});
 const rows=[];
 for(const file of fs.readdirSync(examples).filter(x=>x.endsWith(".json")).sort()){
