@@ -172,11 +172,16 @@
       "shareable room join URL",
       "visual room pairing marker",
       "configurable WebSocket relay endpoint",
-      "bounded reconnect backoff policy"
+      "bounded reconnect backoff policy",
+      "standards-based QR generation for room join URL",
+      "bounded WebSocket Shared Reality relay service",
+      "origin allowlist on relay",
+      "room capacity and payload limits",
+      "relay identity and session validation"
     ],
     "next": [
-      "standards-compliant scannable QR generation",
-      "deploy/select signaling relay for physical-device rooms",
+      "deploy Shared Reality relay",
+      "configure lab relay URL",
       "real Phone A + Phone B replication test",
       "Shared AR camera anchor alignment",
       "Reality Play Lab 01 body-input seam"
