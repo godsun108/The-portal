@@ -1,0 +1,44 @@
+{
+  "schema": "portal.shared-spatial.v1",
+  "name": "PORTAL Shared Reality",
+  "purpose": "Synchronize one spatial game world across phones, tablets, headsets and presentation displays.",
+  "model": {
+    "session": "authoritative shared game-state namespace",
+    "anchor": "common physical-world origin negotiated or resolved per device",
+    "player": "device/player pose and capabilities",
+    "object": "networked spatial entity with owner and version",
+    "event": "timestamped gameplay action"
+  },
+  "modes": [
+    {
+      "id": "shared-ar",
+      "description": "Multiple camera devices see and manipulate the same anchored virtual world from their own viewpoints."
+    },
+    {
+      "id": "reality-play",
+      "description": "A phone observes player movement while a TV or other display presents the game experience."
+    },
+    {
+      "id": "hybrid-party",
+      "description": "Camera-tracked players, handheld AR players and headset players participate in one session."
+    }
+  ],
+  "requirements": [
+    "session join/leave",
+    "shared anchor resolution",
+    "object replication",
+    "ownership arbitration",
+    "late-join snapshot",
+    "latency smoothing",
+    "host migration strategy",
+    "privacy-safe camera processing",
+    "play-space safety",
+    "AirPlay/display presentation treated as output, not authority"
+  ],
+  "examples": [
+    "tabletop cooperative dungeon visible from every phone",
+    "virtual creature moving through one real room while every player sees the same creature position",
+    "phone camera tracks a standing player while spectators watch the composited game on TV",
+    "one player in VR interacts with objects that phone AR players see in the same shared world"
+  ]
+}
