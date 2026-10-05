@@ -1,6 +1,6 @@
 {
   "schema": "portal.tv.open-library.v1",
-  "generatedAt": "2026-10-05T11:55:55.394Z",
+  "generatedAt": "2026-10-05T12:07:05.857Z",
   "policy": {
     "allowedLicenses": [
       "CC0-1.0",
@@ -31,7 +31,20 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2006,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "science-fiction",
+        "surreal"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "sci-fi",
+        "shorts"
+      ]
     },
     {
       "id": "big-buck-bunny",
@@ -44,7 +57,19 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2008,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "comedy"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "comedy",
+        "shorts"
+      ]
     },
     {
       "id": "sintel",
@@ -57,7 +82,20 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2010,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "fantasy",
+        "adventure"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "fantasy",
+        "shorts"
+      ]
     },
     {
       "id": "tears-of-steel",
@@ -70,7 +108,19 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2012,
+      "format": "short-film",
+      "themes": [
+        "science-fiction",
+        "live-action",
+        "visual-effects"
+      ],
+      "channelTags": [
+        "cinema",
+        "sci-fi",
+        "shorts"
+      ]
     },
     {
       "id": "wing-it",
@@ -83,7 +133,17 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2023,
+      "format": "short-film",
+      "themes": [
+        "animation"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "shorts"
+      ]
     },
     {
       "id": "charge",
@@ -96,7 +156,19 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2022,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "science-fiction"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "sci-fi",
+        "shorts"
+      ]
     },
     {
       "id": "sprite-fright",
@@ -109,7 +181,20 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2021,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "comedy",
+        "horror"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "comedy",
+        "shorts"
+      ]
     },
     {
       "id": "coffee-run",
@@ -122,7 +207,19 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2020,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "comedy"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "comedy",
+        "shorts"
+      ]
     },
     {
       "id": "spring",
@@ -135,7 +232,19 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2019,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "fantasy"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "fantasy",
+        "shorts"
+      ]
     },
     {
       "id": "agent-327",
@@ -148,7 +257,20 @@
       "rightsStatus": "verified_open",
       "license": "CC-BY-4.0",
       "rightsSource": "https://studio.blender.org/terms-and-conditions/",
-      "attribution": "Blender Foundation / Blender Studio"
+      "attribution": "Blender Foundation / Blender Studio",
+      "year": 2017,
+      "format": "short-film",
+      "themes": [
+        "animation",
+        "action",
+        "comedy"
+      ],
+      "channelTags": [
+        "cinema",
+        "animation",
+        "comedy",
+        "shorts"
+      ]
     }
   ],
   "rejected": []
