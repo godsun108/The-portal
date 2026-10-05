@@ -138,6 +138,37 @@
         "all-portal-factories"
       ],
       "revenueRole": "production reliability"
+    },
+    {
+      "id": "game-factory",
+      "name": "PORTAL Game Factory",
+      "domain": "games",
+      "status": "partial",
+      "autonomy": "staged",
+      "inputs": [
+        "game specifications",
+        "genre templates"
+      ],
+      "outputs": [
+        "generated game candidates",
+        "quality evidence"
+      ],
+      "qa": [
+        "deterministic generation",
+        "PORTAL protocol seams",
+        "browser playtest harness",
+        "quality gates"
+      ],
+      "implementation": [
+        "game-factory/game-factory.cjs",
+        "game-factory/catalog.json",
+        "game-factory/quality-gates.json",
+        "game-factory/qa/factory-playtest.spec.cjs"
+      ],
+      "feeds": [
+        "portal-ci"
+      ],
+      "revenueRole": "game portfolio and premium flagship pipeline"
     }
   ]
 }
