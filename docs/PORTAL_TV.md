@@ -15,3 +15,11 @@ Channels are labeled placeholders, not claims of live streams. No copyrighted co
 - Add first-party original program manifest with licensed sources, metadata and schedule.
 - Introduce a user-controlled export/import of browser-local guide.
 - If live programming is desired, add an authorized HLS playback path and real program guide data.
+
+## v0.3 directory interaction
+
+The `tv-directory.html` official-destination catalog now includes browser-local favorites (`portal-tv-favorites-v1`) and recently opened destinations (`portal-tv-history-v1`, capped at 100). Search, category, favorites-only and recently-opened filters are available. External services open in their own sites; recent history records link-opening intent, not verified playback or completed watching. The history can be cleared. Local storage is per browser/device, not synced. Provider eligibility and availability remain subject to change.
+
+## Media licensing and integration gate
+
+Only use explicit provider embed permissions or authorized direct streams for in-page playback. Do not scrape stream URLs, defeat DRM, proxy restricted broadcasts, or call directory destinations playable channels. OTA ingestion needs the viewer's own hardware and reception. Next: validate browser behavior and establish a reviewed first-party original-content manifest before adding actual in-page streams.
