@@ -1,0 +1,11 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "beacon-jump",
+  "title": "BEACON//JUMP",
+  "tagline": "MOVE // LEAP // REACH",
+  "genre": "platformer",
+  "durationSeconds": 45,
+  "worldKey": "portal-game-history",
+  "artifact": "beacon-jump-clear",
+  "overwrite": false
+}
