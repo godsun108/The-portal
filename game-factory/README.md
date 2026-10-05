@@ -17,13 +17,13 @@ Every generated game uses the existing PORTAL seams: `beginRun`, `event`, `finis
 
 ## Contract
 
-A generated game must live at `games/<id>/index.html`, be registered in `arcade/cabinets.json`, keep runtime dependencies browser-safe/local, expose PORTAL run telemetry, and pass Game Factory plus Production Experience QA.
+A generated game must live at `games/<id>/index.html`, be registered in `arcade/cabinets.json` as a quarantined `candidate`, keep runtime dependencies browser-safe/local, expose PORTAL run telemetry, and pass Game Factory plus Production Experience QA. A factory candidate becomes `playable` only through `promote-candidate.cjs` with explicit passing browser evidence.
 
 ## Commands
 
 ```bash
 node game-factory/game-factory.cjs game-factory/examples/signal-dodge.json
-node game-factory/game-factory.cjs --validate
+node game-factory/game-factory.cjs --validate\nnode game-factory/acceptance-runner.cjs game-factory/examples/signal-dodge.json\nnode game-factory/promote-candidate.cjs <id> <browser-evidence.json>
 ```
 
 `--validate` now checks the existing game catalog and self-tests every factory genre for deterministic output and required integration seams.
