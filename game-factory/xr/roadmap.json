@@ -162,14 +162,20 @@
       "publish/subscribe spatial transport seam",
       "replicated spatial client",
       "bidirectional multi-client object propagation",
-      "Shared Reality Lab routed through replicated clients"
+      "Shared Reality Lab routed through replicated clients",
+      "normalized short room codes",
+      "host and guest spatial roles",
+      "room join URL seam",
+      "late-join snapshot request/publication primitives",
+      "WebSocket-backed spatial bus adapter",
+      "Shared Reality Lab room pairing"
     ],
     "next": [
-      "WebRTC/WebSocket transport adapter for physical devices",
-      "real phone session pairing and join code",
-      "Shared AR camera/anchor hardware prototype",
-      "Reality Play Lab 01 body-input seam",
-      "spatial VHE actor seam"
+      "deploy/select signaling relay for physical-device rooms",
+      "QR presentation for room join URL",
+      "real Phone A + Phone B replication test",
+      "Shared AR camera anchor alignment",
+      "Reality Play Lab 01 body-input seam"
     ]
   }
 }
