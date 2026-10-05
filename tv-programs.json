@@ -1,6 +1,6 @@
 {
   "schema": "portal.tv.programs.v1",
-  "status": "curated_source_identified_embed_playback_not_verified",
+  "status": "six_curated_video_ids_source_identified_embed_playback_not_verified",
   "programs": [
     {
       "title": "NASA — Official Channel Trailer",
@@ -19,6 +19,46 @@
       "videoId": "YQWespzOtzI",
       "source": "https://www.youtube.com/watch?v=YQWespzOtzI",
       "live": false
+    },
+    {
+      "title": "Elephants Dream — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Foundation",
+      "type": "youtube_embed",
+      "videoId": "4eJVGqJhp40",
+      "source": "https://www.youtube.com/watch?v=4eJVGqJhp40",
+      "live": false,
+      "rights": "Blender open movie; attribution to Blender Foundation; YouTube embedding subject to provider settings"
+    },
+    {
+      "title": "Big Buck Bunny — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Foundation",
+      "type": "youtube_embed",
+      "videoId": "YE7VzlLtp-4",
+      "source": "https://www.youtube.com/watch?v=YE7VzlLtp-4",
+      "live": false,
+      "rights": "Blender open movie; attribution to Blender Foundation; YouTube embedding subject to provider settings"
+    },
+    {
+      "title": "Sintel — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Foundation",
+      "type": "youtube_embed",
+      "videoId": "eRsGyueVLvQ",
+      "source": "https://www.youtube.com/watch?v=eRsGyueVLvQ",
+      "live": false,
+      "rights": "Blender open movie; attribution to Blender Foundation; YouTube embedding subject to provider settings"
+    },
+    {
+      "title": "Tears of Steel — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Foundation",
+      "type": "youtube_embed",
+      "videoId": "R6MlUcmOul8",
+      "source": "https://www.youtube.com/watch?v=R6MlUcmOul8",
+      "live": false,
+      "rights": "Blender open movie; attribution to Blender Foundation; YouTube embedding subject to provider settings"
     }
   ]
 }
