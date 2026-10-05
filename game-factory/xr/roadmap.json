@@ -168,11 +168,15 @@
       "room join URL seam",
       "late-join snapshot request/publication primitives",
       "WebSocket-backed spatial bus adapter",
-      "Shared Reality Lab room pairing"
+      "Shared Reality Lab room pairing",
+      "shareable room join URL",
+      "visual room pairing marker",
+      "configurable WebSocket relay endpoint",
+      "bounded reconnect backoff policy"
     ],
     "next": [
+      "standards-compliant scannable QR generation",
       "deploy/select signaling relay for physical-device rooms",
-      "QR presentation for room join URL",
       "real Phone A + Phone B replication test",
       "Shared AR camera anchor alignment",
       "Reality Play Lab 01 body-input seam"
