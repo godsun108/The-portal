@@ -13,7 +13,7 @@ assert(!arcade.includes('id="stage" hidden'),"Arcade native stage must not depen
 assert(arcade.includes('stage.style.setProperty("display","grid","important")'),"Arcade open path explicitly reveals the stage");
 assert(pulse.includes("earth-now/dynamic/latest.json"),"Pulse reads canonical Earth snapshot");
 const stations=JSON.parse(read("./stations.json"));
-for(const station of stations.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const p="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(p),"Missing station destination: "+station.id+" / "+room[0]+" -> "+p)}
+for(const station of stations.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const clean="./"+href.replace(/^\.\//,"").replace(/\/$/,"");const p=/\.html?(?:[?#].*)?$/i.test(clean)?clean.split(/[?#]/)[0]:clean+"/index.html";assert(fs.existsSync(p),"Missing station destination: "+station.id+" / "+room[0]+" -> "+p)}
 for(const p of ["./index.html","./earth/index.html","./window/index.html","./arcade/index.html","./pulse/index.html"]){const s=read(p);assert(!s.includes("window-node-production"),p+" contains stale Window domain");assert(!s.includes("portal-arcade-unlocked"),p+" contains deprecated Arcade key")}
 console.log("Portal experience contracts passed.");
 
