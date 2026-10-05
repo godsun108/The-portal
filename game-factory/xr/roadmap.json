@@ -52,6 +52,44 @@
         "privacy",
         "device capability fallbacks"
       ]
+    },
+    {
+      "id": "reality-play",
+      "name": "Reality Play",
+      "status": "foundation",
+      "targets": [
+        "phone-camera body tracking",
+        "gesture-to-game input",
+        "TV/AirPlay presentation",
+        "mirror-mode compositing",
+        "party play-space calibration"
+      ],
+      "principles": [
+        "local tracking authority",
+        "presentation latency must not drive simulation",
+        "privacy-safe camera processing",
+        "safe play-space calibration",
+        "controller-free accessibility"
+      ]
+    },
+    {
+      "id": "shared-reality",
+      "name": "Shared Reality",
+      "status": "foundation",
+      "targets": [
+        "multi-phone shared AR",
+        "cross-device spatial sessions",
+        "shared persistent anchors",
+        "networked spatial objects",
+        "hybrid phone/headset/TV party play"
+      ],
+      "principles": [
+        "one logical world from many viewpoints",
+        "late-join synchronization",
+        "conflict-safe object ownership",
+        "latency smoothing",
+        "device capability fallbacks"
+      ]
     }
   ],
   "sharedFoundation": [
@@ -64,7 +102,12 @@
     "comfort system",
     "performance budgets",
     "XR interaction grammar",
-    "cross-platform save/profile"
+    "cross-platform save/profile",
+    "shared spatial session protocol",
+    "anchor consensus/resolution",
+    "networked spatial entity replication",
+    "Reality Play camera-input abstraction",
+    "spectator/display output seam"
   ],
   "prototype": {
     "lab": "games/portal-xr-lab-01/",
@@ -112,10 +155,11 @@
       "pinch-driven object grab carry and release"
     ],
     "next": [
+      "Shared AR Lab 01 local-session prototype",
+      "Reality Play Lab 01 body-input seam",
       "expand full hand skeleton rendering",
-      "immersive AR Lab 01 with passthrough-safe rendering",
       "spatial VHE actor seam",
-      "headset hardware verification and tuning"
+      "headset and phone hardware verification"
     ]
   }
 }
