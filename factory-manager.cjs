@@ -4,6 +4,7 @@ const registry=JSON.parse(fs.readFileSync("factory-registry.json","utf8"));
 const readJson=p=>fs.existsSync(p)?JSON.parse(fs.readFileSync(p,"utf8")):null;
 const openLibrary=readJson("tv-open-library.json");
 const signalHealth=readJson("tv-signal-health.json");
+const economics=readJson("factory-economics.json");
 if(registry.schema!=="portal.factory-registry.v1"||!Array.isArray(registry.factories))throw Error("invalid factory registry");
 const allowed=new Set(["operational","partial","planned"]);
 const ids=new Set();
@@ -31,8 +32,8 @@ const telemetry={
  measuredAt:new Date().toISOString(),
  openEntertainment:openLibrary?{candidates:openLibrary.counts?.candidates??null,admitted:openLibrary.counts?.admitted??null,rejected:openLibrary.counts?.rejected??null,generatedAt:openLibrary.generatedAt||null}:null,
  signalReliability:signalHealth?{checked:signalHealth.summary?.checked??null,reachable:signalHealth.summary?.reachable??null,generatedAt:signalHealth.generatedAt||null,note:signalHealth.note||null}:null,
- economics:{costUsd:null,revenueUsd:null,profitUsd:null,status:"unmeasured",note:"No economic value is inferred without a connected measurement source."}
+ economics:economics?{status:economics.status,currency:economics.currency,source:economics.source,period:economics.period,metrics:economics.metrics,policy:economics.policy}: {status:"disconnected",currency:"USD",metrics:{grossRevenue:null,netRevenue:null,operatingCost:null,profit:null},note:"Economic telemetry file unavailable."}
 };
-const snapshot={schema:"portal.factory-status.v3",generatedAt:new Date().toISOString(),counts,total:registry.factories.length,dependencyEdges:edges.length,telemetry,management:{topPriority:actions[0]||null,actionQueue:actions},factories:registry.factories.map(f=>({id:f.id,name:f.name,domain:f.domain,status:f.status,autonomy:f.autonomy,outputs:f.outputs,revenueRole:f.revenueRole,implementationEvidence:f.implementation.length}))};
+const snapshot={schema:"portal.factory-status.v4",generatedAt:new Date().toISOString(),counts,total:registry.factories.length,dependencyEdges:edges.length,telemetry,management:{topPriority:actions[0]||null,actionQueue:actions},factories:registry.factories.map(f=>({id:f.id,name:f.name,domain:f.domain,status:f.status,autonomy:f.autonomy,outputs:f.outputs,revenueRole:f.revenueRole,implementationEvidence:f.implementation.length}))};
 fs.writeFileSync("factory-status.json",JSON.stringify(snapshot,null,2)+"\n");
 console.log("Digital Factory Manager:",snapshot.counts,"total",snapshot.total,"edges",snapshot.dependencyEdges);
