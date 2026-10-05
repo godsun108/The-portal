@@ -21,6 +21,8 @@ jobs:
         run: node game-factory/acceptance-runner.cjs game-factory/examples/factory-proof-01.json
       - name: Run controlled experiment through acceptance gate
         run: node game-factory/experiment-gate.cjs game-factory/experiments/factory-proof-01-exp-duration-54.json
+      - name: Record verified experiment lineage
+        run: node game-factory/experiment-registry.cjs game-factory/reports/experiment-gate-factory-proof-01-exp-duration-54.json
       - name: Upload Game Factory evidence
         if: always()
         uses: actions/upload-artifact@v4
