@@ -4,9 +4,14 @@
  const root=document.getElementById('portalNetwork');if(!root)return;
  const status=root.querySelector('#networkStatus'),rail=root.querySelector('#networkChannels'),queue=root.querySelector('#networkQueue');
  let open=[];try{const r=await fetch('tv-open-library.json?v=1',{cache:'no-store'});if(r.ok)open=(await r.json()).programs||[]}catch{}
+ const tagged=(x,t)=>Array.isArray(x.channelTags)&&x.channelTags.includes(t);
  const channels=[
-  {id:'open-cinema',name:'PORTAL Open Cinema',icon:'🎬',match:x=>x.genre==='Movies'},
-  {id:'animation',name:'Open Animation',icon:'✨',match:x=>/animation|blender/i.test([x.genre,x.provider,x.title].join(' '))},
+  {id:'open-cinema',name:'PORTAL Open Cinema',icon:'🎬',match:x=>tagged(x,'cinema')||x.genre==='Movies'},
+  {id:'animation',name:'Open Animation',icon:'✨',match:x=>tagged(x,'animation')},
+  {id:'sci-fi',name:'Open Sci-Fi',icon:'🚀',match:x=>tagged(x,'sci-fi')},
+  {id:'comedy',name:'Open Comedy',icon:'😄',match:x=>tagged(x,'comedy')},
+  {id:'fantasy',name:'Open Fantasy',icon:'🐉',match:x=>tagged(x,'fantasy')},
+  {id:'shorts',name:'Open Shorts',icon:'🎞',match:x=>tagged(x,'shorts')},
   {id:'all-open',name:'Open Entertainment',icon:'◈',match:()=>true}
  ];
  const valid=x=>x.rightsStatus==='verified_open'&&x.type==='youtube_embed'&&/^[A-Za-z0-9_-]{11}$/.test(x.videoId||'');
