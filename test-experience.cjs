@@ -37,3 +37,8 @@ const tvNetwork=read("./tv-network.js"),tvShell=read("./tv.html");
 assert(tvShell.includes('id="portalNetwork"')&&tvShell.includes("tv-network.js?v=1"),"PORTAL TV must expose the virtual network surface");
 assert(tvNetwork.includes("rightsStatus==='verified_open'")&&tvNetwork.includes("continuous playlist channel"),"Virtual channels must be built only from rights-admitted open programming and labeled truthfully");
 assert(tvNetwork.includes("PORTAL Open Cinema")&&tvNetwork.includes("Open Animation")&&tvNetwork.includes("Open Entertainment"),"PORTAL Network must retain its foundational generated channels");
+
+const factoryManager=read("./factory-manager.cjs"),factoryRegistry=JSON.parse(read("./factory-registry.json"));
+assert(factoryRegistry.schema==="portal.factory-registry.v1"&&factoryRegistry.factories.length>=5,"Digital Factory Manager must retain an evidence-based factory registry");
+assert(factoryManager.includes("management:{topPriority")&&factoryManager.includes("actionQueue:actions"),"Factory Manager must publish a ranked management action queue");
+assert(factoryManager.includes('conditions.push("producing")')&&factoryManager.includes('conditions.push("under-built")'),"Factory Manager must classify operational and incomplete factories distinctly");
