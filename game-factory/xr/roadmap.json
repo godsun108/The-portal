@@ -92,11 +92,17 @@
       "controller-driven nearest-object acquisition",
       "controller-driven 3D carry and release",
       "reusable XR world object primitive",
-      "reusable locomotion state seam"
+      "reusable locomotion state seam",
+      "parabolic teleport trajectory",
+      "teleport floor intersection and comfort validation",
+      "HRTF positional audio runtime",
+      "distance-attenuated spatial tones",
+      "spatial interaction audio feedback"
     ],
     "next": [
-      "teleport gesture and reference-space offset execution",
-      "spatial audio",
+      "bind teleport gesture to XR controller input",
+      "render teleport arc and destination marker",
+      "head pose listener tracking",
       "hand tracking",
       "immersive AR lab",
       "headset hardware verification and tuning"
