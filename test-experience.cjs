@@ -31,3 +31,8 @@ assert(openCandidates.schema==="portal.tv.open-candidates.v1"&&openCandidates.it
 const tvDirector=read("./tv-programming-director.js");
 assert(tvDirector.includes("tv-open-library.json")&&tvDirector.includes("rights-verified open"),"Programming Director must surface the autonomous open library with explicit rights labeling");
 assert(tvDirector.includes("kind:'open'")&&tvDirector.includes("Watch in Portal"),"Rights-admitted open entertainment must be directly discoverable as in-Portal programming");
+
+const tvNetwork=read("./tv-network.js"),tvShell=read("./tv.html");
+assert(tvShell.includes('id="portalNetwork"')&&tvShell.includes("tv-network.js?v=1"),"PORTAL TV must expose the virtual network surface");
+assert(tvNetwork.includes("rightsStatus==='verified_open'")&&tvNetwork.includes("continuous playlist channel"),"Virtual channels must be built only from rights-admitted open programming and labeled truthfully");
+assert(tvNetwork.includes("PORTAL Open Cinema")&&tvNetwork.includes("Open Animation")&&tvNetwork.includes("Open Entertainment"),"PORTAL Network must retain its foundational generated channels");
