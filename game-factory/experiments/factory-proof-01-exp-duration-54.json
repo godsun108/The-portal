@@ -9,6 +9,8 @@
   "artifact": "factory-proof-mark-exp-54",
   "experiment": {
     "parent": "factory-proof-01",
+    "rootAncestor": "factory-proof-01",
+    "generation": 1,
     "variable": "durationSeconds",
     "baseline": 45,
     "target": 54,
