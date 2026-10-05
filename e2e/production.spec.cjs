@@ -13,8 +13,7 @@ for(const [id,text] of [["moon","DON'T TOUCH"],["button","DO NOT"],["life","READ
 }
 test("Earth serves observations and renderer",async({page})=>{
  await page.goto("https://godsun108.github.io/earth-now/?e2e="+Date.now(),{waitUntil:"domcontentloaded"});
- await expect(page.locator("#status")).not.toContainText("CONNECTING",{timeout:20000});
- const status=await page.locator("#status").innerText(); expect(status).toMatch(/\d+ OBSERVATIONS/);
+ await expect(page.locator("#status")).toContainText(/\d+ OBSERVATIONS/,{timeout:30000});
 });
 test("Window opens a verified view or explicitly reports discovery",async({page})=>{
  await page.goto("https://godsun108.github.io/window-earth/?e2e="+Date.now(),{waitUntil:"domcontentloaded"});
