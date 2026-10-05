@@ -60,14 +60,19 @@
       "platforms": [
         "AR",
         "VR",
-        "MR"
+        "MR",
+        "Reality Play",
+        "Shared Reality"
       ],
       "principles": [
         "comfort",
         "privacy",
         "spatial safety",
         "performance",
-        "cross-platform abstractions"
+        "cross-platform abstractions",
+        "shared spatial state",
+        "multi-device synchronization",
+        "presentation/display decoupling"
       ]
     }
   ]
