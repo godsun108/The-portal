@@ -1,0 +1,30 @@
+{
+  "schema": "portal.experience-pattern.v1",
+  "id": "xr-embodied-interaction",
+  "sourceClass": "immersive XR games",
+  "sources": [
+    "room-scale VR genre",
+    "mixed-reality interaction genre"
+  ],
+  "observation": "XR interactions feel strongest when physical motion maps directly to simple world verbs and comfort remains predictable.",
+  "abstraction": "natural pose/input -> immediate spatial feedback -> low-friction interaction -> optional locomotion comfort mode",
+  "hypothesis": "A small universal set of grab point use and locomotion verbs can support many XR game recipes.",
+  "mechanics": [
+    "xr-head-pose",
+    "xr-controller-input",
+    "xr-grab-interact",
+    "xr-teleport-locomotion"
+  ],
+  "metrics": [
+    "interaction success rate",
+    "recenter frequency",
+    "comfort-mode changes"
+  ],
+  "risks": [
+    "device fragmentation",
+    "motion discomfort",
+    "accessibility mismatch"
+  ],
+  "originalApplication": "PORTAL XR uses a device-neutral interaction grammar with explicit comfort settings and flat-screen fallback.",
+  "copyExpression": false
+}
