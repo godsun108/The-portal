@@ -97,14 +97,19 @@
       "teleport floor intersection and comfort validation",
       "HRTF positional audio runtime",
       "distance-attenuated spatial tones",
-      "spatial interaction audio feedback"
+      "spatial interaction audio feedback",
+      "controller orientation to world ray",
+      "left-hand teleport gesture lifecycle",
+      "visible teleport trajectory",
+      "teleport destination marker",
+      "comfort-gated teleport commit/cancel",
+      "tracked-head spatial audio listener"
     ],
     "next": [
-      "bind teleport gesture to XR controller input",
-      "render teleport arc and destination marker",
-      "head pose listener tracking",
-      "hand tracking",
+      "apply locomotion offset to XR reference space/rendered world",
+      "hand tracking joints and pinch gesture",
       "immersive AR lab",
+      "spatial VHE actor seam",
       "headset hardware verification and tuning"
     ]
   }
