@@ -1,0 +1,75 @@
+{
+  "schema": "portal.game-factory.recipes.v1",
+  "recipes": [
+    {
+      "id": "arena-survivor",
+      "baseGenre": "survival",
+      "mechanics": [
+        "movement-2d",
+        "projectiles",
+        "health",
+        "enemy-chase",
+        "enemy-ranged",
+        "pickups",
+        "score",
+        "procedural-spawn",
+        "objectives"
+      ]
+    },
+    {
+      "id": "boss-rush",
+      "baseGenre": "survival",
+      "mechanics": [
+        "movement-2d",
+        "projectiles",
+        "health",
+        "boss-phases",
+        "pickups",
+        "score",
+        "objectives"
+      ]
+    },
+    {
+      "id": "combat-platformer",
+      "baseGenre": "platformer",
+      "mechanics": [
+        "movement-2d",
+        "jump",
+        "projectiles",
+        "health",
+        "enemy-chase",
+        "pickups",
+        "objectives"
+      ]
+    },
+    {
+      "id": "tactical-defense",
+      "baseGenre": "strategy",
+      "mechanics": [
+        "health",
+        "enemy-chase",
+        "enemy-ranged",
+        "score",
+        "procedural-spawn",
+        "objectives"
+      ]
+    },
+    {
+      "id": "aegis-combat-lab",
+      "baseGenre": "survival",
+      "track": "flagship-rd",
+      "mechanics": [
+        "movement-2d",
+        "projectiles",
+        "health",
+        "enemy-chase",
+        "enemy-ranged",
+        "boss-phases",
+        "pickups",
+        "score",
+        "procedural-spawn",
+        "objectives"
+      ]
+    }
+  ]
+}
