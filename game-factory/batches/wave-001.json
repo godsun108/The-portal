@@ -1,0 +1,62 @@
+{
+  "schema": "portal.game-factory.batch.v1",
+  "batch": "wave-001",
+  "purpose": "first diversified production wave",
+  "candidates": [
+    {
+      "id": "ion-drift",
+      "title": "ION//DRIFT",
+      "tagline": "THREAD THE FIELD // KEEP MOVING",
+      "genre": "racer",
+      "durationSeconds": 35,
+      "artifact": "ion-drift-clear",
+      "schema": "portal.game-factory.spec.v1",
+      "worldKey": "portal-game-history",
+      "overwrite": false
+    },
+    {
+      "id": "ember-step",
+      "title": "EMBER//STEP",
+      "tagline": "MOVE // LEAP // ASCEND",
+      "genre": "platformer",
+      "durationSeconds": 45,
+      "artifact": "ember-step-clear",
+      "schema": "portal.game-factory.spec.v1",
+      "worldKey": "portal-game-history",
+      "overwrite": false
+    },
+    {
+      "id": "signal-memory",
+      "title": "SIGNAL//MEMORY",
+      "tagline": "READ // HOLD // RETURN",
+      "genre": "puzzle",
+      "durationSeconds": 30,
+      "artifact": "signal-memory-clear",
+      "schema": "portal.game-factory.spec.v1",
+      "worldKey": "portal-game-history",
+      "overwrite": false
+    },
+    {
+      "id": "node-command",
+      "title": "NODE//COMMAND",
+      "tagline": "SPEND WISELY // TAKE THE GRID",
+      "genre": "strategy",
+      "durationSeconds": 30,
+      "artifact": "node-command-clear",
+      "schema": "portal.game-factory.spec.v1",
+      "worldKey": "portal-game-history",
+      "overwrite": false
+    },
+    {
+      "id": "meteor-hold",
+      "title": "METEOR//HOLD",
+      "tagline": "DODGE // ENDURE // SURVIVE",
+      "genre": "survival",
+      "durationSeconds": 40,
+      "artifact": "meteor-hold-clear",
+      "schema": "portal.game-factory.spec.v1",
+      "worldKey": "portal-game-history",
+      "overwrite": false
+    }
+  ]
+}
