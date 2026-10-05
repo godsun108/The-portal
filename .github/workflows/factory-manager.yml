@@ -1,0 +1,40 @@
+name: Digital Factory Manager
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'factory-registry.json'
+      - 'factory-manager.cjs'
+      - '.github/workflows/factory-manager.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  supervise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate factory topology
+        run: node --check factory-manager.cjs && node factory-manager.cjs
+      - name: Validate supervisory snapshot
+        run: node -e "const x=require('./factory-status.json'); if(x.schema!=='portal.factory-status.v1'||!x.total) process.exit(1)"
+      - name: Publish factory status when changed
+        run: |
+          if git diff --quiet -- factory-status.json; then
+            echo "Factory status unchanged."
+            exit 0
+          fi
+          git config user.name "portal-factory-manager[bot]"
+          git config user.email "portal-factory-manager[bot]@users.noreply.github.com"
+          git add factory-status.json
+          git commit -m "chore(factory): publish supervisory status"
+          git pull --rebase origin main
+          git push origin HEAD:main
