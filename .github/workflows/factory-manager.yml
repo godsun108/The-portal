@@ -7,6 +7,7 @@ on:
     paths:
       - 'factory-registry.json'
       - 'factory-manager.cjs'
+      - 'factory-economics.json'
       - '.github/workflows/factory-manager.yml'
 
 permissions:
@@ -25,7 +26,7 @@ jobs:
       - name: Validate factory topology
         run: node --check factory-manager.cjs && node factory-manager.cjs
       - name: Validate supervisory snapshot
-        run: node -e "const x=require('./factory-status.json'); if(x.schema!=='portal.factory-status.v3'||!x.total||!x.telemetry||!x.management||!Array.isArray(x.management.actionQueue)||x.telemetry.economics?.status!=='unmeasured') process.exit(1)"
+        run: node -e "const x=require('./factory-status.json'); if(x.schema!=='portal.factory-status.v4'||!x.total||!x.telemetry||!x.management||!Array.isArray(x.management.actionQueue)||!['disconnected','connected'].includes(x.telemetry.economics?.status)) process.exit(1)"
       - name: Publish factory status when changed
         run: |
           if git diff --quiet -- factory-status.json; then
