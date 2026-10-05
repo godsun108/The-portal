@@ -1,0 +1,10 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "factory-proof-01",
+  "title": "SIGNAL PROOF",
+  "tagline": "THE FACTORY MUST PROVE THE SIGNAL",
+  "genre": "platformer",
+  "durationSeconds": 45,
+  "worldKey": "portal-game-history",
+  "artifact": "factory-proof-mark"
+}
