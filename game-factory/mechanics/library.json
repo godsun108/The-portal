@@ -89,12 +89,12 @@
     {
       "id": "vehicle-enter-exit",
       "category": "traversal",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "vehicle-driving",
       "category": "traversal",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "world-streaming",
@@ -114,22 +114,22 @@
     {
       "id": "response-escalation",
       "category": "world",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "faction-reputation",
       "category": "world",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "mission-system",
       "category": "mission",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "world-events",
       "category": "mission",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "shops-economy",
@@ -139,7 +139,7 @@
     {
       "id": "currency",
       "category": "economy",
-      "maturity": "planned"
+      "maturity": "prototype"
     },
     {
       "id": "property-safehouse",
