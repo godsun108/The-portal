@@ -22,17 +22,29 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Validate factory contracts
         run: node --check game-factory/game-factory.cjs && node game-factory/game-factory.cjs --validate
-      - name: Test systemic world runtime\n        run: node game-factory/qa/world-runtime.test.cjs\n      - name: Test shared combat runtime\n        run: node game-factory/qa/combat-runtime.test.cjs\n      - name: Validate mechanic composition\n        run: node game-factory/mechanic-engine.cjs\n      - name: Generate isolated candidates
+      - name: Test systemic world runtime
+        run: node game-factory/qa/world-runtime.test.cjs
+      - name: Test shared combat runtime
+        run: node game-factory/qa/combat-runtime.test.cjs
+      - name: Validate mechanic composition
+        run: node game-factory/mechanic-engine.cjs
+      - name: Generate isolated candidates
         run: |
           for spec in game-factory/examples/*.json; do
             node game-factory/game-factory.cjs "$spec"
           done
-          for batch in game-factory/batches/*.json; do\n            node game-factory/batch-runner.cjs "$batch"\n          done
+          for batch in game-factory/batches/*.json; do
+            node game-factory/batch-runner.cjs "$batch"
+          done
       - name: Score generated candidates
         run: node game-factory/selection-engine.cjs
       - name: Build promotion evidence
         run: node game-factory/promotion-engine.cjs
-      - name: Build release queue\n        run: node game-factory/release-queue.cjs\n      - name: Validate AEGIS combat lab source\n        run: grep -q 'combat-lab-start' games/aegis-combat-lab-01/index.html && grep -q 'runtime/combat.js' games/aegis-combat-lab-01/index.html\n      - name: Install Chromium
+      - name: Build release queue
+        run: node game-factory/release-queue.cjs
+      - name: Validate AEGIS combat lab source
+        run: grep -q 'combat-lab-start' games/aegis-combat-lab-01/index.html && grep -q 'runtime/combat.js' games/aegis-combat-lab-01/index.html
+      - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview
         run: |
