@@ -103,12 +103,17 @@
       "visible teleport trajectory",
       "teleport destination marker",
       "comfort-gated teleport commit/cancel",
-      "tracked-head spatial audio listener"
+      "tracked-head spatial audio listener",
+      "teleport applied through XR offset reference space",
+      "WebXR hand-source registry",
+      "wrist/thumb/index joint pose sampling",
+      "pinch-distance detection",
+      "pinch start/hold/end transitions",
+      "pinch-driven object grab carry and release"
     ],
     "next": [
-      "apply locomotion offset to XR reference space/rendered world",
-      "hand tracking joints and pinch gesture",
-      "immersive AR lab",
+      "expand full hand skeleton rendering",
+      "immersive AR Lab 01 with passthrough-safe rendering",
       "spatial VHE actor seam",
       "headset hardware verification and tuning"
     ]
