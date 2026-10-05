@@ -1,0 +1,11 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "triad-command",
+  "title": "TRIAD//COMMAND",
+  "tagline": "ALLOCATE // CONTROL // WIN",
+  "genre": "strategy",
+  "durationSeconds": 30,
+  "worldKey": "portal-game-history",
+  "artifact": "triad-command-clear",
+  "overwrite": false
+}
