@@ -1,0 +1,143 @@
+{
+  "schema": "portal.factory-registry.v1",
+  "policy": "Registry states are evidence-based. operational means an implemented production path exists; partial means implemented components exist but the factory is not yet autonomous end-to-end; planned means architecture only.",
+  "factories": [
+    {
+      "id": "open-media-discovery",
+      "name": "Open Media Discovery Factory",
+      "domain": "media",
+      "status": "partial",
+      "autonomy": "staged",
+      "inputs": [
+        "approved discovery reservoirs"
+      ],
+      "outputs": [
+        "review candidates"
+      ],
+      "qa": [
+        "source registry",
+        "non-admission boundary"
+      ],
+      "implementation": [
+        "tv-open-sources.json",
+        "tv-open-discovery-stager.cjs"
+      ],
+      "feeds": [
+        "open-entertainment-curator"
+      ],
+      "revenueRole": "audience inventory"
+    },
+    {
+      "id": "open-entertainment-curator",
+      "name": "Open Entertainment Rights Factory",
+      "domain": "media",
+      "status": "operational",
+      "autonomy": "automated-on-change",
+      "inputs": [
+        "candidate registry",
+        "rights evidence"
+      ],
+      "outputs": [
+        "rights-admitted library",
+        "rejection report"
+      ],
+      "qa": [
+        "license allowlist",
+        "rights source",
+        "attribution",
+        "playback type",
+        "programming metadata"
+      ],
+      "implementation": [
+        "tv-open-curator.cjs",
+        ".github/workflows/portal-tv-open-curator.yml"
+      ],
+      "feeds": [
+        "portal-network"
+      ],
+      "revenueRole": "licensed programming supply"
+    },
+    {
+      "id": "portal-network",
+      "name": "PORTAL Network Factory",
+      "domain": "distribution",
+      "status": "operational",
+      "autonomy": "catalog-driven",
+      "inputs": [
+        "rights-admitted library",
+        "channel tags"
+      ],
+      "outputs": [
+        "generated thematic channels",
+        "viewer queues"
+      ],
+      "qa": [
+        "verified_open gate",
+        "supported playback"
+      ],
+      "implementation": [
+        "tv-network.js",
+        "tv-programming-director.js",
+        "tv.html"
+      ],
+      "feeds": [
+        "viewer"
+      ],
+      "revenueRole": "audience and distribution"
+    },
+    {
+      "id": "signal-producer",
+      "name": "TV Signal Reliability Factory",
+      "domain": "qa",
+      "status": "partial",
+      "autonomy": "scheduled",
+      "inputs": [
+        "direct HLS feeds"
+      ],
+      "outputs": [
+        "signal health report"
+      ],
+      "qa": [
+        "manifest probe",
+        "HTTP state",
+        "latency"
+      ],
+      "implementation": [
+        "tv-signal-producer.mjs",
+        ".github/workflows/portal-tv-signal-producer.yml"
+      ],
+      "feeds": [
+        "portal-tv"
+      ],
+      "revenueRole": "reliability"
+    },
+    {
+      "id": "portal-ci",
+      "name": "PORTAL QA & Deployment Factory",
+      "domain": "software",
+      "status": "operational",
+      "autonomy": "push-triggered",
+      "inputs": [
+        "repository changes"
+      ],
+      "outputs": [
+        "contracts",
+        "browser acceptance",
+        "Pages deployment"
+      ],
+      "qa": [
+        "syntax",
+        "integration contracts",
+        "Chromium/WebKit production experience"
+      ],
+      "implementation": [
+        ".github/workflows/contracts.yml",
+        ".github/workflows/experience.yml"
+      ],
+      "feeds": [
+        "all-portal-factories"
+      ],
+      "revenueRole": "production reliability"
+    }
+  ]
+}
