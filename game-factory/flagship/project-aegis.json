@@ -1,0 +1,40 @@
+{
+  "schema": "portal.flagship-game.v1",
+  "id": "project-aegis",
+  "title": "PROJECT AEGIS",
+  "status": "preproduction",
+  "qualityTarget": "premium AAA science-fiction action",
+  "pillars": [
+    "responsive first-person combat",
+    "distinctive original universe",
+    "enemy sandbox with readable behaviors",
+    "vehicles and traversal",
+    "campaign encounters with replay value",
+    "co-op-ready systems"
+  ],
+  "verticalSlice": {
+    "goal": "one polished combat arena demonstrating the full quality bar",
+    "required": [
+      "player controller",
+      "weapon sandbox",
+      "one allied actor",
+      "three enemy archetypes",
+      "encounter director",
+      "checkpoint/save seam",
+      "spatial audio seam",
+      "performance instrumentation",
+      "controller support",
+      "accessibility baseline"
+    ]
+  },
+  "gates": [
+    "prototype",
+    "combat vertical slice",
+    "content pipeline",
+    "campaign slice",
+    "co-op validation",
+    "alpha",
+    "beta",
+    "release candidate"
+  ]
+}
