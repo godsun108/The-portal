@@ -46,6 +46,8 @@ jobs:
         run: grep -q 'combat-lab-start' games/aegis-combat-lab-01/index.html && grep -q 'runtime/combat.js' games/aegis-combat-lab-01/index.html
       - name: Validate AEGIS world lab source
         run: grep -q 'world-lab-start' games/aegis-world-lab-01/index.html && grep -q 'runtime/world.js' games/aegis-world-lab-01/index.html
+      - name: Validate AEGIS integrated lab source
+        run: grep -q 'integrated-lab-start' games/aegis-integrated-lab-01/index.html && grep -q 'runtime/combat.js' games/aegis-integrated-lab-01/index.html && grep -q 'runtime/world.js' games/aegis-integrated-lab-01/index.html
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview
@@ -57,7 +59,7 @@ jobs:
           FACTORY_PREVIEW_URL: http://127.0.0.1:4173
         run: |
           cp game-factory/qa/factory-playtest.spec.cjs e2e/factory-playtest.spec.cjs
-          npx playwright test e2e/factory-playtest.spec.cjs e2e/aegis-combat-lab.spec.cjs e2e/aegis-world-lab.spec.cjs --project=chromium
+          npx playwright test e2e/factory-playtest.spec.cjs e2e/aegis-combat-lab.spec.cjs e2e/aegis-world-lab.spec.cjs e2e/aegis-integrated-lab.spec.cjs --project=chromium
       - name: Capture candidate evidence
         if: always()
         uses: actions/upload-artifact@v4
