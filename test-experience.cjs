@@ -27,3 +27,7 @@ assert(portalTV.includes("tv-open-library.json")&&portalTV.includes("const exist
 assert(openCurator.includes('rightsStatus==="verified_open"')&&openCurator.includes("allowedLicenses"),"Open curator must gate admission on explicit rights state and license allowlist");
 assert(openCurator.includes("rightsSource")&&openCurator.includes("attribution required"),"Open curator must require provenance and attribution where applicable");
 assert(openCandidates.schema==="portal.tv.open-candidates.v1"&&openCandidates.items.length>=10,"Open entertainment candidate registry must remain explicit and seeded");
+
+const tvDirector=read("./tv-programming-director.js");
+assert(tvDirector.includes("tv-open-library.json")&&tvDirector.includes("rights-verified open"),"Programming Director must surface the autonomous open library with explicit rights labeling");
+assert(tvDirector.includes("kind:'open'")&&tvDirector.includes("Watch in Portal"),"Rights-admitted open entertainment must be directly discoverable as in-Portal programming");
