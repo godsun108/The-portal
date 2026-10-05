@@ -1,0 +1,42 @@
+{
+  "schema": "portal.tv.open-sources.v1",
+  "policy": "Discovery reservoirs generate candidates only. A source being approved does not make an item playable. Every item must independently satisfy the curator rights gate with item-level or provider-policy evidence applicable to that work.",
+  "sources": [
+    {
+      "id": "blender-studio",
+      "name": "Blender Studio",
+      "domain": "studio.blender.org",
+      "mode": "provider-open-policy",
+      "status": "active",
+      "rightsExpectation": "CC BY 4.0 unless otherwise noted; preserve attribution and provider terms evidence",
+      "candidateAction": "may-stage"
+    },
+    {
+      "id": "wikimedia-commons",
+      "name": "Wikimedia Commons",
+      "domain": "commons.wikimedia.org",
+      "mode": "item-license",
+      "status": "active",
+      "rightsExpectation": "verify the individual file license and attribution requirements",
+      "candidateAction": "stage-only-until-item-verified"
+    },
+    {
+      "id": "loc-national-screening-room",
+      "name": "Library of Congress National Screening Room",
+      "domain": "loc.gov",
+      "mode": "item-rights-advisory",
+      "status": "active",
+      "rightsExpectation": "inspect the individual item rights/advisory; do not equate availability with public domain",
+      "candidateAction": "stage-only-until-item-verified"
+    },
+    {
+      "id": "nasa-media",
+      "name": "NASA Media",
+      "domain": "nasa.gov",
+      "mode": "government-media-with-exceptions",
+      "status": "active",
+      "rightsExpectation": "verify NASA origin and screen for third-party material, marks, endorsements, or other restrictions",
+      "candidateAction": "stage-only-until-item-verified"
+    }
+  ]
+}
