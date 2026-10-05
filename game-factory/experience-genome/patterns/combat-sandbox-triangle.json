@@ -1,0 +1,29 @@
+{
+  "schema": "portal.experience-pattern.v1",
+  "id": "combat-sandbox-triangle",
+  "sourceClass": "sandbox combat games",
+  "sources": [
+    "arena shooter genre",
+    "tactical action genre"
+  ],
+  "observation": "Combat depth increases when movement, weapon choice and enemy behavior continuously alter one another.",
+  "abstraction": "mobility creates angle -> weapon exploits angle -> enemy counters -> player repositions",
+  "hypothesis": "Three strongly differentiated weapons plus readable enemy archetypes will create more decisions than a larger set of redundant weapons.",
+  "mechanics": [
+    "projectiles",
+    "enemy-chase",
+    "enemy-ranged",
+    "objectives"
+  ],
+  "metrics": [
+    "weapon switching frequency",
+    "damage by weapon",
+    "movement during engagements"
+  ],
+  "risks": [
+    "dominant weapon collapses choice",
+    "enemy readability may be weak"
+  ],
+  "originalApplication": "AEGIS combat labs use original weapon behaviors and faction-specific counters while measuring whether players actually switch tactics.",
+  "copyExpression": false
+}
