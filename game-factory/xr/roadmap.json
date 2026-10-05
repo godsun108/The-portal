@@ -82,11 +82,16 @@
       "tracked controller registry",
       "grip and target-ray pose sampling",
       "select lifecycle events",
-      "teleport target primitive"
+      "teleport target primitive",
+      "native WebGL XR renderer",
+      "XRWebGLLayer session attachment",
+      "per-eye viewport rendering",
+      "viewer pose projection/view matrices",
+      "desktop render fallback alongside immersive path"
     ],
     "next": [
-      "XR graphics layer/reference-space rendering",
-      "controller-driven grab binding",
+      "headset hardware verification",
+      "controller-driven object manipulation in stereoscopic scene",
       "teleport locomotion execution",
       "spatial audio",
       "hand tracking",
