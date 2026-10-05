@@ -484,7 +484,7 @@ assert(progressionState.includes("artifactId(x)===id"),"Artifact checks use cano
 
 // Public station route integrity
 const stationManifest=JSON.parse(fs.readFileSync("./stations.json","utf8"));
-for(const station of stationManifest.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const route="./"+href.replace(/^\.\//,"").replace(/\/$/,"")+"/index.html";assert(fs.existsSync(route),"Station door must resolve: "+station.id+" / "+room[0]+" -> "+route)}
+for(const station of stationManifest.stations)for(const room of station.rooms){const href=room[1];if(href.startsWith("#")||/^https?:/.test(href))continue;const clean="./"+href.replace(/^\.\//,"").replace(/\/$/,"");const route=/\.html?(?:[?#].*)?$/i.test(clean)?clean.split(/[?#]/)[0]:clean+"/index.html";assert(fs.existsSync(route),"Station door must resolve: "+station.id+" / "+room[0]+" -> "+route)}
 
 // Canonical navigation hierarchy: HOME/STATIONS -> STATION -> ROOM -> STATION
 const navHome=fs.readFileSync("./index.html","utf8"),stationNav=fs.readFileSync("./station-nav.js","utf8"),legacyStations=fs.readFileSync("./stations/index.html","utf8"),travelerNav=fs.readFileSync("./traveler-hud.js","utf8");
