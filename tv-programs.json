@@ -1,0 +1,24 @@
+{
+  "schema": "portal.tv.programs.v1",
+  "status": "curated_source_identified_embed_playback_not_verified",
+  "programs": [
+    {
+      "title": "NASA — Official Channel Trailer",
+      "genre": "Space",
+      "provider": "NASA",
+      "type": "youtube_embed",
+      "videoId": "Rfyr7-dQnAg",
+      "source": "https://www.youtube.com/watch?v=Rfyr7-dQnAg",
+      "live": false
+    },
+    {
+      "title": "NASA 2023 — Nothing Is Beyond Our Reach",
+      "genre": "Space",
+      "provider": "NASA",
+      "type": "youtube_embed",
+      "videoId": "YQWespzOtzI",
+      "source": "https://www.youtube.com/watch?v=YQWespzOtzI",
+      "live": false
+    }
+  ]
+}
