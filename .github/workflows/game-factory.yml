@@ -22,7 +22,7 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Validate factory contracts
         run: node --check game-factory/game-factory.cjs && node game-factory/game-factory.cjs --validate
-      - name: Generate isolated candidates
+      - name: Validate mechanic composition\n        run: node game-factory/mechanic-engine.cjs\n      - name: Generate isolated candidates
         run: |
           for spec in game-factory/examples/*.json; do
             node game-factory/game-factory.cjs "$spec"
