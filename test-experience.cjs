@@ -26,7 +26,7 @@ const portalTV=read("./tv.html"),openCurator=read("./tv-open-curator.cjs"),openC
 assert(portalTV.includes("tv-open-library.json")&&portalTV.includes("const existing=new Set"),"PORTAL TV must consume curated open library with duplicate protection");
 assert(openCurator.includes('rightsStatus==="verified_open"')&&openCurator.includes("allowedLicenses"),"Open curator must gate admission on explicit rights state and license allowlist");
 assert(openCurator.includes("rightsSource")&&openCurator.includes("attribution required"),"Open curator must require provenance and attribution where applicable");
-assert(openCandidates.schema==="portal.tv.open-candidates.v1"&&openCandidates.items.length>=10,"Open entertainment candidate registry must remain explicit and seeded");
+assert(["portal.tv.open-candidates.v1","portal.tv.open-candidates.v2"].includes(openCandidates.schema)&&openCandidates.items.length>=10,"Open entertainment candidate registry must remain explicit and seeded");\nif(openCandidates.schema==="portal.tv.open-candidates.v2")assert(openCandidates.items.every(x=>Number.isInteger(x.year)&&x.format&&Array.isArray(x.themes)&&x.themes.length&&Array.isArray(x.channelTags)&&x.channelTags.length),"V2 open entertainment candidates must carry complete programming metadata");
 
 const tvDirector=read("./tv-programming-director.js");
 assert(tvDirector.includes("tv-open-library.json")&&tvDirector.includes("rights-verified open"),"Programming Director must surface the autonomous open library with explicit rights labeling");
