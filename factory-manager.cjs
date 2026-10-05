@@ -27,7 +27,9 @@ const actions=registry.factories.map(f=>{
  const priority=score+(conditions.includes("under-tested")?20:0)+(conditions.includes("input-undefined")?10:0);
  const nextAction=f.status==="partial"?"Close the highest-risk missing step toward end-to-end autonomy.":f.status==="planned"?"Implement the smallest testable production path.":"Keep production healthy; expand only from measured demand or reusable output.";
  return {factoryId:f.id,status:f.status,conditions,priority,nextAction};
-}).sort((a,b)=>b.priority-a.priority||a.factoryId.localeCompare(b.factoryId));
+});
+if(!economics||economics.status!=="connected")actions.push({factoryId:"economic-instrumentation",status:"blocked",conditions:["measurement-source-disconnected"],priority:85,nextAction:"Connect a trusted payment or ledger source before making revenue, cost, or profit decisions."});
+actions.sort((a,b)=>b.priority-a.priority||a.factoryId.localeCompare(b.factoryId));
 const telemetry={
  measuredAt:new Date().toISOString(),
  openEntertainment:openLibrary?{candidates:openLibrary.counts?.candidates??null,admitted:openLibrary.counts?.admitted??null,rejected:openLibrary.counts?.rejected??null,generatedAt:openLibrary.generatedAt||null}:null,
