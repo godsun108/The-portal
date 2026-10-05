@@ -160,6 +160,66 @@
       "id": "world-save",
       "category": "persistence",
       "maturity": "planned"
+    },
+    {
+      "id": "xr-head-pose",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-controller-input",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-hand-input",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-spatial-anchor",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-grab-interact",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-teleport-locomotion",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-smooth-locomotion",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-snap-turn",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "xr-spatial-audio",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "ar-world-placement",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "ar-passthrough",
+      "category": "xr",
+      "maturity": "planned"
+    },
+    {
+      "id": "mr-room-mesh",
+      "category": "xr",
+      "maturity": "planned"
     }
   ]
 }
