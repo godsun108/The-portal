@@ -77,14 +77,20 @@
       "interaction targeting",
       "grab/release interaction",
       "comfort configuration",
-      "XR telemetry"
+      "XR telemetry",
+      "XR reference-space negotiation",
+      "tracked controller registry",
+      "grip and target-ray pose sampling",
+      "select lifecycle events",
+      "teleport target primitive"
     ],
     "next": [
-      "XR reference-space render loop",
-      "controller poses",
-      "select events",
-      "teleport locomotion",
-      "spatial audio"
+      "XR graphics layer/reference-space rendering",
+      "controller-driven grab binding",
+      "teleport locomotion execution",
+      "spatial audio",
+      "hand tracking",
+      "immersive AR lab"
     ]
   }
 }
