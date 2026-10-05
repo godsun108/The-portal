@@ -157,14 +157,19 @@
       "multi-device simulated session join",
       "shared anchor consensus simulation",
       "versioned shared spatial object replication",
-      "per-device viewpoint rendering of one world state"
+      "per-device viewpoint rendering of one world state",
+      "transport-agnostic spatial message envelope",
+      "publish/subscribe spatial transport seam",
+      "replicated spatial client",
+      "bidirectional multi-client object propagation",
+      "Shared Reality Lab routed through replicated clients"
     ],
     "next": [
-      "network transport adapter for real devices",
+      "WebRTC/WebSocket transport adapter for physical devices",
+      "real phone session pairing and join code",
       "Shared AR camera/anchor hardware prototype",
       "Reality Play Lab 01 body-input seam",
-      "spatial VHE actor seam",
-      "hardware verification"
+      "spatial VHE actor seam"
     ]
   }
 }
