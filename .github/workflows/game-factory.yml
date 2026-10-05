@@ -27,7 +27,7 @@ jobs:
           for spec in game-factory/examples/*.json; do
             node game-factory/game-factory.cjs "$spec"
           done
-          node game-factory/batch-runner.cjs game-factory/batches/wave-001.json
+          for batch in game-factory/batches/*.json; do\n            node game-factory/batch-runner.cjs "$batch"\n          done
       - name: Score generated candidates
         run: node game-factory/selection-engine.cjs
       - name: Build promotion evidence
