@@ -10,7 +10,11 @@
     "enemy sandbox with readable behaviors",
     "vehicles and traversal",
     "campaign encounters with replay value",
-    "co-op-ready systems"
+    "co-op-ready systems",
+    "systemic open-world freedom",
+    "living civilian traffic and faction simulation",
+    "enterable vehicles and emergent traversal",
+    "missions economy and interactable world"
   ],
   "verticalSlice": {
     "goal": "one polished combat arena demonstrating the full quality bar",
@@ -36,5 +40,25 @@
     "alpha",
     "beta",
     "release candidate"
-  ]
+  ],
+  "openWorld": {
+    "goal": "original science-fiction sandbox supporting player-directed exploration and emergent play",
+    "capabilities": [
+      "seamless explorable districts",
+      "enter and exit vehicles",
+      "ground and future aerial traversal",
+      "civilian and faction NPC populations",
+      "traffic simulation",
+      "contextual response escalation",
+      "faction reputation",
+      "dynamic world events",
+      "mission chains and optional activities",
+      "shops currency and economy",
+      "safehouses or properties",
+      "interactable world objects",
+      "day/night simulation",
+      "persistent world state"
+    ],
+    "principle": "Build systemic freedom inspired by the open-world genre while retaining original world, characters, missions, mechanics, art and identity."
+  }
 }
