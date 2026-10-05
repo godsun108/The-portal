@@ -5,7 +5,7 @@ const fs=require("fs");
 const SOURCE="tv-open-candidates.json", OUTPUT="tv-open-library.json";
 const allowedLicenses=new Set(["CC0-1.0","CC-BY-4.0","CC-BY-SA-4.0","PUBLIC-DOMAIN-US"]);
 const candidates=JSON.parse(fs.readFileSync(SOURCE,"utf8"));
-if(candidates.schema!=="portal.tv.open-candidates.v1"||!Array.isArray(candidates.items))throw Error("invalid candidate registry");
+if(!["portal.tv.open-candidates.v1","portal.tv.open-candidates.v2"].includes(candidates.schema)||!Array.isArray(candidates.items))throw Error("invalid candidate registry");
 const seen=new Set(), admitted=[], rejected=[];
 for(const raw of candidates.items){
  const x={...raw};
@@ -15,6 +15,10 @@ for(const raw of candidates.items){
  if(seen.has(key))reasons.push("duplicate");
  seen.add(key);
  if(!x.title||!x.provider)reasons.push("missing title/provider");
+ if(candidates.schema==="portal.tv.open-candidates.v2"){
+   if(!Number.isInteger(x.year)||x.year<1888||x.year>new Date().getUTCFullYear()+1)reasons.push("invalid year");
+   if(!x.format||!Array.isArray(x.themes)||!x.themes.length||!Array.isArray(x.channelTags)||!x.channelTags.length)reasons.push("missing programming metadata");
+ }
  if(!x.source||!/^https:\/\//.test(x.source))reasons.push("missing HTTPS provenance");
  if(!x.rightsSource||!/^https:\/\//.test(x.rightsSource))reasons.push("missing HTTPS rights evidence");
  if(x.rightsStatus==="verified_open"){
