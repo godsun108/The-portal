@@ -21,7 +21,7 @@
     {
       "id": "vr",
       "name": "Virtual Reality",
-      "status": "planned",
+      "status": "prototype",
       "targets": [
         "room-scale interaction",
         "seated and standing modes",
@@ -65,5 +65,26 @@
     "performance budgets",
     "XR interaction grammar",
     "cross-platform save/profile"
-  ]
+  ],
+  "prototype": {
+    "lab": "games/portal-xr-lab-01/",
+    "status": "prototype",
+    "implemented": [
+      "desktop spatial fallback",
+      "WebXR capability detection",
+      "immersive-vr session request seam",
+      "spatial anchors",
+      "interaction targeting",
+      "grab/release interaction",
+      "comfort configuration",
+      "XR telemetry"
+    ],
+    "next": [
+      "XR reference-space render loop",
+      "controller poses",
+      "select events",
+      "teleport locomotion",
+      "spatial audio"
+    ]
+  }
 }
