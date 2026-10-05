@@ -484,6 +484,97 @@ window.PORTAL_TV_CATALOG={
       "url": "https://science.nasa.gov/learn/",
       "description": "Science education resources",
       "mode": "official_external_link"
+    },
+    {
+      "title": "FIFA+",
+      "category": "Sports",
+      "url": "https://www.plus.fifa.com/",
+      "description": "Official football video, archives and selected live events; rights vary",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "Olympics",
+      "category": "Sports",
+      "url": "https://olympics.com/en/",
+      "description": "Official Olympic coverage, highlights and selected events",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "CBS Sports",
+      "category": "Sports",
+      "url": "https://www.cbssports.com/watch/",
+      "description": "Sports video and live coverage; eligibility varies",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "ESPN Watch",
+      "category": "Sports",
+      "url": "https://www.espn.com/watch/",
+      "description": "Live sports with applicable provider or subscription access",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "NFL",
+      "category": "Sports",
+      "url": "https://www.nfl.com/watch/",
+      "description": "Official football programming; game access subject to rights",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "MLB TV",
+      "category": "Sports",
+      "url": "https://www.mlb.com/live-stream-games",
+      "description": "Official baseball streaming; subscription and blackout rules apply",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "NBA",
+      "category": "Sports",
+      "url": "https://www.nba.com/watch/",
+      "description": "Official basketball viewing; subscription and territorial rules apply",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "NHL",
+      "category": "Sports",
+      "url": "https://www.nhl.com/",
+      "description": "Official hockey coverage and viewing information",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "WPTV NewsChannel 5",
+      "category": "Treasure Coast Local",
+      "url": "https://www.wptv.com/",
+      "description": "West Palm Beach and Treasure Coast local news; official broadcaster",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "WPBF 25",
+      "category": "Treasure Coast Local",
+      "url": "https://www.wpbf.com/",
+      "description": "South Florida and Treasure Coast local news; official broadcaster",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "CBS 12 WPEC",
+      "category": "Treasure Coast Local",
+      "url": "https://cbs12.com/",
+      "description": "Palm Beach and Treasure Coast local news; official broadcaster",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "PBS South Florida",
+      "category": "Treasure Coast Local",
+      "url": "https://www.wpbt2.org/",
+      "description": "Regional public television and programming",
+      "mode": "official_external_link"
+    },
+    {
+      "title": "Florida Channel",
+      "category": "State & Government",
+      "url": "https://thefloridachannel.org/",
+      "description": "Florida public affairs and legislative coverage",
+      "mode": "official_external_link"
     }
   ]
 };
