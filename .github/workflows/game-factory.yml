@@ -32,7 +32,7 @@ jobs:
         run: node game-factory/selection-engine.cjs
       - name: Build promotion evidence
         run: node game-factory/promotion-engine.cjs
-      - name: Build release queue\n        run: node game-factory/release-queue.cjs\n      - name: Install Chromium
+      - name: Build release queue\n        run: node game-factory/release-queue.cjs\n      - name: Validate AEGIS combat lab source\n        run: grep -q 'combat-lab-start' games/aegis-combat-lab-01/index.html && grep -q 'runtime/combat.js' games/aegis-combat-lab-01/index.html\n      - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview
         run: |
