@@ -1,0 +1,18 @@
+{
+  "schema": "portal.game-factory.composed-spec.v1",
+  "id": "aegis-combat-lab-01",
+  "title": "AEGIS // COMBAT LAB 01",
+  "tagline": "MOVE // ENGAGE // SURVIVE",
+  "recipe": "aegis-combat-lab",
+  "track": "flagship-rd",
+  "durationSeconds": 60,
+  "objective": "survive encounter and clear hostile wave",
+  "telemetry": [
+    "shots",
+    "hits",
+    "damage-taken",
+    "enemy-defeats",
+    "clear-time"
+  ],
+  "promotion": "research-only"
+}
