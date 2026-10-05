@@ -1,0 +1,90 @@
+{
+  "schema": "portal.game-factory.mechanics.v1",
+  "mechanics": [
+    {
+      "id": "movement-2d",
+      "category": "control",
+      "maturity": "proven"
+    },
+    {
+      "id": "jump",
+      "category": "control",
+      "maturity": "proven"
+    },
+    {
+      "id": "lane-shift",
+      "category": "control",
+      "maturity": "proven"
+    },
+    {
+      "id": "projectiles",
+      "category": "combat",
+      "maturity": "prototype"
+    },
+    {
+      "id": "health",
+      "category": "combat",
+      "maturity": "prototype"
+    },
+    {
+      "id": "enemy-chase",
+      "category": "enemy",
+      "maturity": "prototype"
+    },
+    {
+      "id": "enemy-ranged",
+      "category": "enemy",
+      "maturity": "prototype"
+    },
+    {
+      "id": "boss-phases",
+      "category": "enemy",
+      "maturity": "prototype"
+    },
+    {
+      "id": "pickups",
+      "category": "progression",
+      "maturity": "prototype"
+    },
+    {
+      "id": "score",
+      "category": "progression",
+      "maturity": "prototype"
+    },
+    {
+      "id": "objectives",
+      "category": "mission",
+      "maturity": "prototype"
+    },
+    {
+      "id": "procedural-spawn",
+      "category": "world",
+      "maturity": "prototype"
+    },
+    {
+      "id": "checkpoint",
+      "category": "persistence",
+      "maturity": "planned"
+    },
+    {
+      "id": "inventory",
+      "category": "progression",
+      "maturity": "planned"
+    },
+    {
+      "id": "vehicle",
+      "category": "traversal",
+      "maturity": "planned"
+    },
+    {
+      "id": "quest",
+      "category": "mission",
+      "maturity": "planned"
+    },
+    {
+      "id": "coop-seam",
+      "category": "network",
+      "maturity": "planned"
+    }
+  ]
+}
