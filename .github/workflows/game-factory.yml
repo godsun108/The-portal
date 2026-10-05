@@ -27,7 +27,7 @@ jobs:
           for spec in game-factory/examples/*.json; do
             node game-factory/game-factory.cjs "$spec"
           done
-      - name: Install Chromium
+      - name: Score generated candidates\n        run: node game-factory/selection-engine.cjs\n      - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview
         run: |
@@ -45,6 +45,6 @@ jobs:
           path: |
             playwright-report/
             test-results/
-            /tmp/game-factory-http.log
+            /tmp/game-factory-http.log\n            game-factory/reports/
           if-no-files-found: ignore
           retention-days: 14
