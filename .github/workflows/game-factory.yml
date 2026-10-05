@@ -28,6 +28,8 @@ jobs:
         run: node game-factory/qa/xr-runtime.test.cjs
       - name: Validate Experience Genome
         run: node game-factory/experience-genome/validate.cjs
+      - name: Test telemetry learning loop
+        run: node game-factory/learning-loop.test.cjs
       - name: Test shared combat runtime
         run: node game-factory/qa/combat-runtime.test.cjs
       - name: Validate mechanic composition
