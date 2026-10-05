@@ -19,6 +19,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Run autonomous Game Factory acceptance line
         run: node game-factory/acceptance-runner.cjs game-factory/examples/factory-proof-01.json
+      - name: Run controlled experiment through acceptance gate
+        run: node game-factory/experiment-gate.cjs game-factory/experiments/factory-proof-01-exp-duration-54.json
       - name: Upload Game Factory evidence
         if: always()
         uses: actions/upload-artifact@v4
