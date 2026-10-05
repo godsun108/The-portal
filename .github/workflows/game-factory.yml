@@ -11,12 +11,40 @@ on:
 permissions:
   contents: read
 jobs:
-  validate:
+  validate-and-playtest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Validate Game Factory and PORTAL game contracts
+      - name: Install browser QA
+        run: npm install --no-audit --no-fund
+      - name: Validate factory contracts
         run: node --check game-factory/game-factory.cjs && node game-factory/game-factory.cjs --validate
+      - name: Generate isolated candidates
+        run: |
+          for spec in game-factory/examples/*.json; do
+            node game-factory/game-factory.cjs "$spec"
+          done
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start candidate preview
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/game-factory-http.log 2>&1 &
+          echo $! > /tmp/game-factory-http.pid
+      - name: Browser playtest generated candidates
+        env:
+          FACTORY_PREVIEW_URL: http://127.0.0.1:4173
+        run: npx playwright test game-factory/qa/factory-playtest.spec.cjs --project=chromium
+      - name: Capture candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-factory-evidence
+          path: |
+            playwright-report/
+            test-results/
+            /tmp/game-factory-http.log
+          if-no-files-found: ignore
+          retention-days: 14
