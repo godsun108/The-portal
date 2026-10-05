@@ -85,6 +85,81 @@
       "id": "coop-seam",
       "category": "network",
       "maturity": "planned"
+    },
+    {
+      "id": "vehicle-enter-exit",
+      "category": "traversal",
+      "maturity": "planned"
+    },
+    {
+      "id": "vehicle-driving",
+      "category": "traversal",
+      "maturity": "planned"
+    },
+    {
+      "id": "world-streaming",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "npc-population",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "traffic-simulation",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "response-escalation",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "faction-reputation",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "mission-system",
+      "category": "mission",
+      "maturity": "planned"
+    },
+    {
+      "id": "world-events",
+      "category": "mission",
+      "maturity": "planned"
+    },
+    {
+      "id": "shops-economy",
+      "category": "economy",
+      "maturity": "planned"
+    },
+    {
+      "id": "currency",
+      "category": "economy",
+      "maturity": "planned"
+    },
+    {
+      "id": "property-safehouse",
+      "category": "persistence",
+      "maturity": "planned"
+    },
+    {
+      "id": "interactable-world",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "day-night",
+      "category": "world",
+      "maturity": "planned"
+    },
+    {
+      "id": "world-save",
+      "category": "persistence",
+      "maturity": "planned"
     }
   ]
 }
