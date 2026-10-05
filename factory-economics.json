@@ -1,0 +1,30 @@
+{
+  "schema": "portal.economics.v1",
+  "generatedAt": null,
+  "status": "disconnected",
+  "currency": "USD",
+  "source": {
+    "provider": null,
+    "kind": null,
+    "evidenceAt": null
+  },
+  "period": {
+    "start": null,
+    "end": null
+  },
+  "metrics": {
+    "grossRevenue": null,
+    "refunds": null,
+    "fees": null,
+    "netRevenue": null,
+    "operatingCost": null,
+    "profit": null,
+    "transactions": null
+  },
+  "policy": {
+    "truth": "Null means unmeasured, never zero.",
+    "revenue": "Revenue must come from a trusted payment or ledger source, not catalog counts, traffic, estimates, or manually inferred sales.",
+    "costs": "Costs require an attributable bill, usage meter, ledger entry, or explicitly reviewed manual record.",
+    "profit": "Profit may be computed only when both net revenue and operating cost are measured for compatible periods."
+  }
+}
