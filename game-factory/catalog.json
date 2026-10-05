@@ -1,0 +1,45 @@
+{
+  "schema": "portal.game-factory.catalog.v1",
+  "policy": {
+    "publish": "quality-gated",
+    "monetization": "player-first",
+    "promotion": "telemetry and QA evidence required"
+  },
+  "tracks": [
+    {
+      "id": "volume",
+      "purpose": "rapid portfolio production",
+      "genres": [
+        "survival",
+        "racer",
+        "platformer",
+        "puzzle",
+        "strategy"
+      ],
+      "target": "many small and medium original games",
+      "revenueModels": [
+        "sponsorship",
+        "optional cosmetics",
+        "premium collections",
+        "licensing",
+        "careful ad-supported releases"
+      ]
+    },
+    {
+      "id": "flagship",
+      "purpose": "premium original universe",
+      "codename": "PROJECT AEGIS",
+      "target": "AAA-quality science-fiction action game",
+      "principles": [
+        "original IP",
+        "excellent combat feel",
+        "strong art direction",
+        "campaign-grade encounters",
+        "co-op-ready architecture",
+        "performance budgets",
+        "accessibility",
+        "controller and keyboard/mouse support"
+      ]
+    }
+  ]
+}
