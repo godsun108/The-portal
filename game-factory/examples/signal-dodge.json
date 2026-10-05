@@ -1,0 +1,11 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "signal-dodge",
+  "title": "SIGNAL//DODGE",
+  "tagline": "MOVE // SURVIVE // HOLD THE SIGNAL",
+  "genre": "survival",
+  "durationSeconds": 30,
+  "worldKey": "portal-game-history",
+  "artifact": "signal-dodge-clear",
+  "overwrite": false
+}
