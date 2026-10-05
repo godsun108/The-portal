@@ -20,3 +20,10 @@ console.log("Portal experience contracts passed.");
 // Cache/deployment regression sentinels: these stale identifiers previously served broken production code.
 assert(!earth.includes("20260928-4"),"Earth wrapper must not reintroduce stale 20260928-4 build identifiers");
 assert(!win.includes("window-node-production"),"Window wrapper must not reintroduce deprecated Railway service");
+
+// PORTAL TV autonomous open-entertainment seam
+const portalTV=read("./tv.html"),openCurator=read("./tv-open-curator.cjs"),openCandidates=JSON.parse(read("./tv-open-candidates.json"));
+assert(portalTV.includes("tv-open-library.json")&&portalTV.includes("const existing=new Set"),"PORTAL TV must consume curated open library with duplicate protection");
+assert(openCurator.includes('rightsStatus==="verified_open"')&&openCurator.includes("allowedLicenses"),"Open curator must gate admission on explicit rights state and license allowlist");
+assert(openCurator.includes("rightsSource")&&openCurator.includes("attribution required"),"Open curator must require provenance and attribution where applicable");
+assert(openCandidates.schema==="portal.tv.open-candidates.v1"&&openCandidates.items.length>=10,"Open entertainment candidate registry must remain explicit and seeded");
