@@ -1,0 +1,22 @@
+name: Game Factory
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'game-factory/**'
+      - 'games/**'
+      - 'arcade/cabinets.json'
+      - '.github/workflows/game-factory.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate Game Factory and PORTAL game contracts
+        run: node --check game-factory/game-factory.cjs && node game-factory/game-factory.cjs --validate
