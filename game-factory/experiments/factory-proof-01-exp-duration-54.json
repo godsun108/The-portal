@@ -1,0 +1,18 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "factory-proof-01-exp-duration-54",
+  "title": "SIGNAL PROOF · EXP",
+  "tagline": "CONTROLLED FACTORY EXPERIMENT",
+  "genre": "platformer",
+  "durationSeconds": 54,
+  "worldKey": "portal-game-history",
+  "artifact": "factory-proof-mark-exp-54",
+  "experiment": {
+    "parent": "factory-proof-01",
+    "variable": "durationSeconds",
+    "baseline": 45,
+    "target": 54,
+    "signal": "difficulty-or-clarity-review",
+    "maxChanges": 1
+  }
+}
