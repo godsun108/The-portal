@@ -43,5 +43,8 @@ assert(factoryRegistry.schema==="portal.factory-registry.v1"&&factoryRegistry.fa
 assert(factoryManager.includes("management:{topPriority")&&factoryManager.includes("actionQueue:actions"),"Factory Manager must publish a ranked management action queue");
 assert(factoryManager.includes('conditions.push("producing")')&&factoryManager.includes('conditions.push("under-built")'),"Factory Manager must classify operational and incomplete factories distinctly");
 
-assert(factoryManager.includes('schema:"portal.factory-status.v3"')&&factoryManager.includes("openEntertainment:openLibrary"),"Factory Manager must publish measured production telemetry");
-assert(factoryManager.includes('status:"unmeasured"')&&factoryManager.includes("No economic value is inferred"),"Factory Manager must preserve truthful unmeasured economics until a measurement source exists");
+assert(factoryManager.includes('schema:"portal.factory-status.v4"')&&factoryManager.includes("openEntertainment:openLibrary"),"Factory Manager must publish measured production telemetry");
+const factoryEconomics=JSON.parse(read("./factory-economics.json"));
+assert(factoryEconomics.schema==="portal.economics.v1"&&factoryEconomics.status==="disconnected","Economic telemetry must begin explicitly disconnected until a trusted source is connected");
+assert(factoryEconomics.metrics.grossRevenue===null&&factoryEconomics.metrics.operatingCost===null&&factoryEconomics.metrics.profit===null,"Unknown economics must remain null rather than fabricated zeroes");
+assert(factoryManager.includes("measurement-source-disconnected")&&factoryManager.includes("trusted payment or ledger source"),"Factory Manager must surface missing economic instrumentation as an actionable management condition");
