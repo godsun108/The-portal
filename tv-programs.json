@@ -129,6 +129,36 @@
       "source": "https://www.youtube.com/watch?v=gCNeDWCI0vo",
       "live": true,
       "status": "candidate_unverified_embed_and_live_state"
+    },
+    {
+      "title": "DW English — Live World News",
+      "genre": "News",
+      "provider": "Deutsche Welle",
+      "url": "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "public_broadcaster_feed_candidate_not_playback_verified",
+      "source": "https://github.com/Free-TV/IPTV/blob/master/lists/zz_news_en.md"
+    },
+    {
+      "title": "Al Jazeera English — Live World News",
+      "genre": "News",
+      "provider": "Al Jazeera",
+      "url": "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "public_broadcaster_feed_candidate_not_playback_verified",
+      "source": "https://github.com/Free-TV/IPTV/blob/master/lists/zz_news_en.md"
+    },
+    {
+      "title": "CGTN English — Live News",
+      "genre": "News",
+      "provider": "CGTN",
+      "url": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "public_broadcaster_feed_candidate_not_playback_verified",
+      "source": "https://github.com/Free-TV/IPTV/blob/master/lists/zz_news_en.md"
     }
   ]
 }
