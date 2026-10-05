@@ -8,6 +8,25 @@ on:
 permissions:
   contents: read
 jobs:
+  game-factory-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Run autonomous Game Factory acceptance line
+        run: node game-factory/acceptance-runner.cjs game-factory/examples/factory-proof-01.json
+      - name: Upload Game Factory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-factory-acceptance-evidence
+          path: game-factory/reports/
+          if-no-files-found: error
+          retention-days: 14
   browser-production:
     runs-on: ubuntu-latest
     steps:
