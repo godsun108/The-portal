@@ -1,0 +1,33 @@
+{
+  "schema": "portal.game-studio.doctrine.v1",
+  "name": "Experience Genome",
+  "purpose": "Study successful game experiences, extract reusable design principles, and produce original games from those principles.",
+  "rules": [
+    "analyze mechanics loops pacing controls progression encounter structure retention social dynamics and accessibility",
+    "record abstract patterns and measurable hypotheses rather than copying expressive content",
+    "never reproduce protected characters story dialogue maps art music branding or distinctive audiovisual identity",
+    "combine patterns from multiple sources with original mechanics worldbuilding and playtest evidence",
+    "promote patterns only after internal prototypes and player evidence"
+  ],
+  "pipeline": [
+    "observe",
+    "decompose",
+    "abstract",
+    "hypothesize",
+    "prototype",
+    "measure",
+    "mutate",
+    "combine",
+    "originality review",
+    "promote"
+  ],
+  "outputs": [
+    "experience patterns",
+    "mechanic recipes",
+    "balance hypotheses",
+    "control models",
+    "encounter grammars",
+    "progression models",
+    "original game candidates"
+  ]
+}
