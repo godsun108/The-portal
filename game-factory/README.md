@@ -23,10 +23,10 @@ A generated game must live at `games/<id>/index.html`, be registered in `arcade/
 
 ```bash
 node game-factory/game-factory.cjs game-factory/examples/signal-dodge.json
-node game-factory/game-factory.cjs --validate\nnode game-factory/acceptance-runner.cjs game-factory/examples/signal-dodge.json\nnode game-factory/promote-candidate.cjs <id> <browser-evidence.json>
+node game-factory/game-factory.cjs --validate\nnode game-factory/acceptance-runner.cjs game-factory/examples/factory-proof-01.json\nnode game-factory/promote-candidate.cjs <id> <browser-evidence.json>
 ```
 
-`--validate` now checks the existing game catalog and self-tests every factory genre for deterministic output and required integration seams.
+`acceptance-runner.cjs` now performs the complete candidate line: generation → structural QA → factory validation → quarantined registration → local Chromium evidence → evidence-gated promotion → publish verification.\n\n`--validate` checks the existing game catalog and self-tests every factory genre for deterministic output and required integration seams.
 
 Existing games are never overwritten unless a spec explicitly sets `"overwrite": true`.
 
