@@ -3,7 +3,8 @@
   "policy": {
     "publish": "quality-gated",
     "monetization": "player-first",
-    "promotion": "telemetry and QA evidence required"
+    "promotion": "telemetry and QA evidence required",
+    "originality": "experience patterns may be studied and abstracted; shipped expression must remain original"
   },
   "tracks": [
     {
@@ -39,6 +40,34 @@
         "performance budgets",
         "accessibility",
         "controller and keyboard/mouse support"
+      ]
+    },
+    {
+      "id": "experience-genome",
+      "purpose": "reverse-engineer successful player experiences into abstract reusable design patterns",
+      "target": "original games informed by evidence rather than imitation",
+      "principles": [
+        "mechanics not expression",
+        "multi-source synthesis",
+        "prototype before promotion",
+        "originality review"
+      ]
+    },
+    {
+      "id": "xr",
+      "purpose": "AR VR and mixed-reality game production",
+      "target": "cross-reality original games and PORTAL experiences",
+      "platforms": [
+        "AR",
+        "VR",
+        "MR"
+      ],
+      "principles": [
+        "comfort",
+        "privacy",
+        "spatial safety",
+        "performance",
+        "cross-platform abstractions"
       ]
     }
   ]
