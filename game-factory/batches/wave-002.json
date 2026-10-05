@@ -1,0 +1,117 @@
+{
+  "schema": "portal.game-factory.batch.v1",
+  "batch": "wave-002",
+  "purpose": "expanded diversified production wave",
+  "candidates": [
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "nova-run",
+      "title": "NOVA//RUN",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "racer",
+      "durationSeconds": 42,
+      "worldKey": "portal-game-history",
+      "artifact": "nova-run-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "ghost-lane",
+      "title": "GHOST//LANE",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "racer",
+      "durationSeconds": 38,
+      "worldKey": "portal-game-history",
+      "artifact": "ghost-lane-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "vault-rise",
+      "title": "VAULT//RISE",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "platformer",
+      "durationSeconds": 48,
+      "worldKey": "portal-game-history",
+      "artifact": "vault-rise-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "lumen-leap",
+      "title": "LUMEN//LEAP",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "platformer",
+      "durationSeconds": 44,
+      "worldKey": "portal-game-history",
+      "artifact": "lumen-leap-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "cipher-four",
+      "title": "CIPHER//FOUR",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "puzzle",
+      "durationSeconds": 32,
+      "worldKey": "portal-game-history",
+      "artifact": "cipher-four-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "echo-code",
+      "title": "ECHO//CODE",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "puzzle",
+      "durationSeconds": 34,
+      "worldKey": "portal-game-history",
+      "artifact": "echo-code-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "sector-command",
+      "title": "SECTOR//COMMAND",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "strategy",
+      "durationSeconds": 36,
+      "worldKey": "portal-game-history",
+      "artifact": "sector-command-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "triad-front",
+      "title": "TRIAD//FRONT",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "strategy",
+      "durationSeconds": 38,
+      "worldKey": "portal-game-history",
+      "artifact": "triad-front-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "starfall-hold",
+      "title": "STARFALL//HOLD",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "survival",
+      "durationSeconds": 45,
+      "worldKey": "portal-game-history",
+      "artifact": "starfall-hold-clear",
+      "overwrite": false
+    },
+    {
+      "schema": "portal.game-factory.spec.v1",
+      "id": "void-rain",
+      "title": "VOID//RAIN",
+      "tagline": "WAVE 002 // PROVE THE RUN",
+      "genre": "survival",
+      "durationSeconds": 40,
+      "worldKey": "portal-game-history",
+      "artifact": "void-rain-clear",
+      "overwrite": false
+    }
+  ]
+}
