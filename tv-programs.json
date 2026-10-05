@@ -1,6 +1,6 @@
 {
   "schema": "portal.tv.programs.v1",
-  "status": "six_curated_video_ids_source_identified_embed_playback_not_verified",
+  "status": "curated_source_identified_embed_playback_not_verified",
   "programs": [
     {
       "title": "NASA — Official Channel Trailer",
@@ -59,6 +59,66 @@
       "source": "https://www.youtube.com/watch?v=R6MlUcmOul8",
       "live": false,
       "rights": "Blender open movie; attribution to Blender Foundation; YouTube embedding subject to provider settings"
+    },
+    {
+      "title": "Wing It! — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "u9Ij-c29dxI",
+      "source": "https://www.youtube.com/watch?v=u9Ij-c29dxI",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Charge — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "UXqq0ZvbOnk",
+      "source": "https://www.youtube.com/watch?v=UXqq0ZvbOnk",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Sprite Fright — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "_cMXraX_5RE",
+      "source": "https://www.youtube.com/watch?v=_cMXraX_5RE",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Coffee Run — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "PVGeM4OdABA",
+      "source": "https://www.youtube.com/watch?v=PVGeM4OdABA",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Spring — Blender Open Movie",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "WhWc3b3KhnY",
+      "source": "https://www.youtube.com/watch?v=WhWc3b3KhnY",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Agent 327: Operation Barbershop",
+      "genre": "Movies",
+      "provider": "Blender Studio",
+      "type": "youtube_embed",
+      "videoId": "mNOzP0pADL4",
+      "source": "https://www.youtube.com/watch?v=mNOzP0pADL4",
+      "live": false,
+      "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
     }
   ]
 }
