@@ -27,7 +27,12 @@ jobs:
           for spec in game-factory/examples/*.json; do
             node game-factory/game-factory.cjs "$spec"
           done
-      - name: Score generated candidates\n        run: node game-factory/selection-engine.cjs\n      - name: Install Chromium
+          node game-factory/batch-runner.cjs game-factory/batches/wave-001.json
+      - name: Score generated candidates
+        run: node game-factory/selection-engine.cjs
+      - name: Build promotion evidence
+        run: node game-factory/promotion-engine.cjs
+      - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start candidate preview
         run: |
@@ -36,7 +41,9 @@ jobs:
       - name: Browser playtest generated candidates
         env:
           FACTORY_PREVIEW_URL: http://127.0.0.1:4173
-        run: cp game-factory/qa/factory-playtest.spec.cjs e2e/factory-playtest.spec.cjs\n          npx playwright test e2e/factory-playtest.spec.cjs --project=chromium
+        run: |
+          cp game-factory/qa/factory-playtest.spec.cjs e2e/factory-playtest.spec.cjs
+          npx playwright test e2e/factory-playtest.spec.cjs --project=chromium
       - name: Capture candidate evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -45,6 +52,6 @@ jobs:
           path: |
             playwright-report/
             test-results/
-            /tmp/game-factory-http.log\n            game-factory/reports/
+            game-factory/reports/
           if-no-files-found: ignore
           retention-days: 14
