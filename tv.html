@@ -14,7 +14,7 @@ function message(s){clear();const p=document.createElement('p');p.textContent=s;
 function play(src){clear();const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.src=src;screen.append(v);v.play().catch(()=>{});}
 function select(i){index=i;message(names[i]+' — no media loaded yet. Add an authorized video to begin.');[...guide.children].forEach((b,n)=>b.setAttribute('aria-pressed',String(n===i)))}
 names.forEach((name,i)=>{const b=document.createElement('button');b.textContent=name;b.onclick=()=>select(i);guide.append(b)});select(0);
-document.getElementById('file').onchange=e=>{const f=e.target.files[0];if(!f)return;objectURL=URL.createObjectURL(f);const url=objectURL;clear();objectURL=url;const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.src=url;screen.append(v);v.play().catch(()=>{})};
+document.getElementById('file').onchange=e=>{const f=e.target.files[0];if(!f)return;clear();objectURL=URL.createObjectURL(f);const url=objectURL;const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.src=url;screen.append(v);v.play().catch(()=>{})};
 document.getElementById('playurl').onclick=()=>{const raw=document.getElementById('url').value.trim();try{const u=new URL(raw);if(u.protocol!=='https:'||!/^\.(mp4|webm|ogg)$/i.test(u.pathname))throw Error();play(u.href)}catch{message('Please provide a direct HTTPS .mp4, .webm or .ogg URL you are authorized to play.')}};
 document.getElementById('stop').onclick=()=>message('SIGNAL OFF');document.getElementById('next').onclick=()=>select((index+1)%names.length);document.getElementById('fullscreen').onclick=()=>screen.requestFullscreen?.();
 </script><script>
