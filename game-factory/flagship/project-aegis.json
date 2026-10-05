@@ -2,7 +2,7 @@
   "schema": "portal.flagship-game.v1",
   "id": "project-aegis",
   "title": "PROJECT AEGIS",
-  "status": "preproduction",
+  "status": "prototype",
   "qualityTarget": "premium AAA science-fiction action",
   "pillars": [
     "responsive first-person combat",
@@ -60,5 +60,20 @@
       "persistent world state"
     ],
     "principle": "Build systemic freedom inspired by the open-world genre while retaining original world, characters, missions, mechanics, art and identity."
+  },
+  "prototype": {
+    "integratedLab": "games/aegis-integrated-lab-01/",
+    "systems": [
+      "on-foot traversal",
+      "vehicle enter/exit and driving",
+      "combat",
+      "mission chain",
+      "credits",
+      "faction reputation",
+      "heat escalation",
+      "response units",
+      "persistent credits and reputation"
+    ],
+    "nextGate": "combat vertical slice"
   }
 }
