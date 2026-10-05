@@ -87,15 +87,19 @@
       "XRWebGLLayer session attachment",
       "per-eye viewport rendering",
       "viewer pose projection/view matrices",
-      "desktop render fallback alongside immersive path"
+      "desktop render fallback alongside immersive path",
+      "visible tracked-controller proxies",
+      "controller-driven nearest-object acquisition",
+      "controller-driven 3D carry and release",
+      "reusable XR world object primitive",
+      "reusable locomotion state seam"
     ],
     "next": [
-      "headset hardware verification",
-      "controller-driven object manipulation in stereoscopic scene",
-      "teleport locomotion execution",
+      "teleport gesture and reference-space offset execution",
       "spatial audio",
       "hand tracking",
-      "immersive AR lab"
+      "immersive AR lab",
+      "headset hardware verification and tuning"
     ]
   }
 }
