@@ -1,0 +1,38 @@
+name: PORTAL Open Entertainment Curator
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'tv-open-candidates.json'
+      - 'tv-open-curator.cjs'
+      - '.github/workflows/portal-tv-open-curator.yml'
+permissions:
+  contents: write
+concurrency:
+  group: portal-tv-open-curator
+  cancel-in-progress: false
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply rights admission gate
+        run: node tv-open-curator.cjs
+      - name: Validate generated library
+        run: node -e "const x=require('./tv-open-library.json');if(x.schema!=='portal.tv.open-library.v1'||!Array.isArray(x.programs))process.exit(1);console.log(x.counts)"
+      - name: Publish curated library when changed
+        run: |
+          git config user.name "portal-tv-curator[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tv-open-library.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(tv): publish curated open entertainment library"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
