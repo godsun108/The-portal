@@ -1,0 +1,29 @@
+name: PORTAL TV Signal Producer
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: portal-tv-signal-producer
+  cancel-in-progress: false
+jobs:
+  inspect-signals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect broadcaster manifests
+        run: node tv-signal-producer.mjs
+      - name: Publish health snapshot only when changed
+        run: |
+          git config user.name "portal-tv-producer[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tv-signal-health.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(tv): update signal reachability report"
+            git push
+          fi
