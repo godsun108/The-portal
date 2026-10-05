@@ -1,6 +1,9 @@
 // Digital Factory Manager: validates the registry and publishes a compact supervisory snapshot.
 const fs=require("fs");
 const registry=JSON.parse(fs.readFileSync("factory-registry.json","utf8"));
+const readJson=p=>fs.existsSync(p)?JSON.parse(fs.readFileSync(p,"utf8")):null;
+const openLibrary=readJson("tv-open-library.json");
+const signalHealth=readJson("tv-signal-health.json");
 if(registry.schema!=="portal.factory-registry.v1"||!Array.isArray(registry.factories))throw Error("invalid factory registry");
 const allowed=new Set(["operational","partial","planned"]);
 const ids=new Set();
@@ -24,6 +27,12 @@ const actions=registry.factories.map(f=>{
  const nextAction=f.status==="partial"?"Close the highest-risk missing step toward end-to-end autonomy.":f.status==="planned"?"Implement the smallest testable production path.":"Keep production healthy; expand only from measured demand or reusable output.";
  return {factoryId:f.id,status:f.status,conditions,priority,nextAction};
 }).sort((a,b)=>b.priority-a.priority||a.factoryId.localeCompare(b.factoryId));
-const snapshot={schema:"portal.factory-status.v2",generatedAt:new Date().toISOString(),counts,total:registry.factories.length,dependencyEdges:edges.length,management:{topPriority:actions[0]||null,actionQueue:actions},factories:registry.factories.map(f=>({id:f.id,name:f.name,domain:f.domain,status:f.status,autonomy:f.autonomy,outputs:f.outputs,revenueRole:f.revenueRole,implementationEvidence:f.implementation.length}))};
+const telemetry={
+ measuredAt:new Date().toISOString(),
+ openEntertainment:openLibrary?{candidates:openLibrary.counts?.candidates??null,admitted:openLibrary.counts?.admitted??null,rejected:openLibrary.counts?.rejected??null,generatedAt:openLibrary.generatedAt||null}:null,
+ signalReliability:signalHealth?{checked:signalHealth.summary?.checked??null,reachable:signalHealth.summary?.reachable??null,generatedAt:signalHealth.generatedAt||null,note:signalHealth.note||null}:null,
+ economics:{costUsd:null,revenueUsd:null,profitUsd:null,status:"unmeasured",note:"No economic value is inferred without a connected measurement source."}
+};
+const snapshot={schema:"portal.factory-status.v3",generatedAt:new Date().toISOString(),counts,total:registry.factories.length,dependencyEdges:edges.length,telemetry,management:{topPriority:actions[0]||null,actionQueue:actions},factories:registry.factories.map(f=>({id:f.id,name:f.name,domain:f.domain,status:f.status,autonomy:f.autonomy,outputs:f.outputs,revenueRole:f.revenueRole,implementationEvidence:f.implementation.length}))};
 fs.writeFileSync("factory-status.json",JSON.stringify(snapshot,null,2)+"\n");
 console.log("Digital Factory Manager:",snapshot.counts,"total",snapshot.total,"edges",snapshot.dependencyEdges);
