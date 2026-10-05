@@ -119,6 +119,16 @@
       "source": "https://www.youtube.com/watch?v=mNOzP0pADL4",
       "live": false,
       "rights": "Official Blender open film; credit Blender Studio. Embedding and regional playback unverified."
+    },
+    {
+      "title": "Al Jazeera English — Official Live News (availability varies)",
+      "genre": "News",
+      "provider": "Al Jazeera English",
+      "type": "youtube_embed",
+      "videoId": "gCNeDWCI0vo",
+      "source": "https://www.youtube.com/watch?v=gCNeDWCI0vo",
+      "live": true,
+      "status": "candidate_unverified_embed_and_live_state"
     }
   ]
 }
