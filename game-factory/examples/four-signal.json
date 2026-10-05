@@ -1,0 +1,11 @@
+{
+  "schema": "portal.game-factory.spec.v1",
+  "id": "four-signal",
+  "title": "FOUR//SIGNAL",
+  "tagline": "READ // REMEMBER // ANSWER",
+  "genre": "puzzle",
+  "durationSeconds": 30,
+  "worldKey": "portal-game-history",
+  "artifact": "four-signal-clear",
+  "overwrite": false
+}
