@@ -30,6 +30,8 @@ jobs:
         run: node game-factory/experience-genome/validate.cjs
       - name: Test telemetry learning loop
         run: node game-factory/learning-loop.test.cjs
+      - name: Test parent-descendant experiment decisions
+        run: node game-factory/experiment-evaluator.test.cjs
       - name: Test shared combat runtime
         run: node game-factory/qa/combat-runtime.test.cjs
       - name: Validate mechanic composition
