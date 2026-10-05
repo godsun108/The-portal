@@ -1,0 +1,1 @@
+{"name":"portal-shared-reality-relay","private":true,"type":"module","scripts":{"start":"node server.mjs"},"dependencies":{"ws":"8.18.0"},"engines":{"node":">=20"}}
