@@ -1,0 +1,69 @@
+{
+  "schema": "portal.game-studio.xr.v1",
+  "tracks": [
+    {
+      "id": "ar",
+      "name": "Augmented Reality",
+      "status": "planned",
+      "targets": [
+        "world-anchored play",
+        "location-aware optional experiences",
+        "camera passthrough interactions",
+        "shared spatial events"
+      ],
+      "principles": [
+        "privacy by default",
+        "explicit location permission",
+        "safe play-space awareness",
+        "graceful non-AR fallback"
+      ]
+    },
+    {
+      "id": "vr",
+      "name": "Virtual Reality",
+      "status": "planned",
+      "targets": [
+        "room-scale interaction",
+        "seated and standing modes",
+        "motion-controller interaction",
+        "spatial combat and exploration"
+      ],
+      "principles": [
+        "comfort first",
+        "multiple locomotion modes",
+        "recenter and boundary awareness",
+        "high stable frame rate",
+        "accessible input"
+      ]
+    },
+    {
+      "id": "mr",
+      "name": "Mixed Reality",
+      "status": "planned",
+      "targets": [
+        "passthrough worlds",
+        "physical-room integration",
+        "spatial characters",
+        "persistent spatial objects"
+      ],
+      "principles": [
+        "environment awareness",
+        "clear virtual/physical boundaries",
+        "privacy",
+        "device capability fallbacks"
+      ]
+    }
+  ],
+  "sharedFoundation": [
+    "OpenXR-oriented abstraction",
+    "WebXR research/prototyping seam",
+    "6DoF pose input",
+    "hand/controller abstraction",
+    "spatial anchors",
+    "spatial audio",
+    "comfort system",
+    "performance budgets",
+    "XR interaction grammar",
+    "cross-platform save/profile"
+  ]
+}
