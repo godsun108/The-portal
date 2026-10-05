@@ -42,3 +42,6 @@ const factoryManager=read("./factory-manager.cjs"),factoryRegistry=JSON.parse(re
 assert(factoryRegistry.schema==="portal.factory-registry.v1"&&factoryRegistry.factories.length>=5,"Digital Factory Manager must retain an evidence-based factory registry");
 assert(factoryManager.includes("management:{topPriority")&&factoryManager.includes("actionQueue:actions"),"Factory Manager must publish a ranked management action queue");
 assert(factoryManager.includes('conditions.push("producing")')&&factoryManager.includes('conditions.push("under-built")'),"Factory Manager must classify operational and incomplete factories distinctly");
+
+assert(factoryManager.includes('schema:"portal.factory-status.v3"')&&factoryManager.includes("openEntertainment:openLibrary"),"Factory Manager must publish measured production telemetry");
+assert(factoryManager.includes('status:"unmeasured"')&&factoryManager.includes("No economic value is inferred"),"Factory Manager must preserve truthful unmeasured economics until a measurement source exists");
