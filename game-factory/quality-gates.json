@@ -1,0 +1,33 @@
+{
+  "schema": "portal.game.quality-gates.v1",
+  "candidate": {
+    "required": [
+      "factory validation",
+      "deterministic generation",
+      "browser boot",
+      "no uncaught runtime errors",
+      "keyboard or pointer controls",
+      "run telemetry"
+    ]
+  },
+  "publish": {
+    "required": [
+      "candidate gates",
+      "playable completion path",
+      "mobile viewport pass",
+      "artifact/progression seam",
+      "catalog metadata"
+    ]
+  },
+  "flagship": {
+    "required": [
+      "performance budget",
+      "controller support",
+      "accessibility baseline",
+      "save/checkpoint validation",
+      "combat telemetry",
+      "original-IP review",
+      "vertical-slice playtest"
+    ]
+  }
+}
