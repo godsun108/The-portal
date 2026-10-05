@@ -1,0 +1,1 @@
+import assert from "node:assert/strict";import{readFileSync}from"node:fs";const s=readFileSync(new URL("../src/mobile_controls.js",import.meta.url),"utf8");assert.match(s,/pointerdown/);assert.match(s,/data-a="enter"/);assert.match(s,/data-a="interact"/);console.log("mobile controls contract ok");
