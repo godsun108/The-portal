@@ -1,0 +1,29 @@
+{
+  "schema": "portal.experience-pattern.v1",
+  "id": "sandbox-consequence-loop",
+  "sourceClass": "systemic open-world games",
+  "sources": [
+    "open-world action genre",
+    "immersive simulation genre"
+  ],
+  "observation": "Player freedom becomes more compelling when actions cause readable world reactions instead of isolated score changes.",
+  "abstraction": "action -> witnessed consequence -> escalating response -> escape/recovery -> persistent aftermath",
+  "hypothesis": "Coupling combat, traversal, factions and response state will produce memorable emergent stories.",
+  "mechanics": [
+    "response-escalation",
+    "faction-reputation",
+    "vehicle-enter-exit",
+    "world-events"
+  ],
+  "metrics": [
+    "time-to-first-emergent-event",
+    "response escalation rate",
+    "player recovery rate"
+  ],
+  "risks": [
+    "response can feel arbitrary",
+    "escalation can overwhelm exploration"
+  ],
+  "originalApplication": "AEGIS factions interpret witnessed actions differently, producing distinct response behaviors and persistent social consequences.",
+  "copyExpression": false
+}
