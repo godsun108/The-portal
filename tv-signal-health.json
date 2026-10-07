@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-07T13:27:31.281Z",
+  "generatedAt": "2026-10-07T23:06:58.002Z",
   "note": "Server-side manifest reachability is NOT proof of playback, authorization, geography or device compatibility.",
   "summary": {
     "checked": 2,
@@ -12,7 +12,7 @@
       "url": "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 345,
+      "latencyMs": 247,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -21,7 +21,7 @@
       "url": "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 313,
+      "latencyMs": 155,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     }
