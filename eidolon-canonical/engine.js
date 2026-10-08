@@ -63,9 +63,10 @@ try{
  $('clipIdle').onclick=()=>play('Idle');
  $('clipWalk').onclick=()=>play('Walk');
  $('clipStop').onclick=()=>{if(mixer){mixer.stopAllAction();report('Motion stopped')}};
- $('asset').onchange=()=>{$('load').disabled=false;report('Selected '+$('asset').selectedOptions[0].text+' · tap Load')};
+ $('asset').onchange=()=>{$('load').disabled=false;$('load').click()};
  $('load').onclick=async()=>{
   $('load').disabled=true;
+  for(const id of ['clipIdle','clipWalk','clipStop'])$(id).disabled=true;
   try{
    const kind=$('asset').value;
    report('Fetching '+(kind==='rigged'?'experimental rigged':'canonical static')+' Stage164 asset…');
@@ -80,6 +81,8 @@ try{
    if(model)scene.remove(model);
    model=fresh;scene.add(model);loaded=true;wire=false;
    clips=gltf.animations;mixer=clips.length?new THREE.AnimationMixer(model):null;
+   for(const id of ['clipIdle','clipWalk','clipStop'])$(id).disabled=!mixer;
+   $('motionhint').textContent=mixer?'Animated model loaded: select Idle or Walk to test motion.':'Static mesh loaded: zero animations (expected). Switch to Animated experiment above.';
    $('stats').textContent='PASS · '+verts.toLocaleString()+' vertices · '+tri.toLocaleString()+' triangles · '+skinned+' skinned meshes · '+bones+' bones · '+clips.length+' clips';
    $('download').hidden=false;$('download').href='./assets/'+path;
    $('download').download=path;
