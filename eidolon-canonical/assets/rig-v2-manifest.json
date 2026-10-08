@@ -1,0 +1,17 @@
+{
+  "stage": 164,
+  "vertices": 12240,
+  "triangles": 24454,
+  "joint_count": 17,
+  "clips": [
+    "EIDOLON_Experimental_Idle",
+    "EIDOLON_Experimental_Walk"
+  ],
+  "size": 745844,
+  "sha256": "75838e5165a1db8909a6ace894c11db30fdc178a2d83d6a42f0db899a93a8774",
+  "skin_test_only": true,
+  "stage166_approved": false,
+  "deformation_version": 2,
+  "weight_strategy": "region_aware_with_4_influences",
+  "walk_amplitudes_reduced": true
+}
