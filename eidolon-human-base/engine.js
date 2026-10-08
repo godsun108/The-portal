@@ -17,7 +17,7 @@ try {
  const key=new THREE.DirectionalLight(0xffeadb,2.8);key.position.set(3,4,6);scene.add(key);
  const rim=new THREE.DirectionalLight(0xb4d4ff,1.3);rim.position.set(-3,4,-3);scene.add(rim);
  const timer=new THREE.Clock();
- let subject=null,radius=1,target=new THREE.Vector3(),wire=false,loaded=false,manifest=null;
+ let subject=null,radius=1,target=new THREE.Vector3(),wire=false,loaded=false,manifest=null,skeletonHelper=null;
  function angle(a){
   let yaw=a==='side'?Math.PI/2:a==='back'?Math.PI:a==='threequarter'?Math.PI/4:0;
   const distance=Math.max(.05,radius*2.45);
@@ -27,28 +27,32 @@ try {
  }
  function frame(){requestAnimationFrame(frame);control.update();renderer.render(scene,camera)}requestAnimationFrame(frame);
  document.querySelectorAll('[data-angle]').forEach(button=>button.onclick=()=>{if(subject){angle(button.dataset.angle);report('VIEW '+button.dataset.angle)}});
+ $('skeleton').onclick=()=>{if(!subject)return report('Load native rig first');if(!skeletonHelper)return report('The static control has no skeleton');skeletonHelper.visible=!skeletonHelper.visible;report('SKELETON '+(skeletonHelper.visible?'VISIBLE':'HIDDEN'))};
+ $('variant').onchange=()=>{$('load').disabled=false;report('Selected '+$('variant').selectedOptions[0].text)};
  $('wire').onclick=()=>{if(!subject)return report('Load a body before wireframe');wire=!wire;subject.traverse(n=>{if(n.isMesh){n.material.wireframe=wire}});report('WIREFRAME '+(wire?'ON':'OFF'))};
  $('load').disabled=false;report('3D renderer ready. Tap Load CC0 Human Base.');
  $('load').onclick=async()=>{
   $('load').disabled=true;
   try {
    report('Fetching upstream mesh manifest and GLB…');
-   const response=await fetch('./assets/manifest.json?rev=1',{cache:'no-store'});
+   const variant=$('variant').value;
+   const response=await fetch('./assets/'+(variant==='rig'?'rig-manifest.json':'manifest.json')+'?rev=2',{cache:'no-store'});
    if(!response.ok)throw Error('Manifest HTTP '+response.status+' — build may be publishing');
    const info=await response.json();
-   if(!info.source_commit||info.rigged!==false||info.photoreal!==false||info.triangles<1000||info.uv_entries<100)throw Error('Source manifest does not meet anatomical import requirements');
-   const imported=await new GLTFLoader().loadAsync('./assets/makehuman-base-static.glb?rev=1');
-   let triangles=0,vertices=0,uvs=0,rigs=0;
+   if((!info.source_commit&&!info.source_repo)||info.rigged!==(variant==='rig')||info.photoreal!==false||info.triangles<1000)throw Error('Source manifest does not meet anatomical import requirements');
+   const imported=await new GLTFLoader().loadAsync('./assets/'+(variant==='rig'?'makehuman-native-rig.glb':'makehuman-base-static.glb')+'?rev=2');
+   let triangles=0,vertices=0,uvs=0,rigs=0,bones=0;
    imported.scene.traverse(n=>{
-    if(n.isMesh){const g=n.geometry;triangles+=(g.index?.count||g.attributes.position.count)/3;vertices+=g.attributes.position.count;if(g.attributes.uv)uvs+=g.attributes.uv.count;if(n.isSkinnedMesh)rigs++}
+    if(n.isMesh){const g=n.geometry;triangles+=(g.index?.count||g.attributes.position.count)/3;vertices+=g.attributes.position.count;if(g.attributes.uv)uvs+=g.attributes.uv.count;if(n.isSkinnedMesh)rigs++}if(n.isBone)bones++
    });
-   if(triangles!==info.triangles||vertices!==info.exported_vertices||rigs!==0||uvs<100)throw Error('Mesh import did not match manifest geometry');
-   if(subject)scene.remove(subject);
+   if(triangles!==info.triangles||vertices!==(variant==='rig'?info.vertices:info.exported_vertices)||uvs<100||(variant==='rig'?(rigs<1||bones!==info.joint_count):(rigs!==0||bones!==0)))throw Error('Mesh import/rig did not match source manifest');
+   if(skeletonHelper){scene.remove(skeletonHelper);skeletonHelper=null;}if(subject)scene.remove(subject);
    subject=imported.scene;scene.add(subject);loaded=true;manifest=info;wire=false;
+   if(variant==='rig'){let rig=null;subject.traverse(n=>{if(n.isSkinnedMesh)rig=n});if(rig){skeletonHelper=new THREE.SkeletonHelper(rig);skeletonHelper.visible=false;scene.add(skeletonHelper);}}
    const bounds=new THREE.Box3().setFromObject(subject);const size=new THREE.Vector3();bounds.getSize(size);bounds.getCenter(target);
    radius=Math.max(.01,size.length()*.57);angle('threequarter');
-   $('stats').textContent='PASS: '+triangles.toLocaleString()+' triangles · '+vertices.toLocaleString()+' indexed/UV vertices · '+info.original_vertices.toLocaleString()+' source vertices · '+info.uv_entries.toLocaleString()+' UV entries · static / unrigged';
-   report('PASS: Actual MakeHuman CC0 anatomical mesh and UVs loaded; no animations claimed.');
+   $('stats').textContent='PASS: '+triangles.toLocaleString()+' triangles · '+vertices.toLocaleString()+' indexed/UV vertices · '+(info.original_vertices??info.vertices).toLocaleString()+' source vertices · '+bones+' bones · '+rigs+' skinned meshes · '+(variant==='rig'?'native weights':'static control');
+   report('PASS: Actual MakeHuman CC0 anatomical body loaded; '+bones+' bones, '+rigs+' skinned meshes. No animations or photorealism claimed.');
   }catch(error){$('load').disabled=false;report('LOAD FAILED: '+(error?.message||error))}
  };
  $('capture').onclick=()=>{
