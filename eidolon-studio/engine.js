@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 const report=s=>{document.getElementById('log').textContent+='\n'+s;document.getElementById('status').textContent=s},canvas=document.getElementById('view');
 try{
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true});renderer.setSize(480,640,false);renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,preserveDrawingBuffer:true});renderer.setSize(480,640,false);renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.outputColorSpace=THREE.SRGBColorSpace;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x18253a);const camera=new THREE.PerspectiveCamera(38,480/640,.1,100);camera.position.set(0,1.45,4.5);camera.lookAt(0,1.4,0);scene.add(new THREE.HemisphereLight(0xffffff,0x445566,2));const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(-2,4,4);scene.add(light);
 let cameraView='front';
 const studioBackdrop=document.getElementById('backdrop');
