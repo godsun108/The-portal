@@ -1,0 +1,13 @@
+{
+  "name": "EIDOLON Human v1",
+  "stage": 164,
+  "vertex_count": 12240,
+  "triangle_count": 24454,
+  "glb_bytes": 441708,
+  "glb_sha256": "115801d0e509cd721ab769a58955dd6cc619be4c04b8624ef4d1054a7bdf241e",
+  "positions_sha256": "c6634b0334157e2a0d970939420418f25ab10368f83df2b6ff3570172709e1a3",
+  "source": "VHE Stage128 signed-distance field + Stage164 extraction recipe",
+  "is_skinned": false,
+  "embedded_animations": 0,
+  "research_only": true
+}
