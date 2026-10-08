@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Human Lab · GLB Isolation Test</title><style>html{background:#0b1220;color:#e9f0ff;font:16px system-ui}body{max-width:650px;margin:auto;padding:16px}canvas{display:block;width:100%;aspect-ratio:9/12;background:#17243a;border:1px solid #52627a;border-radius:12px}button,input{font:inherit;margin:8px 0;padding:10px}button{background:#314968;color:white;border:1px solid #7289a7;border-radius:8px}#log{white-space:pre-wrap;overflow-wrap:anywhere;background:#17243a;padding:12px;border-radius:8px}a{color:#b4d8ff}</style></head><body><h2>Human Lab · Isolated GLB Test</h2><p>Independent test page. Working V3 is not modified.</p><p id="status">Booting…</p><canvas id="view" width="480" height="640"></canvas><p><label>Choose a licensed .glb character from Files <input id="file" type="file" accept=".glb,model/gltf-binary"></label></p><button id="reset">Reset scene</button><button id="snapshot">Save PNG</button><p id="log" role="status">Diagnostic log starting…</p><p>Models selected here are read from your device; this page does not upload them. GLB files with external textures or Draco/KTX2 compression may require extra decoders. The default shape is a diagnostic cube, not a realistic human.</p><p><a href="../human-lab-v3/">Back to verified V3</a></p><script>const status=document.getElementById('status'),log=document.getElementById('log');function report(s){log.textContent+= '\n'+s;status.textContent=s}log.textContent='Browser ready';window.addEventListener('error',e=>report('JS error: '+e.message));window.addEventListener('unhandledrejection',e=>report('Promise error: '+e.reason));</script><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script><script type="module">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Human Lab · GLB Isolation Test</title><style>html{background:#0b1220;color:#e9f0ff;font:16px system-ui}body{max-width:650px;margin:auto;padding:16px}canvas{display:block;width:100%;aspect-ratio:9/12;background:#17243a;border:1px solid #52627a;border-radius:12px}button,input{font:inherit;margin:8px 0;padding:10px}button{background:#314968;color:white;border:1px solid #7289a7;border-radius:8px}#log{white-space:pre-wrap;overflow-wrap:anywhere;background:#17243a;padding:12px;border-radius:8px}a{color:#b4d8ff}</style></head><body><h2>Human Lab · Isolated GLB Test</h2><p>Independent test page. Working V3 is not modified.</p><p id="status">Booting…</p><canvas id="view" width="480" height="640"></canvas><p><label>Choose a licensed .glb character from Files <input id="file" type="file" accept=".glb,model/gltf-binary"></label></p><button id="generate">Generate original EIDOLON human</button><button id="reset">Reset scene</button><button id="snapshot">Save PNG</button><p id="log" role="status">Diagnostic log starting…</p><p>Models selected here are read from your device; this page does not upload them. GLB files with external textures or Draco/KTX2 compression may require extra decoders. The default shape is a diagnostic cube, not a realistic human.</p><p><a href="../human-lab-v3/">Back to verified V3</a></p><script>const status=document.getElementById('status'),log=document.getElementById('log');function report(s){log.textContent+= '\n'+s;status.textContent=s}log.textContent='Browser ready';window.addEventListener('error',e=>report('JS error: '+e.message));window.addEventListener('unhandledrejection',e=>report('Promise error: '+e.reason));</script><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script><script type="module">
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 const report=s=>{document.getElementById('log').textContent+='\n'+s;document.getElementById('status').textContent=s},canvas=document.getElementById('view');
@@ -8,6 +8,50 @@ const scene=new THREE.Scene();scene.background=new THREE.Color(0x18253a);const c
 const placeholder=new THREE.Mesh(new THREE.BoxGeometry(.9,1.5,.5),new THREE.MeshStandardMaterial({color:0x73a8da,roughness:.65}));placeholder.position.y=1.4;scene.add(placeholder);let imported=null,mixer=null;const loader=new GLTFLoader();let last=performance.now(),frame=0;
 function tick(now){const dt=Math.min(.05,(now-last)/1000);last=now;placeholder.rotation.y+=dt*.25;if(mixer)mixer.update(dt);renderer.render(scene,camera);frame++;if(frame===30)report('PASS: WebGL scene running; GLTFLoader imported');requestAnimationFrame(tick)}requestAnimationFrame(tick);
 document.getElementById('file').onchange=()=>{const file=document.getElementById('file').files?.[0];if(!file)return;if(!file.name.toLowerCase().endsWith('.glb'))return report('Only .glb supported');if(file.size>60e6)return report('File exceeds 60 MB phone-test limit');const url=URL.createObjectURL(file);report('Parsing '+file.name);loader.load(url,gltf=>{try{const model=gltf.scene,box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());if(!Number.isFinite(size.y)||size.y<=0)throw Error('Invalid model bounds');if(imported)scene.remove(imported);model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;mixer=gltf.animations.length?new THREE.AnimationMixer(model):null;if(mixer)mixer.clipAction(gltf.animations[0]).play();report('PASS: '+file.name+' · animations '+gltf.animations.length+' · meshes '+model.getObjectByProperty('isMesh',true)?.name)}catch(e){report('Model setup failed: '+e.message)}finally{URL.revokeObjectURL(url)}},undefined,e=>{report('GLB parse failed: '+e.message);URL.revokeObjectURL(url)})};
+
+function generateDiagnosticGLB(){
+ const parts=[
+ ['torso',[0,1.48,0],[.50,.72,.28],[.34,.48,.66,1]],
+ ['neck',[0,2.02,0],[.15,.18,.15],[.65,.44,.32,1]],
+ ['head',[0,2.36,0],[.35,.43,.32],[.65,.44,.32,1]],
+ ['arm_l',[-.68,1.55,0],[.20,.80,.22],[.35,.48,.65,1]],
+ ['arm_r',[.68,1.55,0],[.20,.80,.22],[.35,.48,.65,1]],
+ ['leg_l',[-.25,.58,0],[.24,1.16,.25],[.20,.26,.39,1]],
+ ['leg_r',[.25,.58,0],[.24,1.16,.25],[.20,.26,.39,1]]];
+ const corners=[[-.5,-.5,-.5],[.5,-.5,-.5],[.5,.5,-.5],[-.5,.5,-.5],[-.5,-.5,.5],[.5,-.5,.5],[.5,.5,.5],[-.5,.5,.5]];
+ const triangles=[0,2,1,0,3,2,4,5,6,4,6,7,0,1,5,0,5,4,2,3,7,2,7,6,1,2,6,1,6,5,3,0,4,3,4,7];
+ const pieces=[],views=[],accessors=[],meshes=[],nodes=[],materials=[];let length=0;
+ function add(bytes,target){const padding=(4-length%4)%4;if(padding){pieces.push(new Uint8Array(padding));length+=padding}const offset=length;pieces.push(bytes);length+=bytes.length;views.push({buffer:0,byteOffset:offset,byteLength:bytes.length,target});return views.length-1}
+ for(const [name,center,scale,rgba] of parts){
+  const coords=new Float32Array(corners.flat());const idx=new Uint16Array(triangles);
+  const pv=add(new Uint8Array(coords.buffer),34962),iv=add(new Uint8Array(idx.buffer),34963);
+  const p=accessors.length;accessors.push({bufferView:pv,componentType:5126,count:8,type:'VEC3',min:[-.5,-.5,-.5],max:[.5,.5,.5]});
+  const i=accessors.length;accessors.push({bufferView:iv,componentType:5123,count:36,type:'SCALAR'});
+  const m=materials.length;materials.push({name,pbrMetallicRoughness:{baseColorFactor:rgba,metallicFactor:0,roughnessFactor:.85},doubleSided:true});
+  const mesh=meshes.length;meshes.push({name,primitives:[{attributes:{POSITION:p},indices:i,material:m}]});
+  nodes.push({name,mesh,translation:center,scale});
+ }
+ const binary=new Uint8Array(length);let cursor=0;for(const p of pieces){binary.set(p,cursor);cursor+=p.length}
+ const doc={asset:{version:'2.0',generator:'EIDOLON phone diagnostic exporter v1'},scene:0,scenes:[{nodes:nodes.map((_,i)=>i)}],nodes,meshes,materials,buffers:[{byteLength:length}],bufferViews:views,accessors,extras:{character_id:'eidolon-diagnostic-001',certification:'diagnostic only',rigged:false,photorealistic:false}};
+ const encoder=new TextEncoder(),raw=encoder.encode(JSON.stringify(doc)),jsonSize=Math.ceil(raw.length/4)*4,total=12+8+jsonSize+8+binary.length;
+ const out=new ArrayBuffer(total),dv=new DataView(out),u=new Uint8Array(out);let o=0;
+ function word(v){dv.setUint32(o,v,true);o+=4}
+ word(0x46546c67);word(2);word(total);word(jsonSize);word(0x4e4f534a);u.fill(32,o,o+jsonSize);u.set(raw,o);o+=jsonSize;word(binary.length);word(0x004e4942);u.set(binary,o);
+ return out
+}
+document.getElementById('generate').onclick=()=>{
+ try{
+  report('Generating original EIDOLON diagnostic GLB on phone…');
+  const data=generateDiagnosticGLB();
+  loader.parse(data,'',gltf=>{
+   const model=gltf.scene,box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
+   if(imported)scene.remove(imported);model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;mixer=null;
+   report('PASS: Original EIDOLON GLB generated and loaded · '+gltf.scene.children.length+' parts · '+data.byteLength+' bytes');
+   const blob=new Blob([data],{type:'model/gltf-binary'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='eidolon-diagnostic.glb';a.textContent='Download original GLB';a.style.display='block';a.style.color='#b4d8ff';a.id='generated-link';document.getElementById('generated-link')?.remove();document.getElementById('log').after(a);
+  },e=>report('Generated GLB parse error: '+e.message));
+ }catch(e){report('Generator error: '+e.message)}
+};
+
 document.getElementById('reset').onclick=()=>{if(imported)scene.remove(imported);imported=null;mixer=null;placeholder.visible=true;report('Reset complete')};
 document.getElementById('snapshot').onclick=()=>{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='glb-test.png';a.click()};
 report('PASS: modules loaded; starting WebGL');
