@@ -1,0 +1,29 @@
+{
+  "source_research_stage": 164,
+  "vertices": 11024,
+  "triangles": 22014,
+  "joint_count": 17,
+  "clips": [
+    "EIDOLON_Experimental_Idle",
+    "EIDOLON_Experimental_Walk"
+  ],
+  "size": 811936,
+  "sha256": "30981c129c1d6c1125e29b4f366476b955c801fa9b57510176d14583db95f184",
+  "skin_test_only": true,
+  "stage166_approved": false,
+  "deformation_version": 8,
+  "anatomy_revision": "ellipsoid_torso_tapered_limbs_smooth_union",
+  "appearance": "embedded_vertex_colors_skin_clothing_shoes",
+  "production_ready": false,
+  "canonical_stage164": false,
+  "gait_revision": "counter_swing_and_nonnegative_swing_knee",
+  "foot_planting": false,
+  "same_static_geometry_as_v5": false,
+  "surface_strategy": "ellipsoid_tapered_smooth_min_k_0.014",
+  "weight_strategy": "mesh_adjacency_laplacian_36_pass_top4",
+  "walk_amplitudes_reduced": true,
+  "adjacency_l1_before": 0.11464441567659378,
+  "adjacency_l1_after": 0.08560270816087723,
+  "edge_p95_before": 0.3677661418914795,
+  "edge_p95_after": 0.1991150975227356
+}
