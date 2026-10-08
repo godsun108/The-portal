@@ -1,16 +1,29 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reality Foundry | G36</title><style>
 :root{color-scheme:dark;font:16px system-ui;background:#09111e;color:#eaf2ff}*{box-sizing:border-box}body{margin:0}header{padding:16px 20px;background:#15243a;border-bottom:1px solid #38506a}h1{font-size:1.35rem;margin:0}small,p{color:#b8c8dc}main{display:grid;grid-template-columns:minmax(0,1fr) 290px;min-height:calc(100dvh - 70px)}#stage{position:relative;min-height:56dvh;touch-action:none}canvas{width:100%;height:100%;display:block}#status{position:absolute;left:12px;bottom:12px;padding:8px 12px;background:#10223de8;border-radius:8px}aside{padding:18px;background:#101d30;overflow:auto}button,input{accent-color:#74c9ff}button{background:#203e59;color:white;border:1px solid #54799a;border-radius:8px;padding:9px 12px;margin:4px;cursor:pointer}button:focus-visible{outline:2px solid #8bd4ff}input[type=range]{width:100%}.part{display:flex;align-items:center;gap:7px;padding:4px}.part button{flex:1;text-align:left;margin:0}.part button[aria-pressed=true]{background:#216b89}.note{font-size:.85rem;line-height:1.5}@media(max-width:750px){main{grid-template-columns:1fr;grid-template-rows:48dvh auto}#stage{min-height:48dvh}aside{overflow:visible}}</style></head><body>
 <header><h1>Reality Foundry — G36</h1><small>Visual Genesis · Browser-native mechanical exploration · Illustrative demo</small></header><main><section id="stage"><canvas id="view" aria-label="Interactive mechanical assembly"></canvas><div id="status" role="status">Starting…</div></section><aside>
-<p class="note">Drag to rotate · Pinch or scroll to zoom · Tap a component to isolate it. No download or external libraries required.</p>
+<p class="note">Drag to rotate · Scroll to zoom · Tap a component to isolate it. No download or external libraries required.</p>
 <button id="play">Play</button><button id="reset">Reset</button><button id="show">Show all</button>
 <label for="timeline">Timeline <output id="time">0.0 s</output></label><input id="timeline" type="range" min="0" max="59.2" step=".1" value="0">
 <label for="explode">Explode assembly</label><input id="explode" type="range" min="0" max="100" value="0">
-<h2>Components</h2><div id="parts"></div><p id="selection" class="note">Select a component.</p>
+<h2>Assembly relationships</h2><p class="note">Conceptual relationships only. Select a connection to highlight its two components.</p><div id="joints"></div><p id="jointDetail" class="note" role="status">Choose a relationship to inspect.</p><h2>Components</h2><div id="parts"></div><p id="selection" class="note">Select a component.</p>
 <p class="note"><strong>Important:</strong> This is a conceptual wireframe with illustrative motion, not a scan, manufacturer CAD, or validated physical simulation. The production G36 glTF models remain in our private development repository.</p></aside></main>
 <script>
 (()=>{'use strict';const cvs=document.querySelector('#view'),ctx=cvs.getContext('2d'),status=document.querySelector('#status');if(!ctx){status.textContent='Canvas unavailable';return}
 const names=['Mainspring barrel','Gear train','Escape wheel','Pallet lever','Pallet stones','Fork horns','Balance','Impulse jewel','Hairspring'];
 const parts=names.map((name,i)=>({name,visible:true,id:i}));
+const relationships=[
+{a:0,b:1,type:'energy transfer',basis:'inferred',detail:'Barrel torque is transmitted into the train; geometry and ratios are not verified.'},
+{a:1,b:2,type:'gear engagement',basis:'inferred',detail:'The train drives the escape wheel; tooth counts and center distances are illustrative.'},
+{a:2,b:3,type:'escapement contact',basis:'inferred',detail:'Escape wheel interacts with pallet lever; contact surfaces and impulse timing are unvalidated.'},
+{a:3,b:4,type:'rigid attachment',basis:'inferred',detail:'Pallet stones are represented as attached to the lever; positions are conceptual.'},
+{a:3,b:5,type:'rigid attachment',basis:'inferred',detail:'Fork horns belong to the lever assembly; no measured clearances.'},
+{a:5,b:7,type:'impulse interaction',basis:'inferred',detail:'Fork and impulse jewel interact; collision and safety geometry have not been solved.'},
+{a:7,b:6,type:'rigid attachment',basis:'inferred',detail:'Impulse jewel travels with the balance; no measured inertia.'},
+{a:6,b:8,type:'restoring torque',basis:'inferred',detail:'Hairspring restores balance oscillation; no calibrated stiffness or dynamic simulation.'}
+];
+let selectedJoint=-1;
+function inspectJoint(index){selectedJoint=index;const j=relationships[index];parts.forEach((p,i)=>p.visible=i===j.a||i===j.b);sync();document.querySelector('#jointDetail').textContent=names[j.a]+' ↔ '+names[j.b]+' · '+j.type+' · '+j.basis.toUpperCase()+'. '+j.detail;}
+
 let az=.38,el=.3,zoom=1,explode=0,t=0,playing=false,previous=0,drag=null;
 const origin=[[0,0,0],[-1.5,.5,.1],[-2.8,1,.2],[-2.1,2.2,.5],[-2.1,2.5,.8],[-1.7,2.9,.6],[-.7,3.5,.4],[-.8,3.4,1],[.2,3.5,.3]];
 const radii=[1.2,.72,.48,.43,.16,.2,1.05,.13,.8],colors=['#d6ae6b','#9dc4dc','#e8c083','#b0d8ee','#e8b77e','#8ec7db','#78c9fa','#ffe1a0','#b9a6e8'];
@@ -23,6 +36,7 @@ for(const {p,i} of order){if(!p.visible)continue;const [ox,oy,oz]=origin[i],offs
 status.textContent='Interactive · '+parts.filter(p=>p.visible).length+' components · '+t.toFixed(1)+' s'}
 function select(i){const isolated=parts.every((p,j)=>p.visible===(j===i));parts.forEach((p,j)=>p.visible=isolated||j===i);sync();document.querySelector('#selection').textContent=isolated?'All parts visible':names[i]+' — illustrative component'}
 function sync(){document.querySelectorAll('.part input').forEach((el,i)=>el.checked=parts[i].visible);document.querySelectorAll('.part button').forEach((el,i)=>el.setAttribute('aria-pressed',String(parts[i].visible&&parts.filter(p=>p.visible).length===1)))}
+const jointList=document.querySelector('#joints');relationships.forEach((j,i)=>{const b=document.createElement('button');b.textContent=names[j.a]+' ↔ '+names[j.b];b.setAttribute('aria-label','Inspect '+j.type+' between '+names[j.a]+' and '+names[j.b]);b.onclick=()=>inspectJoint(i);jointList.append(b)});
 const list=document.querySelector('#parts');parts.forEach((p,i)=>{const row=document.createElement('div');row.className='part';const cb=document.createElement('input');cb.type='checkbox';cb.checked=true;cb.setAttribute('aria-label','Show '+p.name);cb.onchange=()=>{p.visible=cb.checked;sync()};const b=document.createElement('button');b.textContent=p.name;b.onclick=()=>select(i);row.append(cb,b);list.append(row)});
 document.querySelector('#show').onclick=()=>{parts.forEach(p=>p.visible=true);sync()};
 document.querySelector('#reset').onclick=()=>{az=.38;el=.3;zoom=1;explode=0;t=0;playing=false;document.querySelector('#play').textContent='Play';document.querySelector('#timeline').value=0;document.querySelector('#explode').value=0;parts.forEach(p=>p.visible=true);sync()};
