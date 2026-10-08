@@ -49,8 +49,10 @@ def parse_obj(path):
                 parsed.append((vi,ti,ni))
             # OBJ polygon fans; suitable for bundled quad base, not all arbitrary n-gons.
             for j in range(1,len(parsed)-1):
-                triangle_faces.append((parsed[0],parsed[j],parsed[j+1]))
                 groups[group]=groups.get(group,0)+1
+                # MakeHuman base.obj bundles helpers (skirt, hair, eyes, joints, etc).
+                # Export ONLY the anatomical body to avoid merged artifacts.
+                if group=='body':triangle_faces.append((parsed[0],parsed[j],parsed[j+1]))
     if len(verts)<4 or not triangle_faces:raise ValueError("OBJ missing mesh data")
     return (np.asarray(verts,dtype=np.float32),np.asarray(tex,dtype=np.float32).reshape(-1,2),
             np.asarray(normals,dtype=np.float32).reshape(-1,3),triangle_faces,groups)
@@ -122,15 +124,15 @@ def build(source):
         "source_path":SOURCE_PATH,"source_license":LICENSE,
         "source_sha256":hashlib.sha256(raw).hexdigest(),"asset_sha256":hashlib.sha256(glb).hexdigest(),
         "original_vertices":len(verts),"exported_vertices":len(pos),"triangles":len(fidx),
-        "uv_entries":len(uvs),"groups":groups,
+        "uv_entries":len(uvs),"groups":groups,"exported_group":"body","excluded_helper_triangle_count":sum(n for name,n in groups.items() if name!="body"),
         "bbox_min":bbox_min.tolist(),"bbox_max":bbox_max.tolist(),
         "bytes":len(glb),"rigged":False,"animations":0,"photoreal":False,
         "certified":"importer-structure-only","asset_status":"research-reference"
     }
     (OUT/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     assert struct.unpack_from("<4sII",glb)==(b"glTF",2,len(glb))
-    assert len(fidx)>1000, "Not a proper anatomical source mesh"
-    assert len(uvs)>100, "Missing source UVs"
+    assert len(fidx)>1000 and len(fidx)==groups.get("body",0), "Not a clean human body mesh"
+    assert len(uvs)>100, "Missing source UVs"\n    # Topology integrity using source vertex indices rather than duplicated UV vertices.\n    edge_counts={}\n    degenerate=0\n    for tri in faces:\n        ids=[c[0] for c in tri]\n        if len(set(ids))<3:degenerate+=1\n        for a,b in ((ids[0],ids[1]),(ids[1],ids[2]),(ids[2],ids[0])):\n            edge=tuple(sorted((a,b)))\n            edge_counts[edge]=edge_counts.get(edge,0)+1\n    boundary=sum(c==1 for c in edge_counts.values())\n    nonmanifold=sum(c>2 for c in edge_counts.values())\n    manifest["body_boundary_edges"]=boundary\n    manifest["body_nonmanifold_edges"]=nonmanifold\n    manifest["body_degenerate_faces"]=degenerate\n    (OUT/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\\n")\n    print(f"Body-only structural QA: {boundary} boundary edges, {nonmanifold} nonmanifold edges, {degenerate} degenerate triangles")\n    assert degenerate==0, "Degenerate triangles in imported body"
     print(json.dumps(manifest,indent=2))
 if __name__=="__main__":
     if len(sys.argv)!=2:raise SystemExit("Usage: build_makehuman_base.py path/to/base.obj")
