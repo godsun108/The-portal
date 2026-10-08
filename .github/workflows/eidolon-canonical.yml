@@ -1,0 +1,45 @@
+name: EIDOLON Canonical Mesh Build
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/build_eidolon_canonical.py'
+      - '.github/workflows/eidolon-canonical.yml'
+permissions:
+  contents: write
+concurrency:
+  group: eidolon-canonical-build
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deterministic mesh dependencies
+        run: python -m pip install "numpy==2.3.5" "scikit-image==0.26.0"
+      - name: Reconstruct and verify canonical actor
+        run: python scripts/build_eidolon_canonical.py
+      - name: Archive GLB and manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: eidolon-human-v1-canonical
+          path: |
+            eidolon-canonical/assets/eidolon-human-v1-canonical.glb
+            eidolon-canonical/assets/manifest.json
+      - name: Publish static assets for iPhone viewer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add eidolon-canonical/assets/eidolon-human-v1-canonical.glb eidolon-canonical/assets/manifest.json
+          if git diff --cached --quiet; then
+            echo "Canonical assets unchanged."
+          else
+            git commit -m "build: publish verified EIDOLON Human v1 canonical GLB"
+            git push
+          fi
