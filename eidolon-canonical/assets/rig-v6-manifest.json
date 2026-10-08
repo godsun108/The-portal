@@ -1,0 +1,26 @@
+{
+  "stage": 164,
+  "vertices": 12152,
+  "triangles": 24278,
+  "joint_count": 17,
+  "clips": [
+    "EIDOLON_Experimental_Idle",
+    "EIDOLON_Experimental_Walk"
+  ],
+  "size": 747228,
+  "sha256": "3925239d152838440327f9626215218ae13cb95d93c9cda99432ea418eb1eed3",
+  "skin_test_only": true,
+  "stage166_approved": false,
+  "deformation_version": 6,
+  "gait_revision": "counter_swing_and_nonnegative_swing_knee",
+  "foot_planting": false,
+  "same_static_geometry_as_v5": true,
+  "surface_strategy": "smooth_min_k_0.018",
+  "canonical_stage164": false,
+  "weight_strategy": "mesh_adjacency_laplacian_36_pass_top4",
+  "walk_amplitudes_reduced": true,
+  "adjacency_l1_before": 0.10698936134576797,
+  "adjacency_l1_after": 0.0830666571855545,
+  "edge_p95_before": 0.3400976359844208,
+  "edge_p95_after": 0.19988365471363068
+}
