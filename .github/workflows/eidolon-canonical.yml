@@ -56,5 +56,6 @@ jobs:
             echo "Canonical assets unchanged."
           else
             git commit -m "build: publish verified EIDOLON Human v1 canonical GLB"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
