@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/build_eidolon_canonical.py'
       - 'scripts/build_eidolon_rigged.py'
+      - 'scripts/build_eidolon_rigged_v2.py'
       - '.github/workflows/eidolon-canonical.yml'
 permissions:
   contents: write
@@ -28,6 +29,8 @@ jobs:
         run: python scripts/build_eidolon_canonical.py
       - name: Build experimental 17-joint actor and two clips
         run: python scripts/build_eidolon_rigged.py
+      - name: Build experimental deformation v2
+        run: python scripts/build_eidolon_rigged_v2.py
       - name: Archive GLB and manifest
         uses: actions/upload-artifact@v4
         with:
@@ -37,11 +40,13 @@ jobs:
             eidolon-canonical/assets/manifest.json
             eidolon-canonical/assets/eidolon-human-v1-rigged-experimental.glb
             eidolon-canonical/assets/rig-manifest.json
+            eidolon-canonical/assets/eidolon-human-v1-rigged-v2-experimental.glb
+            eidolon-canonical/assets/rig-v2-manifest.json
       - name: Publish static assets for iPhone viewer
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add eidolon-canonical/assets/eidolon-human-v1-canonical.glb eidolon-canonical/assets/manifest.json eidolon-canonical/assets/eidolon-human-v1-rigged-experimental.glb eidolon-canonical/assets/rig-manifest.json
+          git add eidolon-canonical/assets/eidolon-human-v1-canonical.glb eidolon-canonical/assets/manifest.json eidolon-canonical/assets/eidolon-human-v1-rigged-experimental.glb eidolon-canonical/assets/rig-manifest.json eidolon-canonical/assets/eidolon-human-v1-rigged-v2-experimental.glb eidolon-canonical/assets/rig-v2-manifest.json
           if git diff --cached --quiet; then
             echo "Canonical assets unchanged."
           else
