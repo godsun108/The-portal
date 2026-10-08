@@ -1,5 +1,5 @@
 {
-  "stage": 164,
+  "source_research_stage": 164,
   "vertices": 11384,
   "triangles": 22734,
   "joint_count": 17,
@@ -16,8 +16,8 @@
   "canonical_stage164": false,
   "gait_revision": "counter_swing_and_nonnegative_swing_knee",
   "foot_planting": false,
-  "same_static_geometry_as_v5": true,
-  "surface_strategy": "smooth_min_k_0.018",
+  "same_static_geometry_as_v5": false,
+  "surface_strategy": "ellipsoid_tapered_smooth_min_k_0.032",
   "weight_strategy": "mesh_adjacency_laplacian_36_pass_top4",
   "walk_amplitudes_reduced": true,
   "adjacency_l1_before": 0.11539366841316223,
