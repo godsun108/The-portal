@@ -149,8 +149,7 @@ def build():
         if y<.067:
             color=shoes
         elif y<.50:
-            color=trousers if ax<.19 else skin
-            if ax>.06:color=trousers
+            color=skin if (ax>.195 and y>.37) else trousers
         elif y<.813 and ax<.165:
             color=shirt
         elif y<.755 and ax<.19 and y>.55:
