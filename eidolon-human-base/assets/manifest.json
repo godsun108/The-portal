@@ -4,10 +4,10 @@
   "source_path": "makehuman/data/3dobjs/base.obj",
   "source_license": "CC0-1.0 (MakeHuman bundled core assets)",
   "source_sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
-  "asset_sha256": "595a45763fd2d1e1eb8391a5c522da151fc39739500d9b023ef1f8e20107c155",
+  "asset_sha256": "5e707bd40a5e5083ac080294c594ad60fe1db33e5384e35c17fe485c1e84f0ce",
   "original_vertices": 19158,
-  "exported_vertices": 21833,
-  "triangles": 36972,
+  "exported_vertices": 14517,
+  "triangles": 26756,
   "uv_entries": 21334,
   "groups": {
     "body": 26756,
@@ -150,20 +150,25 @@
     "helper-tongue": 448,
     "joint-ground": 12
   },
+  "exported_group": "body",
+  "excluded_helper_triangle_count": 10216,
   "bbox_min": [
-    -4.973199844360352,
-    -8.448800086975098,
-    -1.1033999919891357
+    -4.962699890136719,
+    -8.16759967803955,
+    -1.0154000520706177
   ],
   "bbox_max": [
-    4.973199844360352,
-    8.496700286865234,
-    3.2564001083374023
+    4.962699890136719,
+    8.491299629211426,
+    3.2146999835968018
   ],
-  "bytes": 921988,
+  "bytes": 626580,
   "rigged": false,
   "animations": 0,
   "photoreal": false,
   "certified": "importer-structure-only",
-  "asset_status": "research-reference"
+  "asset_status": "research-reference",
+  "body_boundary_edges": 0,
+  "body_nonmanifold_edges": 0,
+  "body_degenerate_faces": 0
 }
