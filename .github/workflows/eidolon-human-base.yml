@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/build_makehuman_base.py'
       - 'scripts/build_makehuman_rig.py'
+      - 'scripts/test_makehuman_glb.py'
       - '.github/workflows/eidolon-human-base.yml'
 permissions:
   contents: write
@@ -42,6 +43,8 @@ jobs:
         run: python scripts/build_makehuman_base.py /tmp/eidolon-source/base.obj
       - name: Export native MakeHuman human bone hierarchy and weights
         run: python scripts/build_makehuman_rig.py /tmp/eidolon-source/base.obj /tmp/eidolon-source/default.mhskel /tmp/eidolon-source/default_weights.mhw
+      - name: Verify actual glTF bones, weights, and watertight body
+        run: python scripts/test_makehuman_glb.py
       - uses: actions/upload-artifact@v4
         with:
           name: eidolon-makehuman-cc0-base
@@ -50,11 +53,12 @@ jobs:
             eidolon-human-base/assets/manifest.json
             eidolon-human-base/assets/makehuman-native-rig.glb
             eidolon-human-base/assets/rig-manifest.json
+            eidolon-human-base/assets/qa-report.json
       - name: Publish versioned anatomical asset
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add eidolon-human-base/assets/makehuman-base-static.glb eidolon-human-base/assets/manifest.json eidolon-human-base/assets/makehuman-native-rig.glb eidolon-human-base/assets/rig-manifest.json
+          git add eidolon-human-base/assets/makehuman-base-static.glb eidolon-human-base/assets/manifest.json eidolon-human-base/assets/makehuman-native-rig.glb eidolon-human-base/assets/rig-manifest.json eidolon-human-base/assets/qa-report.json
           if git diff --cached --quiet; then
             echo 'No asset changes.'
             exit 0
