@@ -71,8 +71,8 @@ try{
    const kind=$('asset').value;
    report('Fetching '+(kind==='v2'?'V2 region-aware rig':kind==='rigged'?'V1 experimental rig':'canonical static')+' Stage164 asset…');
    const path=kind==='v2'?'eidolon-human-v1-rigged-v2-experimental.glb':kind==='rigged'?'eidolon-human-v1-rigged-experimental.glb':'eidolon-human-v1-canonical.glb';
-   const manifest=await fetch('./assets/'+(kind==='v2'?'rig-v2-manifest.json':kind==='rigged'?'rig-manifest.json':'manifest.json')+'?build=2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Manifest HTTP '+r.status+' · asset build may still be publishing');return r.json()});
-   const gltf=await new GLTFLoader().loadAsync('./assets/'+path+'?build=2');
+   const manifest=await fetch('../eidolon-canonical/assets/'+(kind==='v2'?'rig-v2-manifest.json':kind==='rigged'?'rig-manifest.json':'manifest.json')+'?build=2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Manifest HTTP '+r.status+' · asset build may still be publishing');return r.json()});
+   const gltf=await new GLTFLoader().loadAsync('../eidolon-canonical/assets/'+path+'?build=2');
    const fresh=gltf.scene;
    let verts=0,tri=0,skinned=0,bones=0;
    fresh.traverse(n=>{if(n.isMesh){verts+=n.geometry.attributes.position.count;tri+=(n.geometry.index?.count||n.geometry.attributes.position.count)/3;if(n.isSkinnedMesh)skinned++}if(n.isBone)bones++});
@@ -84,7 +84,7 @@ try{
    for(const id of ['clipIdle','clipWalk','clipStop'])$(id).disabled=!mixer;
    $('motionhint').textContent=mixer?'Animated model loaded: select Idle or Walk to test motion.':'Static mesh loaded: zero animations (expected). Switch to Animated experiment above.';
    $('stats').textContent='PASS · '+verts.toLocaleString()+' vertices · '+tri.toLocaleString()+' triangles · '+skinned+' skinned meshes · '+bones+' bones · '+clips.length+' clips';
-   $('download').hidden=false;$('download').href='./assets/'+path;
+   $('download').hidden=false;$('download').href='../eidolon-canonical/assets/'+path;
    $('download').download=path;
    report('PASS: Stage164 '+kind+' GLB imported. '+(kind!=='static'?'Experimental skinning and clips detected; visually compare deformations.':'Static canonical research geometry.'));
    if(mixer)play('Idle');
