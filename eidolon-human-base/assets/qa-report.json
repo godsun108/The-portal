@@ -1,0 +1,10 @@
+{
+  "result": "PASS: packaged glTF 2 anatomical topology and native weights",
+  "triangles": 26756,
+  "unique_uv_vertices": 14517,
+  "bones": 163,
+  "body_manifold": true,
+  "skinning_weights_normalized": true,
+  "animations": 0,
+  "photoreal": false
+}
