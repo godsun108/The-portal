@@ -53,7 +53,7 @@ document.getElementById('generate').onclick=()=>{
 };
 
 document.getElementById('animate').onclick=()=>{if(!imported){report('Generate a human first');return}actorMotion=!actorMotion;actorStart=performance.now();if(!actorMotion){imported.rotation.set(0,0,0);imported.position.x=0;imported.traverse(n=>{if(['arm_l','arm_r','leg_l','leg_r','head'].includes(n.name))n.rotation.set(0,0,0)})}report(actorMotion?'PASS: Procedural walk/turn animation running':'Animation stopped')};
-document.getElementById('reset').onclick=()=>{actorMotion=false;{if(imported)scene.remove(imported);imported=null;mixer=null;placeholder.visible=true;report('Reset complete')};
+document.getElementById('reset').onclick=()=>{actorMotion=false;if(imported)scene.remove(imported);imported=null;mixer=null;placeholder.visible=true;report('Reset complete')};
 document.getElementById('snapshot').onclick=()=>{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='glb-test.png';a.click()};
 report('PASS: modules loaded; starting WebGL');
 }catch(e){report('Renderer failed: '+e.message)}
