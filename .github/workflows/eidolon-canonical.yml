@@ -90,6 +90,16 @@ jobs:
             echo "Canonical assets unchanged."
           else
             git commit -m "build: publish verified EIDOLON Human v1 canonical GLB"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            # Retry concurrent commits to main without losing generated GLB assets.
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                echo "Generated assets published"
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Asset publication failed after retries"
+            exit 1
           fi
