@@ -63,14 +63,17 @@ function buildV2(){
  for(const side of [-1,1]){const suffix=side<0?'l':'r';
   limbs['arm_'+suffix]=limb('arm_'+suffix,side,true,false,[side*.48,1.91,0],skin,.135,.10);
   limbs['leg_'+suffix]=limb('leg_'+suffix,side,false,true,[side*.21,.99,0],pants,.19,.13);
-  ell(root,'hand_'+suffix,side*.48,.83,0,.115,.14,.085,skin);
-  ell(root,'shoe_'+suffix,side*.21,.06,.10,.16,.10,.29,hair);
+  // Shoulder cap follows the shoulder bone, bridging the torso/upper-arm gap.
+  ell(limbs['arm_'+suffix].root,'shoulder_'+suffix,0,-.06,0,.19,.21,.18,cloth);
+  // Both accessories are parented to the lower bone, so they follow joint rotation.
+  ell(limbs['arm_'+suffix].hinge,'hand_'+suffix,0,-.54,0,.115,.14,.09,skin);
+  ell(limbs['leg_'+suffix].hinge,'shoe_'+suffix,0,-.54,.11,.17,.11,.27,hair);
  }
  root.userData={mouth,eyes,limbs,head,skinned:true};
  return root
 }
 document.getElementById('generate').onclick=()=>{
- try{if(imported)scene.remove(imported);const model=buildV2(),box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;actorMotion=false;mixer=null;report('V3 assembled: four skinned limbs with corrected bind transforms · awaiting motion verification')}
+ try{if(imported)scene.remove(imported);const model=buildV2(),box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;actorMotion=false;mixer=null;report('V3 assembled: skinned limbs + bone-attached hands/feet + shoulder caps · awaiting motion verification')}
  catch(e){report('V2 build error: '+e.message)}
 };
 document.getElementById('animate').onclick=()=>{if(!imported){report('Generate a human first');return}actorMotion=!actorMotion;actorStart=performance.now();if(!actorMotion){imported.rotation.set(0,0,0);imported.position.x=0;imported.traverse(n=>{if(['arm_l','arm_r','leg_l','leg_r','head','elbow_l','elbow_r','knee_l','knee_r'].includes(n.name))n.rotation.set(0,0,0)})}report(actorMotion?'PASS: Procedural walk/turn animation running':'Animation stopped')};
