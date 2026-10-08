@@ -82,7 +82,7 @@ try{
   if(!mixer)return;
   const clip=clips.find(c=>c.name.endsWith('Walk'));if(!clip)return;
   if(!activeAction||activeAction.getClip()!==clip){mixer.stopAllAction();activeAction=mixer.clipAction(clip);activeAction.reset().play()}
-  activeAction.paused=true;paused=true;mixer.setTime(Math.max(0,Math.min(.999,f))*clip.duration);
+  activeAction.paused=false;mixer.setTime(Math.max(0,Math.min(.999,f))*clip.duration);activeAction.paused=true;paused=true;
   model.updateMatrixWorld(true);
  }
  $('pose').onclick=()=>{
