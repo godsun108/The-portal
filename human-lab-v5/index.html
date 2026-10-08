@@ -51,7 +51,7 @@ function buildV2(){
   const pos=geo.attributes.position,indices=[],weights=[];
   for(let i=0;i<pos.count;i++){const y=-pos.getY(i);const w=THREE.MathUtils.smoothstep(y,.34,.72);indices.push(0,1,0,0);weights.push(1-w,w,0,0)}
   geo.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(indices,4));geo.setAttribute('skinWeight',new THREE.Float32BufferAttribute(weights,4));
-  const mesh=new THREE.SkinnedMesh(geo,material);mesh.name='skinned_'+name;mesh.add(bones[0]);root.remove(bones[0]);mesh.bind(new THREE.Skeleton(bones));mesh.position.set(...origin);bones[0].position.set(0,0,0);root.add(mesh);
+  const mesh=new THREE.SkinnedMesh(geo,material);mesh.name='skinned_'+name;mesh.position.set(...origin);bones[0].position.set(0,0,0);mesh.add(bones[0]);root.remove(bones[0]);root.add(mesh);root.updateMatrixWorld(true);mesh.bind(new THREE.Skeleton(bones));
   return {root:bones[0],hinge:bones[1],mesh};
  }
  ell(root,'torso',0,1.54,0,.42,.55,.25,cloth);ell(root,'pelvis',0,1.06,0,.36,.24,.25,pants);ell(root,'neck',0,2.09,0,.12,.17,.12,skin);
@@ -70,7 +70,7 @@ function buildV2(){
  return root
 }
 document.getElementById('generate').onclick=()=>{
- try{if(imported)scene.remove(imported);const model=buildV2(),box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;actorMotion=false;mixer=null;report('PASS: EIDOLON V3 built · four SkinnedMesh limbs · two bones per limb · procedural geometry')}
+ try{if(imported)scene.remove(imported);const model=buildV2(),box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;actorMotion=false;mixer=null;report('V3 assembled: four skinned limbs with corrected bind transforms · awaiting motion verification')}
  catch(e){report('V2 build error: '+e.message)}
 };
 document.getElementById('animate').onclick=()=>{if(!imported){report('Generate a human first');return}actorMotion=!actorMotion;actorStart=performance.now();if(!actorMotion){imported.rotation.set(0,0,0);imported.position.x=0;imported.traverse(n=>{if(['arm_l','arm_r','leg_l','leg_r','head','elbow_l','elbow_r','knee_l','knee_r'].includes(n.name))n.rotation.set(0,0,0)})}report(actorMotion?'PASS: Procedural walk/turn animation running':'Animation stopped')};
