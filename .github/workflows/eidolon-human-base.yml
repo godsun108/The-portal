@@ -1,0 +1,60 @@
+name: EIDOLON Human Base Import
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/build_makehuman_base.py'
+      - '.github/workflows/eidolon-human-base.yml'
+permissions:
+  contents: write
+concurrency:
+  group: eidolon-makehuman-base
+  cancel-in-progress: false
+jobs:
+  import-and-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deterministic importer dependency
+        run: python -m pip install 'numpy==2.3.5'
+      - name: Fetch pinned CC0 MakeHuman core mesh
+        run: |
+          mkdir -p /tmp/eidolon-source
+          curl -fsSL --retry 3 --max-time 75 \
+            'https://raw.githubusercontent.com/makehumancommunity/makehuman/a8bc2d54ff0ac92e78ff71431b1023eda42bf482/makehuman/data/3dobjs/base.obj' \
+            -o /tmp/eidolon-source/base.obj
+          test -s /tmp/eidolon-source/base.obj
+          wc -c /tmp/eidolon-source/base.obj
+      - name: Rebuild anatomical GLB and validate mesh
+        run: python scripts/build_makehuman_base.py /tmp/eidolon-source/base.obj
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eidolon-makehuman-cc0-base
+          path: |
+            eidolon-human-base/assets/makehuman-base-static.glb
+            eidolon-human-base/assets/manifest.json
+      - name: Publish versioned anatomical asset
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add eidolon-human-base/assets/makehuman-base-static.glb eidolon-human-base/assets/manifest.json
+          if git diff --cached --quiet; then
+            echo 'No asset changes.'
+            exit 0
+          fi
+          git commit -m 'build: publish pinned CC0 MakeHuman anatomical base'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo 'Anatomical base published'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'Could not publish anatomical base after retries'
+          exit 1
