@@ -9,6 +9,11 @@ function persist(next){localStorage.setItem(KEY,JSON.stringify(next));saved=next
 function lock(){wallet=null;review=null;$('password').value='';$('wallet-state').textContent='Locked';$('accept').disabled=true;}
 function ready(){if(!wallet)throw Error('Unlock your wallet first.');if(!$('backed').checked)throw Error('Save your private wallet backup first.');}
 function download(name,obj){const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+async function copyText(value){
+ try{await navigator.clipboard.writeText(value);return true;}catch{
+  const area=document.createElement('textarea');area.value=value;area.setAttribute('readonly','');area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();return ok;
+ }
+}
 function outbound(){if(!saved.bundle)throw Error('Create or accept a session first.');return {schema:'earthchain.public-message.v1',bundle:saved.bundle,proposal:saved.pending};}
 async function render(){
  $('address').textContent=saved.vault?.address||'No wallet';$('config').textContent=saved.bundle?JSON.stringify(saved.bundle.journal.config,null,2):'No session pinned';
@@ -23,6 +28,7 @@ $('create').onclick=run(async()=>{if(saved.vault)throw Error('A wallet already e
 $('unlock').onclick=run(async()=>{if(!saved.vault)throw Error('Create or restore a test wallet.');wallet=await unlockWallet(saved.vault,$('password').value);$('password').value='';$('wallet-state').textContent='Unlocked';tell('Unlocked locally.');});
 $('lock').onclick=lock;
 $('backup').onclick=run(async()=>{if(!saved.vault)throw Error('No wallet');download('earthchain-private-encrypted-test-wallet.json',saved.vault);});
+$('copy-address').onclick=run(async()=>{if(!saved.vault)throw Error('Create or restore a wallet first.');if(!await copyText(saved.vault.address))throw Error('Clipboard unavailable; copy the address from the page.');tell('Public address copied. It is safe to share; never share your backup or password.');});
 $('restore-button').onclick=run(async()=>{const f=$('restore').files[0];if(!f||f.size>8192)throw Error('Select your encrypted wallet backup.');const v=JSON.parse(await f.text());if(saved.vault&&saved.vault.address!==v.address)throw Error('Different wallet: use a separate browser profile.');const w=await unlockWallet(v,$('password').value);persist({...saved,vault:v});wallet=w;$('password').value='';$('wallet-state').textContent='Unlocked · recovery verified';await render();tell('Recovered wallet. If this is a replacement device, import the latest co-signed ledger and reconcile any pending proposal with your friend before signing.');});
 $('session').onclick=run(async()=>{ready();if(saved.bundle)throw Error('A session is already pinned.');const peer=$('friend').value.trim();if(!addressPattern.test(peer)||peer===wallet.address)throw Error('Enter your friend’s distinct public address.');const random=Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');const c={schema:SCHEMA,network:'EARTHCHAIN_TEST_'+random,asset:ASSET,fee:0,participants:[wallet.address,peer]};validateConfig(c);persist({...saved,bundle:emptyMutual(c)});await render();tell('Session created. Share the public message and compare its network and both addresses with your friend.');});
 async function propose(type,amount){
@@ -43,7 +49,7 @@ async function propose(type,amount){
 }
 $('faucet').onclick=run(()=>propose('FAUCET',100));$('propose').onclick=run(()=>propose('TRANSFER',Number($('amount').value)));
 $('download').onclick=run(async()=>download('earthchain-public-message.json',outbound()));
-$('copy').onclick=run(async()=>{await navigator.clipboard.writeText(JSON.stringify(outbound()));tell('Public message copied.');});
+$('copy').onclick=run(async()=>{if(!await copyText(JSON.stringify(outbound())))throw Error('Clipboard unavailable; use Download instead.');tell('Public message copied.');});
 $('share').onclick=run(async()=>{const json=JSON.stringify(outbound(),null,2),f=new File([json],'earthchain-public-message.json',{type:'application/json'});if(navigator.canShare?.({files:[f]}))await navigator.share({files:[f],title:'EarthChain public test message'});else download('earthchain-public-message.json',outbound());});
 $('public-file').onchange=run(async()=>{const f=$('public-file').files[0];if(!f||f.size>2000000)throw Error('Public file too large or missing.');$('incoming').value=await f.text();tell('File loaded. Press Inspect.');});
 $('incoming').oninput=()=>{review=null;$('accept').disabled=true;};
@@ -73,3 +79,4 @@ $('verify').onclick=run(async()=>{await render();tell('Saved co-signed history v
 $('export').onclick=run(async()=>{if(!saved.bundle)throw Error('No session');await render();download('earthchain-cosigned-public-ledger.json',{schema:'earthchain.public-message.v1',bundle:saved.bundle,proposal:saved.pending});});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)lock();});let idle;const touch=()=>{clearTimeout(idle);idle=setTimeout(lock,300000);};document.addEventListener('pointerdown',touch);document.addEventListener('keydown',touch);touch();
 if(!crypto.subtle||!isSecureContext)tell('Open on an approved HTTPS static host or localhost. This device must support Ed25519 Web Crypto.');else render().then(()=>tell('No-server test mode ready. No network requests are made by this application.')).catch(e=>tell(e.message));
+if('serviceWorker' in navigator && isSecureContext)navigator.serviceWorker.register('./sw.js').catch(()=>{});

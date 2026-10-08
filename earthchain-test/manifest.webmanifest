@@ -1,0 +1,10 @@
+{
+  "name": "EarthChain ECTEST Wallet",
+  "short_name": "EarthChain",
+  "start_url": "./no-server.html",
+  "display": "standalone",
+  "background_color": "#0d1c18",
+  "theme_color": "#0d1c18",
+  "description": "A valueless, no-server two-person EarthChain test wallet.",
+  "icons": []
+}
