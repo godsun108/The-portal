@@ -215,10 +215,10 @@ def build():
     OUT.mkdir(parents=True,exist_ok=True)
     output=OUT/"eidolon-human-v1-rigged-v7-anatomy.glb"
     output.write_bytes(payload)
-    manifest={"stage":164,"vertices":len(pos),"triangles":len(faces),
+    manifest={"source_research_stage":164,"vertices":len(pos),"triangles":len(faces),
               "joint_count":len(names),"clips":["EIDOLON_Experimental_Idle","EIDOLON_Experimental_Walk"],
               "size":len(payload),"sha256":hashlib.sha256(payload).hexdigest(),
-              "skin_test_only":True,"stage166_approved":False,"deformation_version":7,"anatomy_revision":"ellipsoid_torso_tapered_limbs_smooth_union","canonical_stage164":False,"gait_revision":"counter_swing_and_nonnegative_swing_knee","foot_planting":False,"same_static_geometry_as_v5":True,"surface_strategy":"smooth_min_k_0.018","canonical_stage164":False,"weight_strategy":"mesh_adjacency_laplacian_36_pass_top4","walk_amplitudes_reduced":True,"adjacency_l1_before":rough_before,"adjacency_l1_after":rough_after,"edge_p95_before":p95_before,"edge_p95_after":p95_after}
+              "skin_test_only":True,"stage166_approved":False,"deformation_version":7,"anatomy_revision":"ellipsoid_torso_tapered_limbs_smooth_union","canonical_stage164":False,"gait_revision":"counter_swing_and_nonnegative_swing_knee","foot_planting":False,"same_static_geometry_as_v5":False,"surface_strategy":"ellipsoid_tapered_smooth_min_k_0.032","canonical_stage164":False,"weight_strategy":"mesh_adjacency_laplacian_36_pass_top4","walk_amplitudes_reduced":True,"adjacency_l1_before":rough_before,"adjacency_l1_after":rough_after,"edge_p95_before":p95_before,"edge_p95_after":p95_after}
     (OUT/"rig-v7-manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     # Syntactic self-check (GLTFLoader/browser check happens independently).
     assert struct.unpack_from("<4sII",payload)==(b"glTF",2,len(payload))
