@@ -1,0 +1,19 @@
+{
+  "stage": 164,
+  "vertices": 12240,
+  "triangles": 24454,
+  "joint_count": 17,
+  "clips": [
+    "EIDOLON_Experimental_Idle",
+    "EIDOLON_Experimental_Walk"
+  ],
+  "size": 745844,
+  "sha256": "4b7547da8ff6ac269ee6102d87e652d05e61d647e388eeb56f5d85cc3a492329",
+  "skin_test_only": true,
+  "stage166_approved": false,
+  "deformation_version": 3,
+  "weight_strategy": "mesh_adjacency_laplacian_18_pass_top4",
+  "walk_amplitudes_reduced": true,
+  "adjacency_l1_before": 0.10613638162612915,
+  "adjacency_l1_after": 0.08710545301437378
+}
