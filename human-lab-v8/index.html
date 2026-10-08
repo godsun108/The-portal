@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Human Lab · GLB Isolation Test</title><style>html{background:#0b1220;color:#e9f0ff;font:16px system-ui}body{max-width:650px;margin:auto;padding:16px}canvas{display:block;width:100%;aspect-ratio:9/12;background:#17243a;border:1px solid #52627a;border-radius:12px}button,input{font:inherit;margin:8px 0;padding:10px}button{background:#314968;color:white;border:1px solid #7289a7;border-radius:8px}#log{white-space:pre-wrap;overflow-wrap:anywhere;background:#17243a;padding:12px;border-radius:8px}a{color:#b4d8ff}</style></head><body><h2>EIDOLON V6 · Hands & Face Study</h2><p>Experimental fingers, facial structure and skeletal motion. Previous labs remain unchanged.</p><p id="status">Booting…</p><canvas id="view" width="480" height="640"></canvas><p><label>Choose a licensed .glb character from Files <input id="file" type="file" accept=".glb,model/gltf-binary"></label></p><button id="generate">Build Human V6</button><button id="animate">Animate V6</button><button id="reset">Reset scene</button><button id="snapshot">Save PNG</button><p id="log" role="status">Diagnostic log starting…</p><p>Models selected here are read from your device; this page does not upload them. GLB files with external textures or Draco/KTX2 compression may require extra decoders. The default shape is a diagnostic cube. V6 adds original five-digit hand geometry, facial structure, skinned limbs and simple facial controls. Torso and limbs are not yet a watertight single mesh; this is not photorealism.</p><p><a href="../human-lab-v3/">Back to verified V3</a></p><script>const status=document.getElementById('status'),log=document.getElementById('log');function report(s){log.textContent+= '\n'+s;status.textContent=s}log.textContent='Browser ready';window.addEventListener('error',e=>report('JS error: '+e.message));window.addEventListener('unhandledrejection',e=>report('Promise error: '+e.reason));</script><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script><script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const report=s=>{document.getElementById('log').textContent+='\n'+s;document.getElementById('status').textContent=s},canvas=document.getElementById('view');
+try{
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true});renderer.setSize(480,640,false);renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x18253a);const camera=new THREE.PerspectiveCamera(38,480/640,.1,100);camera.position.set(0,1.45,4.5);camera.lookAt(0,1.4,0);scene.add(new THREE.HemisphereLight(0xffffff,0x445566,2));const light=new THREE.DirectionalLight(0xffffff,3);light.position.set(-2,4,4);scene.add(light);
+const placeholder=new THREE.Mesh(new THREE.BoxGeometry(.9,1.5,.5),new THREE.MeshStandardMaterial({color:0x73a8da,roughness:.65}));placeholder.position.y=1.4;scene.add(placeholder);let imported=null,mixer=null,actorMotion=false,actorStart=0;const loader=new GLTFLoader();let last=performance.now(),frame=0;
+function tick(now){const dt=Math.min(.05,(now-last)/1000);last=now;placeholder.rotation.y+=dt*.25;if(mixer)mixer.update(dt);if(actorMotion&&imported){const t=(now-actorStart)/1000;if(imported.userData.mouth){imported.userData.mouth.scale.y=.013*(1+1.3*Math.max(0,Math.sin(t*3)));const blink=Math.pow(Math.max(0,Math.cos(t*2.4)),32);for(const eye of imported.userData.eyes||[])eye.scale.y=.025*(1-.90*blink);for(const brow of imported.userData.brows||[])brow.position.y=.225+.013*Math.sin(t*1.5)}const gait=Math.sin(t*5);imported.rotation.y=.25*Math.sin(t*.7);imported.position.x=.16*Math.sin(t*.9);imported.traverse(n=>{if(n.name==="arm_l")n.rotation.x=.45*gait;if(n.name==="arm_r")n.rotation.x=-.45*gait;if(n.name==="leg_l")n.rotation.x=-.35*gait;if(n.name==="leg_r")n.rotation.x=.35*gait;if(n.name==="head")n.rotation.y=.12*Math.sin(t*1.2);if(n.name.startsWith('elbow_'))n.rotation.x=.2+.12*Math.sin(t*5);if(n.name.startsWith('knee_'))n.rotation.x=Math.max(0,.45*Math.sin(t*5+(n.name.endsWith('_l')?0:Math.PI)));});}renderer.render(scene,camera);frame++;if(frame===30)report('PASS: WebGL scene running; GLTFLoader imported');requestAnimationFrame(tick)}requestAnimationFrame(tick);
+document.getElementById('file').onchange=()=>{const file=document.getElementById('file').files?.[0];if(!file)return;if(!file.name.toLowerCase().endsWith('.glb'))return report('Only .glb supported');if(file.size>60e6)return report('File exceeds 60 MB phone-test limit');const url=URL.createObjectURL(file);report('Parsing '+file.name);loader.load(url,gltf=>{try{const model=gltf.scene,box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());if(!Number.isFinite(size.y)||size.y<=0)throw Error('Invalid model bounds');if(imported)scene.remove(imported);actorMotion=false;model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;mixer=gltf.animations.length?new THREE.AnimationMixer(model):null;if(mixer)mixer.clipAction(gltf.animations[0]).play();report('PASS: '+file.name+' · animations '+gltf.animations.length+' · meshes '+model.getObjectByProperty('isMesh',true)?.name)}catch(e){report('Model setup failed: '+e.message)}finally{URL.revokeObjectURL(url)}},undefined,e=>{report('GLB parse failed: '+e.message);URL.revokeObjectURL(url)})};
+
+function generateDiagnosticGLB(){
+ const parts=[
+ ['torso',[0,1.48,0],[.50,.72,.28],[.34,.48,.66,1]],
+ ['neck',[0,2.02,0],[.15,.18,.15],[.65,.44,.32,1]],
+ ['head',[0,2.36,0],[.35,.43,.32],[.65,.44,.32,1]],
+ ['arm_l',[-.68,1.55,0],[.20,.80,.22],[.35,.48,.65,1]],
+ ['arm_r',[.68,1.55,0],[.20,.80,.22],[.35,.48,.65,1]],
+ ['leg_l',[-.25,.58,0],[.24,1.16,.25],[.20,.26,.39,1]],
+ ['leg_r',[.25,.58,0],[.24,1.16,.25],[.20,.26,.39,1]]];
+ const corners=[[-.5,-.5,-.5],[.5,-.5,-.5],[.5,.5,-.5],[-.5,.5,-.5],[-.5,-.5,.5],[.5,-.5,.5],[.5,.5,.5],[-.5,.5,.5]];
+ const triangles=[0,2,1,0,3,2,4,5,6,4,6,7,0,1,5,0,5,4,2,3,7,2,7,6,1,2,6,1,6,5,3,0,4,3,4,7];
+ const pieces=[],views=[],accessors=[],meshes=[],nodes=[],materials=[];let length=0;
+ function add(bytes,target){const padding=(4-length%4)%4;if(padding){pieces.push(new Uint8Array(padding));length+=padding}const offset=length;pieces.push(bytes);length+=bytes.length;views.push({buffer:0,byteOffset:offset,byteLength:bytes.length,target});return views.length-1}
+ for(const [name,center,scale,rgba] of parts){
+  const coords=new Float32Array(corners.flat());const idx=new Uint16Array(triangles);
+  const pv=add(new Uint8Array(coords.buffer),34962),iv=add(new Uint8Array(idx.buffer),34963);
+  const p=accessors.length;accessors.push({bufferView:pv,componentType:5126,count:8,type:'VEC3',min:[-.5,-.5,-.5],max:[.5,.5,.5]});
+  const i=accessors.length;accessors.push({bufferView:iv,componentType:5123,count:36,type:'SCALAR'});
+  const m=materials.length;materials.push({name,pbrMetallicRoughness:{baseColorFactor:rgba,metallicFactor:0,roughnessFactor:.85},doubleSided:true});
+  const mesh=meshes.length;meshes.push({name,primitives:[{attributes:{POSITION:p},indices:i,material:m}]});
+  nodes.push({name,mesh,translation:center,scale});
+ }
+ const binary=new Uint8Array(length);let cursor=0;for(const p of pieces){binary.set(p,cursor);cursor+=p.length}
+ const doc={asset:{version:'2.0',generator:'EIDOLON phone diagnostic exporter v1'},scene:0,scenes:[{nodes:nodes.map((_,i)=>i)}],nodes,meshes,materials,buffers:[{byteLength:length}],bufferViews:views,accessors,extras:{character_id:'eidolon-diagnostic-001',certification:'diagnostic only',rigged:false,photorealistic:false}};
+ const encoder=new TextEncoder(),raw=encoder.encode(JSON.stringify(doc)),jsonSize=Math.ceil(raw.length/4)*4,total=12+8+jsonSize+8+binary.length;
+ const out=new ArrayBuffer(total),dv=new DataView(out),u=new Uint8Array(out);let o=0;
+ function word(v){dv.setUint32(o,v,true);o+=4}
+ word(0x46546c67);word(2);word(total);word(jsonSize);word(0x4e4f534a);u.fill(32,o,o+jsonSize);u.set(raw,o);o+=jsonSize;word(binary.length);word(0x004e4942);u.set(binary,o);
+ return out
+}
+function buildV2(){
+ const root=new THREE.Group();root.name='EIDOLON_V6';const skin=new THREE.MeshStandardMaterial({color:0xc48e73,roughness:.85,skinning:true}),cloth=new THREE.MeshStandardMaterial({color:0x527e9f,roughness:.92,skinning:true}),pants=new THREE.MeshStandardMaterial({color:0x34445e,roughness:.95,skinning:true}),hair=new THREE.MeshStandardMaterial({color:0x2b211f,roughness:1}),eyeMat=new THREE.MeshStandardMaterial({color:0x18191d,roughness:.3});
+ function ell(parent,name,x,y,z,sx,sy,sz,mat){const m=new THREE.Mesh(new THREE.SphereGeometry(1,24,16),mat);m.name=name;m.position.set(x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m}
+ // Each limb is a single skinned cylinder, smoothly deformed by shoulder/hip and elbow/knee bones.
+ function limb(name,side,upper,lower,origin,material,r1,r2){
+  const bones=[new THREE.Bone(),new THREE.Bone()];bones[0].name=name;bones[1].name=(upper?'elbow_':'knee_')+(side<0?'l':'r');
+  bones[0].position.set(...origin);bones[1].position.y=-.52;bones[0].add(bones[1]);root.add(bones[0]);
+  const length=1.06,geo=new THREE.CylinderGeometry(r1,r2,length,14,18,true);
+  geo.translate(0,-length/2,0);
+  const pos=geo.attributes.position,indices=[],weights=[];
+  for(let i=0;i<pos.count;i++){const y=-pos.getY(i);const w=THREE.MathUtils.smoothstep(y,.34,.72);indices.push(0,1,0,0);weights.push(1-w,w,0,0)}
+  geo.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(indices,4));geo.setAttribute('skinWeight',new THREE.Float32BufferAttribute(weights,4));
+  const mesh=new THREE.SkinnedMesh(geo,material);mesh.name='skinned_'+name;mesh.position.set(...origin);bones[0].position.set(0,0,0);mesh.add(bones[0]);root.remove(bones[0]);root.add(mesh);root.updateMatrixWorld(true);mesh.bind(new THREE.Skeleton(bones));
+  return {root:bones[0],hinge:bones[1],mesh};
+ }
+ // Single procedural torso surface: chest/shoulders taper into waist.
+ function torsoSurface(){
+  const rows=26,sides=40,vertices=[],normals=[],uv=[],idx=[];
+  for(let j=0;j<=rows;j++){
+   const t=j/rows,y=1.02+t*1.07;
+   const waist=0.29,shoulder=.48;
+   const shoulderBlend=THREE.MathUtils.smoothstep(t,.55,.90);
+   const taper=THREE.MathUtils.smoothstep(t,.91,1);
+   const rx=THREE.MathUtils.lerp(waist,shoulder,shoulderBlend)*(1-.44*taper);
+   const rz=.205+.055*Math.sin(t*Math.PI);
+   for(let k=0;k<=sides;k++){const a=k/sides*Math.PI*2;
+    vertices.push(Math.cos(a)*rx,y,Math.sin(a)*rz);
+    uv.push(k/sides,t);
+   }
+  }
+  for(let j=0;j<rows;j++)for(let k=0;k<sides;k++){const a=j*(sides+1)+k,b=a+sides+1;idx.push(a,b,a+1,b,b+1,a+1)}
+  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();
+  const m=new THREE.Mesh(g,cloth);m.name='continuous_torso';root.add(m);
+ }
+ torsoSurface();ell(root,'pelvis',0,1.06,0,.30,.17,.23,pants);ell(root,'neck',0,2.09,0,.12,.17,.12,skin);
+ const head=new THREE.Group();head.name='head';head.position.set(0,2.32,0);root.add(head);
+ ell(head,'cranium',0,.13,0,.255,.32,.245,skin);ell(head,'hair',0,.36,-.025,.258,.14,.248,hair);
+ const eyes=[];for(const side of [-1,1])eyes.push(ell(head,'eye_'+(side<0?'l':'r'),side*.095,.16,.229,.035,.025,.015,eyeMat));
+ const mouth=ell(head,'mouth',0,-.035,.237,.078,.012,.012,eyeMat);ell(head,'chin',0,-.125,.18,.13,.09,.09,skin);for(const side of [-1,1])ell(head,'cheek_'+(side<0?'l':'r'),side*.145,-.01,.19,.105,.105,.085,skin);const nose=ell(head,'nose',0,.065,.245,.058,.09,.07,skin);const brows=[];for(const side of [-1,1])brows.push(ell(head,'brow_'+(side<0?'l':'r'),side*.095,.225,.23,.09,.015,.017,hair));
+ const limbs={};
+ for(const side of [-1,1]){const suffix=side<0?'l':'r';
+  limbs['arm_'+suffix]=limb('arm_'+suffix,side,true,false,[side*.43,1.91,0],skin,.128,.092);
+  limbs['leg_'+suffix]=limb('leg_'+suffix,side,false,true,[side*.19,1.01,0],pants,.165,.12);
+  // Shoulder cap follows the shoulder bone, bridging the torso/upper-arm gap.
+  ell(limbs['arm_'+suffix].root,'shoulder_'+suffix,0,-.07,0,.125,.17,.145,cloth);
+  // Both accessories are parented to the lower bone, so they follow joint rotation.
+  const hand=new THREE.Group();hand.name='hand_'+suffix;hand.position.set(0,-.53,0);limbs['arm_'+suffix].hinge.add(hand);
+  ell(hand,'palm_'+suffix,0,-.08,0,.09,.12,.06,skin);
+  // Four individual fingers and a thumb, all following the wrist bone.
+  for(let finger=0;finger<4;finger++){const x=(finger-1.5)*.041;
+   ell(hand,'finger_'+suffix+'_'+finger,x,-.205-(finger===1||finger===2?.014:0),.005,.018,.075+(finger===1||finger===2?.014:0),.023,skin);
+  }
+  ell(hand,'thumb_'+suffix,side*.091,-.11,.034,.032,.075,.03,skin).rotation.z=side*.55;
+  ell(limbs['leg_'+suffix].hinge,'shoe_'+suffix,0,-.54,.11,.145,.095,.25,hair);
+ }
+ root.userData={mouth,eyes,brows,limbs,head,nose,skinned:true};
+ return root
+}
+document.getElementById('generate').onclick=()=>{
+ try{if(imported)scene.remove(imported);const model=buildV2(),box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());model.position.sub(center);model.scale.multiplyScalar(2.7/size.y);model.position.y+=1.4;scene.add(model);imported=model;placeholder.visible=false;actorMotion=false;mixer=null;report('V6 assembled: articulated finger geometry, face refinement, skinned limbs · awaiting device verification')}
+ catch(e){report('V2 build error: '+e.message)}
+};
+document.getElementById('animate').onclick=()=>{if(!imported){report('Generate a human first');return}actorMotion=!actorMotion;actorStart=performance.now();if(!actorMotion){imported.rotation.set(0,0,0);imported.position.x=0;imported.traverse(n=>{if(['arm_l','arm_r','leg_l','leg_r','head','elbow_l','elbow_r','knee_l','knee_r'].includes(n.name))n.rotation.set(0,0,0)})}report(actorMotion?'PASS: Procedural walk/turn animation running':'Animation stopped')};
+document.getElementById('reset').onclick=()=>{actorMotion=false;if(imported)scene.remove(imported);imported=null;mixer=null;placeholder.visible=true;report('Reset complete')};
+document.getElementById('snapshot').onclick=()=>{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='glb-test.png';a.click()};
+report('PASS: modules loaded; starting WebGL');
+}catch(e){report('Renderer failed: '+e.message)}
+</script></body></html>
