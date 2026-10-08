@@ -132,7 +132,24 @@ def build(source):
     (OUT/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
     assert struct.unpack_from("<4sII",glb)==(b"glTF",2,len(glb))
     assert len(fidx)>1000 and len(fidx)==groups.get("body",0), "Not a clean human body mesh"
-    assert len(uvs)>100, "Missing source UVs"\n    # Topology integrity using source vertex indices rather than duplicated UV vertices.\n    edge_counts={}\n    degenerate=0\n    for tri in faces:\n        ids=[c[0] for c in tri]\n        if len(set(ids))<3:degenerate+=1\n        for a,b in ((ids[0],ids[1]),(ids[1],ids[2]),(ids[2],ids[0])):\n            edge=tuple(sorted((a,b)))\n            edge_counts[edge]=edge_counts.get(edge,0)+1\n    boundary=sum(c==1 for c in edge_counts.values())\n    nonmanifold=sum(c>2 for c in edge_counts.values())\n    manifest["body_boundary_edges"]=boundary\n    manifest["body_nonmanifold_edges"]=nonmanifold\n    manifest["body_degenerate_faces"]=degenerate\n    (OUT/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\\n")\n    print(f"Body-only structural QA: {boundary} boundary edges, {nonmanifold} nonmanifold edges, {degenerate} degenerate triangles")\n    assert degenerate==0, "Degenerate triangles in imported body"
+    assert len(uvs)>100, "Missing source UVs"
+    # Source-topology checks ignore UV seam duplication.
+    edge_counts={}
+    degenerate=0
+    for tri in faces:
+        ids=[c[0] for c in tri]
+        if len(set(ids))<3:degenerate+=1
+        for a,b in ((ids[0],ids[1]),(ids[1],ids[2]),(ids[2],ids[0])):
+            edge=tuple(sorted((a,b)))
+            edge_counts[edge]=edge_counts.get(edge,0)+1
+    boundary=sum(c==1 for c in edge_counts.values())
+    nonmanifold=sum(c>2 for c in edge_counts.values())
+    manifest["body_boundary_edges"]=boundary
+    manifest["body_nonmanifold_edges"]=nonmanifold
+    manifest["body_degenerate_faces"]=degenerate
+    (OUT/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n")
+    print(f"Body-only topology QA: {boundary} boundary edges, {nonmanifold} nonmanifold edges, {degenerate} degenerate triangles")
+    assert degenerate==0, "Degenerate triangles in imported body"
     print(json.dumps(manifest,indent=2))
 if __name__=="__main__":
     if len(sys.argv)!=2:raise SystemExit("Usage: build_makehuman_base.py path/to/base.obj")
