@@ -69,4 +69,5 @@ jobs:
           path: |
             eidolon-mobile-smoke.png
             eidolon-mobile-results.json
+            eidolon-motion-evidence/
           if-no-files-found: warn
