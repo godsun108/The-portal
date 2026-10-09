@@ -5,6 +5,7 @@ on:
       - 'eidolon-native-motion/**'
       - 'eidolon-human-base/assets/**'
       - 'scripts/eidolon-mobile-smoke.cjs'
+      - 'scripts/check-eidolon-motion-catalog.cjs'
       - '.github/workflows/eidolon-mobile-smoke.yml'
   pull_request:
     paths:
@@ -34,6 +35,7 @@ jobs:
       - name: Check syntax and run mobile browser
         run: |
           node scripts/check-eidolon.cjs
+          node scripts/check-eidolon-motion-catalog.cjs
           node scripts/eidolon-mobile-smoke.cjs
       - name: Publish failure issue
         if: failure() && github.event_name == 'push'
