@@ -32,7 +32,8 @@ jobs:
       - name: Install browser test dependencies
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          node node_modules/playwright/cli.js install --with-deps chromium
+          node -e "const p=require('playwright');const fs=require('node:fs');const executable=p.chromium.executablePath();console.log('Browser executable:',executable);if(!fs.existsSync(executable))throw Error('Playwright Chromium executable missing')"
       - name: Start static server
         run: python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/eidolon-http.log 2>&1 &
       - name: Generate and verify reproducible motion fixture
