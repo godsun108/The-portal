@@ -12,6 +12,7 @@ on:
       - 'eidolon-native-motion/**'
       - 'eidolon-human-base/assets/**'
       - 'scripts/eidolon-mobile-smoke.cjs'
+      - 'scripts/check-eidolon-motion-catalog.cjs'
       - '.github/workflows/eidolon-mobile-smoke.yml'
   workflow_dispatch:
 permissions:
@@ -51,7 +52,7 @@ jobs:
               with open('eidolon-mobile-results.json') as f: report=json.load(f)
           except (FileNotFoundError, json.JSONDecodeError): pass
           title='EIDOLON mobile browser smoke failure'
-          body='Automated mobile browser smoke test failed.\\n\\nRun: '+os.environ['RUN_URL']+'\\n\\nFailure: '+str(report.get('failure','See workflow logs'))+'\\n\\nCompleted checks: '+', '.join(report.get('checks',[]))+'\\n\\nSee workflow artifacts for screenshot and JSON diagnostics.'
+          body='Automated mobile browser smoke test failed.\n\nRun: '+os.environ['RUN_URL']+'\n\nFailure: '+str(report.get('failure','See workflow logs'))+'\n\nCompleted checks: '+', '.join(report.get('checks',[]))+'\n\nSee workflow artifacts for screenshot and JSON diagnostics.'
           existing=subprocess.run(['gh','issue','list','--repo',os.environ['REPO'],'--state','open','--search',title+' in:title','--json','number,title'],capture_output=True,text=True,check=True)
           issues=json.loads(existing.stdout)
           matches=[i for i in issues if i['title']==title]
