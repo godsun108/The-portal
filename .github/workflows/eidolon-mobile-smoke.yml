@@ -34,8 +34,13 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Start static server
         run: python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/eidolon-http.log 2>&1 &
-      - name: Generate original animation test fixture
-        run: node scripts/generate-eidolon-wave.cjs
+      - name: Generate and verify reproducible motion fixture
+        run: |
+          node scripts/generate-eidolon-wave.cjs
+          sha256sum eidolon-native-motion/assets/motions/eidolon-wave-test.glb > /tmp/eidolon-wave.sha256
+          node scripts/generate-eidolon-wave.cjs
+          sha256sum -c /tmp/eidolon-wave.sha256
+          node scripts/check-eidolon-motion-catalog.cjs
       - name: Check syntax and run mobile browser
         run: |
           node scripts/check-eidolon.cjs
