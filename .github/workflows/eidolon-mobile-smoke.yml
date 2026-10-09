@@ -5,6 +5,7 @@ on:
       - 'eidolon-native-motion/**'
       - 'eidolon-human-base/assets/**'
       - 'scripts/eidolon-mobile-smoke.cjs'
+      - 'scripts/check-eidolon.cjs'
       - 'scripts/check-eidolon-motion-catalog.cjs'
       - 'scripts/generate-eidolon-wave.cjs'
       - '.github/workflows/eidolon-mobile-smoke.yml'
