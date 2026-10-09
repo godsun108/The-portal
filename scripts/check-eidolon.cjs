@@ -11,12 +11,18 @@ for(const file of files){
   try{
     fs.writeFileSync(temp,moduleScript[1]);
     cp.execFileSync(process.execPath,['--check',temp],{stdio:'pipe'});
+    // Validate every inline classic script too: startup diagnostics must never hide syntax regressions.
+    const classic=[...html.matchAll(/<script(?![^>]*\\btype=["'](?:module|importmap)["'])[^>]*>([\\s\\S]*?)<\\/script>/gi)];
+    for(let i=0;i<classic.length;i++){
+      fs.writeFileSync(temp,classic[i][1]);
+      cp.execFileSync(process.execPath,['--check',temp],{stdio:'pipe'});
+    }
     const ids=[...html.matchAll(/\bid=["']([^"']+)["']/g)].map(m=>m[1]);
     const duplicate=[...new Set(ids.filter((id,i)=>ids.indexOf(id)!==i))];
     const used=[...moduleScript[1].matchAll(/\$\(["']([^"']+)["']\)|\bel\(["']([^"']+)["']\)/g)].map(m=>m[1]||m[2]);
     const missing=[...new Set(used.filter(id=>!ids.includes(id)))];
     if(duplicate.length||missing.length){throw Error('Duplicate IDs: '+duplicate.join(', ')+'; missing referenced IDs: '+missing.join(', '));}
-    console.log('PASS',file,'syntax and DOM IDs');
+    console.log('PASS',file,'module + '+classic.length+' classic scripts syntax and DOM IDs');
   }catch(e){failed=true;console.error('FAIL',file,e.stderr?.toString()||e.message)}
   finally{try{fs.unlinkSync(temp)}catch{}}
 }
