@@ -39,9 +39,9 @@ jobs:
       - name: Generate and verify reproducible motion fixture
         run: |
           node scripts/generate-eidolon-wave.cjs
-          sha256sum eidolon-native-motion/assets/motions/eidolon-wave-test.glb > /tmp/eidolon-wave.sha256
+          sha256sum eidolon-native-motion/assets/motions/eidolon-*.glb > /tmp/eidolon-motions.sha256
           node scripts/generate-eidolon-wave.cjs
-          sha256sum -c /tmp/eidolon-wave.sha256
+          sha256sum -c /tmp/eidolon-motions.sha256
           node scripts/check-eidolon-motion-catalog.cjs
       - name: Check syntax and run mobile browser
         run: |
@@ -80,5 +80,5 @@ jobs:
             eidolon-mobile-smoke.png
             eidolon-mobile-results.json
             eidolon-motion-evidence/
-            eidolon-native-motion/assets/motions/eidolon-wave-test.glb
+            eidolon-native-motion/assets/motions/eidolon-*.glb
           if-no-files-found: warn
