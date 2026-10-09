@@ -6,6 +6,7 @@ on:
       - 'eidolon-human-base/assets/**'
       - 'scripts/eidolon-mobile-smoke.cjs'
       - 'scripts/check-eidolon-motion-catalog.cjs'
+      - 'scripts/generate-eidolon-wave.cjs'
       - '.github/workflows/eidolon-mobile-smoke.yml'
   pull_request:
     paths:
@@ -33,6 +34,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Start static server
         run: python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/eidolon-http.log 2>&1 &
+      - name: Generate original animation test fixture
+        run: node scripts/generate-eidolon-wave.cjs
       - name: Check syntax and run mobile browser
         run: |
           node scripts/check-eidolon.cjs
@@ -70,4 +73,5 @@ jobs:
             eidolon-mobile-smoke.png
             eidolon-mobile-results.json
             eidolon-motion-evidence/
+            eidolon-native-motion/assets/motions/eidolon-wave-test.glb
           if-no-files-found: warn
