@@ -6,6 +6,8 @@ const root=path.resolve('eidolon-native-motion');
 const motions=[
  {id:'eidolon-wave-test',title:'EIDOLON Wave Test',bones:['upperarm01.R','lowerarm01.R'],values:[[-.2,-.9,-1.25,-.9,-.2,-.2],[0,.4,.9,.4,0,0]]},
  {id:'eidolon-two-arm-reach',title:'EIDOLON Two Arm Reach',bones:['upperarm01.L','upperarm01.R','lowerarm01.L','lowerarm01.R'],values:[[0,.3,.8,1.1,.5,0],[0,-.3,-.8,-1.1,-.5,0],[0,-.2,-.4,-.4,-.2,0],[0,.2,.4,.4,.2,0]]},
+ {id:'eidolon-run-cycle-test',title:'EIDOLON Run Cycle Test',bones:['upperleg01.L','upperleg01.R','lowerleg01.L','lowerleg01.R','upperarm01.L','upperarm01.R','spine01'],values:[[.6,.2,-.55,-.6,.15,.6],[-.6,-.2,.55,.6,-.15,-.6],[.15,.65,.3,.05,.12,.15],[.12,.05,.15,.65,.3,.12],[-.5,-.15,.45,.5,-.12,-.5],[.5,.15,-.45,-.5,.12,.5],[.08,.04,0,-.04,.02,.08]]},
+ {id:'eidolon-jump-test',title:'EIDOLON Jump Test',bones:['upperleg01.L','upperleg01.R','lowerleg01.L','lowerleg01.R','upperarm01.L','upperarm01.R','spine01'],values:[[0,.25,-.12,-.12,.22,0],[0,.25,-.12,-.12,.22,0],[0,.5,.12,.12,.45,0],[0,.5,.12,.12,.45,0],[0,-.25,-.95,-.95,-.3,0],[0,.25,.95,.95,.3,0],[0,.12,-.08,-.08,.1,0]]},
  {id:'eidolon-walk-cycle-test',title:'EIDOLON Walk Cycle Test',bones:['upperleg01.L','upperleg01.R','lowerleg01.L','lowerleg01.R','upperarm01.L','upperarm01.R','spine01'],values:[[.35,.12,-.3,-.4,.1,.35],[-.35,-.12,.3,.4,-.1,-.35],[.1,.35,.2,0,.05,.1],[.05,0,.1,.35,.2,.05],[-.22,-.08,.2,.24,-.06,-.22],[.22,.08,-.2,-.24,.06,.22],[0,.03,0,-.03,0,0]]}
 ];
 const catalog={schema_version:1,description:'Original procedural EIDOLON motion fixtures, not production-quality character animation.',motions:[]};
