@@ -48,14 +48,18 @@ const assert = require('node:assert/strict');
       assert.ok(choice,'approved clip missing: '+entry.id);
       await page.locator('#clipselect').selectOption(choice.value);
       await page.locator('#clipplay').click();
-      await page.waitForTimeout(900);
+      await page.waitForTimeout(150);
+      const firstFrame=await page.locator('#view').screenshot();
+      await page.waitForTimeout(750);
+      const secondFrame=await page.locator('#view').screenshot();
+      assert.notDeepEqual(firstFrame,secondFrame,'clip has no visible animation between frames: '+entry.id);
       const screenshot='eidolon-motion-evidence/'+entry.id+'.png';
       await page.screenshot({path:screenshot,fullPage:true});
       const playbackStatus=await page.locator('#clipinfo').innerText();
       assert.ok(playbackStatus && !/error|failed|unavailable/i.test(playbackStatus),'clip playback failed: '+entry.id+' '+playbackStatus);
       results.motionEvidence.push({id:entry.id,screenshot,status:playbackStatus});
     }
-    check('catalog motion screenshots');
+    check('catalog motion visibly animates and screenshots captured');
   }
   await page.screenshot({path:'eidolon-mobile-smoke.png',fullPage:true});
   check('screenshot captured');
