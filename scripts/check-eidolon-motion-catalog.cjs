@@ -2,6 +2,8 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve('eidolon-native-motion'),catalog=JSON.parse(fs.readFileSync(path.join(root,'motion-catalog.json'),'utf8'));
 if(catalog.schema_version!==1||!Array.isArray(catalog.motions))throw Error('Invalid catalog schema');
+const rigManifest=JSON.parse(fs.readFileSync('eidolon-human-base/assets/rig-manifest.json','utf8'));
+const rigBones=new Set(rigManifest.joint_names);
 const ids=new Set(),allowedLicenses=new Set(['CC0-1.0','CC-BY-4.0','MIT','CUSTOM-APPROVED']);
 for(const m of catalog.motions){
  if(!/^[a-z0-9][a-z0-9-]{1,63}$/.test(m.id||'')||ids.has(m.id))throw Error('Invalid/duplicate motion id');
@@ -17,7 +19,7 @@ for(const m of catalog.motions){
  if(b.length<20||b.length>25*1024*1024||b.toString('ascii',0,4)!=='glTF')throw Error(m.id+': invalid/oversized GLB');
  const declared=b.readUInt32LE(8);if(declared!==b.length)throw Error(m.id+': GLB length mismatch');
  const hash=crypto.createHash('sha256').update(b).digest('hex');
- if(m.sha256!==hash)throw Error(m.id+': SHA256 mismatch'); 
+ if(!/^[0-9a-f]{64}$/.test(m.sha256||'')||m.sha256!==hash)throw Error(m.id+': SHA256 mismatch'); 
  // Parse the GLB JSON chunk to ensure the asset contains usable skeletal animation.
  const chunkLength=b.readUInt32LE(12),chunkType=b.toString('ascii',16,20);
  if(chunkType!=='JSON'||chunkLength<2||20+chunkLength>b.length)throw Error(m.id+': invalid GLB JSON chunk');
@@ -34,6 +36,7 @@ for(const m of catalog.motions){
  }
  if(!animatedBones.size)throw Error(m.id+': no named bone rotation tracks');
  if(!Array.isArray(m.bone_names)||!m.bone_names.length)throw Error(m.id+': missing verified compatible bone_names');
+ if(m.bone_names.some(n=>!rigBones.has(n)))throw Error(m.id+': bone not present in EIDOLON rig manifest');
  const overlap=m.bone_names.filter(n=>animatedBones.has(n));
  if(!overlap.length)throw Error(m.id+': declared bones absent from animation');
  if(m.bone_names.some(n=>!animatedBones.has(n)))throw Error(m.id+': declared bone missing animation rotation');
