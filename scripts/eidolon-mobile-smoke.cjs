@@ -10,7 +10,7 @@ const assert = require('node:assert/strict');
  page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
  try{
   await page.goto('http://127.0.0.1:8765/eidolon-native-motion/index.html',{waitUntil:'domcontentloaded',timeout:30000});
-  await page.waitForFunction(()=>document.getElementById('build')?.textContent.includes('MODEL LOADED'),{timeout:90000});
+  await page.waitForFunction(()=>document.getElementById('build')?.textContent.includes('MODEL LOADED'),null,{timeout:90000});
   assert.equal(await page.locator('#actionplay').count(),1);
   await page.locator('#actionpick').selectOption('walk');
   await page.locator('#actionplay').click();
