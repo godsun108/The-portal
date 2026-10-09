@@ -12,7 +12,7 @@ for(const file of files){
     fs.writeFileSync(temp,moduleScript[1]);
     cp.execFileSync(process.execPath,['--check',temp],{stdio:'pipe'});
     // Validate every inline classic script too: startup diagnostics must never hide syntax regressions.
-    const classic=[...html.matchAll(/<script(?![^>]*\\btype=["'](?:module|importmap)["'])[^>]*>([\\s\\S]*?)<\\/script>/gi)];
+    const classic=[...html.matchAll(/<script(?![^>]*\btype=["'](?:module|importmap)["'])[^>]*>([\s\S]*?)<\/script>/gi)];
     for(let i=0;i<classic.length;i++){
       fs.writeFileSync(temp,classic[i][1]);
       cp.execFileSync(process.execPath,['--check',temp],{stdio:'pipe'});
