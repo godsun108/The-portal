@@ -36,6 +36,24 @@ const assert = require('node:assert/strict');
   assert.match(catalogStatus,/^Catalog:/,'motion catalog must load');
   results.catalog=catalogStatus;
   check('catalog loaded');
+  const catalog=JSON.parse(require('node:fs').readFileSync('eidolon-native-motion/motion-catalog.json','utf8'));
+  if(catalog.motions.length){
+    const fs=require('node:fs');
+    fs.mkdirSync('eidolon-motion-evidence',{recursive:true});
+    results.motionEvidence=[];
+    for(const entry of catalog.motions){
+      const choices=await page.locator('#clipselect option').evaluateAll(nodes=>nodes.map(n=>({value:n.value,text:n.textContent})));
+      const choice=choices.find(c=>c.text.startsWith('Catalog: '+entry.title+' · '));
+      assert.ok(choice,'approved clip missing: '+entry.id);
+      await page.locator('#clipselect').selectOption(choice.value);
+      await page.locator('#clipplay').click();
+      await page.waitForTimeout(900);
+      const screenshot='eidolon-motion-evidence/'+entry.id+'.png';
+      await page.screenshot({path:screenshot,fullPage:true});
+      results.motionEvidence.push({id:entry.id,screenshot,status:await page.locator('#clipinfo').innerText()});
+    }
+    check('catalog motion screenshots');
+  }
   await page.screenshot({path:'eidolon-mobile-smoke.png',fullPage:true});
   check('screenshot captured');
   assert.deepEqual(errors,[],'browser JS/console errors');
