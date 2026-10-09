@@ -37,6 +37,7 @@ const assert = require('node:assert/strict');
   results.catalog=catalogStatus;
   check('catalog loaded');
   const catalog=JSON.parse(require('node:fs').readFileSync('eidolon-native-motion/motion-catalog.json','utf8'));
+  assert.match(catalogStatus,new RegExp('Catalog: '+catalog.motions.length+' approved assets · '+catalog.motions.length+' playable clips'),'all approved motions must become playable clips');
   if(catalog.motions.length){
     const fs=require('node:fs');
     fs.mkdirSync('eidolon-motion-evidence',{recursive:true});
@@ -50,7 +51,9 @@ const assert = require('node:assert/strict');
       await page.waitForTimeout(900);
       const screenshot='eidolon-motion-evidence/'+entry.id+'.png';
       await page.screenshot({path:screenshot,fullPage:true});
-      results.motionEvidence.push({id:entry.id,screenshot,status:await page.locator('#clipinfo').innerText()});
+      const playbackStatus=await page.locator('#clipinfo').innerText();
+      assert.ok(playbackStatus && !/error|failed|unavailable/i.test(playbackStatus),'clip playback failed: '+entry.id+' '+playbackStatus);
+      results.motionEvidence.push({id:entry.id,screenshot,status:playbackStatus});
     }
     check('catalog motion screenshots');
   }
