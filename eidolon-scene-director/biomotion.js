@@ -12,7 +12,28 @@ export function footTelemetry(actor,floorY=0){
  const out={};for(const side of ['L','R']){const foot=actor.getObjectByName('foot.'+side);if(!foot){out[side]=null;continue}foot.getWorldPosition(v);out[side]={x:v.x,y:v.y,z:v.z,height:v.y-floorY}}return out;
 }
 export function createFootMarkers(scene){
- const markers={};for(const side of ['L','R']){const mesh=new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),new THREE.MeshBasicMaterial({color:side==='L'?0x5af3e1:0xff78bd,depthTest:false}));mesh.renderOrder=10;mesh.visible=false;scene.add(mesh);markers[side]=mesh}return {update(telemetry,enabled){for(const side of ['L','R']){const point=telemetry[side],marker=markers[side];marker.visible=!!(enabled&&point);if(point)marker.position.set(point.x,point.y,point.z)}},dispose(){for(const marker of Object.values(markers)){scene.remove(marker);marker.geometry.dispose();marker.material.dispose()}}};
+ const markers={};
+ for(const side of ['L','R']){
+  const color=side==='L'?0x4affdc:0xff62c5;
+  const group=new THREE.Group();
+  const sphere=new THREE.Mesh(new THREE.SphereGeometry(.105,16,12),new THREE.MeshBasicMaterial({color,depthTest:false,transparent:true,opacity:.96}));
+  sphere.renderOrder=100;group.add(sphere);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(.12,.18,32),new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide,depthTest:false,transparent:true,opacity:.9}));
+  ring.rotation.x=-Math.PI/2;ring.renderOrder=99;group.add(ring);
+  const stem=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3(0,1,0)]),new THREE.LineBasicMaterial({color,depthTest:false}));
+  stem.renderOrder=98;group.add(stem);
+  group.visible=false;scene.add(group);markers[side]={group,sphere,ring,stem};
+ }
+ return {update(telemetry,enabled){
+  for(const side of ['L','R']){
+   const p=telemetry[side],m=markers[side];m.group.visible=!!(enabled&&p);if(!p)continue;
+   m.group.position.set(p.x,p.y,p.z);
+   m.ring.position.y=-p.height+.015;
+   const positions=m.stem.geometry.attributes.position;
+   positions.setXYZ(0,0,0,0);positions.setXYZ(1,0,-p.height,0);positions.needsUpdate=true;
+   m.sphere.material.color.setHex(p.height<-.04?0xff4d4d:p.height<.09?0xffe16b:side==='L'?0x4affdc:0xff62c5);
+  }
+ },dispose(){for(const m of Object.values(markers)){scene.remove(m.group);m.group.traverse(o=>{o.geometry?.dispose();o.material?.dispose()})}}};
 }
 export function createContactTracker(){
  let previous=null,peakPenetration=0,peakHeight=0,peakSlip=0,samples=0;
