@@ -79,7 +79,7 @@ if(typeof window!=="undefined"){
       owned.textContent="Owned Starfall hulls: "+(snap.skins.length?snap.skins.join(", "):"none");
       dashboard.append(address,owned);
      }else{
-      status.textContent=snap.state==="not_connected"?"No recent verified wallet view on this device. Open the existing checkout to connect.":"No fresh verified wallet view. Reconnect or refresh in Starfall checkout, then return here.";
+      status.textContent=snap.state==="not_connected"?"No saved signed view on this device. Connect through Starfall checkout first.":snap.state==="expired"?"Saved signed view expired (valid for up to five minutes). Open Starfall checkout, unlock and refresh ownership, then return immediately.":"Unable to verify saved wallet view ("+snap.state+"). Refresh ownership in Starfall checkout and return.";
      }
     }catch{status.textContent="Wallet snapshot unavailable. Existing wallet remains unchanged."}
    })();
