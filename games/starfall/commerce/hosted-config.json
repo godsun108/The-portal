@@ -1,0 +1,7 @@
+{
+  "endpoint": "https://earthchain-test-checkout-production.up.railway.app",
+  "pin": {
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAvy30Kw9XJs94m1msGk39EGA5mWF5Ll2wUYgDyACgst8=\n-----END PUBLIC KEY-----\n",
+    "network": "EARTHCHAIN_COMMERCE_TEST_229db0febbe06da30bef795cb6c3e018"
+  }
+}
