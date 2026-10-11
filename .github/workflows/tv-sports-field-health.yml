@@ -1,0 +1,35 @@
+name: PORTAL TV sports field health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 9 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'tv-sports-health-probe.cjs'
+      - 'tv-sports-iphone-field-report.json'
+      - '.github/workflows/tv-sports-field-health.yml'
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate script
+        run: node --check tv-sports-health-probe.cjs
+      - name: Sample reported streams (HTTP manifest only)
+        run: node tv-sports-health-probe.cjs
+      - name: Assert no streams admitted
+        run: |
+          node -e "const r=require('./tv-sports-health-latest.json');if(r.items.some(x=>x.admitted!==false||x.rightsStatus!=='unverified'))process.exit(1);console.log(r.counts)"
+      - name: Upload dated health evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-tv-sports-field-health
+          path: tv-sports-health-latest.json
+          retention-days: 14
