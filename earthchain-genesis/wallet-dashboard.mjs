@@ -21,6 +21,6 @@ export async function cachedTestWalletSnapshot({storage=localStorage,now=Date.no
   const balance=view.balances[address];
   if(!Number.isSafeInteger(balance)||balance<0)return {state:"balance_unavailable"};
   const skins=await starfallSkins(view,address);
-  return {state:"verified",address,balance,skins:skins.map(s=>({skinId:s.skinId,tokenId:s.tokenId})),expiresAt:view.expiresAt,network:view.config.network};
+  return {state:"verified",address,balance,skins:skins.map(s=>({skinId:s.skinId,tokenId:s.tokenId})),expiresAt:view.expiresAt,count:view.count,head:view.head,network:view.config.network};
  }catch{return {state:"stale_or_unverified"}}
 }
