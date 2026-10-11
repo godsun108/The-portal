@@ -214,26 +214,26 @@
       "deviceConfirmed": true
     },
     {
-      "title": "NHK WORLD-JAPAN — Live TV (test)",
+      "title": "NHK WORLD-JAPAN — Live TV",
       "genre": "World TV",
       "provider": "NHK WORLD-JAPAN",
       "url": "https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8",
       "type": "hls",
       "live": true,
-      "status": "candidate_unverified_device_playback",
+      "status": "user_confirmed_iphone_playback_2026-10-11",
       "source": "https://github.com/iptv-org/iptv/issues/32093",
-      "deviceConfirmed": false
+      "deviceConfirmed": true
     },
     {
-      "title": "i24NEWS English World — Live News (test)",
+      "title": "i24NEWS English World — Live News",
       "genre": "News",
       "provider": "i24NEWS",
       "url": "https://i24newsenglish-cdn.encoders.immergo.tv/master.m3u8",
       "type": "hls",
       "live": true,
-      "status": "candidate_unverified_device_playback",
+      "status": "user_confirmed_iphone_playback_2026-10-11",
       "source": "https://publiciptv.com/channels/i24newsenglishworldil",
-      "deviceConfirmed": false
+      "deviceConfirmed": true
     }
   ],
   "rightsPolicy": {
