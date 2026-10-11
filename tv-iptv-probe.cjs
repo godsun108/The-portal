@@ -2,8 +2,14 @@
 const fs=require('node:fs');
 const catalog=JSON.parse(fs.readFileSync('tv-iptv-discovery.json','utf8'));
 if(catalog.schema!=='portal.tv.iptv-discovery.v1'||!Array.isArray(catalog.items))throw Error('Unexpected catalog');
-const priority=x=>x.categories.includes('sports')?0:x.categories.includes('business')?1:2;
-const candidates=catalog.items.filter(x=>x.admitted===false).sort((a,b)=>priority(a)-priority(b)).slice(0,60);
+// Reserve capacity for both priorities: a sports-heavy catalog must not starve finance.
+const pool=catalog.items.filter(x=>x.admitted===false);
+const sports=pool.filter(x=>x.categories.includes('sports')).slice(0,25);
+const selected=new Set(sports.map(x=>x.id));
+const finance=pool.filter(x=>x.categories.includes('business')&&!selected.has(x.id)).slice(0,25);
+finance.forEach(x=>selected.add(x.id));
+const other=pool.filter(x=>!selected.has(x.id)).slice(0,60-sports.length-finance.length);
+const candidates=[...sports,...finance,...other];
 async function probe(item){
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),6000);
  try{
@@ -17,7 +23,7 @@ async function probe(item){
 }
 (async()=>{
  const results=[];for(let i=0;i<candidates.length;i+=6)results.push(...await Promise.all(candidates.slice(i,i+6).map(probe)));
- const out={schema:'portal.tv.stream-probe.v1',generatedAt:new Date().toISOString(),note:'HTTP manifest checks only, not video playback or authorization; none admitted.',counts:{tested:results.length,manifestSeen:results.filter(x=>x.manifestSeen).length,sports:results.filter(x=>x.categories.includes('sports')).length,business:results.filter(x=>x.categories.includes('business')).length},items:results};
+ const out={schema:'portal.tv.stream-probe.v1',generatedAt:new Date().toISOString(),note:'HTTP manifest checks only, not video playback or authorization; none admitted.',counts:{tested:results.length,manifestSeen:results.filter(x=>x.manifestSeen).length,sports:results.filter(x=>x.categories.includes('sports')).length,business:results.filter(x=>x.categories.includes('business')).length,successfulSports:results.filter(x=>x.manifestSeen&&x.categories.includes('sports')).length,successfulFinance:results.filter(x=>x.manifestSeen&&x.categories.includes('business')).length},items:results};
  fs.writeFileSync('tv-iptv-probe.json',JSON.stringify(out,null,2));
  console.log(JSON.stringify(out.counts));
 })().catch(e=>{console.error(e);process.exitCode=1});
