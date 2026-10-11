@@ -246,6 +246,28 @@
       "source": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
       "deviceConfirmed": false,
       "disabled": true
+    },
+    {
+      "title": "FIFA — Argentina vs France 2022 World Cup Final (full match replay)",
+      "genre": "Sports",
+      "provider": "FIFA",
+      "type": "youtube_embed",
+      "videoId": "ORzHdV_NVnQ",
+      "source": "https://www.youtube.com/watch?v=ORzHdV_NVnQ",
+      "live": false,
+      "status": "official_provider_video_embed_unverified_on_iphone",
+      "rights": "Official FIFA YouTube publication; playback subject to embedding and regional settings"
+    },
+    {
+      "title": "Bloomberg Television — Business News (stream embed test)",
+      "genre": "Finance",
+      "provider": "Bloomberg Television",
+      "type": "youtube_embed",
+      "videoId": "iEpJwprxDdk",
+      "source": "https://www.youtube.com/watch?v=iEpJwprxDdk",
+      "live": true,
+      "status": "official_provider_youtube_video_live_state_and_embed_unverified",
+      "rights": "Official Bloomberg Television YouTube publication; live status and embedding may change"
     }
   ],
   "rightsPolicy": {
