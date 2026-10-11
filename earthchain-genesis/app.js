@@ -31,6 +31,26 @@ if(typeof window!=="undefined"){
    action.className="discovery";
    action.textContent="Check ECTEST service (read-only)";
    detailPanel.append(action);
+   const probe=document.createElement("button");
+   probe.type="button";
+   probe.className="discovery";
+   probe.textContent="Check iPhone signing support";
+   detailPanel.append(probe);
+   probe.addEventListener("click",async()=>{
+    probe.disabled=true;
+    const result=document.createElement("p");
+    result.setAttribute("role","status");
+    detailPanel.append(result);
+    try{
+     const {probeWalletCrypto}=await import("./wallet-capability.mjs");
+     const outcome=await probeWalletCrypto();
+     result.textContent=outcome.supported?"Ed25519 signing and verification supported. No wallet connected; temporary key discarded.":"Wallet signing unavailable: "+outcome.reason+". No wallet connected.";
+    }catch{
+     result.textContent="Unable to check signing support. No wallet connected.";
+    }finally{
+     probe.disabled=false;
+    }
+   });
    action.addEventListener("click",async()=>{
     action.disabled=true;
     action.textContent="Checking…";
