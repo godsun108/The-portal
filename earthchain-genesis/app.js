@@ -1,9 +1,9 @@
 "use strict";
 const modules=[
 ["EarthID","♙","Not connected","Shared authentication and profiles require verified backend contracts."],
-["EarthWallet","◈","Not connected","No wallet provider, custody model, or EarthCoin contract has been verified. No balances or transfers are shown."],
-["EarthPlay","✦","Not connected","Existing game implementation and reward settlement are not yet located."],
-["EarthMarket","▣","Not connected","Catalog, USD checkout, and fulfillment adapters require verified implementations."],
+["EarthWallet","◈","Existing ECTEST trial","Existing test wallet and hosted checkout are available in the Portal. No real funds or EarthCoin contract are connected."],
+["EarthPlay","✦","Existing Starfall game","Starfall is available in the Portal. Gameplay and signed test collectible ownership remain in their existing modules."],
+["EarthMarket","▣","Test collectibles only","Existing Starfall checkout supports valueless ECTEST collectibles. USD storefront and physical-goods commerce are not connected."],
 ["EarthTV","▷","Candidate integration","The Portal has a documented public experience layer; video service integration is not verified."],
 ["EarthSocial","◎","Planned","Profiles, posts, communities and moderation are not implemented in this preview."],
 ["EarthConnect","✉","Planned","Private messaging requires identity, permissions and abuse safeguards."],
@@ -17,6 +17,26 @@ const modules=[
 ];
 const grid=document.getElementById("modules");const detail=document.getElementById("detail");
 for(const [name,symbol,status,description] of modules){const button=document.createElement("button");button.type="button";button.className="module";const symbolNode=document.createElement("span");symbolNode.className="symbol";symbolNode.textContent=symbol;const heading=document.createElement("strong");heading.textContent=name;const state=document.createElement("span");state.className="status";state.textContent=status;button.append(symbolNode,heading,state);button.addEventListener("click",()=>{detail.replaceChildren();const title=document.createElement("h2");title.textContent=name+" · "+status;const paragraph=document.createElement("p");paragraph.textContent=description;detail.append(title,paragraph);detail.scrollIntoView({behavior:"smooth",block:"nearest"});});grid.append(button);}
+/* Reuse Portal experiences on the same origin; no wallet keys or balances are copied. */
+const routes={
+ EarthPlay:[["Play Starfall","../games/starfall/"]],
+ EarthMarket:[["Starfall test collectible marketplace","../games/starfall/commerce/direct.html"]],
+ EarthWallet:[["Open existing ECTEST wallet & checkout","../games/starfall/commerce/direct.html"],["Create or restore existing test wallet","../earthchain-test/no-server.html"]]
+};
+for(const button of grid.querySelectorAll(".module")){
+ const name=button.querySelector("strong")?.textContent;
+ if(!routes[name])continue;
+ button.addEventListener("click",()=>{
+  for(const [label,href] of routes[name]){
+   const link=document.createElement("a");
+   link.className="discovery";
+   link.href=href;
+   link.rel="noopener";
+   link.textContent=label;
+   detail.append(link);
+  }
+ });
+}
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
 
 /* Explicit opt-in, read-only test checkout discovery. No wallet credentials or mutations. */
@@ -36,18 +56,6 @@ if(typeof window!=="undefined"){
    probe.className="discovery";
    probe.textContent="Check iPhone signing support";
    detailPanel.append(probe);
-   const existing=document.createElement("a");
-   existing.className="discovery";
-   existing.href="../games/starfall/commerce/direct.html";
-   existing.textContent="Open existing ECTEST wallet & checkout";
-   existing.rel="noopener";
-   detailPanel.append(existing);
-   const create=document.createElement("a");
-   create.className="discovery";
-   create.href="../earthchain-test/no-server.html";
-   create.textContent="Create or restore existing test wallet";
-   create.rel="noopener";
-   detailPanel.append(create);
    probe.addEventListener("click",async()=>{
     probe.disabled=true;
     const result=document.createElement("p");
