@@ -36,6 +36,18 @@ if(typeof window!=="undefined"){
    probe.className="discovery";
    probe.textContent="Check iPhone signing support";
    detailPanel.append(probe);
+   const existing=document.createElement("a");
+   existing.className="discovery";
+   existing.href="../games/starfall/commerce/direct.html";
+   existing.textContent="Open existing ECTEST wallet & checkout";
+   existing.rel="noopener";
+   detailPanel.append(existing);
+   const create=document.createElement("a");
+   create.className="discovery";
+   create.href="../earthchain-test/no-server.html";
+   create.textContent="Create or restore existing test wallet";
+   create.rel="noopener";
+   detailPanel.append(create);
    probe.addEventListener("click",async()=>{
     probe.disabled=true;
     const result=document.createElement("p");
