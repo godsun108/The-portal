@@ -6,10 +6,14 @@ export async function cachedTestWalletSnapshot({storage=localStorage,now=Date.no
  if(!raw)return {state:"not_connected"};
  let saved;
  try{saved=JSON.parse(raw)}catch{return {state:"unavailable"}}
- if(!saved?.envelope||!saved?.pin||!saved?.guard)return {state:"not_connected"};
+ if(!saved?.envelope||!saved?.guard)return {state:"not_connected"};
+ if(Number.isSafeInteger(saved.envelope?.view?.expiresAt)&&saved.envelope.view.expiresAt<=now)return {state:"expired"};
  try{
   const {verifyView,starfallSkins}=await import("../games/starfall/commerce/browser-commerce.mjs");
-  const view=await verifyView(saved.envelope,{pin:saved.pin,guard:saved.guard,now});
+  const configResponse=await fetch("../games/starfall/commerce/hosted-config.json",{cache:"no-store"});
+  if(!configResponse.ok)return {state:"config_unavailable"};
+  const config=await configResponse.json();
+  const view=await verifyView(saved.envelope,{pin:config.pin,guard:saved.guard,now});
   const vaultRaw=storage.getItem("earthchain.no-server.v1");
   const vaultData=vaultRaw?JSON.parse(vaultRaw):null;
   const address=vaultData?.vault?.address;
