@@ -1,0 +1,139 @@
+{
+  "schema": "portal.tv.user-field-reports.v1",
+  "source": "user supplied exported iPhone Channel Lab checks",
+  "recordedAt": "2026-10-11",
+  "note": "Device playback observations only. No authorization or retransmission rights established. Not admitted to main PORTAL TV.",
+  "counts": {
+    "tested": 14,
+    "userConfirmedPlaying": 10,
+    "userReportedFailed": 4
+  },
+  "items": [
+    {
+      "name": "30A Golf Kingdom",
+      "country": "US",
+      "url": "https://30a-tv.com/feeds/vidaa/golf.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_reported_failed",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "A Spor",
+      "country": "TR",
+      "url": "https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/aspor/aspor.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "ACC Digital Network",
+      "country": "US",
+      "url": "https://raycom-accdn-firetv.amagi.tv/playlist.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "ACI Sport TV",
+      "country": "IT",
+      "url": "https://webstream.multistream.it/memfs/e2cb3629-c1a2-495b-b43a-9eb386f04ed8.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Adjarasport 1",
+      "country": "GE",
+      "url": "https://live20.bozztv.com/dvrfl05/gin-adjara/index.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_reported_failed",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Africa 24 Sport",
+      "country": "FR",
+      "url": "https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Al Iraqia Sport",
+      "country": "IQ",
+      "url": "https://imn-live.esite-lab.com/hls/iraqia-sports-1.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Alfa Sport",
+      "country": "CY",
+      "url": "https://dev.aftermind.xyz/edge-hls/unitrust/alfasports/index.m3u8?token=8TXWzhY3h6jrzqEqx",
+      "category": "sports",
+      "playbackStatus": "user_reported_failed",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "AS3 Sport TV",
+      "country": "VE",
+      "url": "https://streamtv.as3sport.online:3394/hybrid/play.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Astrahan.Ru Sport",
+      "country": "RU",
+      "url": "https://streaming.astrakhan.ru/astrakhanrusporthd/playlist.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "ATG Live",
+      "country": "SE",
+      "url": "https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Awapa Sports TV",
+      "country": "SV",
+      "url": "https://mgv-awapa.akamaized.net/hls/live/2104282/MGV_CHANNEL15/master.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_reported_failed",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Azteca Deportes Network",
+      "country": "MX",
+      "url": "https://live-manifest.production-public.tubi.io/live/6bf131c3-d664-424c-93c9-49188a788980/playlist.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    },
+    {
+      "name": "Bahrain Sports 1",
+      "country": "BH",
+      "url": "https://5c7b683162943.streamlock.net/live/ngrp:sportsone_all/playlist.m3u8",
+      "category": "sports",
+      "playbackStatus": "user_confirmed_playing",
+      "rightsStatus": "unverified",
+      "admitted": false
+    }
+  ]
+}
