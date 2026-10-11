@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starfall Asset Foundry Preview</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui;background:#081821;color:#e3f6ed}body{max-width:780px;margin:auto;padding:20px}a{color:#9ee8bf}main{display:grid;gap:16px}canvas{max-width:100%;width:512px;image-rendering:pixelated;border:1px solid #355c58;border-radius:12px;background:repeating-conic-gradient(#172c31 0 25%,#0b2025 0 50%) 50%/24px 24px}button,select{font:inherit;padding:12px;background:#23503c;color:white;border:1px solid #80c99d;border-radius:10px}button:focus-visible,select:focus-visible{outline:3px solid #f5db7c}.note{color:#a8c4c1}
+</style>
+<main><p><a href="../">← Starfall</a> · <a href="../../../earthchain-genesis/">Genesis</a></p><h1>Starfall Asset Foundry</h1><p class="note">Isolated experimental sprite-sheet preview. No wallet connection, no purchases, no gameplay changes.</p>
+<label>Ship <select id="ship"><option value="fire-horse">Fire Horse</option><option value="solar-lion">Solar Lion</option></select></label>
+<canvas id="atlas" width="512" height="128" aria-label="Four-frame sprite strip"></canvas>
+<p id="status" role="status">Loading geometry…</p><button id="export" disabled>Export transparent PNG sprite strip</button>
+<p class="note">4 frames · 128×128 pixels per frame · 512×128 PNG · transparent background. Preview scales the exported sprites up.</p></main>
+<script type="module">
+import {getShip,validateShip} from './ship-contract.mjs';
+const canvas=document.querySelector('#atlas'),ctx=canvas.getContext('2d'),status=document.querySelector('#status'),shipSelect=document.querySelector('#ship'),exportButton=document.querySelector('#export');
+function draw(){
+ const id=shipSelect.value;if(!validateShip(id)){status.textContent='Invalid geometry';exportButton.disabled=true;return;}
+ const ship=getShip(id);ctx.clearRect(0,0,512,128);
+ for(let frame=0;frame<4;frame++){
+  ctx.save();ctx.translate(frame*128+64,64);ctx.scale(1.6,1.6);
+  ctx.fillStyle=ship.fill;ctx.beginPath();ship.points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fill();
+  ctx.fillStyle=ship.accent;ctx.beginPath();ctx.moveTo(0,-13);ctx.lineTo(5,1);ctx.lineTo(0,8);ctx.lineTo(-5,1);ctx.closePath();ctx.fill();
+  ship.engines.forEach(([x,y])=>{ctx.fillStyle=ship.accent;ctx.fillRect(x-2,y,4,6+frame*2);ctx.fillStyle='#fff6d5';ctx.fillRect(x-1,y,2,3);});
+  ctx.restore();
+ }
+ status.textContent=ship.name+' · 4 transparent frames rendered from reusable geometry contract';exportButton.disabled=false;
+}
+shipSelect.addEventListener('change',draw);exportButton.addEventListener('click',()=>{canvas.toBlob(blob=>{if(!blob){status.textContent='PNG export unavailable';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='starfall-'+shipSelect.value+'-sprite-strip-v0.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');});draw();
+</script></html>
