@@ -1,0 +1,31 @@
+name: PORTAL TV sports health review
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 9 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'tv-sports-health-probe.cjs'
+      - '.github/workflows/tv-sports-health.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax validation
+        run: node --check tv-sports-health-probe.cjs
+      - name: Check sports stream manifests
+        run: node tv-sports-health-probe.cjs
+      - name: Archive report
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-tv-sports-health
+          path: tv-sports-health.json
+          retention-days: 14
