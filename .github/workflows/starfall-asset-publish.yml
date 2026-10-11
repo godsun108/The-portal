@@ -52,5 +52,6 @@ jobs:
             exit 0
           fi
           git commit -m "assets: propose updated $HULL atlas"
-          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin "$branch"
+          gh auth setup-git
+          git push origin "$branch"
           gh pr create --base main --head "$branch" --title "Review $HULL atlas release" --body "Proposed by manually triggered workflow. Staged asset dimensions and content checked; human review required. No automatic merge."
