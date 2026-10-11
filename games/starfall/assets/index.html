@@ -7,13 +7,13 @@
 <main><p><a href="../">← Starfall</a> · <a href="../../../earthchain-genesis/">Genesis</a></p><h1>Starfall Asset Foundry</h1><p class="note">Isolated experimental sprite-sheet preview. No wallet connection, no purchases, no gameplay changes.</p>
 <label>Ship <select id="ship"><option value="fire-horse">Fire Horse</option><option value="solar-lion">Solar Lion</option></select></label>
 <canvas id="atlas" width="512" height="128" aria-label="Four-frame sprite strip"></canvas>
-<p id="status" role="status">Loading geometry…</p><button id="export" disabled>Export transparent PNG sprite strip</button>
+<p id="status" role="status">Loading geometry…</p><button id="export" disabled>Export transparent PNG sprite strip</button> <button id="manifest" disabled>Export matching manifest JSON</button>
 <p class="note">4 frames · 128×128 pixels per frame · 512×128 PNG · transparent background. Preview scales the exported sprites up.</p></main>
 <script type="module">
 import {getShip,validateShip} from './ship-contract.mjs';
-const canvas=document.querySelector('#atlas'),ctx=canvas.getContext('2d'),status=document.querySelector('#status'),shipSelect=document.querySelector('#ship'),exportButton=document.querySelector('#export');
+const canvas=document.querySelector('#atlas'),ctx=canvas.getContext('2d'),status=document.querySelector('#status'),shipSelect=document.querySelector('#ship'),exportButton=document.querySelector('#export'),manifestButton=document.querySelector('#manifest');
 function draw(){
- const id=shipSelect.value;if(!validateShip(id)){status.textContent='Invalid geometry';exportButton.disabled=true;return;}
+ const id=shipSelect.value;if(!validateShip(id)){status.textContent='Invalid geometry';exportButton.disabled=true;manifestButton.disabled=true;return;}
  const ship=getShip(id);ctx.clearRect(0,0,512,128);
  for(let frame=0;frame<4;frame++){
   ctx.save();ctx.translate(frame*128+64,64);ctx.scale(1.6,1.6);
@@ -22,7 +22,9 @@ function draw(){
   ship.engines.forEach(([x,y])=>{ctx.fillStyle=ship.accent;ctx.fillRect(x-2,y,4,6+frame*2);ctx.fillStyle='#fff6d5';ctx.fillRect(x-1,y,2,3);});
   ctx.restore();
  }
- status.textContent=ship.name+' · 4 transparent frames rendered from reusable geometry contract';exportButton.disabled=false;
+ status.textContent=ship.name+' · 4 transparent frames rendered from reusable geometry contract';exportButton.disabled=false;manifestButton.disabled=false;
 }
+function downloadText(name,body){const blob=new Blob([body],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+manifestButton.addEventListener('click',()=>{const id=shipSelect.value;if(!validateShip(id))return;const m={version:1,id,image:'./assets/'+id+'.png',frameWidth:128,frameHeight:128,frames:4,fps:8};downloadText(id+'.json',JSON.stringify(m,null,2)+'\n');status.textContent='Manifest exported. Rename the PNG to '+id+'.png and place both files in games/starfall/assets/.';});
 shipSelect.addEventListener('change',draw);exportButton.addEventListener('click',()=>{canvas.toBlob(blob=>{if(!blob){status.textContent='PNG export unavailable';return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='starfall-'+shipSelect.value+'-sprite-strip-v0.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');});draw();
 </script></html>
