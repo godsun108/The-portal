@@ -241,10 +241,11 @@
       "provider": "CGTN",
       "url": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
       "type": "hls",
-      "live": true,
-      "status": "candidate_unverified_playback_and_embedding_rights",
+      "live": false,
+      "status": "user_confirmed_iphone_playback_failed_2026_10_11",
       "source": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
-      "deviceConfirmed": false
+      "deviceConfirmed": false,
+      "disabled": true
     }
   ],
   "rightsPolicy": {
