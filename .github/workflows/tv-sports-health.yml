@@ -23,6 +23,9 @@ jobs:
         run: node --check tv-sports-health-probe.cjs
       - name: Check sports stream manifests
         run: node tv-sports-health-probe.cjs
+      - name: Validate health report invariants
+        run: |
+          node -e "const r=require('./tv-sports-health.json');if(r.schema!=='portal.tv.health.v1'||r.counts.tested!==14||r.items.length!==14||r.items.some(x=>x.admitted!==false||x.rightsStatus!=='unverified'))process.exit(1);console.log('Report schema and non-admission assertions passed')"
       - name: Archive report
         uses: actions/upload-artifact@v4
         with:
