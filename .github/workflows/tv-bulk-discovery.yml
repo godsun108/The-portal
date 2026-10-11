@@ -1,0 +1,27 @@
+name: PORTAL TV bulk discovery review
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate script syntax
+        run: node --check tv-iptv-discover.cjs
+      - name: Stage unverified candidates
+        run: node tv-iptv-discover.cjs
+      - name: Inspect candidate counts
+        run: |
+          node -e "const j=require('./tv-iptv-discovery.json');const c={};for(const x of j.items)for(const k of x.categories)c[k]=(c[k]||0)+1;console.log(JSON.stringify({counts:j.counts,genres:c,allUnadmitted:j.items.every(x=>x.admitted===false)},null,2));if(j.items.some(x=>x.admitted!==false))process.exit(1)"
+      - name: Upload research-only catalog
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-tv-unverified-discovery
+          path: tv-iptv-discovery.json
+          retention-days: 7
