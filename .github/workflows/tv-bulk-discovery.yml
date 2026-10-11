@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/tv-bulk-discovery.yml'
       - 'tv-iptv-discover.cjs'
+      - 'tv-iptv-probe.cjs'
 permissions:
   contents: read
 jobs:
@@ -24,9 +25,13 @@ jobs:
       - name: Inspect candidate counts
         run: |
           node -e "const j=require('./tv-iptv-discovery.json');const c={};for(const x of j.items)for(const k of x.categories)c[k]=(c[k]||0)+1;console.log(JSON.stringify({counts:j.counts,genres:c,allUnadmitted:j.items.every(x=>x.admitted===false)},null,2));if(j.items.some(x=>x.admitted!==false))process.exit(1)"
+      - name: Probe up to 60 prioritized HLS manifests (no admission)
+        run: node tv-iptv-probe.cjs
       - name: Upload research-only catalog
         uses: actions/upload-artifact@v4
         with:
           name: portal-tv-unverified-discovery
-          path: tv-iptv-discovery.json
+          path: |
+            tv-iptv-discovery.json
+            tv-iptv-probe.json
           retention-days: 7
