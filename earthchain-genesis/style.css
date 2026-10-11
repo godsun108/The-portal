@@ -3,3 +3,5 @@
 .discovery:hover,.discovery:focus-visible{outline:2px solid #b4f4b2;outline-offset:3px}
 .discovery:disabled{opacity:.65;cursor:wait}
 .notice [role="status"]{margin-top:14px;overflow-wrap:anywhere}
+
+.wallet-snapshot{margin-top:16px;padding:16px;border:1px solid #416953;border-radius:14px;background:#0a1e17}.wallet-snapshot h3{margin:0 0 10px;font-size:17px}.wallet-snapshot p{overflow-wrap:anywhere;margin:9px 0;color:#c7dfcc}
