@@ -4,7 +4,7 @@ Playable browser-local vertical slice for the existing Portal. Serve the reposit
 
 ## Truth boundary
 
-This is not yet the requested full EarthChain NFT game economy. Credits, completion, and inventory are untrusted browser-local data; they have no monetary value and can be edited. No signature, payment, mint, scarcity, consensus, or ownership proof is claimed. No wallet secrets are requested. The existing EarthChain test wallet is linked, not connected. Its current protocol accepts only FAUCET/TRANSFER and cannot atomically buy an NFT. The explicit EarthChain purchase adapter fails closed.
+This is not yet the requested full EarthChain NFT game economy. Credits, completion, and inventory are untrusted browser-local data; they have no monetary value and can be edited. No signature, payment, mint, scarcity, consensus, or ownership proof is claimed. No wallet secrets are requested. The local-credit shop remains separate. The commerce/ test hangar now uses the existing device wallet to sign offline commerce BUY requests; see commerce/README.md. Its current protocol accepts only FAUCET/TRANSFER and cannot atomically buy an NFT. The old local-economy purchase adapter still fails closed; signed commerce purchases run through the separate test hangar.
 
 ## Required next integration
 
