@@ -90,14 +90,32 @@ if(typeof window!=="undefined"){
       const gallery=document.createElement("div");gallery.className="wallet-data hull-gallery";
       const hulls={"solar-lion":["☀","Solar Lion"],"fire-horse":["♞","Fire Horse"],"earth-steward":["✿","Earth Steward"]};
       if(!snap.skins.length){const empty=document.createElement("p");empty.textContent="No owned Starfall hulls in this signed view.";gallery.append(empty);}
-      for(const id of snap.skins){
+      for(const item of snap.skins){
+       const id=item.skinId;
        if(!hulls[id])continue;
        const card=document.createElement("article");card.className="hull-card";
        const symbol=document.createElement("span");symbol.className="hull-icon";symbol.textContent=hulls[id][0];
        const name=document.createElement("strong");name.textContent=hulls[id][1];
        const verified=document.createElement("small");verified.textContent="Verified owned · ECTEST test collectible";
        const play=document.createElement("a");play.href="../games/starfall/";play.textContent="Play Starfall →";
-       card.append(symbol,name,verified,play);gallery.append(card);
+       const equip=document.createElement("button");
+       equip.type="button";equip.className="hull-equip";
+       const selected=()=>{try{return JSON.parse(localStorage.getItem("earthchain.starfall.hosted.v1")||"null")?.preferredToken===item.tokenId}catch{return false}};
+       equip.textContent=selected()?"Selected for Starfall":"Equip for Starfall";
+       equip.addEventListener("click",()=>{
+        try{
+         const raw=localStorage.getItem("earthchain.starfall.hosted.v1");
+         const stored=JSON.parse(raw||"null");
+         if(!stored?.envelope||stored.envelope.view?.expiresAt<=Date.now()||stored.envelope.view?.count!==snap.count||stored.envelope.view?.head!==snap.head){
+          status.textContent="Signed view changed or expired. Recheck snapshot before equipping.";return;
+         }
+         localStorage.setItem("earthchain.starfall.hosted.v1",JSON.stringify({...stored,preferredToken:item.tokenId}));
+         for(const b of gallery.querySelectorAll(".hull-equip"))b.textContent="Equip for Starfall";
+         equip.textContent="Selected for Starfall";
+         status.textContent="Selected "+hulls[id][1]+" locally. Open Starfall to play. No purchase or transfer.";
+        }catch{status.textContent="Could not save hull selection on this device."}
+       });
+       card.append(symbol,name,verified,equip,play);gallery.append(card);
       }
       dashboard.insertBefore(gallery,controls);
      }else{
