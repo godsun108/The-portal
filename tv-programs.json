@@ -223,6 +223,17 @@
       "status": "candidate_unverified_device_playback",
       "source": "https://github.com/iptv-org/iptv/issues/32093",
       "deviceConfirmed": false
+    },
+    {
+      "title": "i24NEWS English World — Live News (test)",
+      "genre": "News",
+      "provider": "i24NEWS",
+      "url": "https://i24newsenglish-cdn.encoders.immergo.tv/master.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "candidate_unverified_device_playback",
+      "source": "https://publiciptv.com/channels/i24newsenglishworldil",
+      "deviceConfirmed": false
     }
   ],
   "rightsPolicy": {
