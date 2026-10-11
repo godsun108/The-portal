@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PORTAL TV · Channel Lab</title>
+<style>body{margin:0;background:#080f20;color:#eef5ff;font:16px system-ui,sans-serif}main{max-width:1050px;margin:auto;padding:18px}a{color:#9edcff}button,select,input{font:inherit;padding:12px;border-radius:9px;border:1px solid #617594;background:#15233d;color:#fff}button{cursor:pointer}button:focus-visible{outline:3px solid #7bdcff}.controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.card{border:1px solid #344764;border-radius:12px;padding:12px;background:#111d33}.card p{color:#b4c5db;font-size:.88rem}.card button{width:100%}video{width:100%;background:black;min-height:170px}#player{border:1px solid #456080;border-radius:12px;padding:12px;margin:12px 0}#status{color:#b6d6ff}small{color:#bdcbe0}</style></head><body><main>
+<p><a href="tv.html">← Back to PORTAL TV</a></p><h1>📡 PORTAL Channel Lab</h1>
+<p>Explore public IPTV directory candidates in batches. <strong>These are not verified PORTAL channels.</strong> Directory listing does not prove permission, playback, or reliability. Test only streams you are authorized to access; broadcaster terms and regional restrictions apply.</p>
+<div class="controls"><label>Category <select id="category"><option value="sports">🏆 Sports</option><option value="business">📈 Finance / Business</option><option value="news">News</option><option value="music">Music</option><option value="documentary">Documentaries</option><option value="entertainment">Entertainment</option></select></label><label>Search <input id="query" type="search" placeholder="Station or country"></label><button id="reload">Refresh directory</button></div>
+<p id="status" role="status">Loading directory…</p><section id="player" hidden><h2 id="now">Candidate stream test</h2><video id="video" controls playsinline></video><div class="controls"><button id="stop">■ Stop</button></div><p id="playStatus" role="status">Not tested</p><small>Test results are local to this session. A successful manifest load is not a rights or iPhone playback certification.</small></section>
+<div id="results" class="grid"></div><div class="controls"><button id="more" hidden>Show 30 more</button></div><small>Source: iptv-org public metadata. No stream is admitted to the PORTAL TV verified lineup by this page.</small></main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),status=$('status'),results=$('results'),video=$('video');
+let catalog=[],streams=[],block=new Set(),shown=30,active=null,loading=false;
+const base='https://iptv-org.github.io/api/';
+function allowed(u){try{const x=new URL(u);return x.protocol==='https:'&&x.pathname.toLowerCase().endsWith('.m3u8')&&!x.username&&!x.password}catch{return false}}
+function stop(){video.pause();video.removeAttribute('src');video.load();if(active){active.destroy();active=null} $('playStatus').textContent='Stopped';}
+$('stop').onclick=stop;
+async function load(){if(loading)return;loading=true;status.textContent='Fetching public channel directory…';results.replaceChildren();try{
+const responses=await Promise.all(['channels.json','streams.json','blocklist.json'].map(async name=>{const r=await fetch(base+name,{cache:'no-store'});if(!r.ok)throw Error(name+': HTTP '+r.status);return r.json()}));
+const [channels,feeds,blocked]=responses;block=new Set(blocked.map(x=>x.channel));const lookup=new Map(channels.filter(x=>x.id&&!x.is_nsfw&&!x.closed&&!block.has(x.id)).map(x=>[x.id,x]));const seen=new Set();catalog=[];
+for(const feed of feeds){const c=lookup.get(feed.channel);if(!c||seen.has(c.id)||feed.referrer||feed.user_agent||!allowed(feed.url))continue;seen.add(c.id);catalog.push({name:c.name,country:c.country||'Unknown',categories:c.categories||[],url:feed.url,website:c.website||''})}
+catalog.sort((a,b)=>a.name.localeCompare(b.name));shown=30;draw();
+}catch(e){status.textContent='Directory unavailable: '+e.message+'. Existing PORTAL TV channels are unaffected.'}finally{loading=false}}
+function draw(){const genre=$('category').value,q=$('query').value.trim().toLowerCase();const found=catalog.filter(x=>x.categories.includes(genre)&&(x.name+' '+x.country).toLowerCase().includes(q));results.replaceChildren();for(const item of found.slice(0,shown)){const card=document.createElement('article');card.className='card';const h=document.createElement('h3');h.textContent=item.name;const p=document.createElement('p');p.textContent=item.country+' · '+item.categories.join(', ')+' · UNVERIFIED';const btn=document.createElement('button');btn.textContent='▶ Test candidate in player';btn.onclick=()=>play(item);card.append(h,p,btn);results.append(card)}status.textContent=found.length+' unverified '+genre+' candidates found; showing '+Math.min(shown,found.length)+'. No playback or rights claims.';$('more').hidden=shown>=found.length}
+function play(item){stop();$('player').hidden=false;$('now').textContent=item.name+' · UNVERIFIED';$('playStatus').textContent='Attempting stream. Tap play if iPhone requires a gesture.';video.src=item.url;video.load();video.play().catch(()=>$('playStatus').textContent='Autoplay unavailable or stream blocked. Try Play manually.');$('player').scrollIntoView({behavior:'smooth',block:'start'})}
+video.addEventListener('playing',()=>$('playStatus').textContent='Playing on this device now. Rights remain unverified.');
+video.addEventListener('error',()=>$('playStatus').textContent='Playback failed or blocked on this device.');
+$('category').onchange=()=>{shown=30;draw()};$('query').oninput=()=>{shown=30;draw()};$('more').onclick=()=>{shown+=30;draw()};$('reload').onclick=load;load();
+})();
+</script></body></html>
