@@ -20,7 +20,7 @@ async function main(){
  }
  items.sort((a,b)=>a.name.localeCompare(b.name));
  const out={schema:'portal.tv.iptv-discovery.v1',generatedAt:new Date().toISOString(),source:base,policy:'Research candidates only. Public playlist inclusion does not establish rebroadcast or embedding permission, live availability, or iPhone compatibility. Do not feed this file directly to the player.',counts:{channels:channels.length,streams:streams.length,candidates:items.length},items};
- fs.writeFileSync('tv-iptv-discovery.json',JSON.stringify(out,null,2)+'\\n');
+ fs.writeFileSync('tv-iptv-discovery.json',JSON.stringify(out,null,2)+'\n');
  console.log('Staged '+items.length+' unverified candidates; none admitted.');
 }
 main().catch(e=>{console.error(e);process.exitCode=1});
