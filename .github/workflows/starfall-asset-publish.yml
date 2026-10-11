@@ -1,0 +1,57 @@
+name: Propose Starfall asset release
+on:
+  workflow_dispatch:
+    inputs:
+      hull:
+        description: 'Approved hull to propose (staged assets only)'
+        required: true
+        type: choice
+        options:
+          - fire-horse
+          - solar-lion
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate staged assets and prepare proposal
+        env:
+          HULL: ${{ inputs.hull }}
+        run: |
+          set -eu
+          test "$HULL" = fire-horse -o "$HULL" = solar-lion
+          test -f "games/starfall/assets/staging/$HULL.svg"
+          test -f "games/starfall/assets/staging/$HULL.json"
+          node games/starfall/assets/validate-staged.mjs "$HULL"
+          cp "games/starfall/assets/staging/$HULL.svg" "games/starfall/assets/$HULL.svg"
+          cp "games/starfall/assets/staging/$HULL.json" "games/starfall/assets/$HULL.json"
+          node games/starfall/assets/validate-assets.mjs
+          node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs
+      - name: Open reviewable PR (never merge automatically)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HULL: ${{ inputs.hull }}
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="asset-proposal/${HULL}-${GITHUB_RUN_ID}"
+          git checkout -b "$branch"
+          git add "games/starfall/assets/$HULL.svg" "games/starfall/assets/$HULL.json"
+          if git diff --cached --quiet; then
+            echo "Staged assets match released assets; no PR necessary."
+            exit 0
+          fi
+          git commit -m "assets: propose updated $HULL atlas"
+          gh auth setup-git
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" --title "Review $HULL atlas release" --body "Proposed by manually triggered workflow. Staged asset dimensions and content checked; human review required. No automatic merge."
