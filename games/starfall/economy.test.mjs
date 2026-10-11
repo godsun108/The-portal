@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {fresh,reward,purchase,equip,validate,earthchainPurchase} from './economy.mjs';
+test('endgame purchase requires completion and sufficient credits',()=>{assert.throws(()=>purchase({...fresh(),credits:999},'solar-lion'));const s=reward(fresh(),true);assert.throws(()=>purchase(s,'fire-horse'));const next=purchase(s,'solar-lion');assert.equal(next.credits,0);assert.equal(s.credits,60);assert.equal(next.equipped,'solar-lion');assert.throws(()=>purchase({...next,credits:999},'solar-lion'));});
+test('loss rewards do not unlock endgame',()=>{const s=reward(fresh(),false);assert.equal(s.credits,10);assert.equal(s.cleared,false);});
+test('unowned and unknown items rejected',()=>{assert.throws(()=>equip(fresh(),'solar-lion'));assert.throws(()=>purchase(reward(fresh(),true),'unknown'));});
+test('invalid saved balances and ownership rejected',()=>{for(const credits of [-1,NaN,1.5,Infinity])assert.throws(()=>validate({...fresh(),credits}));assert.throws(()=>validate({...fresh(),owned:['fake']}));assert.throws(()=>validate({...fresh(),equipped:'solar-lion'}));});
+test('EarthChain settlement fails closed',()=>{assert.throws(earthchainPurchase,/not available/);});
