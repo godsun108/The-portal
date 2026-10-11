@@ -234,6 +234,17 @@
       "status": "user_confirmed_iphone_playback_2026-10-11",
       "source": "https://publiciptv.com/channels/i24newsenglishworldil",
       "deviceConfirmed": true
+    },
+    {
+      "title": "CGTN English — Live News (test)",
+      "genre": "News",
+      "provider": "CGTN",
+      "url": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "candidate_unverified_playback_and_embedding_rights",
+      "source": "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
+      "deviceConfirmed": false
     }
   ],
   "rightsPolicy": {
