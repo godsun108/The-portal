@@ -66,23 +66,48 @@ if(typeof window!=="undefined"){
    status.textContent="Checking locally saved signed view…";
    dashboard.append(title,status);
    detailPanel.append(dashboard);
-   (async()=>{
+   const controls=document.createElement("div");
+   controls.className="wallet-actions";
+   const reload=document.createElement("button");
+   reload.type="button";reload.className="discovery";reload.textContent="Recheck signed snapshot";
+   const refreshLink=document.createElement("a");
+   refreshLink.className="discovery";refreshLink.href="../games/starfall/commerce/direct.html";
+   refreshLink.textContent="Refresh ownership in Starfall checkout";
+   controls.append(reload,refreshLink);dashboard.append(controls);
+   const showSnapshot=async()=>{
+    reload.disabled=true;status.textContent="Verifying saved signed snapshot…";
+    for(const node of [...dashboard.querySelectorAll(".wallet-data")])node.remove();
     try{
      const {cachedTestWalletSnapshot}=await import("./wallet-dashboard.mjs");
      const snap=await cachedTestWalletSnapshot();
      if(!dashboard.isConnected)return;
      if(snap.state==="verified"){
-      status.textContent=snap.balance+" ECTEST · verified signed snapshot (expires "+new Date(snap.expiresAt).toLocaleTimeString()+")";
-      const address=document.createElement("p");
-      address.textContent="Test address: "+snap.address;
-      const owned=document.createElement("p");
-      owned.textContent="Owned Starfall hulls: "+(snap.skins.length?snap.skins.join(", "):"none");
-      dashboard.append(address,owned);
+      status.textContent=snap.balance+" ECTEST · signed test snapshot · expires "+new Date(snap.expiresAt).toLocaleTimeString();
+      const address=document.createElement("p");address.className="wallet-data";
+      address.textContent="Test address: "+snap.address;dashboard.insertBefore(address,controls);
+      const heading=document.createElement("h4");heading.className="wallet-data";
+      heading.textContent="Verified Starfall hulls";dashboard.insertBefore(heading,controls);
+      const gallery=document.createElement("div");gallery.className="wallet-data hull-gallery";
+      const hulls={"solar-lion":["☀","Solar Lion"],"fire-horse":["♞","Fire Horse"],"earth-steward":["✿","Earth Steward"]};
+      if(!snap.skins.length){const empty=document.createElement("p");empty.textContent="No owned Starfall hulls in this signed view.";gallery.append(empty);}
+      for(const id of snap.skins){
+       if(!hulls[id])continue;
+       const card=document.createElement("article");card.className="hull-card";
+       const symbol=document.createElement("span");symbol.className="hull-icon";symbol.textContent=hulls[id][0];
+       const name=document.createElement("strong");name.textContent=hulls[id][1];
+       const verified=document.createElement("small");verified.textContent="Verified owned · ECTEST test collectible";
+       const play=document.createElement("a");play.href="../games/starfall/";play.textContent="Play Starfall →";
+       card.append(symbol,name,verified,play);gallery.append(card);
+      }
+      dashboard.insertBefore(gallery,controls);
      }else{
-      status.textContent=snap.state==="not_connected"?"No saved signed view on this device. Connect through Starfall checkout first.":snap.state==="expired"?"Saved signed view expired (valid for up to five minutes). Open Starfall checkout, unlock and refresh ownership, then return immediately.":"Unable to verify saved wallet view ("+snap.state+"). Refresh ownership in Starfall checkout and return.";
+      status.textContent=snap.state==="not_connected"?"No saved signed view on this device. Connect through Starfall checkout first.":snap.state==="expired"?"Signed view expired (five-minute lifetime). Refresh ownership in Starfall checkout and return.":"Cannot verify saved view ("+snap.state+"). Use the existing checkout to refresh it.";
      }
-    }catch{status.textContent="Wallet snapshot unavailable. Existing wallet remains unchanged."}
-   })();
+    }catch{status.textContent="Snapshot check unavailable. Existing wallet remains unchanged."}
+    finally{reload.disabled=false;}
+   };
+   reload.addEventListener("click",showSnapshot);
+   showSnapshot();
    probe.addEventListener("click",async()=>{
     probe.disabled=true;
     const result=document.createElement("p");
