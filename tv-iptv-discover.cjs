@@ -3,7 +3,7 @@ const fs=require('node:fs');
 const base='https://iptv-org.github.io/api/';
 const endpoints=['channels.json','streams.json','blocklist.json'];
 async function load(name){const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),20000);try{const r=await fetch(base+name,{signal:controller.signal});if(!r.ok)throw Error(name+' HTTP '+r.status);return await r.json()}finally{clearTimeout(timeout)}}
-function validURL(raw){try{const u=new URL(raw);return u.protocol==='https:'&&/\\.m3u8$/i.test(u.pathname)&&!u.username&&!u.password}catch{return false}}
+function validURL(raw){try{const u=new URL(raw);return u.protocol==='https:'&&u.pathname.toLowerCase().endsWith('.m3u8')&&!u.username&&!u.password}catch{return false}}
 async function main(){
  const [channels,streams,blocklist]=await Promise.all(endpoints.map(load));
  const lookup=new Map(channels.filter(c=>c.id&&!c.is_nsfw&&!c.closed).map(c=>[c.id,c]));
