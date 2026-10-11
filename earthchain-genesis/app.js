@@ -56,6 +56,33 @@ if(typeof window!=="undefined"){
    probe.className="discovery";
    probe.textContent="Check iPhone signing support";
    detailPanel.append(probe);
+   const dashboard=document.createElement("section");
+   dashboard.className="wallet-snapshot";
+   dashboard.setAttribute("aria-label","Verified ECTEST wallet snapshot");
+   const title=document.createElement("h3");
+   title.textContent="Your ECTEST dashboard";
+   const status=document.createElement("p");
+   status.setAttribute("role","status");
+   status.textContent="Checking locally saved signed view…";
+   dashboard.append(title,status);
+   detailPanel.append(dashboard);
+   (async()=>{
+    try{
+     const {cachedTestWalletSnapshot}=await import("./wallet-dashboard.mjs");
+     const snap=await cachedTestWalletSnapshot();
+     if(!dashboard.isConnected)return;
+     if(snap.state==="verified"){
+      status.textContent=snap.balance+" ECTEST · verified signed snapshot (expires "+new Date(snap.expiresAt).toLocaleTimeString()+")";
+      const address=document.createElement("p");
+      address.textContent="Test address: "+snap.address;
+      const owned=document.createElement("p");
+      owned.textContent="Owned Starfall hulls: "+(snap.skins.length?snap.skins.join(", "):"none");
+      dashboard.append(address,owned);
+     }else{
+      status.textContent=snap.state==="not_connected"?"No recent verified wallet view on this device. Open the existing checkout to connect.":"No fresh verified wallet view. Reconnect or refresh in Starfall checkout, then return here.";
+     }
+    }catch{status.textContent="Wallet snapshot unavailable. Existing wallet remains unchanged."}
+   })();
    probe.addEventListener("click",async()=>{
     probe.disabled=true;
     const result=document.createElement("p");
