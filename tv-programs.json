@@ -212,6 +212,17 @@
       "status": "user_confirmed_iphone_playback_2026-10-11",
       "source": "https://github.com/mftvbox/iptv-org/blob/master/streams/fr.m3u",
       "deviceConfirmed": true
+    },
+    {
+      "title": "NHK WORLD-JAPAN — Live TV (test)",
+      "genre": "World TV",
+      "provider": "NHK WORLD-JAPAN",
+      "url": "https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8",
+      "type": "hls",
+      "live": true,
+      "status": "candidate_unverified_device_playback",
+      "source": "https://github.com/iptv-org/iptv/issues/32093",
+      "deviceConfirmed": false
     }
   ],
   "rightsPolicy": {
