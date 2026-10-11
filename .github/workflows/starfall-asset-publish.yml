@@ -9,6 +9,13 @@ on:
         options:
           - fire-horse
           - solar-lion
+      format:
+        description: 'Staged atlas format'
+        required: true
+        type: choice
+        options:
+          - svg
+          - png
 permissions:
   contents: write
   pull-requests: write
@@ -26,27 +33,30 @@ jobs:
       - name: Validate staged assets and prepare proposal
         env:
           HULL: ${{ inputs.hull }}
+          FORMAT: ${{ inputs.format }}
         run: |
           set -eu
           test "$HULL" = fire-horse -o "$HULL" = solar-lion
-          test -f "games/starfall/assets/staging/$HULL.svg"
+          test "$FORMAT" = svg -o "$FORMAT" = png
+          test -f "games/starfall/assets/staging/$HULL.$FORMAT"
           test -f "games/starfall/assets/staging/$HULL.json"
-          node games/starfall/assets/validate-staged.mjs "$HULL"
-          cp "games/starfall/assets/staging/$HULL.svg" "games/starfall/assets/$HULL.svg"
+          if [ "$FORMAT" = svg ]; then node games/starfall/assets/validate-staged.mjs "$HULL"; else node games/starfall/assets/validate-staged-png.mjs "$HULL"; fi
+          cp "games/starfall/assets/staging/$HULL.$FORMAT" "games/starfall/assets/$HULL.$FORMAT"
           cp "games/starfall/assets/staging/$HULL.json" "games/starfall/assets/$HULL.json"
-          node games/starfall/assets/validate-assets.mjs
+          if [ "$FORMAT" = svg ]; then node games/starfall/assets/validate-assets.mjs; fi
           node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs
       - name: Open reviewable PR (never merge automatically)
         env:
           GH_TOKEN: ${{ github.token }}
           HULL: ${{ inputs.hull }}
+          FORMAT: ${{ inputs.format }}
         run: |
           set -eu
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          branch="asset-proposal/${HULL}-${GITHUB_RUN_ID}"
+          branch="asset-proposal/${HULL}-${FORMAT}-${GITHUB_RUN_ID}"
           git checkout -b "$branch"
-          git add "games/starfall/assets/$HULL.svg" "games/starfall/assets/$HULL.json"
+          git add "games/starfall/assets/$HULL.$FORMAT" "games/starfall/assets/$HULL.json"
           if git diff --cached --quiet; then
             echo "Staged assets match released assets; no PR necessary."
             exit 0

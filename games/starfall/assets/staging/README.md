@@ -1,9 +1,9 @@
 # Starfall asset release proposals
 
-The browser Asset Foundry exports a transparent PNG and a matching JSON manifest. It never receives a GitHub credential or publishes code.
+The browser Asset Foundry exports `fire-horse.png` or `solar-lion.png` and a matching JSON manifest. No GitHub credentials are used in the browser.
 
-The current manual proposal workflow accepts **SVG only**, for Fire Horse or Solar Lion. It is a gated path for reviewed SVG atlases; PNG support requires a separate validated release workflow. Place a candidate SVG and matching JSON in this `staging/` folder using a GitHub branch and pull request, with names `fire-horse.svg` and `fire-horse.json` (or `solar-lion.*`). The JSON image path must be `./assets/<hull>.svg`. Do not merge unreviewed or untrusted SVG.
+To propose a release, add the exported PNG and JSON to this staging folder via a reviewed GitHub pull request. After staging is merged, open GitHub Actions → **Propose Starfall asset release** → Run workflow, choose the hull and **png**. The workflow checks manifest fields and PNG header dimensions, runs existing unit tests and proposes a second PR to copy the asset to the game path. Review and merge manually. The image path in JSON must be `./assets/<hull>.png`.
 
-After staged files are merged to main, open GitHub Actions → **Propose Starfall asset release** → Run workflow, select the hull. The workflow validates staged dimensions and allowed content, copies the staged files to the live asset paths, runs existing tests, and proposes a pull request for review. It never merges that PR. If the bot lacks permission to open pull requests, an administrator must enable that GitHub Actions permission.
+SVG staging is also supported: stage `<hull>.svg` plus JSON with `image: "./assets/<hull>.svg"`, then select **svg**. SVG checks include basic active-content filtering and geometry validation.
 
-This is not a one-tap mobile upload and is not a production deployment system. A future authenticated service may automate staging and approval without giving credentials to the public browser.
+**Limitations:** The PNG check validates signature, format, size and dimensions but does not fully decode or CRC-check the image. Browser acceptance testing is still necessary. No automatic upload, no automatic merging, no payment or wallet access. GitHub Actions must have permission to create PRs. This is a reviewed GitHub workflow, not a one-tap iPhone publishing service.
