@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "id": "fire-horse",
+  "image": "./assets/fire-horse.svg",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "fps": 8
+}

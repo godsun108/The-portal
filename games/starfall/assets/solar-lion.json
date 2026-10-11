@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "id": "solar-lion",
+  "image": "./assets/solar-lion.svg",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "fps": 8
+}
