@@ -4,7 +4,7 @@ import {frameAt} from './animation-engine.mjs';
 const allowed=new Set(['fire-horse','solar-lion']);
 const atlases=new Map();
 export function validateAtlas(a){
- return !!a&&a.version===1&&allowed.has(a.id)&&typeof a.image==='string'&&/^\.\/assets\/[a-z0-9-]+\.png$/.test(a.image)&&Number.isInteger(a.frameWidth)&&a.frameWidth>=16&&a.frameWidth<=256&&Number.isInteger(a.frameHeight)&&a.frameHeight>=16&&a.frameHeight<=256&&Number.isInteger(a.frames)&&a.frames>=1&&a.frames<=16&&Number.isFinite(a.fps)&&a.fps>0&&a.fps<=30;
+ return !!a&&a.version===1&&allowed.has(a.id)&&typeof a.image==='string'&&/^\.\/assets\/[a-z0-9-]+\.(?:png|svg)$/.test(a.image)&&Number.isInteger(a.frameWidth)&&a.frameWidth>=16&&a.frameWidth<=256&&Number.isInteger(a.frameHeight)&&a.frameHeight>=16&&a.frameHeight<=256&&Number.isInteger(a.frames)&&a.frames>=1&&a.frames<=16&&Number.isFinite(a.fps)&&a.fps>0&&a.fps<=30;
 }
 export async function preloadAtlas(id){
  if(!allowed.has(id))return false;
