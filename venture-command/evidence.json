@@ -316,6 +316,38 @@
       "next": "Research Florida species-specific hemp feed rules, cattle farming plan and land/operating cost requirements; conventional feed only if herd is later authorized.",
       "last_reviewed": "2026-10-12",
       "proof": "AAFCO laying-hen hempseed meal definition; FDA/USDA cattle studies with caution about cannabinoid residues."
+    },
+    {
+      "id": "sheep",
+      "name": "Regenerative Sheep & Wool",
+      "tier": "research",
+      "stage": "Flock welfare and feed law research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "hemp-biorefinery/sheep/README.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/sheep/WOOL-TO-TEXTILES.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/sheep/FINANCIAL-AND-LEGAL-GATES.md"
+        }
+      ],
+      "blocker": "No approved sheep-specific hemp feed route; cannabinoid residue studies raise food-safety concerns. Land, veterinary care, breeds and wool market not qualified.",
+      "next": "Compare warm-climate wool and hair breeds; research suitable land, flock welfare and commercial wool-processing buyers. No hemp feeding.",
+      "last_reviewed": "2026-10-12",
+      "proof": "US FDA animal-food requirements, UF/IFAS sheep care and controlled cannabinoid residue studies; no commercial feed authorization."
     }
   ]
 }
