@@ -60,6 +60,12 @@ We are expanding the **research scope**, not claiming an operating circular refi
 - **[Cattle Cost and Decision Register](cattle/DECISIONS-AND-COSTS.md)** — land, animal-care and capital gates; no animals or experimental feed authorized.
 The two programs are complementary but cattle nutrition must not borrow the legal status of hemp textiles or human hemp-seed foods.
 
+## Regenerative sheep and wool production
+- [Sheep husbandry and hemp feed regulatory research](sheep/README.md)
+- [Wool-to-hemp-textile supply chain](sheep/WOOL-TO-TEXTILES.md)
+- [Sheep acquisition and finance gates](sheep/FINANCIAL-AND-LEGAL-GATES.md)
+The animal operation begins with conventional species-appropriate forage and veterinary care; hemp-derived ingredients for sheep remain research-only until their legality and animal/food safety are established.
+
 ## Navigation
 - [System architecture and route decisions](research/PROCESS-ARCHITECTURE.md)
 - [Mass balance and techno-economics requirements](research/FEASIBILITY-DATA-PLAN.md)
