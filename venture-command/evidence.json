@@ -181,6 +181,34 @@
       "next": "Continue literature and compliance screening; no human testing or manufacturing.",
       "last_reviewed": "2026-10-12",
       "proof": "No approved inhalable formula."
+    },
+    {
+      "id": "flowertea",
+      "name": "Hemp Flower / CBD Flower Tea",
+      "tier": "research",
+      "stage": "Food-law and ingestion safety research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/ventures/HEMP-FLOWER-TEA.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/research/HEMP-NUTRITION-RESEARCH-QUESTIONS.md"
+        }
+      ],
+      "blocker": "Lawful classification of hemp-flower as a food/ingestible product, finished-infusion safety and cannabinoid exposures.",
+      "next": "Compare conventional herbal-tea vs state-regulated hemp-product vs licensed medical-market routes; seek legal review before procurement.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Concept only; no GRAS finding or food authorization for the flower."
     }
   ]
 }
