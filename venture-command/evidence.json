@@ -212,9 +212,9 @@
     },
     {
       "id": "biorefinery",
-      "name": "Regenerative Hemp Biorefinery",
+      "name": "Regenerative Hemp & Mycelium Biorefinery",
       "tier": "research",
-      "stage": "Circular campus and carbon materials feasibility",
+      "stage": "Fungal and circular materials feasibility",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -239,12 +239,24 @@
         {
           "repo": "godsun108/The-portal",
           "path": "hemp-biorefinery/research/CIRCULARITY-SCORECARD.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/mushroom-factory/README.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/mushroom-factory/SELF-MANUFACTURING.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/mushroom-factory/ECONOMICS-AND-VALIDATION.md"
         }
       ],
-      "blocker": "No measured hemp yields, soil-grade biochar assays, market-ready graphene characterization, verified mass/energy/LCA or permitted plant engineering.",
-      "next": "Compare fiber and biochar product buyers; map feedstock allocation, qualified pyrolysis partners and third-party carbon-material characterization.",
+      "blocker": "No validated mushroom/hemp substrate performance, end-product customers, permitted facility zoning, mass balances, capital estimates or safety-reviewed self-manufactured components.",
+      "next": "Compare fresh culinary mushrooms, molded mycelium packaging and biochar residue value; test allocation economics and qualified engineering of noncritical parts.",
       "last_reviewed": "2026-10-12",
-      "proof": "Modular architecture and independent research references; no operating pilot or verified hemp graphene product."
+      "proof": "Research architecture and published fungal biomaterials studies only; no pilot plant or saleable product certified."
     }
   ]
 }
