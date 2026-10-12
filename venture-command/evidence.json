@@ -212,9 +212,9 @@
     },
     {
       "id": "biorefinery",
-      "name": "Industrial Hemp Biorefinery",
+      "name": "Regenerative Hemp Biorefinery",
       "tier": "research",
-      "stage": "Feasibility",
+      "stage": "Circular campus and carbon materials feasibility",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -227,11 +227,24 @@
         "repo": "godsun108/The-portal",
         "path": "hemp-biorefinery/README.md"
       },
-      "supporting": [],
-      "blocker": "Measured feedstock and process yields, permits and costs not yet known.",
-      "next": "Investigate fractionation equipment and material balances.",
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/research/REGENERATIVE-CAMPUS-ARCHITECTURE.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/research/BIOCHAR-GRAPHENE-MATERIALS.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/research/CIRCULARITY-SCORECARD.md"
+        }
+      ],
+      "blocker": "No measured hemp yields, soil-grade biochar assays, market-ready graphene characterization, verified mass/energy/LCA or permitted plant engineering.",
+      "next": "Compare fiber and biochar product buyers; map feedstock allocation, qualified pyrolysis partners and third-party carbon-material characterization.",
       "last_reviewed": "2026-10-12",
-      "proof": "Research briefs only."
+      "proof": "Modular architecture and independent research references; no operating pilot or verified hemp graphene product."
     }
   ]
 }
