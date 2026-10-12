@@ -33,3 +33,6 @@ USDA ARS textile hemp fiber testing: https://www.ars.usda.gov/research/project?a
 Review of hemp textile processing: https://www.mdpi.com/1996-1944/15/5/1901
 Fiber field-retting microbiology: https://link.springer.com/article/10.1007/s00253-024-13323-y
 Field to fiber review: https://www.mdpi.com/2673-7248/4/2/11
+
+## Parallel sheep-wool textile pathway
+Our research now includes wool and hemp/wool blend products, with distinct wool scouring, fiber grading and spinning needs. See [Sheep wool-to-textiles plan](../sheep/WOOL-TO-TEXTILES.md). Animal welfare and sheep-feed rules remain separately gated.
