@@ -319,9 +319,9 @@
     },
     {
       "id": "sheep",
-      "name": "Regenerative Sheep & Wool",
+      "name": "Sheep: Wool, Meat & Regenerative Grazing",
       "tier": "research",
-      "stage": "Flock welfare and feed law research",
+      "stage": "Dual-flock feasibility: wool + meat",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -342,10 +342,14 @@
         {
           "repo": "godsun108/The-portal",
           "path": "hemp-biorefinery/sheep/FINANCIAL-AND-LEGAL-GATES.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/sheep/DUAL-FLOCK-PLAN.md"
         }
       ],
       "blocker": "No approved sheep-specific hemp feed route; cannabinoid residue studies raise food-safety concerns. Land, veterinary care, breeds and wool market not qualified.",
-      "next": "Compare warm-climate wool and hair breeds; research suitable land, flock welfare and commercial wool-processing buyers. No hemp feeding.",
+      "next": "Evaluate Florida Cracker wool line and climate-adapted hair sheep meat line; compare customer demand, veterinary care, site and margins.",
       "last_reviewed": "2026-10-12",
       "proof": "US FDA animal-food requirements, UF/IFAS sheep care and controlled cannabinoid residue studies; no commercial feed authorization."
     }
