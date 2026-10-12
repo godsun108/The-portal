@@ -1,0 +1,33 @@
+name: PORTAL TV multigenre candidate health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 9 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'tv-multigenre-health-probe.cjs'
+      - '.github/workflows/tv-multigenre-health.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate probe syntax
+        run: node --check tv-multigenre-health-probe.cjs
+      - name: Probe 25 cross-genre candidate manifests
+        run: node tv-multigenre-health-probe.cjs
+      - name: Verify report does not claim playback or rights
+        run: |
+          node -e "const r=require('./tv-multigenre-health.json');if(r.schema!=='portal.tv.multigenre-health.v1'||r.items.length>25||r.items.some(x=>x.playbackVerified!==false||x.admitted!==false||x.rightsStatus!=='unverified'))process.exit(1)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portal-tv-multigenre-candidate-health
+          path: tv-multigenre-health.json
+          retention-days: 14
