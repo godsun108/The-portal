@@ -124,7 +124,7 @@
     },
     {
       "id": "hemp",
-      "name": "Hemp Nutrition & Seasoning",
+      "name": "Hemp Foods: Seasoning & Chips",
       "tier": "research",
       "stage": "Food-use research",
       "gates": {
@@ -143,12 +143,16 @@
         {
           "repo": "godsun108/The-portal",
           "path": "cocoa-shell-tea/ventures/CBD-SEASONING.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/ventures/HEMP-SNACK-CHIPS.md"
         }
       ],
       "blocker": "Ingredient-specific conventional-food eligibility; CBD-added food remains federally constrained.",
-      "next": "Research hemp-seed culinary ingredients; keep leaf/flower foods on separate safety/legal track.",
+      "next": "Qualify hemp hearts/protein for seasoning and tortilla-style chip hypotheses; document manufacturer and price feasibility.",
       "last_reviewed": "2026-10-12",
-      "proof": "Ingredient-category research only; no finished food qualification."
+      "proof": "FDA ingredient GRAS notices identified, including chips as an intended use for specified hulled hemp seed; no finished product formula or clearance."
     },
     {
       "id": "smoke",
