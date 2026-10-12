@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-12",
+  "purpose": "Research-stage evidence and activation gate inventory; not investment or regulatory clearance",
+  "authorization": {
+    "approved_spend_usd": 0,
+    "any_contracts_authorized": false,
+    "live_sales_authorized": false
+  },
+  "gate_definitions": {
+    "customer": "Product-specific demand or validated customer brief",
+    "ingredient": "Exact product ingredient intended use and supplier safety evidence",
+    "manufacturing": "Suitable production process and qualified vendor",
+    "economics": "Full landed-unit costs and working capital, not tolling alone",
+    "legal": "Entity, IP, insurance and product-specific regulatory review",
+    "authorization": "Budget cap and signed authorization"
+  },
+  "ventures": [
+    {
+      "id": "poolside",
+      "name": "Poolside Margaritas",
+      "tier": "now",
+      "stage": "Vendor diligence",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "partial",
+        "economics": "partial",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/poolside-estate",
+        "path": "procurement/OUTREACH-TRACKER.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/poolside-estate",
+          "path": "research/VERIFIED-VENDOR-PRICING-2026-10-12.md"
+        },
+        {
+          "repo": "godsun108/poolside-estate",
+          "path": "procurement/QUOTE-COMPARISON.md"
+        }
+      ],
+      "blocker": "Commercial recipe, tequila quote, final technical specifications, brand/entity decisions and Phase I funding approval.",
+      "next": "Log remaining formulator and tequila-supply responses; complete actual landed COGS and R&D budget.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Islamorada, Right Coast and Deibel written correspondence; no production commitment."
+    },
+    {
+      "id": "tea",
+      "name": "Cocoa Shell Tea",
+      "tier": "now",
+      "stage": "Ingredient qualification",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/procurement/OUTREACH-TRACKER.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/research/SAFETY-REGULATORY.md"
+        }
+      ],
+      "blocker": "Suitable edible-use cocoa-shell ingredient and independent review of contaminant, microbiology and regulatory records.",
+      "next": "Receive supplier documents and qualify a second food-grade source.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Supplier inquiry sent; no written supplier qualification yet."
+    },
+    {
+      "id": "sparkling",
+      "name": "Sparkling Tea Soda",
+      "tier": "next",
+      "stage": "Product briefs",
+      "gates": {
+        "customer": "partial",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/research/SPARKLING-TEA-PRODUCT-BRIEFS.md"
+      },
+      "supporting": [],
+      "blocker": "Flavor validation, product formulation, process/shelf-life requirements and real manufacturing prices.",
+      "next": "Benchmark competitors and design customer preference study.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Three conceptual product briefs; no testing completed."
+    },
+    {
+      "id": "zero",
+      "name": "Zero-Proof Social Drinks",
+      "tier": "next",
+      "stage": "Product briefs",
+      "gates": {
+        "customer": "partial",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/research/ZERO-PROOF-PRODUCT-BRIEFS.md"
+      },
+      "supporting": [],
+      "blocker": "Exact ingredients, compliant claims, consumer tasting protocol and manufacturer feasibility.",
+      "next": "Compare social-drink alternatives and refine conventional-ingredient concepts.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Two conceptual briefs; functional actives not cleared."
+    },
+    {
+      "id": "hemp",
+      "name": "Hemp Nutrition & Seasoning",
+      "tier": "research",
+      "stage": "Food-use research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "partial",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/research/HEMP-NUTRITION-RESEARCH-QUESTIONS.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/ventures/CBD-SEASONING.md"
+        }
+      ],
+      "blocker": "Ingredient-specific conventional-food eligibility; CBD-added food remains federally constrained.",
+      "next": "Research hemp-seed culinary ingredients; keep leaf/flower foods on separate safety/legal track.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Ingredient-category research only; no finished food qualification."
+    },
+    {
+      "id": "smoke",
+      "name": "Botanical Smoke Blends",
+      "tier": "research",
+      "stage": "Safety and classification research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "cocoa-shell-tea/ventures/BOTANICAL-SMOKE-BLENDS.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/ventures/SAFETY-AND-CLAIMS-REGISTER.md"
+        }
+      ],
+      "blocker": "Ingredient-specific inhalation-toxicology evidence and appropriate regulatory classification.",
+      "next": "Continue literature and compliance screening; no human testing or manufacturing.",
+      "last_reviewed": "2026-10-12",
+      "proof": "No approved inhalable formula."
+    }
+  ]
+}
