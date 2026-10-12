@@ -212,9 +212,9 @@
     },
     {
       "id": "biorefinery",
-      "name": "Regenerative Hemp & Mycelium Biorefinery",
+      "name": "Advanced Materials & Regenerative Manufacturing",
       "tier": "research",
-      "stage": "Fungal and circular materials feasibility",
+      "stage": "Flagship industrial materials research",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -225,7 +225,7 @@
       },
       "source": {
         "repo": "godsun108/The-portal",
-        "path": "hemp-biorefinery/README.md"
+        "path": "hemp-biorefinery/advanced-materials/README.md"
       },
       "supporting": [
         {
@@ -251,12 +251,20 @@
         {
           "repo": "godsun108/The-portal",
           "path": "hemp-biorefinery/mushroom-factory/ECONOMICS-AND-VALIDATION.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/advanced-materials/SECTOR-QUALIFICATION-MATRIX.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/advanced-materials/MATERIALS-AND-TESTS.md"
         }
       ],
-      "blocker": "No validated mushroom/hemp substrate performance, end-product customers, permitted facility zoning, mass balances, capital estimates or safety-reviewed self-manufactured components.",
-      "next": "Compare fresh culinary mushrooms, molded mycelium packaging and biochar residue value; test allocation economics and qualified engineering of noncritical parts.",
+      "blocker": "Materials are not qualified for construction structures, marine, vehicle, aerospace, electronics or robotic safety uses; no validated cost, test data or OEM acceptance.",
+      "next": "Select one noncritical prototype material and one paying industry buyer; define coupon tests, application standards, and staged material qualification.",
       "last_reviewed": "2026-10-12",
-      "proof": "Research architecture and published fungal biomaterials studies only; no pilot plant or saleable product certified."
+      "proof": "Cross-sector engineering matrix and R&D plans committed; no certified end-use application."
     }
   ]
 }
