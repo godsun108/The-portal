@@ -265,6 +265,57 @@
       "next": "Select one noncritical prototype material and one paying industry buyer; define coupon tests, application standards, and staged material qualification.",
       "last_reviewed": "2026-10-12",
       "proof": "Cross-sector engineering matrix and R&D plans committed; no certified end-use application."
+    },
+    {
+      "id": "textiles",
+      "name": "Community Hemp Textiles",
+      "tier": "research",
+      "stage": "Market and fiber manufacturing research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "partial",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "hemp-biorefinery/textiles/README.md"
+      },
+      "supporting": [],
+      "blocker": "No confirmed fabric supplier, buyer commitments, qualifying textile test data or production economics.",
+      "next": "Compare affordable hemp-blend essentials and vetted fiber/fabric manufacturing partners.",
+      "last_reviewed": "2026-10-12",
+      "proof": "Published hemp textile processing evidence and research roadmap, no product launched."
+    },
+    {
+      "id": "cattle",
+      "name": "Regenerative Cattle & Hemp Feed",
+      "tier": "research",
+      "stage": "Husbandry, land and feed regulation research",
+      "gates": {
+        "customer": "open",
+        "ingredient": "open",
+        "manufacturing": "open",
+        "economics": "open",
+        "legal": "open",
+        "authorization": "open"
+      },
+      "source": {
+        "repo": "godsun108/The-portal",
+        "path": "hemp-biorefinery/cattle/README.md"
+      },
+      "supporting": [
+        {
+          "repo": "godsun108/The-portal",
+          "path": "hemp-biorefinery/cattle/DECISIONS-AND-COSTS.md"
+        }
+      ],
+      "blocker": "No owned herd, pasture/fencing/water/care plan or authorized capital. Hemp-derived cattle feed legal clearance and residue safety are unproven.",
+      "next": "Research Florida species-specific hemp feed rules, cattle farming plan and land/operating cost requirements; conventional feed only if herd is later authorized.",
+      "last_reviewed": "2026-10-12",
+      "proof": "AAFCO laying-hen hempseed meal definition; FDA/USDA cattle studies with caution about cannabinoid residues."
     }
   ]
 }
