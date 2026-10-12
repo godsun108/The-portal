@@ -1,6 +1,13 @@
 # Industrial Hemp Biorefinery — Research & Systems Design
 Established 2026-10-12. **Feasibility stage. No equipment ordered, operating plant, engineering certification, permits, product sales or capital authorization.**
 
+## Flagship: advanced materials for the world we build
+**The primary long-term industrial mission is to develop and qualify regenerative materials for skyscrapers, boats, trains, automobiles, aircraft, spaceships, computers, robotics, and equipment used to manufacture future materials.** The hemp/mycelium biorefinery is the feedstock and processing platform; materials engineering and application-specific qualification are the ultimate manufacturing capabilities.
+
+**[OPEN THE ADVANCED MATERIALS & MANUFACTURING PROGRAM →](advanced-materials/README.md)**
+
+Use the [eight-sector engineering and certification matrix](advanced-materials/SECTOR-QUALIFICATION-MATRIX.md) and [material qualification/product passport plan](advanced-materials/MATERIALS-AND-TESTS.md). Begin with noncritical components and progressively validate more demanding products. We have no certified skyscraper or flight-grade material yet.
+
 ## Mission
 Design an integrated, staged processing facility that separates industrial hemp stalks into bast fiber, hurd, and eventually purified cellulose, hemicellulose-derived C5 sugars (especially xylose), lignin and conversion coproducts. Evaluate profitable product paths for **paper, biobased plastics and composites, industrial sugars, and gasoline/diesel-range renewable hydrocarbon fuel blendstocks**. Invest only after mass balance, safety/permitting and actual unit economics justify the sequence.
 
