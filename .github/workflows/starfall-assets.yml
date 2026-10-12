@@ -21,6 +21,6 @@ jobs:
         with:
           node-version: '22'
       - name: Check animation and atlas math
-        run: node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs
+        run: node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs games/starfall/assets/intake-contract.test.mjs
       - name: Validate shipped atlas files
         run: node games/starfall/assets/validate-assets.mjs
