@@ -12,3 +12,6 @@ FDA CBD food position: https://www.fda.gov/news-events/public-health-focus/fda-r
 
 ## Commercial option
 CBD-free hemp-heart culinary seasoning as the simplest concept to investigate; not a completed safety/food-law clearance.
+
+## New product research: snack chips
+[Hemp-based chip concept and research gates](../ventures/HEMP-SNACK-CHIPS.md) — edible hemp hearts, seed protein and selected conventional food bases; three format hypotheses (tortilla, popped, baked). FDA GRN 765 specifically lists chips among intended uses of dehulled hemp seed under the notice's conditions; this is ingredient-specific evidence, **not** clearance of our unformulated snack. Poolside and Cocoa Shell Tea remain first-priority ventures.
