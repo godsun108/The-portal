@@ -11,7 +11,7 @@
   programs=base.programs||[];open=curated.programs||[];
  }catch{}
  const official=(window.PORTAL_TV_CATALOG?.entries||[]).map(x=>({...x,kind:'official'}));
- const live=programs.filter(x=>x.type==='hls'&&x.live).map(x=>({...x,kind:'direct'}));
+ const live=programs.filter(x=>x.live&&(x.type==='hls'||x.type==='youtube_embed')).map(x=>({...x,kind:x.type==='hls'?'direct':'live_embed'}));
  const existing=new Set(programs.map(x=>x.videoId||x.url||x.source));
  const vod=[...programs.filter(x=>x.type==='youtube_embed'&&!x.live).map(x=>({...x,kind:'vod'})),...open.filter(x=>!existing.has(x.videoId||x.url||x.source)).map(x=>({...x,kind:'open'}))];
  const options=[...live,...vod,...official];const cats=[...new Set(options.map(x=>x.genre||x.category).filter(Boolean))].sort();
@@ -27,9 +27,10 @@
    const item=document.createElement('article');item.style.cssText='padding:12px;background:#142338;border:1px solid #4a6c7d;border-radius:10px';
    const title=document.createElement('strong'),detail=document.createElement('small'),button=document.createElement(x.kind==='official'?'a':'button');
    title.textContent=x.title;detail.style.cssText='display:block;margin:5px 0 10px';
-   detail.textContent=(x.genre||x.category)+' · '+(isVerified(x)?'✓ Previously played on iPhone':isOpen(x)?'◈ '+(x.license||'Open license')+' · rights verified':x.kind==='direct'?'Unverified direct stream':x.kind==='vod'?'In-Portal on demand':'Official provider destination; access varies');
-   button.textContent=x.kind==='official'?'Open official service ↗':x.kind==='direct'?'▶ Watch live in Portal':'▶ Watch in Portal';
+   detail.textContent=(x.genre||x.category)+' · '+(isVerified(x)?'✓ Previously played on iPhone':isOpen(x)?'◈ '+(x.license||'Open license')+' · rights verified':x.kind==='direct'?'Unverified direct stream':x.kind==='live_embed'?'Official live YouTube embed · playback and current live status unverified':x.kind==='vod'?'In-Portal on demand':'Official provider destination; access varies');
+   button.textContent=x.kind==='official'?'Open official service ↗':x.kind==='direct'?'▶ Watch live in Portal':x.kind==='live_embed'?'▶ Try live embed in Portal':'▶ Watch in Portal';
    if(x.kind==='direct'){button.onclick=()=>{const match=[...document.querySelectorAll('#watchNow button')].find(b=>b.dataset.streamurl===x.url);if(match)match.click();else if(window.portalTune)window.portalTune({name:x.title,url:x.url,category:x.genre});else alert('The live tuner has not loaded yet.')}}
+   else if(x.kind==='live_embed'){button.onclick=()=>{const match=[...document.querySelectorAll('#portalGenreChannels button[data-portal-video]')].find(b=>b.dataset.portalVideo===x.videoId);if(match)match.click();else alert('The in-Portal live embed is unavailable.')}}
    else if(x.kind==='vod'||x.kind==='open'){button.onclick=()=>{const id=x.videoId||x.url||x.source;const match=[...document.querySelectorAll('#vodLibrary button')].find(b=>(b.dataset.videoid||b.dataset.streamurl)===id);if(match)match.click();else alert('The on-demand library has not loaded this title yet.')}}
    else{button.href=x.url;button.target='_blank';button.rel='noopener noreferrer';button.style.cssText='display:inline-block;color:#80e9dd;padding:8px'}
    item.append(title,detail,button);results.append(item);
