@@ -1,6 +1,9 @@
 # Regenerative Sheep and Hemp Feed Research Program
 Created 2026-10-12. Research only: no animals acquired, hemp fed, experimental feeding, expenditure or wool sale authorized.
 
+## Confirmed direction: BOTH wool and meat/grazing sheep
+We will research a dual-flock (or qualified dual-purpose) model for **wool/textiles** and **meat/regenerative grazing**. The wool and meat operations have separate product economics, animal records and breed-selection criteria, while potentially sharing suitable infrastructure. [See the two-flock roadmap](DUAL-FLOCK-PLAN.md).
+
 ## Mission
 Build a healthy and financially viable sheep operation aligned with regenerative grazing and our **community textile program**. Evaluate breeds for wool, meat, dairy or conservation grazing separately. Investigate whether any particular hemp-derived ingredients become legally permitted and safe in sheep feed; until then rely on species-appropriate conventional feed approved by the flock's veterinarian/nutritionist.
 
