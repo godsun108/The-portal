@@ -4,6 +4,10 @@ Develop, test, and eventually manufacture qualified materials for **skyscrapers 
 
 **Status: research / engineering feasibility ONLY.** No structurally certified material, aerospace qualification, operating factory, commercial contract, testing authorization or capital approval exists.
 
+**[START HERE: Nine-step execution roadmap →](STEP-BY-STEP-ROADMAP.md)**
+
+The plan runs from customer research to independently tested prototypes, first paid orders, modular manufacturing, full processing, advanced materials and ultimately qualified in-house machinery. Each stage has an evidence and funding gate.
+
 ## Material platforms we aim to engineer
 1. **Hemp bast fiber**: reinforcement in polymer composites, nonwovens, paper, boards and engineered interior parts.
 2. **Cellulose**: molded fiber, nanocellulose and future cellulose-based resin or film R&D.
