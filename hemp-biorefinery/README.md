@@ -39,6 +39,14 @@ We are expanding the **research scope**, not claiming an operating circular refi
 - [Biochar, graphene and hemp-based manufacturing](research/BIOCHAR-GRAPHENE-MATERIALS.md)
 - [Mass, water, carbon and soil regeneration measurement scorecard](research/CIRCULARITY-SCORECARD.md)
 
+## Fungal biotechnology and self-manufacturing extension — October 12, 2026
+[MycoCircular: mushroom factory and hemp-mycelium manufacturing](mushroom-factory/README.md) adds an independently segregated food-mushroom operation, mycelium-grown materials, fungal enzyme pretreatment research, and traceable spent-substrate recovery. It also documents a multi-generation strategy to fabricate qualified noncritical tooling from our own hemp and fungal materials while maintaining purchased/certified safety-critical machine elements.
+
+- [Mushroom and material products](mushroom-factory/PRODUCT-HIERARCHY.md)
+- [Cascading flows, zoning and residue uses](mushroom-factory/CASCADING-FACTORY.md)
+- [Self-manufacturing machine-components roadmap](mushroom-factory/SELF-MANUFACTURING.md)
+- [Economics, experiments and stop gates](mushroom-factory/ECONOMICS-AND-VALIDATION.md)
+
 ## Navigation
 - [System architecture and route decisions](research/PROCESS-ARCHITECTURE.md)
 - [Mass balance and techno-economics requirements](research/FEASIBILITY-DATA-PLAN.md)
