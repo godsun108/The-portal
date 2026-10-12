@@ -31,6 +31,14 @@ This is a *research-order hypothesis*, not a claim about actual profitability.
 **G4 economics:** comparable vendor process quotes, delivered ton cost, energy/water/reagent costs, labor/maintenance and independently reviewed TEA/LCA.
 **G5 authorization:** budget, capped loss, responsible entity, qualified engineers, stage-specific milestones and no purchase/contract unless approved.
 
+## Full-circle regenerative campus extension (October 12, 2026)
+We are expanding the **research scope**, not claiming an operating circular refinery. Eligible clean residual biomass may be allocated to engineered pyrolysis and tested soil-grade biochar, or carbon-material conversion research. A dedicated experimental route examines whether hemp-derived biochar can be upgraded to characterized graphene-like carbon for material composites. Segregate soil amendment biochar from high-performance carbon fillers and enforce measured mass/energy, emissions, wastewater and carbon accounting. All equipment and operations remain subject to qualified engineering, legal review and future budget authorization.
+
+### New integrated-campus documents
+- [Circular campus system architecture](research/REGENERATIVE-CAMPUS-ARCHITECTURE.md)
+- [Biochar, graphene and hemp-based manufacturing](research/BIOCHAR-GRAPHENE-MATERIALS.md)
+- [Mass, water, carbon and soil regeneration measurement scorecard](research/CIRCULARITY-SCORECARD.md)
+
 ## Navigation
 - [System architecture and route decisions](research/PROCESS-ARCHITECTURE.md)
 - [Mass balance and techno-economics requirements](research/FEASIBILITY-DATA-PLAN.md)
