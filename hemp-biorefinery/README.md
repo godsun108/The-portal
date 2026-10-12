@@ -54,6 +54,12 @@ We are expanding the **research scope**, not claiming an operating circular refi
 - [Self-manufacturing machine-components roadmap](mushroom-factory/SELF-MANUFACTURING.md)
 - [Economics, experiments and stop gates](mushroom-factory/ECONOMICS-AND-VALIDATION.md)
 
+## New community manufacturing and farm programs — October 12, 2026
+- **[Community Hemp Textiles](textiles/README.md)** — apparel, bedding, workwear, industrial textiles and accessible community products; phased fiber processing and spinning/weaving.
+- **[Regenerative Cattle & Hemp Feed Research](cattle/README.md)** — stepwise humane herd acquisition, pasture management, veterinarian-approved routine, and regulatory review before any hemp-derived cattle feed.
+- **[Cattle Cost and Decision Register](cattle/DECISIONS-AND-COSTS.md)** — land, animal-care and capital gates; no animals or experimental feed authorized.
+The two programs are complementary but cattle nutrition must not borrow the legal status of hemp textiles or human hemp-seed foods.
+
 ## Navigation
 - [System architecture and route decisions](research/PROCESS-ARCHITECTURE.md)
 - [Mass balance and techno-economics requirements](research/FEASIBILITY-DATA-PLAN.md)
