@@ -52,7 +52,7 @@
       "id": "tea",
       "name": "Cocoa Shell Tea",
       "tier": "now",
-      "stage": "Ingredient qualification",
+      "stage": "Supplier reply and alternative sourcing",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -69,12 +69,16 @@
         {
           "repo": "godsun108/The-portal",
           "path": "cocoa-shell-tea/research/SAFETY-REGULATORY.md"
+        },
+        {
+          "repo": "godsun108/The-portal",
+          "path": "cocoa-shell-tea/procurement/ALTERNATIVE-SUPPLIER-SHORTLIST-2026-10-13.md"
         }
       ],
-      "blocker": "Suitable edible-use cocoa-shell ingredient and independent review of contaminant, microbiology and regulatory records.",
-      "next": "Receive supplier documents and qualify a second food-grade source.",
-      "last_reviewed": "2026-10-12",
-      "proof": "Supplier inquiry sent; no written supplier qualification yet."
+      "blocker": "Mountain Rose long-term unavailable. Alternative suppliers not yet document-qualified; brewing suitability, current COA and landed costs unresolved.",
+      "next": "Request written availability, current-lot contaminant/microbiological COAs, beverage/repack intended use and bulk pricing from Origen, ChocoSol and Manoa, without purchasing.",
+      "last_reviewed": "2026-10-13",
+      "proof": "Mountain Rose supplied historical documents and long-term-out-of-stock reply Oct 13; public supplier listings found, no alternative verified."
     },
     {
       "id": "sparkling",
