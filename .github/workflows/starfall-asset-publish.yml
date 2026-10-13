@@ -43,7 +43,7 @@ jobs:
           if [ "$FORMAT" = svg ]; then node games/starfall/assets/validate-staged.mjs "$HULL"; else node games/starfall/assets/validate-staged-png.mjs "$HULL"; fi
           cp "games/starfall/assets/staging/$HULL.$FORMAT" "games/starfall/assets/$HULL.$FORMAT"
           cp "games/starfall/assets/staging/$HULL.json" "games/starfall/assets/$HULL.json"
-          if [ "$FORMAT" = svg ]; then node games/starfall/assets/validate-assets.mjs; fi
+          node games/starfall/assets/validate-assets.mjs
           node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs
       - name: Open reviewable PR (never merge automatically)
         env:
