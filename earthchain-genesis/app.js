@@ -5,6 +5,7 @@ const modules=[
 ["EarthPlay","✦","Existing Starfall game","Starfall is available in the Portal. Gameplay and signed test collectible ownership remain in their existing modules."],
 ["EarthMarket","▣","Test collectibles only","Existing Starfall checkout supports valueless ECTEST collectibles. USD storefront and physical-goods commerce are not connected."],
 ["EarthTV","▷","Candidate integration","The Portal has a documented public experience layer; video service integration is not verified."],
+["EarthLive","◉","Interface preview","Livestream category preview; no broadcast ingest, live playback, chat or monetization are connected."],
 ["EarthSocial","◎","Planned","Profiles, posts, communities and moderation are not implemented in this preview."],
 ["EarthConnect","✉","Planned","Private messaging requires identity, permissions and abuse safeguards."],
 ["EarthSound","♫","Planned","Licensed music distribution and playback are not connected."],
@@ -20,6 +21,7 @@ for(const [name,symbol,status,description] of modules){const button=document.cre
 /* Reuse Portal experiences on the same origin; no wallet keys or balances are copied. */
 const routes={
  EarthSocial:[["Open Friends & Family and Following preview","../earthsocial/"]],
+ EarthLive:[["Explore EarthLive preview","../earthlive/"]],
  EarthPlay:[["Play Starfall","../games/starfall/"]],
  EarthMarket:[["Starfall test collectible marketplace","../games/starfall/commerce/direct.html"]],
  EarthWallet:[["Open existing ECTEST wallet & checkout","../games/starfall/commerce/direct.html"],["Create or restore existing test wallet","../earthchain-test/no-server.html"]]

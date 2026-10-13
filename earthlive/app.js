@@ -1,0 +1,5 @@
+"use strict";
+// Static, fictional categories only. No fake viewer counts, stream URLs or simulated live state.
+const categories=[["🎮","Gaming","Gameplay, co-op sessions and community tournaments."],["🎵","Music","Live performances, DJ sets and music production."],["🎙️","Talk & Podcasts","Interviews, conversations and educational events."],["🎨","Creative","Art, animation, coding and maker livestreams."],["🌎","Community","Events, environmental projects and gatherings."]];
+const grid=document.getElementById("categories");
+for(const [symbol,name,description] of categories){const card=document.createElement("article");card.className="category";const art=document.createElement("div");art.className="art";art.setAttribute("aria-hidden","true");art.textContent=symbol;const info=document.createElement("div");info.className="info";const title=document.createElement("strong");title.textContent=name;const detail=document.createElement("p");detail.textContent=description;const status=document.createElement("small");status.textContent="Category preview · No live streams";info.append(title,detail,status);card.append(art,info);grid.append(card);}
