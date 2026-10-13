@@ -19,6 +19,7 @@ const grid=document.getElementById("modules");const detail=document.getElementBy
 for(const [name,symbol,status,description] of modules){const button=document.createElement("button");button.type="button";button.className="module";const symbolNode=document.createElement("span");symbolNode.className="symbol";symbolNode.textContent=symbol;const heading=document.createElement("strong");heading.textContent=name;const state=document.createElement("span");state.className="status";state.textContent=status;button.append(symbolNode,heading,state);button.addEventListener("click",()=>{detail.replaceChildren();const title=document.createElement("h2");title.textContent=name+" · "+status;const paragraph=document.createElement("p");paragraph.textContent=description;detail.append(title,paragraph);detail.scrollIntoView({behavior:"smooth",block:"nearest"});});grid.append(button);}
 /* Reuse Portal experiences on the same origin; no wallet keys or balances are copied. */
 const routes={
+ EarthVideo:[["Open EarthVideo discovery preview","../earthvideo/"]],
  EarthPlay:[["Play Starfall","../games/starfall/"]],
  EarthMarket:[["Starfall test collectible marketplace","../games/starfall/commerce/direct.html"]],
  EarthWallet:[["Open existing ECTEST wallet & checkout","../games/starfall/commerce/direct.html"],["Create or restore existing test wallet","../earthchain-test/no-server.html"]]
