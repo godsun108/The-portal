@@ -5,6 +5,7 @@ const modules=[
 ["EarthPlay","✦","Existing Starfall game","Starfall is available in the Portal. Gameplay and signed test collectible ownership remain in their existing modules."],
 ["EarthMarket","▣","Test collectibles only","Existing Starfall checkout supports valueless ECTEST collectibles. USD storefront and physical-goods commerce are not connected."],
 ["EarthTV","▷","Candidate integration","The Portal has a documented public experience layer; video service integration is not verified."],
+["EarthVideo","▶","Interface preview","Video discovery interface preview; no hosting, uploads, live playback, creator accounts or recommendations are connected."],
 ["EarthSocial","◎","Planned","Profiles, posts, communities and moderation are not implemented in this preview."],
 ["EarthConnect","✉","Planned","Private messaging requires identity, permissions and abuse safeguards."],
 ["EarthSound","♫","Planned","Licensed music distribution and playback are not connected."],
@@ -19,6 +20,7 @@ const grid=document.getElementById("modules");const detail=document.getElementBy
 for(const [name,symbol,status,description] of modules){const button=document.createElement("button");button.type="button";button.className="module";const symbolNode=document.createElement("span");symbolNode.className="symbol";symbolNode.textContent=symbol;const heading=document.createElement("strong");heading.textContent=name;const state=document.createElement("span");state.className="status";state.textContent=status;button.append(symbolNode,heading,state);button.addEventListener("click",()=>{detail.replaceChildren();const title=document.createElement("h2");title.textContent=name+" · "+status;const paragraph=document.createElement("p");paragraph.textContent=description;detail.append(title,paragraph);detail.scrollIntoView({behavior:"smooth",block:"nearest"});});grid.append(button);}
 /* Reuse Portal experiences on the same origin; no wallet keys or balances are copied. */
 const routes={
+ EarthVideo:[["Open EarthVideo discovery preview","../earthvideo/"]],
  EarthSocial:[["Open Friends & Family and Following preview","../earthsocial/"]],
  EarthPlay:[["Play Starfall","../games/starfall/"]],
  EarthMarket:[["Starfall test collectible marketplace","../games/starfall/commerce/direct.html"]],
