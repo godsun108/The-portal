@@ -1,0 +1,13 @@
+import test from "node:test";import assert from "node:assert/strict";import {authorize,ACTIONS} from "./permissions.mjs";
+const actor={id:"alice",authenticated:true};const resource={id:"post-1",ownerId:"bob",visibility:"private"};
+test("unauthenticated users denied",()=>assert.equal(authorize({actor:{id:"alice",authenticated:false},resource,action:"content:read"}).allowed,false));
+test("unknown actions denied",()=>assert.equal(authorize({actor,resource,action:"admin:all"}).allowed,false));
+test("owners can manage their own resource",()=>assert.equal(authorize({actor:{id:"bob",authenticated:true},resource,action:"content:delete"}).allowed,true));
+test("private content denied without grant",()=>assert.equal(authorize({actor,resource,action:"content:read"}).allowed,false));
+test("public content can be read by authenticated user",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"public"},action:"content:read"}).allowed,true));
+test("public does not imply editing",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"public"},action:"content:edit"}).allowed,false));
+test("explicit active matching grant permits action",()=>assert.equal(authorize({actor,resource,action:"content:read",grants:[{actorId:"alice",resourceId:"post-1",action:"content:read",active:true}]}).allowed,true));
+test("inactive, unrelated, or wrong-action grants denied",()=>assert.equal(authorize({actor,resource,action:"chat:send",grants:[{actorId:"alice",resourceId:"post-1",action:"content:read",active:true}]}).allowed,false));
+test("malformed grants denied",()=>assert.equal(authorize({actor,resource,action:"content:read",grants:[null,{},false]}).allowed,false));
+test("invalid resource visibility denied",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"all"},action:"content:read"}).allowed,false));
+test("supported actions are explicitly enumerated",()=>assert.ok(ACTIONS.includes("billing:manage")));
