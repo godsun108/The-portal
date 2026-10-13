@@ -11,3 +11,11 @@ test("inactive, unrelated, or wrong-action grants denied",()=>assert.equal(autho
 test("malformed grants denied",()=>assert.equal(authorize({actor,resource,action:"content:read",grants:[null,{},false]}).allowed,false));
 test("invalid resource visibility denied",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"all"},action:"content:read"}).allowed,false));
 test("supported actions are explicitly enumerated",()=>assert.ok(ACTIONS.includes("billing:manage")));
+
+test("empty actor id denied",()=>assert.equal(authorize({actor:{id:"",authenticated:true},resource,action:"content:read"}).allowed,false));
+test("whitespace actor id denied",()=>assert.equal(authorize({actor:{id:"alice bob",authenticated:true},resource,action:"content:read"}).allowed,false));
+test("oversized resource id denied",()=>assert.equal(authorize({actor,resource:{...resource,id:"x".repeat(257)},action:"content:read"}).allowed,false));
+test("forged inactive grant cannot unlock private content",()=>assert.equal(authorize({actor,resource,action:"content:read",grants:[{actorId:"alice",resourceId:"post-1",action:"content:read",active:false}]}).allowed,false));
+test("different resource grant does not unlock target",()=>assert.equal(authorize({actor,resource,action:"content:read",grants:[{actorId:"alice",resourceId:"post-2",action:"content:read",active:true}]}).allowed,false));
+test("members visibility alone does not grant access",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"members"},action:"content:read"}).allowed,false));
+test("followers visibility alone does not grant access",()=>assert.equal(authorize({actor,resource:{...resource,visibility:"followers"},action:"content:read"}).allowed,false));
