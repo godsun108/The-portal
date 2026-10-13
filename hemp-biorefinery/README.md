@@ -66,6 +66,9 @@ The two programs are complementary but cattle nutrition must not borrow the lega
 - [Sheep acquisition and finance gates](sheep/FINANCIAL-AND-LEGAL-GATES.md)
 The animal operation begins with conventional species-appropriate forage and veterinary care; hemp-derived ingredients for sheep remain research-only until their legality and animal/food safety are established.
 
+## Supply resilience and vertical integration
+[Supply resilience, independent backups and farm/manufacturing make-or-buy roadmap](research/SUPPLY-RESILIENCE-AND-VERTICAL-INTEGRATION.md). Build independent sourcing redundancy first, then evaluate contract farms, joint ventures and ownership only after evidence-based capital analysis.
+
 ## Navigation
 - [System architecture and route decisions](research/PROCESS-ARCHITECTURE.md)
 - [Mass balance and techno-economics requirements](research/FEASIBILITY-DATA-PLAN.md)
