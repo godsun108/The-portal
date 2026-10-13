@@ -7,6 +7,7 @@ const modules=[
 ["EarthTV","▷","Candidate integration","The Portal has a documented public experience layer; video service integration is not verified."],
 ["EarthVideo","▶","Interface preview","Video discovery interface preview; no hosting, uploads, live playback, creator accounts or recommendations are connected."],
 ["EarthLive","◉","Interface preview","Livestream category preview; no broadcast ingest, live playback, chat or monetization are connected."],
+["EarthBrowse","🌐","Web hub preview","External search and browser-tab navigation with device-local bookmarks; not an embedded browser engine."],
 ["EarthSocial","◎","Planned","Profiles, posts, communities and moderation are not implemented in this preview."],
 ["EarthConnect","✉","Planned","Private messaging requires identity, permissions and abuse safeguards."],
 ["EarthSound","♫","Planned","Licensed music distribution and playback are not connected."],
@@ -24,6 +25,7 @@ const routes={
  EarthVideo:[["Open EarthVideo discovery preview","../earthvideo/"]],
  EarthSocial:[["Open Friends & Family and Following preview","../earthsocial/"]],
  EarthLive:[["Explore EarthLive preview","../earthlive/"]],
+ EarthBrowse:[["Open EarthBrowse web hub","../earthbrowse/"]],
  EarthPlay:[["Play Starfall","../games/starfall/"]],
  EarthMarket:[["Starfall test collectible marketplace","../games/starfall/commerce/direct.html"]],
  EarthWallet:[["Open existing ECTEST wallet & checkout","../games/starfall/commerce/direct.html"],["Create or restore existing test wallet","../earthchain-test/no-server.html"]]
