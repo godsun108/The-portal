@@ -1,0 +1,11 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {validateResourceRequest,sessionContextFromTrustedPrincipal} from "./backend-contract.mjs";
+test("valid read request",()=>assert.deepEqual(validateResourceRequest({resourceKind:"post",resourceId:"post_1",operation:"read"}),{ok:true,value:{resourceKind:"post",operation:"read",resourceId:"post_1"}}));
+test("valid create request without client resource id",()=>assert.equal(validateResourceRequest({resourceKind:"post",operation:"create"}).ok,true));
+test("rejects unsupported resource and operation",()=>{assert.equal(validateResourceRequest({resourceKind:"wallet",resourceId:"x",operation:"read"}).ok,false);assert.equal(validateResourceRequest({resourceKind:"post",resourceId:"x",operation:"admin"}).ok,false);});
+test("rejects invalid resource identifiers",()=>{for(const value of ["../other","", "a b", "a".repeat(129)])assert.equal(validateResourceRequest({resourceKind:"post",resourceId:value,operation:"read"}).ok,false);});
+test("rejects client-assigned create id",()=>assert.equal(validateResourceRequest({resourceKind:"post",resourceId:"x",operation:"create"}).ok,false));
+test("rejects unverified principal",()=>{assert.equal(sessionContextFromTrustedPrincipal({subject:"alice",verified:false}).ok,false);assert.equal(sessionContextFromTrustedPrincipal({subject:"alice"}).ok,false);});
+test("verified trusted principal yields actor context",()=>assert.deepEqual(sessionContextFromTrustedPrincipal({subject:"alice",verified:true}),{ok:true,actor:{id:"alice",authenticated:true}}));
+test("invalid subject rejected",()=>assert.equal(sessionContextFromTrustedPrincipal({subject:"alice bob",verified:true}).ok,false));
