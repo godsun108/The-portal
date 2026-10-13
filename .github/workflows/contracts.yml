@@ -18,3 +18,5 @@ jobs:
         run: node test-contracts.cjs
       - name: Verify traveler experience invariants
         run: node test-experience.cjs
+      - name: Verify Genesis and EarthID Node test suites
+        run: node --test earthchain-genesis/*.test.mjs genesis-core/*.test.mjs
