@@ -10,11 +10,22 @@ export function createCredentialRegistry(path=":memory:"){
  const credentialInsert=db.prepare("INSERT INTO credentials(id,account_id,public_key) VALUES(?,?,?)");
  const lookup=db.prepare("SELECT id,account_id,public_key,sign_count,revoked FROM credentials WHERE id=?");
  const revoke=db.prepare("UPDATE credentials SET revoked=1 WHERE id=? AND account_id=? AND revoked=0");
+ // Compare-and-swap protects against racing authentications and revoked credentials.
+ const advance=db.prepare("UPDATE credentials SET sign_count=? WHERE id=? AND account_id=? AND revoked=0 AND sign_count=?");
  return {
   addAccount(id){if(!validId(id))return false;try{accountInsert.run(id);return true;}catch{return false;}},
   addCredential({id,accountId,publicKey}){if(!validId(id)||!validId(accountId)||typeof publicKey!=="string"||publicKey.length<1||publicKey.length>8192)return false;try{credentialInsert.run(id,accountId,publicKey);return true;}catch{return false;}},
   getCredential(id){if(!validId(id))return null;const r=lookup.get(id);return r?{id:r.id,accountId:r.account_id,publicKey:r.public_key,signCount:r.sign_count,revoked:Boolean(r.revoked)}:null;},
   revokeCredential(id,accountId){if(!validId(id)||!validId(accountId))return false;return revoke.run(id,accountId).changes===1;},
+  // Internal storage operation ONLY: caller must have independently verified
+  // WebAuthn signature, challenge, origin, RP ID, credential and account owner.
+  commitVerifiedCounter({id,accountId,previousCounter,newCounter}){
+   if(!validId(id)||!validId(accountId)||![previousCounter,newCounter].every(x=>Number.isSafeInteger(x)&&x>=0))return false;
+   if(newCounter!==0||previousCounter!==0){
+    if(newCounter<=previousCounter)return false;
+   }
+   return advance.run(newCounter,id,accountId,previousCounter).changes===1;
+  },
   close(){db.close();}
  };
 }
