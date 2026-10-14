@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10251e"><meta name="robots" content="noindex">
+<title>EarthID · iPhone Passkey Readiness</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#091912;color:#e9f2e9}
+body{margin:0;padding:env(safe-area-inset-top) 22px env(safe-area-inset-bottom);max-width:640px;margin-inline:auto}
+a{color:#b7eacb}header{padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+header strong{letter-spacing:.11em}main{padding:36px 0 48px}h1{font-size:clamp(2rem,9vw,3.2rem);line-height:1.1}
+p{line-height:1.6;color:#b9c7bf}.panel{background:#12271d;border:1px solid #375543;border-radius:20px;padding:18px 20px;margin:18px 0}
+.panel h2{font-size:1.08rem;margin:0 0 16px}.check{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:13px 0;border-top:1px solid #31493a}
+.check:first-of-type{border:0}.state{font-weight:650;text-align:right;font-size:.9rem}.ok{color:#9de5b5}.warn{color:#ffca84}.muted{color:#b1bdb6}
+strong{color:#f2f9f1}small{color:#acbcb0}.note{border-left:3px solid #d7b77c;padding-left:16px}
+footer{font-size:.82rem;padding-bottom:30px;color:#b1bdb6}
+</style>
+</head>
+<body>
+<header><strong>◉ EARTHID</strong><a href="./index.html">EarthChain Genesis ↗</a></header>
+<main>
+<p>DEVICE READINESS · DEVELOPMENT PREVIEW</p>
+<h1>Your iPhone.<br>Your identity.</h1>
+<p>This page checks Safari passkey prerequisites directly on this device. It does not create an account, ask for a passkey, or transmit anything to a server.</p>
+<section class="panel" aria-label="iPhone passkey checks">
+<h2>Device diagnostics</h2>
+<div class="check"><span>Secure browser context</span><span class="state muted" id="secure">Checking…</span></div>
+<div class="check"><span>Native passkey interface</span><span class="state muted" id="webauthn">Checking…</span></div>
+<div class="check"><span>WebAuthn JSON compatibility</span><span class="state muted" id="json">Checking…</span></div>
+<div class="check"><span>Device test readiness</span><span class="state muted" id="ready">Checking…</span></div>
+</section>
+<section class="panel" aria-label="Backend status">
+<h2>EarthID service status</h2>
+<div class="check"><span>Secure authentication backend</span><span class="state warn">Not connected</span></div>
+<div class="check"><span>Live sign-in</span><span class="state warn">Not available</span></div>
+<p class="note">Successful device checks do not prove a live login works. A trusted HTTPS API, account verification and real-device ceremony testing are still required.</p>
+</section>
+<p>All engineering tests are run by GitHub Actions. You can use your iPhone to review progress and eventually run device tests in Safari—no laptop required.</p>
+</main>
+<footer>Truth before theater · Evidence before confidence · Operational before victory.</footer>
+<script type="module">
+import {inspectEarthIDBrowser} from "./earthid-readiness.mjs";
+const result=inspectEarthIDBrowser(window);
+for(const [field,element] of [["secureContext","secure"],["nativeWebAuthn","webauthn"],["jsonParsing","json"],["readyForFutureDeviceTest","ready"]]){
+ const el=document.getElementById(element);
+ el.textContent=result[field]?"Supported":"Not detected";
+ el.className="state "+(result[field]?"ok":"warn");
+}
+</script>
+</body>
+</html>
