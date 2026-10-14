@@ -337,6 +337,38 @@
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Twilight_of_a_Woman's_Soul_(1913).webm",
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "little-shop-of-horrors-1960",
+      "title": "The Little Shop of Horrors",
+      "year": 1960,
+      "genre": "Comedy · Horror",
+      "credit": "Roger Corman",
+      "runtime": "72 min",
+      "mediaFile": "The Little Shop of Horrors (1960) by Roger Corman.webm",
+      "fileSizeBytes": 1590000000,
+      "note": "Exact Commons file page documents U.S. public-domain status and a complete approximately 72-minute feature. Original file is large; mobile transcode selection recommended. Verify rights of any soundtrack/restoration in target jurisdictions.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Little%20Shop%20of%20Horrors%20(1960)%20by%20Roger%20Corman.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Little_Shop_of_Horrors_(1960)_by_Roger_Corman.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "the-outlaw-1943",
+      "title": "The Outlaw",
+      "year": 1943,
+      "genre": "Western · Drama",
+      "credit": "Howard Hughes",
+      "runtime": "116 min",
+      "mediaFile": "The Outlaw (1943).webm",
+      "fileSizeBytes": 601150679,
+      "note": "Exact Commons file page documents U.S. public-domain status and approximately 116-minute feature. Other countries may retain copyright; on-device playback unverified.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Outlaw%20(1943).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Outlaw_(1943).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
     }
   ]
 }
