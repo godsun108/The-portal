@@ -609,6 +609,51 @@
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone",
       "note": "Commons video duration 1h12m57s and U.S. public-domain statement based on nonrenewal; Japanese rights information also included. The specific upload, soundtrack and territorial use may require further review; Commons metadata is not independent legal clearance."
+    },
+    {
+      "id": "carnival-of-souls-1962",
+      "title": "Carnival of Souls",
+      "year": 1962,
+      "genre": "Horror · Mystery",
+      "credit": "Herk Harvey",
+      "runtime": "78 min",
+      "mediaFile": "Carnival of Souls (1962) by Herk Harvey.webm",
+      "note": "Commons file is 77m43s and labels this specific film file public domain in the United States due to non-renewal. U.S. rights claim sourced; territorial, restoration and soundtrack rights require separate review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Carnival%20of%20Souls%20(1962)%20by%20Herk%20Harvey.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Carnival_of_Souls_(1962)_by_Herk_Harvey.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "giant-gila-monster-1959",
+      "title": "The Giant Gila Monster",
+      "year": 1959,
+      "genre": "Science fiction · Horror",
+      "credit": "Ray Kellogg",
+      "runtime": "75 min",
+      "mediaFile": "THE GIANT GILA MONSTER.webm",
+      "note": "Commons page describes full 74m42s theatrical print and U.S. public-domain non-renewal. Availability and audio/edition rights need independent review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/THE%20GIANT%20GILA%20MONSTER.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:THE_GIANT_GILA_MONSTER.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "fast-and-furious-1954",
+      "title": "The Fast and the Furious",
+      "year": 1954,
+      "genre": "Crime · Action",
+      "credit": "John Ireland / Edward Sampson",
+      "runtime": "72 min",
+      "mediaFile": "The Fast and the Furious (1954) by John Ireland.webm",
+      "note": "Commons identifies original 72m28s film and U.S. public-domain non-renewal, distinct from the modern franchise. Territory and edition rights require review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Fast%20and%20the%20Furious%20(1954)%20by%20John%20Ireland.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Fast_and_the_Furious_(1954)_by_John_Ireland.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
     }
   ]
 }
