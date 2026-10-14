@@ -30,10 +30,10 @@ export function createCredentialRegistry(path=":memory:"){
   addCredential({id,accountId,publicKey}){if(!validId(id)||!validId(accountId)||typeof publicKey!=="string"||publicKey.length<1||publicKey.length>8192)return false;try{credentialInsert.run(id,accountId,publicKey);return true;}catch{return false;}},
   // INTERNAL STORAGE ONLY. Caller must independently confirm the WebAuthn
   // registration ceremony and the account binding before inserting.
-  addVerifiedWebAuthnCredential({id,accountId,publicKey}){
+  addVerifiedWebAuthnCredential({id,accountId,publicKey,counter=0}){
    const encoded=serializePublicKey(publicKey);
-   if(!validId(id)||!validId(accountId)||!encoded)return false;
-   try{credentialInsert.run(id,accountId,encoded);return true;}catch{return false;}
+   if(!validId(id)||!validId(accountId)||!encoded||!Number.isSafeInteger(counter)||counter<0)return false;
+   try{db.prepare("INSERT INTO credentials(id,account_id,public_key,sign_count) VALUES(?,?,?,?)").run(id,accountId,encoded,counter);return true;}catch{return false;}
   },
   getCredential(id){if(!validId(id))return null;const r=lookup.get(id);return r?{id:r.id,accountId:r.account_id,publicKey:r.public_key,signCount:r.sign_count,revoked:Boolean(r.revoked)}:null;},
   // Returns the shape expected by SimpleWebAuthn's authentication verifier.
