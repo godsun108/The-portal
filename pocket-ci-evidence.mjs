@@ -44,3 +44,7 @@ export function inspectBrowserEvidence(data) {
     /(?:Z|[+-]\d{2}:\d{2})$/.test(data.created_at);
   return { valid, status:valid ? 'untrusted-browser-' + data.status : 'invalid' };
 }
+
+export function serializeBrowserEvidence(scope, result, now = new Date()) {
+  return JSON.stringify(makeBrowserEvidence(scope, result, now), null, 2) + '\n';
+}
