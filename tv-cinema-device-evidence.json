@@ -1,0 +1,35 @@
+{
+  "schema": "portal.tv.cinema.device-evidence.v1",
+  "asOf": "2026-10-14",
+  "scope": "User-reported successful in-page playback on iPhone within PORTAL TV; one observed user/device; not an automated uptime test or a blanket availability guarantee.",
+  "records": [
+    {
+      "videoId": "YE7VzlLtp-4",
+      "title": "Big Buck Bunny",
+      "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    },
+    {
+      "videoId": "eRsGyueVLvQ",
+      "title": "Sintel",
+      "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    },
+    {
+      "videoId": "R6MlUcmOul8",
+      "title": "Tears of Steel",
+      "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    },
+    {
+      "videoId": "4eJVGqJhp40",
+      "title": "Elephants Dream",
+      "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    }
+  ]
+}
