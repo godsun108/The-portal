@@ -273,6 +273,38 @@
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone",
       "note": "Commons identifies 41m1s film, labels public domain in United States. Film edition and territory rights remain review items."
+    },
+    {
+      "id": "the-italian-1915",
+      "title": "The Italian",
+      "year": 1915,
+      "genre": "Drama · Immigration",
+      "credit": "Reginald Barker",
+      "runtime": "74 min",
+      "mediaFile": "The Italian (1915).webm",
+      "fileSizeBytes": 391880278,
+      "note": "Commons file page identifies a 74-minute U.S. silent feature and documents U.S. public-domain status; country, specific edition and soundtrack rights require independent review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Italian%20(1915).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Italian_(1915).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "the-squaw-man-1914",
+      "title": "The Squaw Man",
+      "year": 1914,
+      "genre": "Western · Drama",
+      "credit": "Cecil B. DeMille / Oscar Apfel",
+      "runtime": "72 min",
+      "mediaFile": "The Squaw Man (1914).webm",
+      "fileSizeBytes": 193656306,
+      "note": "Commons file page identifies a 72-minute U.S. silent feature and documents U.S. public-domain status; historical portrayal may be offensive; source and edition rights require review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Squaw%20Man%20(1914).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Squaw_Man_(1914).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
     }
   ]
 }
