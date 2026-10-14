@@ -2,7 +2,7 @@
   "schema": "portal.tv.classics.v1",
   "asOf": "2026-10-14",
   "source": "Wikimedia Commons hosted files",
-  "policy": "All listed title-specific Commons source pages describe United States public-domain status. Specific editions, restored elements and other countries require separate review. URLs are provider-hosted experimental in-page playback, not guaranteed to play.",
+  "policy": "Manually selected Commons file pages with US public-domain documentation, which is not global clearance. Automated source checks monitor file availability but cannot establish legal rights or iPhone playback. No automatic rights admission.",
   "titles": [
     {
       "id": "the-general",
@@ -150,6 +150,81 @@
         "source": "user_reported_in_cinema",
         "scope": "one device/session; no uptime guarantee"
       }
+    },
+    {
+      "id": "his-girl-friday",
+      "title": "His Girl Friday",
+      "year": 1940,
+      "genre": "Comedy · Romance",
+      "credit": "Howard Hawks",
+      "runtime": "92 min",
+      "format": "webm",
+      "mediaFile": "His Girl Friday.webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/His%20Girl%20Friday.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:His_Girl_Friday.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
+    },
+    {
+      "id": "detour",
+      "title": "Detour",
+      "year": 1945,
+      "genre": "Film noir · Thriller",
+      "credit": "Edgar G. Ulmer",
+      "runtime": "68 min",
+      "format": "webm",
+      "mediaFile": "Detour (1945) by Edgar G. Ulmer.webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Detour%20(1945)%20by%20Edgar%20G.%20Ulmer.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Detour_(1945)_by_Edgar_G._Ulmer.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
+    },
+    {
+      "id": "night-of-the-living-dead",
+      "title": "Night of the Living Dead",
+      "year": 1968,
+      "genre": "Horror · Thriller",
+      "credit": "George A. Romero",
+      "runtime": "96 min",
+      "format": "webm",
+      "mediaFile": "Night of the Living Dead (1968 film).webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Night%20of%20the%20Living%20Dead%20(1968%20film).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Night_of_the_Living_Dead_(1968_film).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
+    },
+    {
+      "id": "last-man-on-earth",
+      "title": "The Last Man on Earth",
+      "year": 1964,
+      "genre": "Horror · Sci-fi",
+      "credit": "Ubaldo Ragona / Sidney Salkow",
+      "runtime": "87 min",
+      "format": "webm",
+      "mediaFile": "The Last Man on Earth (1964) by Ubaldo Ragona and Sidney Salkow.webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Last%20Man%20on%20Earth%20(1964)%20by%20Ubaldo%20Ragona%20and%20Sidney%20Salkow.webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Last_Man_on_Earth_(1964)_by_Ubaldo_Ragona_and_Sidney_Salkow.webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
+    },
+    {
+      "id": "great-train-robbery",
+      "title": "The Great Train Robbery",
+      "year": 1903,
+      "genre": "Western · Crime",
+      "credit": "Edwin S. Porter",
+      "runtime": "13 min",
+      "format": "webm",
+      "mediaFile": "The Great Train Robbery (1903).webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Great%20Train%20Robbery%20(1903).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Great_Train_Robbery_(1903).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
     }
   ]
 }
