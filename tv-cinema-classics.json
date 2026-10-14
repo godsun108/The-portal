@@ -37,8 +37,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sherlock%20Jr.%20(1924).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Sherlock_Jr._(1924).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "nosferatu",
@@ -52,8 +58,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Nosferatu%20(1922).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Nosferatu_(1922).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "phantom-of-the-opera",
@@ -67,8 +79,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Phantom%20of%20the%20Opera%20(1925).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Phantom_of_the_Opera_(1925).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "caligari",
@@ -82,8 +100,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Cabinet%20of%20Dr.%20Caligari%20(1920).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Cabinet_of_Dr._Caligari_(1920).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "trip-to-moon",
@@ -97,8 +121,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Le%20Voyage%20dans%20la%20Lune%20(1902).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Le_Voyage_dans_la_Lune_(1902).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "the-kid",
@@ -112,8 +142,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Kid%20(1921).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Kid_(1921).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     }
   ]
 }
