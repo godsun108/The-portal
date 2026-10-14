@@ -52,7 +52,7 @@
       "id": "tea",
       "name": "Cocoa Shell Tea",
       "tier": "now",
-      "stage": "Supplier reply and alternative sourcing",
+      "stage": "Origen small-batch stock identified; documentation incomplete",
       "gates": {
         "customer": "open",
         "ingredient": "open",
@@ -75,10 +75,10 @@
           "path": "cocoa-shell-tea/procurement/ALTERNATIVE-SUPPLIER-SHORTLIST-2026-10-13.md"
         }
       ],
-      "blocker": "Mountain Rose long-term unavailable. Alternative suppliers not yet document-qualified; brewing suitability, current COA and landed costs unresolved.",
-      "next": "Request written availability, current-lot contaminant/microbiological COAs, beverage/repack intended use and bulk pricing from Origen, ChocoSol and Manoa, without purchasing.",
-      "last_reviewed": "2026-10-13",
-      "proof": "Mountain Rose supplied historical documents and long-term-out-of-stock reply Oct 13; public supplier listings found, no alternative verified."
+      "blocker": "Origen has US 2.5 lb inventory but no supplied metals results or current comprehensive microbial, pesticide or mycotoxin data; volume limited. ChocoSol US shipping paused. No qualified backup.",
+      "next": "Request Origen's existing heavy metals report and product/repack documentation at no cost; await Manoa and compare independent backup sources.",
+      "last_reviewed": "2026-10-14",
+      "proof": "October 14 supplier emails: Origen confirms 1125g US stock and two-year shelf life but testing gaps; ChocoSol has suspended US deliveries. No lab verification or authorization."
     },
     {
       "id": "sparkling",
