@@ -47,7 +47,9 @@ async function findMobileSource(p){
    const probe=document.createElement('video');
    return !!probe.canPlayType(String(x.type||'').split(';')[0]);
   });
-  const choice=playable.find(x=>String(x.type).startsWith('video/mp4'))||playable[0]||good[0]||null;
+  // Never silently select a format the iPhone reports it cannot decode.
+  // A null result falls back to the documented original and a truthful warning.
+  const choice=playable.find(x=>String(x.type).startsWith('video/mp4'))||playable[0]||null;
   derivativeCache.set(p.mediaFile,choice);
   return choice;
  }finally{clearTimeout(timer)}
@@ -62,7 +64,11 @@ function mount(p,url,label,request){
  video.style.cssText='width:100%;height:100%;background:#000';
  video.setAttribute('aria-label',p.title);video.src=url;
  video.addEventListener('playing',()=>{if(request===session)playback.textContent='Now playing '+label+' from Wikimedia Commons. Use the AirPlay icon in the native video controls, if offered by Safari.'});
- video.addEventListener('error',()=>{if(request===session)playback.textContent='Video unavailable or unsupported. Try Original file or open the Wikimedia source.'});
+ video.addEventListener('error',()=>{
+  if(request!==session)return;
+  const errorCode=video.error?.code;
+  playback.textContent='Video could not play'+(errorCode===4?' (unsupported file format)':errorCode===2?' (network error)':'')+'. Use Video source → Original file to retry, or Open film on Wikimedia Commons. This is not proof that the film is unavailable.';
+ });
  screen.append(video);
  // Inline AirPlay icon: opens the SAME native Safari device picker as the video's AirPlay control.
  // Safari decides whether this API and the receiving TV are available.
@@ -88,7 +94,8 @@ async function watch(p){
  playback.textContent='Finding the best available Commons video for iPhone…';
  try{
   const variant=await findMobileSource(p);
-  mount(p,variant?.src||p.mediaUrl,variant?'mobile '+variant.height+'p':'original (no compatible smaller source)',request);
+  mount(p,variant?.src||p.mediaUrl,variant?'mobile '+variant.height+'p':'original (no playable smaller source detected)',request);
+  if(!variant&&request===session)playback.textContent='No smaller video format reported playable by this browser. Original film selected; it may be large or unsupported. Try the Commons source page if playback fails.';
  }catch{mount(p,p.mediaUrl,'original (source lookup unavailable)',request)}
 }
 quality.addEventListener('change',()=>{if(activeFilm)watch(activeFilm)});
