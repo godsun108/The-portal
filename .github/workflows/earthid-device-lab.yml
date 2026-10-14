@@ -1,0 +1,35 @@
+name: EarthID Device Lab CI
+
+on:
+  push:
+    paths:
+      - 'genesis-core/**'
+      - 'earthchain-genesis/earthid-*.mjs'
+      - 'earthchain-genesis/earthid-*.html'
+      - '.github/workflows/earthid-device-lab.yml'
+  pull_request:
+    paths:
+      - 'genesis-core/**'
+      - 'earthchain-genesis/earthid-*.mjs'
+      - 'earthchain-genesis/earthid-*.html'
+      - '.github/workflows/earthid-device-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned EarthID verification dependencies
+        run: npm install --prefix genesis-core --no-package-lock --ignore-scripts
+      - name: Run integrated cryptographic and HTTP fixture tests
+        run: node --test genesis-core/*.test.mjs
+      - name: Verify the lab never presents a false production sign-in
+        run: node --test genesis-core/device-lab.test.mjs
