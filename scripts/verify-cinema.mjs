@@ -45,6 +45,8 @@ for(const marker of ['id="classicSearch"','id="classicGenre"','id="classicSort"'
 for(const token of ['id="classicQuality"','prop:\'videoinfo\'','viprop:\'derivatives\'','variant?.src||p.mediaUrl','session++','https://commons.wikimedia.org/w/api.php'])assert(html.includes(token),'Missing mobile Commons fallback contract: '+token);
 for(const token of ['video.controls=true','x-webkit-airplay','probe.canPlayType','video player’s built-in AirPlay control','id="classicQuality"'])assert(html.includes(token),'Native video controls missing: '+token);
 for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvHelpToggle"','id="classicTvHelp"','id="classicMirrorHelp"','value="tv"'])assert(!html.includes(retired),'Retired extra AirPlay interface remains: '+retired);
+for(const token of ['cinema-airplay-icon','AirPlay this film','video.webkitShowPlaybackTargetPicker','screen.append(airplay)','position:absolute;top:8px;right:8px'])assert(html.includes(token),'Missing visible in-player AirPlay: '+token);
+for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvHelpToggle"'])assert(!html.includes(retired),'Unexpected duplicate TV button: '+retired);
 console.log('PASS: '+classics.titles.length+' Classics entries and unique source files.');
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 for(const [i,script] of scripts.entries()){try{new Function(script)}catch(e){throw new Error('Inline script '+i+': '+e.message)}}
