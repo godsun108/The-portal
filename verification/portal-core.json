@@ -1,0 +1,30 @@
+{
+  "schema": "turbo.verify.v1",
+  "jobs": [
+    {
+      "id": "permission-syntax",
+      "kind": "syntax",
+      "path": "earthchain-genesis/permissions.mjs"
+    },
+    {
+      "id": "permission-contract",
+      "kind": "test",
+      "path": "earthchain-genesis/permissions.test.mjs"
+    },
+    {
+      "id": "account-isolation",
+      "kind": "test",
+      "path": "earthchain-genesis/isolation.test.mjs"
+    },
+    {
+      "id": "earthid-origin",
+      "kind": "test",
+      "path": "genesis-core/device-lab-origin.test.mjs"
+    },
+    {
+      "id": "iphone-lab",
+      "kind": "test",
+      "path": "genesis-core/device-lab.test.mjs"
+    }
+  ]
+}
