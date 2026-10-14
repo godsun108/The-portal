@@ -655,5 +655,7 @@
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone"
     }
-  ]
+  ],
+  "catalogRevision": 1,
+  "catalogPublishedCount": 40
 }
