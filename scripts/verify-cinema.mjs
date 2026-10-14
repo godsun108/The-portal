@@ -25,6 +25,9 @@ for(const marker of ['id="cinemaTheater"','id="cinemaScreen"','id="portalPlayabl
 
 const classics=JSON.parse(readFileSync('tv-cinema-classics.json','utf8'));
 assert.equal(classics.schema,'portal.tv.classics.v1');
+assert(Number.isSafeInteger(classics.catalogRevision)&&classics.catalogRevision>=1,'Classics catalog revision required');
+assert.equal(classics.catalogPublishedCount,classics.titles.length,'Published count must match Classics titles');
+for(const token of ['raw.githubusercontent.com/godsun108/The-portal/main/tv-cinema-classics.json','catalog='+"'"+'','Updated catalog loaded from GitHub while Pages catches up'])assert(html.includes(token),'Missing catalog freshness mechanism '+token);
 assert(Array.isArray(classics.titles)&&classics.titles.length>0);
 const filmIds=new Set(),filmFiles=new Set(),filmIdentity=new Set();
 for(const p of classics.titles){
