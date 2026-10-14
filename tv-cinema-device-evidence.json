@@ -1,7 +1,7 @@
 {
   "schema": "portal.tv.cinema.device-evidence.v1",
   "asOf": "2026-10-14",
-  "scope": "User-reported successful in-page playback on iPhone within PORTAL TV; one observed user/device; not an automated uptime test or a blanket availability guarantee.",
+  "scope": "User-reported playback observations on one iPhone in PORTAL TV; results are per-video and time-bounded. This is not an automated uptime test, rights determination or blanket availability guarantee.",
   "records": [
     {
       "videoId": "YE7VzlLtp-4",
@@ -28,6 +28,20 @@
       "videoId": "4eJVGqJhp40",
       "title": "Elephants Dream",
       "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    },
+    {
+      "videoId": "WhWc3b3KhnY",
+      "title": "Spring",
+      "result": "user_confirmed_playing",
+      "device": "iPhone",
+      "date": "2026-10-14"
+    },
+    {
+      "videoId": "_cMXraX_5RE",
+      "title": "Sprite Fright",
+      "result": "user_reported_unavailable",
       "device": "iPhone",
       "date": "2026-10-14"
     }
