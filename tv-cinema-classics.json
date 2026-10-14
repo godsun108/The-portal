@@ -16,8 +16,14 @@
       "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20General%20(1926).webm",
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_General_(1926).webm",
       "rightsStatus": "public_domain_us_source_documented",
-      "playbackStatus": "untested_iphone",
-      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution."
+      "playbackStatus": "user_confirmed_iphone_playing",
+      "note": "Specific Commons file page states U.S. public domain; verify edition, soundtrack/restoration and territory before any separate distribution.",
+      "playbackObservation": {
+        "date": "2026-10-14",
+        "device": "iPhone",
+        "source": "user_reported_in_cinema",
+        "scope": "one device/session; no uptime guarantee"
+      }
     },
     {
       "id": "sherlock-jr",
