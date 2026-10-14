@@ -1,0 +1,7 @@
+# EarthID browser ceremony coordination — local-only
+
+Connects existing SimpleWebAuthn browser options, one-use challenge store, verified registration, and signed authentication into a single local-only begin/finish service. The returned browser payload has an opaque handle and options. On finish, the server uses the handle to recover accountId/challenge/purpose, so the browser cannot replace the server-selected account or challenge in request JSON. Handles expire and are consumed before response verification.
+
+**Security boundary:** The `begin*` methods MUST only be called by a trusted server that has independently selected an authenticated or securely onboarded account. The module has no identity bootstrap, actual HTTP routes, durable transaction storage, WebAuthn browser UI, device testing or deployment. It uses in-memory handles; production must use atomic durable records across workers, abuse limits and trusted origin/session policy. The old standalone enrollment/auth functions remain internal and must never accept arbitrary browser account claims. No public signup/login yet.
+
+Tests use real SimpleWebAuthn rejection of malformed browser responses and confirm replay, purpose and expiry behavior. Successful signed enrollment/authentication is separately covered by `full-signed-ceremony.test.mjs`; the combined coordinator still needs successful browser-to-server end-to-end testing.
