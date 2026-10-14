@@ -14,3 +14,5 @@ test('network failure cannot report green', async () => {const out=await runPort
 test('empty response cannot report green', async () => {const out=await runPortalSmoke(makeFetcher({'tv-catalog.js': ''}),parse); assert.equal(out.passed,false);});
 test('duplicate document IDs cannot report green', async () => {const out=await runPortalSmoke(makeFetcher({'tv.html': html.replace('id="b"','id="a"')}),parse); assert.equal(out.passed,false);});
 test('only predetermined paths are requested', async () => {const called=[];await runPortalSmoke(async (url,opts)=>{called.push(url);return makeFetcher()(url,opts);},parse);assert.deepEqual(called,REQUIRED_FILES);});
+
+test('missing TV HTML still emits six explicit checks', async () => {const out=await runPortalSmoke(makeFetcher({'tv.html':null}),parse);assert.equal(out.passed,false);assert.equal(out.checks.length,6);assert.equal(out.checks.slice(-2).every(x=>x.passed===false),true);});
