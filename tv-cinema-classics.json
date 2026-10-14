@@ -305,6 +305,38 @@
       "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Squaw_Man_(1914).webm",
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "king-of-paris-1917",
+      "title": "King of Paris",
+      "year": 1917,
+      "genre": "Drama · Silent cinema",
+      "credit": "Yevgeni Bauer",
+      "runtime": "62 min",
+      "mediaFile": "King of Paris (1917).webm",
+      "fileSizeBytes": 230096903,
+      "note": "Commons identifies a Russian silent feature (61m51s) and documents United States public-domain status. Review other territories and specific media components.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/King%20of%20Paris%20(1917).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:King_of_Paris_(1917).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
+    },
+    {
+      "id": "twilight-womans-soul-1913",
+      "title": "Twilight of a Woman's Soul",
+      "year": 1913,
+      "genre": "Drama · Silent cinema",
+      "credit": "Yevgeni Bauer",
+      "runtime": "49 min",
+      "mediaFile": "Twilight of a Woman's Soul (1913).webm",
+      "fileSizeBytes": 189064035,
+      "note": "Commons identifies a 48m38s Russian silent film and documents United States public-domain status. Edition and other territories require review.",
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Twilight%20of%20a%20Woman's%20Soul%20(1913).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Twilight_of_a_Woman's_Soul_(1913).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone"
     }
   ]
 }
