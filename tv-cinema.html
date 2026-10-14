@@ -81,9 +81,33 @@ function renderClassics(){
  status.textContent=matches.length+' of '+classics.length+' Classics · '+classics.filter(p=>p.playbackStatus==='user_confirmed_iphone_playing').length+' previously played on iPhone · other playback unconfirmed';
 }
 for(const control of [classicSearch,classicGenre,classicSort])control.addEventListener(control===classicSearch?'input':'change',renderClassics);
-fetch('tv-cinema-classics.json?v=2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('catalog not published');return r.json()}).then(data=>{
- classics=(Array.isArray(data.titles)?data.titles:[]).filter(p=>p.rightsStatus==='public_domain_us_source_documented'&&p.format==='webm'&&/^https:\/\/commons\.wikimedia\.org\/wiki\/Special:Redirect\/file\//.test(p.mediaUrl)&&/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(p.sourcePage));
- const genres=[...new Set(classics.flatMap(p=>p.genre.split(' · ')))].sort((a,b)=>a.localeCompare(b));for(const name of genres){const option=document.createElement('option');option.value=option.textContent=name;classicGenre.append(option)}
+async function fetchClassics(url,label){
+ const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),8500);
+ try{
+  const response=await fetch(url,{cache:'no-store',signal:ctrl.signal,credentials:'omit'});
+  if(!response.ok)throw Error(label+' HTTP '+response.status);
+  const data=await response.json();
+  if(!Array.isArray(data.titles)||data.schema!=='portal.tv.classics.v1')throw Error(label+' catalog invalid');
+  return {data,label,revision:Number.isSafeInteger(data.catalogRevision)?data.catalogRevision:0};
+ }finally{clearTimeout(timer)}
+}
+(async()=>{
+ const cacheBust=Date.now().toString();
+ const pagesUrl='tv-cinema-classics.json?catalog='+cacheBust;
+ const githubUrl='https://raw.githubusercontent.com/godsun108/The-portal/main/tv-cinema-classics.json?catalog='+cacheBust;
+ const candidates=await Promise.allSettled([fetchClassics(pagesUrl,'GitHub Pages'),fetchClassics(githubUrl,'GitHub main')]);
+ const good=candidates.filter(x=>x.status==='fulfilled').map(x=>x.value);
+ if(!good.length){status.textContent='Could not load the current Classics catalog. Check your connection, then reload.';return}
+ good.sort((a,b)=>b.revision-a.revision||b.data.titles.length-a.data.titles.length);
+ const chosen=good[0],data=chosen.data;
+ classics=data.titles.filter(p=>p.rightsStatus==='public_domain_us_source_documented'&&p.format==='webm'&&/^https:\/\/commons\.wikimedia\.org\/wiki\/Special:Redirect\/file\//.test(p.mediaUrl)&&/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(p.sourcePage));
+ const genres=[...new Set(classics.flatMap(p=>p.genre.split(' · ')))].sort((a,b)=>a.localeCompare(b));
+ classicGenre.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='All genres';classicGenre.append(all);
+ for(const name of genres){const option=document.createElement('option');option.value=option.textContent=name;classicGenre.append(option)}
  renderClassics();
-}).catch(()=>{status.textContent='Classic film catalog did not load. Retry after deployment; the other collection remains available.'})})();
+ const pages=candidates[0].status==='fulfilled'?candidates[0].value:null;
+ if(chosen.label==='GitHub main'&&(!pages||chosen.revision>pages.revision||chosen.data.titles.length>pages.data.titles.length)){
+  status.textContent+=' · Updated catalog loaded from GitHub while Pages catches up';
+ }else status.textContent+=' · Catalog: '+chosen.label;
+})().catch(()=>{status.textContent='Classics could not be loaded; please reload.'})})();
 </script></body></html>
