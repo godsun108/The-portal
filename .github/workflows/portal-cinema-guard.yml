@@ -8,6 +8,7 @@ on:
       - 'tv-cinema-classics.json'
       - 'tv-cinema-genre-goals.json'
       - 'scripts/report-cinema-genre-coverage.mjs'
+      - 'scripts/report-cinema-quality.mjs'
       - 'scripts/audit-cinema-sources.mjs'
       - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
@@ -21,6 +22,7 @@ on:
       - 'tv-cinema-classics.json'
       - 'tv-cinema-genre-goals.json'
       - 'scripts/report-cinema-genre-coverage.mjs'
+      - 'scripts/report-cinema-quality.mjs'
       - 'scripts/audit-cinema-sources.mjs'
       - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
@@ -43,10 +45,20 @@ jobs:
         run: node scripts/verify-cinema.mjs
       - name: Check Wikimedia Commons movie sources (non-fatal network failures)
         run: node scripts/audit-cinema-sources.mjs
+      - name: Triaging source size, runtime and playback evidence
+        run: node scripts/report-cinema-quality.mjs
       - name: Report progress toward 100 titles per genre
         run: node scripts/report-cinema-genre-coverage.mjs
       - name: Discover future film candidates for human review
         run: node scripts/discover-cinema-candidates.mjs
+      - name: Upload Cinema quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cinema-quality-triage
+          path: cinema-quality-triage.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload per-genre coverage
         if: always()
         uses: actions/upload-artifact@v4
