@@ -23,6 +23,12 @@ for(const marker of ['id="cinemaTheater"','id="cinemaScreen"','id="portalPlayabl
  assert(html.includes(marker),'Cinema player contract missing: '+marker);
 }
 
+const goals=JSON.parse(readFileSync('tv-cinema-genre-goals.json','utf8'));
+assert.equal(goals.schema,'portal.tv.genre-goals.v1');
+assert.equal(goals.targetPerGenre,100);
+assert(goals.genreNames.length>=20&&goals.genreNames.length===new Set(goals.genreNames).size,'Genre target taxonomy must be comprehensive and unique');
+for(const genre of goals.genreNames)assert(goals.discoveryQueries[genre],'Discovery query missing for '+genre);
+for(const token of ['id="cinemaGenreGoals"','id="cinemaGenreGoalRows"','tv-cinema-genre-goals.json','goals.targetPerGenre','genre targets'])assert(html.includes(token),'Genre target UI missing '+token);
 const classics=JSON.parse(readFileSync('tv-cinema-classics.json','utf8'));
 assert.equal(classics.schema,'portal.tv.classics.v1');
 assert(Number.isSafeInteger(classics.catalogRevision)&&classics.catalogRevision>=1,'Classics catalog revision required');
