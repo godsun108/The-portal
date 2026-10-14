@@ -107,7 +107,7 @@ function renderClassics(){
   const info=document.createElement('div');info.className='tag';info.textContent=p.year+' · '+p.runtime+' · '+p.genre;
   const credit=document.createElement('p');credit.textContent=p.credit+' · Commons U.S. public-domain claim (edition rights may differ) · '+(p.playbackStatus==='user_confirmed_iphone_playing'?'✓ Previously played on iPhone (Oct 14)':'iPhone playback untested');
   const button=document.createElement('button');button.type='button';button.className='film-action';
-  const minutesMatch=String(p.runtime||'').match(/^(?:~)?(\\d+)\\s*min/i);
+  const minutesMatch=String(p.runtime||'').match(/^(?:~)?(\d+)\s*min/i);
   const mins=minutesMatch?Number(minutesMatch[1]):null;
   // Explicit labels beat heuristics: never advertise a documentary/archival clip as a feature.
   const isShort=mins!==null&&mins<40;
