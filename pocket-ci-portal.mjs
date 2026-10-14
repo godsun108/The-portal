@@ -31,10 +31,12 @@ export async function runPortalSmoke(fetcher = fetch, parse = (text) => new DOMP
       checks.push({ label: 'TV markup contains unique element IDs', passed: ids.length > 0 && ids.length === new Set(ids).size });
       checks.push({ label: 'TV has an application title', passed: !!doc.querySelector('title')?.textContent?.trim() });
     } catch (_) {
-      checks.push({ label: 'TV HTML parses successfully', passed: false });
+      checks.push({ label: 'TV markup contains unique element IDs', passed: false });
+      checks.push({ label: 'TV has an application title', passed: false });
     }
   } else {
-    checks.push({ label: 'TV HTML can be inspected', passed: false });
+    checks.push({ label: 'TV markup contains unique element IDs', passed: false });
+    checks.push({ label: 'TV has an application title', passed: false });
   }
   return { checks, passed: checks.length === REQUIRED_FILES.length + 2 && checks.every((x) => x.passed), scope: 'same-origin-static-smoke-only' };
 }
