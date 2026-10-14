@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091a13"><meta name="robots" content="noindex"><title>EarthID Device Lab</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui,-apple-system,sans-serif;background:#081b13;color:#f2f6f1}
+*{box-sizing:border-box}body{margin:0;padding:env(safe-area-inset-top) 22px env(safe-area-inset-bottom);max-width:660px;margin-inline:auto}header{padding:25px 0;display:flex;justify-content:space-between;gap:12px;align-items:center}a{color:#a4e4b8}h1{font-size:clamp(2.2rem,9vw,3.4rem);line-height:1.05;margin:18px 0}p{line-height:1.55;color:#c0d0c4}.eyebrow{letter-spacing:.14em;font-size:.72rem;color:#99d6b2;font-weight:700}section{border:1px solid #365444;border-radius:19px;background:#12291d;margin:19px 0;padding:20px}section h2{font-size:1.08rem;margin:0 0 12px}.item{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #35503e;padding:15px 0}.item:first-of-type{border:0}.value{text-align:right;font-weight:650}.good{color:#a3e9b7}.attention{color:#ffd28f}.actions{display:grid;gap:12px}button{border:1px solid #506a5b;border-radius:13px;background:#254333;color:#cfdbcf;font:inherit;font-weight:650;padding:15px;width:100%}button:disabled{opacity:.55;cursor:not-allowed}.note{border-left:3px solid #dfbd7f;padding:0 0 0 15px}footer{font-size:.8rem;color:#acbfb1;margin:38px 0}
+</style></head><body>
+<header><strong>◉ EARTHID <span style="color:#a3e9b7">LAB</span></strong><a href="./index.html">Genesis ↗</a></header>
+<main><p class="eyebrow">IPHONE-FIRST · DEVELOPMENT</p><h1>Build trust.<br>Prove access.</h1>
+<p>This device lab reports what Safari can do today and what EarthID still needs. Everything stays on your phone: the page does not collect biometric information or request a passkey.</p>
+<section aria-label="Browser diagnostics"><h2>Browser diagnostics</h2>
+<div class="item"><span>Secure browser context</span><span class="value" id="secure">Checking…</span></div>
+<div class="item"><span>WebAuthn credential API</span><span class="value" id="native">Checking…</span></div>
+<div class="item"><span>Passkey JSON API</span><span class="value" id="json">Checking…</span></div>
+<div class="item"><span>Browser readiness</span><span class="value" id="ready">Checking…</span></div></section>
+<section aria-label="Service integration"><h2>Trusted service integration</h2>
+<div class="item"><span>Private HTTPS EarthID API</span><span class="value attention" id="backend">Not connected</span></div>
+<div class="item"><span>Verified onboarding</span><span class="value attention">Not enabled</span></div>
+<div class="actions"><button type="button" id="enroll" disabled>Register passkey · unavailable</button><button type="button" id="login" disabled>Sign in · unavailable</button></div>
+<p class="note">Device support does not mean sign-in is available. Buttons remain disabled until an independently reviewed HTTPS backend and identity verification are configured.</p></section>
+<section><h2>What the cloud can emulate</h2><p>GitHub Actions tests registration, signed assertions, challenge replay, origin restrictions, account isolation and session handling. A real Safari passkey prompt still requires testing on your iPhone.</p><a href="https://github.com/godsun108/The-portal/actions/workflows/contracts.yml">Review automated tests ↗</a></section>
+</main><footer>Truth before theater · Evidence before confidence · Operational before victory.</footer>
+<script type="module">
+import {inspectEarthIDBrowser} from "./earthid-readiness.mjs";
+const state=inspectEarthIDBrowser(window);
+for(const [id,value] of [["secure",state.secureContext],["native",state.nativeWebAuthn],["json",state.jsonParsing],["ready",state.readyForFutureDeviceTest]]){
+ const element=document.getElementById(id);element.textContent=value?"Supported":"Not detected";element.className="value "+(value?"good":"attention");
+}
+</script></body></html>
