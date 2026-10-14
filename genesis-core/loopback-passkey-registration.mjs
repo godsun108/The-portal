@@ -28,7 +28,7 @@ export function createLoopbackRegistrationAPI({
  };
  const server=createServer(async(req,res)=>{
   try{
-   if(req.method!=="POST"||!["/register/options","/register/verify"].includes(req.url))
+   if(req.method!=="POST"||!["/register/options","/register/verify","/reauth/options","/reauth/verify"].includes(req.url))
     return send(res,404,{error:"not-found"});
    if(!guard({method:req.method,headers:req.headers}).allowed)
     return send(res,403,{error:"origin-denied"});
@@ -45,14 +45,15 @@ export function createLoopbackRegistrationAPI({
    let body;
    try{body=JSON.parse(raw||"{}");}catch{return send(res,400,{error:"invalid-json"});}
    if(!body||typeof body!=="object"||Array.isArray(body))return send(res,400,{error:"invalid-request"});
-   if(req.url==="/register/options"){
+   if(req.url==="/register/options"||req.url==="/reauth/options"){
     const account=await accountLookup(actor.subject);
     if(!account||account.id!==actor.subject||typeof account.userName!=="string")
      return send(res,403,{error:"account-unavailable"});
-    const begun=await ceremonies.beginRegistration({
-     trustedAccountId:account.id,trustedUserName:account.userName
-    });
-    pending.set(hash(begun.handle),{subject:actor.subject,sessionHash:hash(token)});
+    const isReauth=req.url==="/reauth/options";
+    const begun=isReauth
+     ?await ceremonies.beginAuthentication({trustedAccountId:account.id})
+     :await ceremonies.beginRegistration({trustedAccountId:account.id,trustedUserName:account.userName});
+    pending.set(hash(begun.handle),{subject:actor.subject,sessionHash:hash(token),ceremony:isReauth?"authentication":"registration"});
     return send(res,200,begun);
    }
    if(!validHandle(body.handle)||!body.response||typeof body.response!=="object")
@@ -61,8 +62,14 @@ export function createLoopbackRegistrationAPI({
    if(!binding)return send(res,403,{error:"ceremony-denied"});
    // Consume before any verification attempt, including a different session.
    pending.delete(key);
-   if(binding.subject!==actor.subject||binding.sessionHash!==hash(token))
+   const requiredCeremony=req.url==="/reauth/verify"?"authentication":"registration";
+   if(binding.ceremony!==requiredCeremony||binding.subject!==actor.subject||binding.sessionHash!==hash(token))
     return send(res,403,{error:"ceremony-denied"});
+   if(requiredCeremony==="authentication"){
+    const result=await ceremonies.finishAuthentication({handle:body.handle,response:body.response});
+    // Test API does not deliver session secrets over JSON or expose new cookie issuance.
+    return send(res,result.authenticated?200:403,{authenticated:result.authenticated===true});
+   }
    const result=await ceremonies.finishRegistration({handle:body.handle,response:body.response});
    return send(res,result.registered?200:403,{registered:result.registered===true});
   }catch{return send(res,500,{error:"internal-error"});}
