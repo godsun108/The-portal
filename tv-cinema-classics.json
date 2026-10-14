@@ -1016,19 +1016,19 @@
       "note": "1925 Harold Lloyd college comedy, 75-minute Commons file; original is 3.2GB AV1, potentially difficult for iPhone playback without derivative. Commons source-page designation is not independent legal clearance; rights, soundtrack, restoration, and geography require human review."
     },
     {
-      "id": "cameraman-1928",
-      "title": "The Cameraman",
+      "id": "steamboat-bill-jr-1928",
+      "title": "Steamboat Bill, Jr.",
       "year": 1928,
-      "genre": "Comedy · Romance",
-      "credit": "Edward Sedgwick and Buster Keaton",
+      "genre": "Comedy · Adventure",
+      "credit": "Charles Reisner",
       "runtime": "70 min",
       "format": "webm",
-      "mediaFile": "The Cameraman (1928).webm",
-      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Cameraman%20(1928).webm",
-      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Cameraman_(1928).webm",
+      "mediaFile": "Steamboat Bill Jr. (1928).webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Steamboat%20Bill%20Jr.%20(1928).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Steamboat_Bill_Jr._(1928).webm",
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone",
-      "note": "1928 Buster Keaton comedy, 70-minute Commons video. Uploaded from a reconstructed Criterion Blu-ray; restoration/edition rights need extra review. Commons source-page designation is not independent legal clearance; rights, soundtrack, restoration, and geography require human review."
+      "note": "1928 Buster Keaton silent comedy; Wikimedia Commons lists a full 70-minute VP8 film file (~504 MB) and U.S. public-domain license. Soundtrack/edition and worldwide rights still require review. Playback untested."
     }
   ],
   "catalogRevision": 4,
