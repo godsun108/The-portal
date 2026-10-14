@@ -26,16 +26,19 @@ for(const marker of ['id="cinemaTheater"','id="cinemaScreen"','id="portalPlayabl
 const classics=JSON.parse(readFileSync('tv-cinema-classics.json','utf8'));
 assert.equal(classics.schema,'portal.tv.classics.v1');
 assert(Array.isArray(classics.titles)&&classics.titles.length>0);
-const filmIds=new Set(),filmFiles=new Set();
+const filmIds=new Set(),filmFiles=new Set(),filmIdentity=new Set();
 for(const p of classics.titles){
  assert(p.id&&!filmIds.has(p.id),'Duplicate or missing classic film ID '+p.id);filmIds.add(p.id);
  assert(p.mediaFile&&!filmFiles.has(p.mediaFile),'Duplicate or missing classic media file '+p.mediaFile);filmFiles.add(p.mediaFile);
+ const identity=p.title.toLowerCase().normalize('NFKC').replace(/[^a-z0-9]+/g,'')+'-'+p.year;
+ assert(!filmIdentity.has(identity),'Possible duplicate film identity '+p.title+' '+p.year);filmIdentity.add(identity);
  assert.equal(p.rightsStatus,'public_domain_us_source_documented',p.title);
  assert.match(p.mediaUrl,/^https:\/\/commons\.wikimedia\.org\/wiki\/Special:Redirect\/file\//);
  assert.match(p.sourcePage,/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
  assert(['untested_iphone','user_confirmed_iphone_playing'].includes(p.playbackStatus),p.title);
 }
 assert(html.includes('id="classicsTitles"'),'Classic title view missing');
+for(const marker of ['id="classicSearch"','id="classicGenre"','id="classicSort"','function renderClassics()','renderClassics();'])assert(html.includes(marker),'Classic discovery control missing: '+marker);
 for(const token of ['id="classicQuality"','prop:\'videoinfo\'','viprop:\'derivatives\'','variant?.src||p.mediaUrl','session++','https://commons.wikimedia.org/w/api.php'])assert(html.includes(token),'Missing mobile Commons fallback contract: '+token);
 console.log('PASS: '+classics.titles.length+' Classics entries and unique source files.');
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
