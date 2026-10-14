@@ -24,8 +24,9 @@ const quality=document.getElementById('classicQuality');
 const mirrorHelp=document.getElementById('classicMirrorHelp');
 document.getElementById('classicMirror').addEventListener('click',()=>{
  if(!activeFilm){playback.textContent='Choose a film first, then select Screen Mirror to TV.';return}
+ const film=activeFilm;
+ quality.value='auto';watch(film);
  document.body.classList.add('cinema-mirror-mode');mirrorHelp.hidden=false;
- quality.value='auto';watch(activeFilm);
  playback.textContent='Mirror mode: start Screen Mirroring from iPhone Control Center, return to PORTAL, and play here. Do not use audio-only AirPlay.';
 });
 document.getElementById('classicMirrorExit').addEventListener('click',()=>{document.body.classList.remove('cinema-mirror-mode');mirrorHelp.hidden=true;});
