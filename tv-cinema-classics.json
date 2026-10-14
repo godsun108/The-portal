@@ -225,6 +225,54 @@
       "rightsStatus": "public_domain_us_source_documented",
       "playbackStatus": "untested_iphone",
       "note": "Commons file page documents US public domain. Film version/territory and playback must be checked independently; do not rehost without review."
+    },
+    {
+      "id": "strong-man-1926",
+      "title": "The Strong Man",
+      "year": 1926,
+      "genre": "Comedy · Romance",
+      "credit": "Frank Capra / Harry Langdon",
+      "runtime": "75 min",
+      "mediaFile": "The Strong Man (1926).webm",
+      "fileSizeBytes": 198959390,
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Strong%20Man%20(1926).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Strong_Man_(1926).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons identifies a 75m24s feature and states United States public-domain status. Edition, music and other territories need review."
+    },
+    {
+      "id": "cabiria-1914",
+      "title": "Cabiria",
+      "year": 1914,
+      "genre": "History · Adventure",
+      "credit": "Giovanni Pastrone",
+      "runtime": "123 min",
+      "mediaFile": "Cabiria (1914).webm",
+      "fileSizeBytes": 497169923,
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Cabiria%20(1914).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Cabiria_(1914).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons identifies a 123m27s feature and states United States public-domain status; international rights limitations documented on source page."
+    },
+    {
+      "id": "student-of-prague-1913",
+      "title": "The Student of Prague",
+      "year": 1913,
+      "genre": "Fantasy · Horror",
+      "credit": "Stellan Rye / Hanns Heinz Ewers",
+      "runtime": "41 min",
+      "mediaFile": "The Student of Prague (1913).webm",
+      "fileSizeBytes": 204194895,
+      "format": "webm",
+      "mediaUrl": "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Student%20of%20Prague%20(1913).webm",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Student_of_Prague_(1913).webm",
+      "rightsStatus": "public_domain_us_source_documented",
+      "playbackStatus": "untested_iphone",
+      "note": "Commons identifies 41m1s film, labels public domain in United States. Film edition and territory rights remain review items."
     }
   ]
 }
