@@ -36,6 +36,7 @@ for(const p of classics.titles){
  assert(['untested_iphone','user_confirmed_iphone_playing'].includes(p.playbackStatus),p.title);
 }
 assert(html.includes('id="classicsTitles"'),'Classic title view missing');
+for(const token of ['id="classicQuality"','prop:\'videoinfo\'','viprop:\'derivatives\'','variant?.src||p.mediaUrl','session++','https://commons.wikimedia.org/w/api.php'])assert(html.includes(token),'Missing mobile Commons fallback contract: '+token);
 console.log('PASS: '+classics.titles.length+' Classics entries and unique source files.');
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 for(const [i,script] of scripts.entries()){try{new Function(script)}catch(e){throw new Error('Inline script '+i+': '+e.message)}}
