@@ -36,6 +36,8 @@ a{color:#a8e7ec}
 <p class="muted">After running a browser test, save a privacy-minimal JSON receipt to Files on your iPhone. It is explicitly marked untrusted and contains no credentials or raw logs.</p>
 <button id="export-self" disabled>Export engine result</button>
 <button id="export-portal" disabled>Export PORTAL result</button>
+<button id="copy-self" disabled>Copy engine JSON</button>
+<button id="copy-portal" disabled>Copy PORTAL JSON</button>
 <p id="export-summary" role="status">Run checks to enable export</p>
 </section>
 <section class="panel" aria-labelledby="report-title">
@@ -60,16 +62,26 @@ import {serializeBrowserEvidence} from './pocket-ci-evidence.mjs';
 const byId=id=>document.getElementById(id);
 let lastSelf=null,lastPortal=null;
 function exportEvidence(scope,result){try{const blob=new Blob([serializeBrowserEvidence(scope,result)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='pocket-ci-'+scope+'-'+Date.now()+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);byId('export-summary').textContent='Evidence prepared for local download (untrusted, not uploaded).';}catch(_){byId('export-summary').textContent='Could not export: invalid check results';}}
+async function copyEvidence(scope,result){
+ try{
+  if(!navigator.clipboard?.writeText)throw Error('clipboard_unavailable');
+  const body=serializeBrowserEvidence(scope,result);
+  await navigator.clipboard.writeText(body);
+  byId('export-summary').textContent='Copied UNTRUSTED browser evidence to clipboard. Review before sharing.';
+ }catch(_){byId('export-summary').textContent='Clipboard unavailable. Use the Export button to save the JSON file.';}
+}
+byId('copy-self').addEventListener('click',()=>{if(lastSelf)copyEvidence('browser-engine-self-test',lastSelf);});
+byId('copy-portal').addEventListener('click',()=>{if(lastPortal)copyEvidence('same-origin-static-smoke-only',lastPortal);});
 byId('export-self').addEventListener('click',()=>{if(lastSelf)exportEvidence('browser-engine-self-test',lastSelf);});
 byId('export-portal').addEventListener('click',()=>{if(lastPortal)exportEvidence('same-origin-static-smoke-only',lastPortal);});
 function render(target,checks){target.replaceChildren();for(const item of checks){const li=document.createElement('li');li.className=item.passed?'pass':'fail';li.textContent=(item.passed?'PASS — ':'FAIL — ')+item.label;target.append(li);}}
-byId('run-tests').addEventListener('click',()=>{const result=selfTest();lastSelf=result;byId('export-self').disabled=false;render(byId('self-results'),result.checks);const count=result.checks.filter(x=>x.passed).length;byId('self-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+count+'/'+result.checks.length+' browser engine tests';});
+byId('run-tests').addEventListener('click',()=>{const result=selfTest();lastSelf=result;byId('export-self').disabled=false;byId('copy-self').disabled=false;render(byId('self-results'),result.checks);const count=result.checks.filter(x=>x.passed).length;byId('self-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+count+'/'+result.checks.length+' browser engine tests';});
 byId('run-portal').addEventListener('click',async()=>{
   byId('run-portal').disabled=true;
   byId('portal-summary').textContent='Checking PORTAL source…';
   try {
     const result=await runPortalSmoke();
-    lastPortal=result;byId('export-portal').disabled=false;
+    lastPortal=result;byId('export-portal').disabled=false;byId('copy-portal').disabled=false;
     render(byId('portal-results'),result.checks);
     const passed=result.checks.filter(x=>x.passed).length;
     byId('portal-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+passed+'/'+result.checks.length+' static browser smoke checks';
