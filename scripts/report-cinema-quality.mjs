@@ -7,7 +7,7 @@ const found=new Map(audit.results.map(x=>[x.file,x]));
 const records=[];
 for(const film of catalog.titles){
  const a=found.get(film.mediaFile);
- const minutes=String(film.runtime||'').match(/^(?:~)?(\\d+)\\s*min/i);
+ const minutes=String(film.runtime||'').match(/^(?:~)?(\d+)\s*min/i);
  const n=minutes?Number(minutes[1]):null;
  const concerns=[];
  if(!a||a.status==='check_unavailable')concerns.push('source_check_unavailable');
