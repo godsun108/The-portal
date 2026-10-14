@@ -31,8 +31,15 @@ a{color:#a8e7ec}
 <p id="portal-summary" role="status">Not run</p><ol id="portal-results"></ol>
 <p class="warning">These tests establish static resource accessibility in this browser, not live broadcast availability or playback rights.</p>
 </section>
+<section class="panel" aria-labelledby="evidence-title">
+<h2 id="evidence-title">3. Export browser test evidence</h2>
+<p class="muted">After running a browser test, save a privacy-minimal JSON receipt to Files on your iPhone. It is explicitly marked untrusted and contains no credentials or raw logs.</p>
+<button id="export-self" disabled>Export engine result</button>
+<button id="export-portal" disabled>Export PORTAL result</button>
+<p id="export-summary" role="status">Run checks to enable export</p>
+</section>
 <section class="panel" aria-labelledby="report-title">
-<h2 id="report-title">3. Inspect a local verification report</h2>
+<h2 id="report-title">4. Inspect a local verification report</h2>
 <p class="muted">Choose a <code>portfolio-verification.json</code> created by our local runner. The file is read in memory on this device. Nothing is uploaded or stored.</p>
 <input id="report-file" type="file" accept=".json,application/json" aria-label="Choose local verification JSON">
 <button id="inspect">Inspect selected JSON</button>
@@ -40,7 +47,7 @@ a{color:#a8e7ec}
 <p class="warning"><strong>Trust boundary:</strong> This checks structure and consistency only. A valid-looking uploaded file is <em>untrusted</em>, not an authenticated receipt, and never proves CI, production uptime, sales, or trading profitability.</p>
 </section>
 <section class="panel">
-<h2>4. What this emulates—and what it cannot</h2>
+<h2>5. What this emulates—and what it cannot</h2>
 <p><span class="pill">Genuine</span> Browser JS assertions, schema checks, test output and fail-closed display.</p>
 <p><span class="pill">Not emulated as proof</span> Python/Node runtimes, private repository checkout, secrets, deployments, browser playback on other devices, or remote automation.</p>
 <p class="muted">Future extensions can run additional browser-compatible contract suites via trusted static modules. Do not load arbitrary uploaded scripts or embed receipt-signing secrets in this public page.</p>
@@ -49,14 +56,20 @@ a{color:#a8e7ec}
 <script type="module">
 import {selfTest,inspectReport} from './pocket-ci-core.mjs';
 import {runPortalSmoke} from './pocket-ci-portal.mjs';
+import {makeBrowserEvidence} from './pocket-ci-evidence.mjs';
 const byId=id=>document.getElementById(id);
+let lastSelf=null,lastPortal=null;
+function exportEvidence(scope,result){try{const evidence=makeBrowserEvidence(scope,result);const blob=new Blob([JSON.stringify(evidence,null,2)+'\\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='pocket-ci-'+scope+'-'+Date.now()+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);byId('export-summary').textContent='Evidence prepared for local download (untrusted, not uploaded).';}catch(_){byId('export-summary').textContent='Could not export: invalid check results';}}
+byId('export-self').addEventListener('click',()=>{if(lastSelf)exportEvidence('browser-engine-self-test',lastSelf);});
+byId('export-portal').addEventListener('click',()=>{if(lastPortal)exportEvidence('same-origin-static-smoke-only',lastPortal);});
 function render(target,checks){target.replaceChildren();for(const item of checks){const li=document.createElement('li');li.className=item.passed?'pass':'fail';li.textContent=(item.passed?'PASS — ':'FAIL — ')+item.label;target.append(li);}}
-byId('run-tests').addEventListener('click',()=>{const result=selfTest();render(byId('self-results'),result.checks);const count=result.checks.filter(x=>x.passed).length;byId('self-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+count+'/'+result.checks.length+' browser engine tests';});
+byId('run-tests').addEventListener('click',()=>{const result=selfTest();lastSelf=result;byId('export-self').disabled=false;render(byId('self-results'),result.checks);const count=result.checks.filter(x=>x.passed).length;byId('self-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+count+'/'+result.checks.length+' browser engine tests';});
 byId('run-portal').addEventListener('click',async()=>{
   byId('run-portal').disabled=true;
   byId('portal-summary').textContent='Checking PORTAL source…';
   try {
     const result=await runPortalSmoke();
+    lastPortal=result;byId('export-portal').disabled=false;
     render(byId('portal-results'),result.checks);
     const passed=result.checks.filter(x=>x.passed).length;
     byId('portal-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+passed+'/'+result.checks.length+' static browser smoke checks';
