@@ -6,6 +6,8 @@ on:
       - 'tv-open-library.json'
       - 'tv-cinema-device-evidence.json'
       - 'tv-cinema-classics.json'
+      - 'tv-cinema-genre-goals.json'
+      - 'scripts/report-cinema-genre-coverage.mjs'
       - 'scripts/audit-cinema-sources.mjs'
       - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
@@ -17,6 +19,8 @@ on:
       - 'tv-open-library.json'
       - 'tv-cinema-device-evidence.json'
       - 'tv-cinema-classics.json'
+      - 'tv-cinema-genre-goals.json'
+      - 'scripts/report-cinema-genre-coverage.mjs'
       - 'scripts/audit-cinema-sources.mjs'
       - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
@@ -39,8 +43,18 @@ jobs:
         run: node scripts/verify-cinema.mjs
       - name: Check Wikimedia Commons movie sources (non-fatal network failures)
         run: node scripts/audit-cinema-sources.mjs
+      - name: Report progress toward 100 titles per genre
+        run: node scripts/report-cinema-genre-coverage.mjs
       - name: Discover future film candidates for human review
         run: node scripts/discover-cinema-candidates.mjs
+      - name: Upload per-genre coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cinema-genre-coverage
+          path: cinema-genre-coverage.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Publish discovery queue
         if: always()
         uses: actions/upload-artifact@v4

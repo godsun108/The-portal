@@ -1,8 +1,15 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 const current=JSON.parse(readFileSync('tv-cinema-classics.json','utf8'));
 const known=new Set(current.titles.map(x=>x.mediaFile.toLowerCase()));
-const searches=['"feature film" webm','"silent film" webm','"documentary" webm','"full movie" webm'];
-const dailySearch=searches[Math.floor(Date.now()/86400000)%searches.length];
+const goals=JSON.parse(readFileSync('tv-cinema-genre-goals.json','utf8'));
+const counts=Object.fromEntries(goals.genreNames.map(x=>[x,0]));
+for(const p of current.titles)for(const tag of new Set(String(p.genre||'').split(' · ').map(x=>goals.aliases[x]||x)))if(tag in counts)counts[tag]++;
+const ranking=goals.genreNames.map(genre=>({genre,count:counts[genre],remaining:Math.max(0,goals.targetPerGenre-counts[genre])})).sort((a,b)=>a.count-b.count||a.genre.localeCompare(b.genre));
+const neediest=ranking.filter(x=>x.remaining>0);
+const rotation=Math.floor(Date.now()/86400000)%Math.max(1,Math.min(8,neediest.length));
+const focus=neediest[rotation]||ranking[rotation]||null;
+const searches=goals.genreNames.map(x=>goals.discoveryQueries[x]);
+const dailySearch=focus?goals.discoveryQueries[focus.genre]:'"feature film" webm';
 const candidates=new Map();
 async function request(params){const url=new URL('https://commons.wikimedia.org/w/api.php');for(const [k,v] of Object.entries({action:'query',format:'json',...params}))url.searchParams.set(k,String(v));const ctrl=new AbortController();const tm=setTimeout(()=>ctrl.abort(),12000);try{const r=await fetch(url,{headers:{'User-Agent':'PortalCinemaDiscovery/1.0 (rights review queue; no auto publishing)','Accept':'application/json'},signal:ctrl.signal});if(!r.ok)throw Error('Commons HTTP '+r.status);return await r.json()}finally{clearTimeout(tm)}}
 const errors=[];
@@ -20,8 +27,9 @@ function score(x){
  return n;
 }
 const results=[...candidates.values()].map(x=>({...x,triageScore:score(x),reviewStatus:'unreviewed',scoreDisclaimer:'Heuristic prioritization only; not rights proof or full-feature validation.'})).sort((a,b)=>b.triageScore-a.triageScore||a.bytes-b.bytes).slice(0,60);
-const report={schema:'portal.tv.discovery.queue.v1',generatedAt:new Date().toISOString(),activeSearch:dailySearch,networkStatus:errors.length?'degraded':'ok',policy:'Research candidates only. Search results and license hints are NOT proof of rights or playability; no auto-admission.',searches,existingClassics:current.titles.length,candidateCount:results.length,errors,candidates:results};
+const report={schema:'portal.tv.discovery.queue.v1',generatedAt:new Date().toISOString(),activeSearch:dailySearch,priorityGenre:focus?.genre||null,genreShortfall:focus?.remaining||0,genreRanking:ranking,networkStatus:errors.length?'degraded':'ok',policy:'Research candidates only. Search results and license hints are NOT proof of rights or playability; no auto-admission.',searches,existingClassics:current.titles.length,candidateCount:results.length,errors,candidates:results};
 writeFileSync('cinema-discovery-queue.json',JSON.stringify(report,null,2)+'\n');
 console.log('Found '+results.length+' unreviewed Commons media candidates ('+errors.length+' query errors). No catalog mutations.');
+console.log('Priority genre: '+(focus?.genre||'none')+' ('+(focus?.count??0)+'/100 admitted Classics in this category).');
 for(const item of results.slice(0,15))console.log('REVIEW-CANDIDATE score='+item.triageScore+' bytes='+item.bytes+' licenseHint='+JSON.stringify(item.licenseHint)+' title='+JSON.stringify(item.file)+' url='+item.sourcePage);
 if(errors.length)console.warn('Discovery unavailable; queue is empty, not proof of no candidates. '+errors.map(x=>x.error).join('; '));
