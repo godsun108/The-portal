@@ -7,6 +7,7 @@ on:
       - 'tv-cinema-device-evidence.json'
       - 'tv-cinema-classics.json'
       - 'scripts/audit-cinema-sources.mjs'
+      - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
       - '.github/workflows/portal-cinema-guard.yml'
   push:
@@ -17,6 +18,7 @@ on:
       - 'tv-cinema-device-evidence.json'
       - 'tv-cinema-classics.json'
       - 'scripts/audit-cinema-sources.mjs'
+      - 'scripts/discover-cinema-candidates.mjs'
       - 'scripts/verify-cinema.mjs'
       - '.github/workflows/portal-cinema-guard.yml'
   workflow_dispatch:
@@ -27,7 +29,7 @@ permissions:
 jobs:
   catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,6 +39,16 @@ jobs:
         run: node scripts/verify-cinema.mjs
       - name: Check Wikimedia Commons movie sources (non-fatal network failures)
         run: node scripts/audit-cinema-sources.mjs
+      - name: Discover future film candidates for human review
+        run: node scripts/discover-cinema-candidates.mjs
+      - name: Publish discovery queue
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cinema-discovery-queue
+          path: cinema-discovery-queue.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Publish source-audit artifact
         if: always()
         uses: actions/upload-artifact@v4
