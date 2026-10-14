@@ -1,0 +1,33 @@
+name: PORTAL Cinema catalog guard
+on:
+  pull_request:
+    paths:
+      - 'tv-cinema.html'
+      - 'tv-open-library.json'
+      - 'tv-cinema-device-evidence.json'
+      - 'scripts/verify-cinema.mjs'
+      - '.github/workflows/portal-cinema-guard.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tv-cinema.html'
+      - 'tv-open-library.json'
+      - 'tv-cinema-device-evidence.json'
+      - 'scripts/verify-cinema.mjs'
+      - '.github/workflows/portal-cinema-guard.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '25 12 * * *'
+permissions:
+  contents: read
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check admitted catalog, cinema player contract and evidence
+        run: node scripts/verify-cinema.mjs
