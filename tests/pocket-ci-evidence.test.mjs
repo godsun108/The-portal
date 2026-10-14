@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {makeBrowserEvidence, inspectBrowserEvidence} from '../pocket-ci-evidence.mjs';
+import {makeBrowserEvidence, inspectBrowserEvidence, serializeBrowserEvidence} from '../pocket-ci-evidence.mjs';
 const now=new Date('2026-10-13T23:00:00Z');
 const pass={passed:true,checks:[{label:'source is reachable',passed:true}]};
 test('genuine browser result exported as explicitly untrusted',()=>{
@@ -28,4 +28,11 @@ test('reject mutated counts on reinspection',()=>{
 test('reject empty and oversized checks',()=>{
  assert.throws(()=>makeBrowserEvidence('browser-engine-self-test',{passed:true,checks:[]},now));
  assert.throws(()=>makeBrowserEvidence('browser-engine-self-test',{passed:true,checks:Array.from({length:65},()=>({label:'test',passed:true}))},now));
+});
+
+test('downloaded JSON parses without trailing literal escapes',()=>{
+ const content=serializeBrowserEvidence('browser-engine-self-test',pass,now);
+ assert.equal(content.endsWith('\n'),true);
+ const parsed=JSON.parse(content);
+ assert.equal(parsed.evidence_type,'untrusted-browser-local');
 });
