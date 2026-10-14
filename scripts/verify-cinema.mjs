@@ -43,7 +43,7 @@ for(const p of classics.titles){
 assert(html.includes('id="classicsTitles"'),'Classic title view missing');
 for(const marker of ['id="classicSearch"','id="classicGenre"','id="classicSort"','function renderClassics()','renderClassics();'])assert(html.includes(marker),'Classic discovery control missing: '+marker);
 for(const token of ['id="classicQuality"','prop:\'videoinfo\'','viprop:\'derivatives\'','variant?.src||p.mediaUrl','session++','https://commons.wikimedia.org/w/api.php'])assert(html.includes(token),'Missing mobile Commons fallback contract: '+token);
-for(const token of ['video.controls=true','x-webkit-airplay','probe.canPlayType','video player’s built-in AirPlay control','id="classicQuality"'])assert(html.includes(token),'Native video controls missing: '+token);
+for(const token of ['video.controls=true','x-webkit-airplay','probe.canPlayType','AirPlay icon on the video','id="classicQuality"'])assert(html.includes(token),'Native video controls missing: '+token);
 for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvHelpToggle"','id="classicTvHelp"','id="classicMirrorHelp"','value="tv"'])assert(!html.includes(retired),'Retired extra AirPlay interface remains: '+retired);
 for(const token of ['cinema-airplay-icon','AirPlay this film','video.webkitShowPlaybackTargetPicker','screen.append(airplay)','position:absolute;top:8px;right:8px'])assert(html.includes(token),'Missing visible in-player AirPlay: '+token);
 for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvHelpToggle"'])assert(!html.includes(retired),'Unexpected duplicate TV button: '+retired);
