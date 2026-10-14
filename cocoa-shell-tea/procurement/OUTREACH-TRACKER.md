@@ -15,3 +15,6 @@ Nonbinding research inquiries sent (Gmail send accepted; delivery and company re
 
 ## October 14, 2026 confirmed correspondence
 Origen and ChocoSol replies received. **Origen small-batch inventory is not commercial supplier qualification**; no current complete quality documentation, written beverage-repacking consent, actual unit cost or shipping quote. **ChocoSol cannot ship to United States currently**, regardless of online stock. Mānoa response not present in latest incoming search as of review. The team has NOT authorized paid COA testing, samples or orders. Private correspondence remains in Gmail, not republished in the public repository.
+
+## October 14 follow-up to Origen
+Sent a nonbinding reply to Danielle requesting existing heavy-metal testing documents (actual lead/cadmium values, date and lot), available specification/allergen information, dry infusion and repackaging/resale intended use, sustainable 2.5 lb box supply capacity, indicative pricing and Florida freight. Explicitly declined authorizing paid testing, samples or an order. Email accepted for sending; delivery/reply pending.
