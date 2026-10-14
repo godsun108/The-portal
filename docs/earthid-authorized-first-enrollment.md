@@ -1,0 +1,7 @@
+# EarthID first-time passkey enrollment — trusted local boundary
+
+This local-only coordinator brings the **existing** browser passkey ceremony service together with operator-approved enrollment. A trusted server operator independently verifies the person assigned to an existing account and then calls the internal `approveAccount({trustedAccountId})` method. That method yields a 256-bit single-use enrollment grant. The grant is consumed before generating registration options, and its server-side account assignment cannot be changed by browser JSON. The existing real SimpleWebAuthn registration verifier writes the credential only after successful cryptographic verification. Registration never issues an authenticated login session.
+
+Tests demonstrate a successful cryptographic fmt:none attestation, server-controlled account binding despite attempted account substitution, one-use grants, replay denial, expiration, wrong-origin rejection, and no session issuance.
+
+**Security and operational caveats:** This is NOT identity verification, recipient verification, user signup, an invitation-delivery channel, or a public first-login service. Grants are bearer secrets; a stolen grant could permit unauthorized passkey enrollment. Before any release, tie grant activation to independent proof of recipient identity and a trusted operator/admin authorization process. Add durable atomically consumable state, abuse limits, recovery, audit trail, CSRF and HTTPS transport. There is no public endpoint or deployment here.
