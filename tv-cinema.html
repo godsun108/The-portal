@@ -41,15 +41,22 @@ async function findMobileSource(p){
       ['video/mp4','video/webm'].some(type=>String(x.type||'').startsWith(type))&&Number(x.height)>0&&Number(x.height)<=480;
    }catch{return false}
   });
-  good.sort((x,y)=>Number(x.height)-Number(y.height));
-  // Prefer formats Safari reports as playable, and MP4 when available, for native controls/AirPlay.
-  const playable=good.filter(x=>{
-   const probe=document.createElement('video');
-   return !!probe.canPlayType(String(x.type||'').split(';')[0]);
+  // Check the reported codecs, not merely the file container. Safari's ability
+  // to play MP4 does not imply every MP4 codec is supported.
+  const probe=document.createElement('video');
+  const playable=good.filter(x=>!!probe.canPlayType(String(x.type||'')));
+  // A legible 360p or 480p stream beats tiny 160p derivatives.
+  // Prefer MP4 for potential native TV/AirPlay interoperability, when playable.
+  playable.sort((a,b)=>{
+   const mp4a=String(a.type||'').startsWith('video/mp4')?1:0;
+   const mp4b=String(b.type||'').startsWith('video/mp4')?1:0;
+   if(mp4a!==mp4b)return mp4b-mp4a;
+   const score=x=>Number(x.height)>=360?Number(x.height):Number(x.height)-360;
+   return score(b)-score(a);
   });
-  // Never silently select a format the iPhone reports it cannot decode.
-  // A null result falls back to the documented original and a truthful warning.
-  const choice=playable.find(x=>String(x.type).startsWith('video/mp4'))||playable[0]||null;
+  // If nothing is supported, use the original Commons source rather than
+  // knowingly selecting an unsupported derivative.
+  const choice=playable[0]||null;
   derivativeCache.set(p.mediaFile,choice);
   return choice;
  }finally{clearTimeout(timer)}
