@@ -54,7 +54,8 @@ for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvH
 for(const token of ['cinema-airplay-icon','AirPlay this film','video.webkitShowPlaybackTargetPicker','screen.append(airplay)','position:absolute;top:8px;right:8px'])assert(html.includes(token),'Missing visible in-player AirPlay: '+token);
 for(const retired of ['id="classicAirPlay"','id="classicMirror"','id="classicTvHelpToggle"'])assert(!html.includes(retired),'Unexpected duplicate TV button: '+retired);
 for(const marker of ['The Classics · Features, shorts & archival films','▶ Watch short film','▶ Watch film','Commons U.S. public-domain claim (edition rights may differ)'])assert(html.includes(marker),'Missing truthful film label: '+marker);
-for(const marker of ['const choice=playable.find','||playable[0]||null','errorCode===4','errorCode===2','No smaller video format reported playable','Use Video source → Original file'])assert(html.includes(marker),'Missing source compatibility/failure handling: '+marker);
+for(const marker of ["probe.canPlayType(String(x.type||''))",'playable.sort((a,b)=>','Number(x.height)>=360','const choice=playable[0]||null','errorCode===4','errorCode===2','No smaller video format reported playable','Use Video source → Original file'])assert(html.includes(marker),'Missing source compatibility/failure handling: '+marker);
+assert(!html.includes("probe.canPlayType(String(x.type||'').split(';')[0])"),'Must not drop Commons codec metadata when checking Safari compatibility');
 console.log('PASS: '+classics.titles.length+' Classics entries and unique source files.');
 const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
 for(const [i,script] of scripts.entries()){try{new Function(script)}catch(e){throw new Error('Inline script '+i+': '+e.message)}}
