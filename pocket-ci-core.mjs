@@ -1,5 +1,5 @@
 // Browser / Node-compatible Pocket CI contract checks. No eval, network, or persisted secrets.
-export const PROFILES = Object.freeze({'command-center':3,foundry:5,'genesis-smoke':1,'oracle-q-smoke':2});
+export const PROFILES = Object.freeze({'command-center':3,foundry:5,'genesis-smoke':1,'oracle-q-smoke':2,'portal-pocket-ci':3});
 export const STATUSES = Object.freeze(['pass','fail','timeout','unavailable']);
 const own=(v,k)=>Object.prototype.hasOwnProperty.call(v,k);
 export function inspectReport(data){
