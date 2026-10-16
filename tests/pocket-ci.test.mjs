@@ -15,3 +15,10 @@ test('wrong number of profile checks rejected',()=>assert.equal(inspectReport({.
 test('invalid object never trusted',()=>assert.equal(inspectReport(null).passed,false));
 test('timestamp without zone rejected',()=>assert.equal(inspectReport({...report,timestamp_utc:'2026-10-13T21:00:00'}).passed,false));
 test('unknown status rejected',()=>assert.equal(inspectReport({...report,results:[{status:'skip'}]}).passed,false));
+
+test('PORTAL local source-smoke report is recognized but remains untrusted',()=>{
+ const portal={...report,profile:'portal-pocket-ci',total:3,passed:3,results:[{status:'pass'},{status:'pass'},{status:'pass'}]};
+ assert.equal(inspectReport(portal).kind,'untrusted-pass-report');
+ assert.equal(inspectReport({...portal,passed:2}).passed,false);
+ assert.equal(inspectReport({...portal,results:portal.results.slice(0,2)}).passed,false);
+});
