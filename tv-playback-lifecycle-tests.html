@@ -6,7 +6,7 @@ try{
 const response=await fetch('tv.html',{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const source=await response.text();
 const lifecycle=source.slice(source.indexOf('function tune(item)'),source.indexOf('window.portalTune=tune;function draw()'));
 check('Playback entry point found',lifecycle.startsWith('function tune(item)'));
-check('Previous playback cleared before new player',/function tune\(item\)\{[^}]*clear\(\)/.test(lifecycle));
+check('Previous playback cleared before new player',lifecycle.indexOf('clear();')>=0&&lifecycle.indexOf('clear();')<lifecycle.indexOf('screen.append(v)'));
 check('New player appended to screen',lifecycle.includes('screen.append(v)'));
 check('Stale playback callbacks guarded',lifecycle.includes('const isCurrent=')&&lifecycle.includes('screen.contains(v)')&&lifecycle.includes('if(!isCurrent())return'));
 check('Startup watchdog bounded',/watchdog=setTimeout\([\s\S]*?,12000\)/.test(lifecycle));
