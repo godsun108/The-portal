@@ -78,6 +78,10 @@ function render(target,checks){target.replaceChildren();for(const item of checks
 byId('run-tests').addEventListener('click',()=>{const result=selfTest();lastSelf=result;byId('export-self').disabled=false;byId('copy-self').disabled=false;render(byId('self-results'),result.checks);const count=result.checks.filter(x=>x.passed).length;byId('self-summary').textContent=(result.passed?'PASS':'FAIL')+' · '+count+'/'+result.checks.length+' browser engine tests';});
 byId('run-portal').addEventListener('click',async()=>{
   byId('run-portal').disabled=true;
+  lastPortal=null;
+  byId('export-portal').disabled=true;
+  byId('copy-portal').disabled=true;
+  byId('portal-results').replaceChildren();
   byId('portal-summary').textContent='Checking PORTAL source…';
   try {
     const result=await runPortalSmoke();
