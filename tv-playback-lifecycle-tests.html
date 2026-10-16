@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PORTAL TV playback lifecycle tests</title><style>body{font:16px system-ui;background:#0a1424;color:#eafffa;max-width:760px;margin:auto;padding:24px}li{margin:9px 0}.pass{color:#91ffb7}.fail{color:#ffaaa0}</style></head><body><h1>Playback lifecycle tests</h1><p>Deterministic browser checks. No streams opened; saved channels untouched.</p><ol id="results"></ol><p id="summary"></p><script>
+(async()=>{'use strict';const results=document.getElementById('results'),summary=document.getElementById('summary');let passed=0,failed=0;
+function check(name,ok){const li=document.createElement('li');li.className=ok?'pass':'fail';li.textContent=(ok?'PASS: ':'FAIL: ')+name;results.append(li);ok?passed++:failed++}
+try{
+const response=await fetch('tv.html',{cache:'no-store'});if(!response.ok)throw Error('HTTP '+response.status);const source=await response.text();
+const lifecycle=source.slice(source.indexOf('function tune(item)'),source.indexOf('window.portalTune=tune;function draw()'));
+check('Playback entry point found',lifecycle.startsWith('function tune(item)'));
+check('Previous playback cleared before new player',lifecycle.indexOf('clear();')>=0&&lifecycle.indexOf('clear();')<lifecycle.indexOf('screen.append(v)'));
+check('New player appended to screen',lifecycle.includes('screen.append(v)'));
+check('Stale playback callbacks guarded',lifecycle.includes('const isCurrent=')&&lifecycle.includes('screen.contains(v)')&&lifecycle.includes('if(!isCurrent())return'));
+check('Startup watchdog bounded',/watchdog=setTimeout\([\s\S]*?,12000\)/.test(lifecycle));
+check('Watchdog cleared on playing',lifecycle.includes("v.addEventListener('playing'")&&lifecycle.includes('clearTimeout(watchdog)'));
+check('Autoplay rejection handled',lifecycle.includes('v.play().catch('));
+check('Native HLS branch retained',lifecycle.includes("v.canPlayType('application/vnd.apple.mpegurl')"));
+check('Hls.js branch retained',lifecycle.includes('window.Hls.isSupported()'));
+check('Hls.js fatal network retries bounded',lifecycle.includes('networkRetries++<2'));
+check('Hls.js fatal media retries bounded',lifecycle.includes('mediaRetries++<1'));
+check('Hls.js instance destroyed on terminal failure',lifecycle.includes('hls.destroy()'));
+check('Video error event retained',lifecycle.includes("v.addEventListener('error'"));
+check('Video stall event retained',lifecycle.includes("v.addEventListener('stalled'"));
+check('Last-channel storage preserved',source.includes('localStorage.setItem(LAST_KEY,x.url)'));
+check('Favorite persistence preserved',source.includes('localStorage.setItem(FAVORITES_KEY,JSON.stringify([...set]))'));
+check('Alternate feed fallback session guarded',source.includes('session===fallbackSession')&&source.includes('cleanupVideo=()=>'));
+}catch(error){check('Source fetched and inspected',false);const li=document.createElement('li');li.textContent=String(error);results.append(li)}
+summary.textContent=passed+' passed · '+failed+' failed. Source-contract tests only; not simulated playback or iPhone stream verification.'})();
+</script></body></html>
