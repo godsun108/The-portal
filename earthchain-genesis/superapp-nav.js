@@ -6,7 +6,8 @@ const destinations=[
  {title:"Asset Foundry",subtitle:"Create and share game assets",href:"../games/starfall/assets/",status:"Available"},
  {title:"ECTEST Wallet",subtitle:"Existing test wallet",href:"../earthchain-test/no-server.html",status:"Test only"},
  {title:"Test Checkout",subtitle:"Starfall collectible checkout",href:"../games/starfall/commerce/direct.html",status:"Test only"},
- {title:"PORTAL TV",subtitle:"Explore the existing TV page",href:"../tv.html",status:"Existing page"}
+ {title:"PORTAL TV",subtitle:"Explore the existing TV page",href:"../tv.html",status:"Existing page"},
+ {title:"EarthLibrary",subtitle:"Read Alice and open local text ebooks",href:"./books/",status:"Reader preview"}
 ];
 const root=document.getElementById("superapp-nav");
 if(root){
