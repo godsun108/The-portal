@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EarthChain Books — Genesis Library</title>
+<style>
+:root{color-scheme:light dark;font-family:system-ui,sans-serif}body{margin:0;background:#f6f1e8;color:#24221f}
+header{background:#19372c;color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+header strong{font-size:1.12rem}main{max-width:780px;margin:auto;padding:24px 18px}
+section{background:#fff;border:1px solid #ded8cd;border-radius:15px;padding:20px;margin-bottom:20px}
+button,input{font:inherit}button{background:#19372c;color:#fff;border:0;border-radius:9px;padding:10px 14px;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #bf8d2f}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.muted{color:#625d55;font-size:.92rem}
+#reading{font-family:Georgia,serif;font-size:20px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;max-height:65vh;overflow:auto;padding:8px}
+#reading:focus{outline:2px solid #bf8d2f}input[type=range]{width:140px}
+@media(prefers-color-scheme:dark){body{background:#191c19;color:#f5f0e6}section{background:#252b26;border-color:#3d473e}.muted{color:#c4c7bc}}
+</style>
+</head>
+<body>
+<header><strong>EarthChain · Books</strong><span>Genesis Library · prototype</span></header>
+<main>
+<section aria-labelledby="libraryTitle">
+<h1 id="libraryTitle">Your Library</h1>
+<h2>Alice’s Adventures in Wonderland</h2>
+<p>Lewis Carroll · Public domain in the United States</p>
+<p class="muted">Read locally or open the original book source. The included text retains its Project Gutenberg notice and license.</p>
+<div class="controls"><button id="openAlice">Read Alice</button><a href="https://www.gutenberg.org/ebooks/11" target="_blank" rel="noopener noreferrer">Book source and other formats</a></div>
+<hr>
+<label for="upload">Open your own plain-text ebook (.txt)</label>
+<input id="upload" type="file" accept=".txt,text/plain">
+<p class="muted">Your uploaded text stays in this browser. No account, upload server, or paid API required.</p>
+</section>
+<section id="reader" hidden aria-labelledby="bookTitle">
+<div class="controls"><button id="back">Library</button><label for="fontSize">Text size</label><input type="range" id="fontSize" min="15" max="32" value="20"><button id="prev">Previous page</button><button id="next">Next page</button></div>
+<h2 id="bookTitle"></h2><p class="muted" id="progress" role="status"></p>
+<div id="reading" tabindex="0" aria-label="Book text"></div>
+<p class="muted">Reading position is saved on this device. Pages are approximate character chunks, not original print pages.</p>
+</section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const PAGE=2500;let book='',bookId='',title='',page=0;
+function key(s){return 'earthchain.books.v1.'+bookId+'.'+s}
+function save(){try{localStorage.setItem(key('page'),String(page));localStorage.setItem('earthchain.books.font',String($('fontSize').value))}catch(e){}}
+function restore(){try{return Number(localStorage.getItem(key('page')))||0}catch(e){return 0}}
+function render(){
+ if(!book)return;
+ const total=Math.max(1,Math.ceil(book.length/PAGE));
+ page=Math.max(0,Math.min(page,total-1));
+ $('reading').textContent=book.slice(page*PAGE,(page+1)*PAGE);
+ $('progress').textContent='Page '+(page+1)+' of '+total;
+ $('prev').disabled=page===0;$('next').disabled=page>=total-1;
+ $('bookTitle').textContent=title;
+ $('reading').scrollTop=0;save();
+}
+function openBook(text,id,name){
+ if(!text||!text.trim())throw Error('Book is empty');
+ book=text;bookId=id;title=name;page=restore();
+ $('reader').hidden=false;render();$('reader').scrollIntoView({behavior:'smooth'});
+}
+$('openAlice').addEventListener('click',async()=>{
+ const button=$('openAlice');button.disabled=true;button.textContent='Loading…';
+ try{const response=await fetch('./books/alice-wonderland.txt');if(!response.ok)throw Error('Book file unavailable');
+  const text=await response.text();openBook(text,'alice-wonderland','Alice’s Adventures in Wonderland');
+ }catch(e){alert('Could not load Alice from this location. Host this folder on a static web server or open your own .txt file.')}
+ finally{button.disabled=false;button.textContent='Read Alice'}
+});
+$('upload').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ if(file.size>10_000_000){alert('Please choose a text file under 10 MB.');return}
+ try{const text=await file.text();openBook(text,'local-'+file.name+'-'+file.size,file.name)}
+ catch(e){alert('Unable to read this file')}
+});
+$('prev').addEventListener('click',()=>{page--;render()});
+$('next').addEventListener('click',()=>{page++;render()});
+$('back').addEventListener('click',()=>{$('reader').hidden=true;$('libraryTitle').scrollIntoView()});
+$('fontSize').addEventListener('input',()=>{$('reading').style.fontSize=$('fontSize').value+'px';save()});
+try{const saved=localStorage.getItem('earthchain.books.font');if(saved&&Number(saved)>=15&&Number(saved)<=32){$('fontSize').value=saved;$('reading').style.fontSize=saved+'px'}}catch(e){}
+</script>
+</body></html>
