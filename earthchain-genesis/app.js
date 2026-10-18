@@ -13,7 +13,7 @@ const modules=[
 ["EarthConnect","✉","Planned","Private messaging requires identity, permissions and abuse safeguards."],
 ["EarthSound","♫","Planned","Licensed music distribution and playback are not connected."],
 ["EarthMind","✳","Candidate integration","Sovereign Core documents model-neutral contracts; live inference is not verified here."],
-["EarthLibrary","▤","Planned","Licensed and public-domain knowledge catalog is not connected."],
+["EarthLibrary","▤","Reader preview","Read Alice and open local plain-text ebooks through the EarthLibrary reader. Catalog search, EPUB/PDF support, accounts and syncing are not yet connected."],
 ["EarthPress","◉","Planned","Editorial provenance and reporting integrations are not connected."],
 ["EarthStudio","◇","Candidate integration","Virtual Human Engine documents creator workflows; no publishing integration is verified."],
 ["EarthSteward","❀","Planned","Environmental project verification and reporting are not connected."],
