@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090318"><title>THE HAPPINESS DIMENSION — INFINITE BLOOM</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090318"><title>THE HAPPINESS DIMENSION — COSMIC PLAYGROUND</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090318;color:white;font-family:system-ui,sans-serif}canvas{display:block;width:100%;height:100%;touch-action:none}.hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:max(16px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom));text-shadow:0 2px 14px #000}.hud>div{pointer-events:auto}.top{display:flex;justify-content:space-between;gap:10px;align-items:start}.title{font-size:clamp(13px,2.5vw,21px);font-weight:750;letter-spacing:.15em}.sub{font-size:10px;letter-spacing:.2em;opacity:.7;margin-top:6px}.bottom{display:flex;flex-wrap:wrap;gap:8px;align-items:center}button,a{background:#130b29b8;color:white;border:1px solid #ffffff66;border-radius:24px;padding:10px 13px;font:inherit;font-size:12px;text-decoration:none;backdrop-filter:blur(10px)}button:focus-visible,a:focus-visible{outline:3px solid #fff}button[aria-pressed=true]{border-color:#a7ffff;background:#243e58}label{font-size:12px;background:#130b29b8;border-radius:20px;padding:9px 12px}input{vertical-align:middle;accent-color:#ab9cff}@media(max-width:480px){.bottom{gap:5px}button,a,label{font-size:11px;padding:8px 10px}}
 </style></head><body><canvas id="universe" aria-label="Animated fractal cosmos and living kaleidoscope"></canvas><div class="hud"><div class="top"><div><div class="title">✧ THE HAPPINESS DIMENSION</div><div class="sub">SPECTRUM OF INTERGALACTIC HAPPINESS</div></div><a href="../">← PORTAL</a></div><div class="bottom"><button id="mode" aria-label="Switch visual world">WORLD: BOTH</button><button id="pause" aria-pressed="false">PAUSE</button><button id="motion" aria-pressed="false">GENTLE MOTION</button><button id="full">FULLSCREEN</button><label>INTENSITY <input id="intensity" type="range" min="0" max="100" value="65"></label></div></div>
@@ -7,54 +7,62 @@
 (()=>{'use strict';const canvas=document.getElementById('universe'),gl=canvas.getContext('webgl',{alpha:false,antialias:false,powerPreference:'low-power'});if(!gl){document.querySelector('.title').textContent='This dimension needs WebGL';return}
 const vs='attribute vec2 position;void main(){gl_Position=vec4(position,0.,1.);}';
 const fs=`precision highp float;
-uniform vec2 resolution;uniform float time;uniform float intensity;uniform float mixMode;
-#define PI 3.14159265359
-vec3 palette(float x){return .55+.45*cos(6.2831853*(vec3(.02,.31,.66)+x));}
+uniform vec2 resolution;uniform float time;uniform float intensity;uniform float scene;
+#define PI 3.14159265
+vec3 pal(float v){return .5+.5*cos(6.28318*(v+vec3(.02,.32,.67)));}
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+1.),f.x),f.y);}
+vec3 tunnel(vec2 p,float t){
+ float r=length(p)+.001,a=atan(p.y,p.x),z=1./(r+.12)+t*.32;
+ float wave=sin(z*4.5+sin(a*9.+z*.5)*1.8)+.55*cos(a*13.+z*1.2);
+ float fleck=pow(max(0.,sin(a*61.+z*15.)*cos(z*27.-a*37.)),22.);
+ return pal(wave*.12+z*.05+t*.012)*(.25+.8*smoothstep(-1.1,1.2,wave))+pal(z*.07)*fleck*.4;
+}
+vec3 flower(vec2 p,float t){
+ float r=length(p)+.001,a=atan(p.y,p.x),sector=abs(mod(a*7./PI+1.,2.)-1.);
+ float petals=cos(sector*PI*18.+r*18.-t*.45);
+ float filigree=sin(log(r+.13)*18.+petals*2.-t*.25);
+ float rim=pow(max(0.,cos(sector*PI*14.+r*9.)),8.);
+ return pal(filigree*.12+r*.4+t*.012)*(.18+.8*smoothstep(-1.,1.,filigree)) + pal(r*.2+t*.01+.3)*rim*.27;
+}
+vec3 nebula(vec2 p,float t){
+ vec2 q=p*2.7+vec2(t*.035,-t*.021);
+ float n=noise(q*2.)*.55+noise(q*4.5)*.3+noise(q*9.)*.15;
+ float swirl=sin(atan(p.y,p.x)*3.+length(p)*7.-t*.18);
+ float dust=pow(max(0.,n+.19*swirl-.43),1.5)*3.4;
+ vec3 c=pal(n*.7+t*.008+.22)*dust;
+ vec2 grid=floor((p+vec2(t*.008,0.))*52.);
+ float star=step(.983,hash(grid))*pow(max(0.,1.-length(fract((p+vec2(t*.008,0.))*52.)-.5)*3.5),7.);
+ return c+vec3(.82,.9,1.)*star*.8+pal(t*.01+.15)*exp(-length(p-vec2(.12*sin(t*.07),.08*cos(t*.06)))*5.)*.24;
+}
+vec3 liquid(vec2 p,float t){
+ vec2 q=p;float accum=0.;
+ for(int i=0;i<4;i++){q=vec2(q.x*cos(.65)-q.y*sin(.65),q.x*sin(.65)+q.y*cos(.65));q+=.18*sin(q.yx*3.5+t*.2+float(i));accum+=sin(q.x*6.+t*.25)*cos(q.y*5.-t*.22);}
+ float f=accum*.25;return pal(f*.18+q.x*.13+t*.014+.08)*(.32+.7*smoothstep(-.9,.9,f));
+}
 void main(){
- vec2 uv=(gl_FragCoord.xy-.5*resolution)/min(resolution.x,resolution.y);
- float r=length(uv)+.0001, a=atan(uv.y,uv.x), t=time;
- float flight=1./(r+.095)+t*.24;
- float twist=a+sin(flight*.45+t*.12)*.42;
- float rings=sin(flight*4.4+sin(twist*9.)*1.4);
- float ribs=cos(twist*12.+flight*.95+sin(flight*.5)*2.);
- float tunnel=rings*.68+ribs*.45;
- float sectors=9.;
- float mirror=abs(mod(a*sectors/PI+1.,2.)-1.);
- float bloom=sin(mirror*PI*12.+r*20.-t*.45);
- float mandala=sin(log(r+.14)*15.-t*.32+bloom*2.1)+.5*cos(mirror*PI*18.-r*32.);
- float blend=smoothstep(0.,1.,mixMode);
- float field=mix(tunnel,mandala,blend);
- float hue=field*.105+flight*.04+t*.012+.09*sin(r*5.+t*.12);
- vec3 color=palette(hue)*(.30+.68*smoothstep(-1.2,1.1,field));
- float sparkle=pow(max(0.,sin(twist*57.+flight*13.)*cos(flight*23.-twist*41.)),28.);
- color+=palette(hue+.25)*sparkle*.6;
- // Slowly drifting luminous nebulae and soft stellar dust.
- vec2 cloud=uv*3.1+vec2(t*.027,-t*.018);
- float mist=sin(cloud.x*2.3+sin(cloud.y*1.7+t*.07))*sin(cloud.y*2.1-sin(cloud.x*1.9));
- color+=palette(hue+.37)*pow(max(0.,mist),3.)*.16;
- vec2 starGrid=floor(uv*48.);
- vec2 starLocal=fract(uv*48.)-.5;
- float star=step(.994,hash(starGrid))*pow(max(0.,1.-length(starLocal)*4.),6.);
- color+=vec3(.8,.88,1.)*star*.75;
- float core=exp(-r*7.)*.35;
- color+=palette(t*.02+.16)*core;
- color*=intensity;
- color=pow(max(color,vec3(0.)),vec3(.82));
- gl_FragColor=vec4(color,1.);
+ vec2 p=(gl_FragCoord.xy-.5*resolution)/min(resolution.x,resolution.y);
+ float s=clamp(scene,0.,3.999);
+ vec3 c;
+ if(s<1.)c=mix(tunnel(p,time),flower(p,time),smoothstep(0.,1.,s));
+ else if(s<2.)c=mix(flower(p,time),nebula(p,time),smoothstep(1.,2.,s));
+ else if(s<3.)c=mix(nebula(p,time),liquid(p,time),smoothstep(2.,3.,s));
+ else c=mix(liquid(p,time),tunnel(p,time),smoothstep(3.,4.,s));
+ c=pow(max(c*intensity,vec3(0.)),vec3(.85));
+ gl_FragColor=vec4(c,1.);
 }`;
 function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s}
 let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('Shader link failed')}catch(e){document.querySelector('.title').textContent='Visual engine unavailable';return}
 gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const pos=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
-const uniforms={resolution:gl.getUniformLocation(program,'resolution'),time:gl.getUniformLocation(program,'time'),intensity:gl.getUniformLocation(program,'intensity'),mixMode:gl.getUniformLocation(program,'mixMode')};
+const uniforms={resolution:gl.getUniformLocation(program,'resolution'),time:gl.getUniformLocation(program,'time'),intensity:gl.getUniformLocation(program,'intensity'),scene:gl.getUniformLocation(program,'scene')};
 let mode=0,paused=false,gentle=matchMedia('(prefers-reduced-motion: reduce)').matches,elapsed=0,last=0;
 const motion=document.getElementById('motion'),pause=document.getElementById('pause'),modeBtn=document.getElementById('mode');
-function sync(){motion.setAttribute('aria-pressed',String(gentle));pause.setAttribute('aria-pressed',String(paused));motion.textContent=gentle?'NORMAL MOTION':'GENTLE MOTION';pause.textContent=paused?'RESUME':'PAUSE';modeBtn.textContent='WORLD: '+['BOTH','COSMIC FLIGHT','KALEIDOSCOPE'][mode]}
+function sync(){motion.setAttribute('aria-pressed',String(gentle));pause.setAttribute('aria-pressed',String(paused));motion.textContent=gentle?'NORMAL MOTION':'GENTLE MOTION';pause.textContent=paused?'RESUME':'PAUSE';modeBtn.textContent='WORLD: '+['ALL WORLDS','COSMIC FLIGHT','LIVING KALEIDOSCOPE','RAINBOW NEBULA','LIQUID LIGHT'][mode]}
 sync();
-modeBtn.onclick=()=>{mode=(mode+1)%3;sync()};pause.onclick=()=>{paused=!paused;sync()};motion.onclick=()=>{gentle=!gentle;sync()};document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.().catch(()=>{})};
+modeBtn.onclick=()=>{mode=(mode+1)%5;sync()};pause.onclick=()=>{paused=!paused;sync()};motion.onclick=()=>{gentle=!gentle;sync()};document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.().catch(()=>{})};
 function frame(now){const dt=last?Math.min(.05,(now-last)/1000):0;last=now;if(!paused)elapsed+=dt*(gentle?.12:1);const scale=Math.min(devicePixelRatio||1,1.5);const w=Math.max(1,Math.floor(innerWidth*scale)),h=Math.max(1,Math.floor(innerHeight*scale));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h)}
-const blend=mode===1?0:mode===2?1:.5+.5*Math.sin(elapsed*.12);
-gl.uniform2f(uniforms.resolution,w,h);gl.uniform1f(uniforms.time,elapsed);gl.uniform1f(uniforms.mixMode,blend);gl.uniform1f(uniforms.intensity,.15+Number(document.getElementById('intensity').value)/100*.95);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(frame)}
+const blend=mode===0?(elapsed/18)%4:mode-1;
+gl.uniform2f(uniforms.resolution,w,h);gl.uniform1f(uniforms.time,elapsed);gl.uniform1f(uniforms.scene,blend);gl.uniform1f(uniforms.intensity,.15+Number(document.getElementById('intensity').value)/100*.95);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(frame)}
 requestAnimationFrame(frame);document.addEventListener('visibilitychange',()=>{last=0});
 })();
 </script></body></html>
