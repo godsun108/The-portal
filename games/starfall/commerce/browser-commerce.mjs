@@ -43,7 +43,16 @@ export async function starfallSkins(view,address){
  const owned=[];
  for(const [tokenId,token] of Object.entries(view.collectibles)){
   const match=/^starfall-(solar-lion|fire-horse|earth-steward)-[a-f0-9]{8}$/.exec(tokenId);
-  if(token.owner!==address||!match)continue;
+  if(token.owner!==address)continue;
+  // Champion collectibles use the same pinned, signed coordinator projection.
+  // No locally asserted champion status is accepted.
+  const champion=/^starfall-champion-([a-z0-9-]{1,32})-([0-9]{1,12})$/.exec(tokenId);
+  if(champion){
+   const metadata={schema:'earthchain.game-collectible.v1',gameId:'starfall',skinId:'starfall-celestial-crown',tokenId,testOnly:true,achievement:'world-record-legacy',season:champion[1],recordSequence:Number(champion[2])};
+   if(await hash(metadata)===token.metadataHash)owned.push({skinId:'starfall-celestial-crown',tokenId});
+   continue;
+  }
+  if(!match)continue;
   const skinId=match[1],metadata={schema:'earthchain.game-collectible.v1',gameId:'starfall',skinId,tokenId,testOnly:true};
   if(await hash(metadata)===token.metadataHash)owned.push({skinId,tokenId});
  }

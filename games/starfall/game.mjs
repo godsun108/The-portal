@@ -7,7 +7,7 @@ import {verifiedTestSkin} from './commerce/equipment.mjs';
 import {catalog,fresh,validate,purchase,equip,reward} from './economy.mjs';
 const $=id=>document.getElementById(id),canvas=$('game'),ctx=canvas.getContext('2d'),key='earthchain.starfall.local.v1';
 let save=fresh(),storageOK=true,chainSkin=null;
-const hullNames={"solar-lion":"Solar Lion","fire-horse":"Fire Horse","earth-steward":"Earth Steward"};
+const hullNames={"solar-lion":"Solar Lion","fire-horse":"Fire Horse","earth-steward":"Earth Steward","starfall-celestial-crown":"Celestial Crown"};
 function renderChainStatus(){
  const label=$('chain-equipment');
  if(chainSkin&&Date.now()>=chainSkin.expiresAt)chainSkin=null;
@@ -51,7 +51,14 @@ function ship(x,y,color,hull='default',time=0){
  ctx.save();ctx.translate(x,y);
  const flicker=3+Math.sin(time/115)*2;
  ctx.shadowBlur=14;ctx.shadowColor=color;
- if(hull==='fire-horse'){
+ if(hull==='starfall-celestial-crown'){
+  // Champion-only cosmetic, no collision, damage, speed or scoring changes.
+  ctx.shadowBlur=23;ctx.shadowColor='#ffd77a';
+  ctx.fillStyle='#214eac';ctx.strokeStyle='#ffdc83';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(0,-29);ctx.lineTo(15,-10);ctx.lineTo(24,13);ctx.lineTo(8,8);ctx.lineTo(0,14);ctx.lineTo(-8,8);ctx.lineTo(-24,13);ctx.lineTo(-15,-10);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.fillStyle='#ffe9a1';ctx.beginPath();ctx.moveTo(0,-21);ctx.lineTo(5,-8);ctx.lineTo(0,-1);ctx.lineTo(-5,-8);ctx.closePath();ctx.fill();
+  for(const side of [-1,1]){ctx.fillStyle='#7edaff';ctx.fillRect(side*12-2,12,4,9+flicker);ctx.fillStyle='#ffcf65';ctx.fillRect(side*12-1,15,2,6+flicker);}
+ }else if(hull==='fire-horse'){
   ctx.fillStyle='#ff724e';ctx.beginPath();ctx.moveTo(0,-23);ctx.lineTo(10,-7);ctx.lineTo(21,15);ctx.lineTo(7,10);ctx.lineTo(0,4);ctx.lineTo(-7,10);ctx.lineTo(-21,15);ctx.lineTo(-10,-7);ctx.closePath();ctx.fill();
   ctx.fillStyle='#ffc078';ctx.beginPath();ctx.moveTo(0,-13);ctx.lineTo(5,1);ctx.lineTo(0,9);ctx.lineTo(-5,1);ctx.fill();
   for(const side of [-1,1]){ctx.fillStyle='#ff9d40';ctx.fillRect(side*11-2,11,4,8+flicker);ctx.fillStyle='#ffe0a0';ctx.fillRect(side*11-1,12,2,4);}
