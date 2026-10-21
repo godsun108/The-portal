@@ -130,6 +130,10 @@
         [
           "DEAD INTERNET",
           "dead/"
+        ],
+        [
+          "BEHIND THE VEIL",
+          "internet-veil/"
         ]
       ]
     },
@@ -208,6 +212,10 @@
         [
           "AI COMPANY",
           "company/"
+        ],
+        [
+          "EARTHCHAIN OBSERVATORY",
+          "earthchain-observatory/"
         ]
       ]
     }
