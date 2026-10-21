@@ -29,7 +29,17 @@ let run=null,paused=false,last=0,keys=new Set(),target=null,visualBank=0,previou
 const stars=Array.from({length:85},()=>({x:Math.random()*600,y:Math.random()*700,r:Math.random()*1.5+.4}));
 function resize(){const d=Math.min(devicePixelRatio||1,2);canvas.width=canvas.clientWidth*d;canvas.height=canvas.clientHeight*d;}window.addEventListener('resize',resize);resize();
 function launch(){visualBank=0;previousX=null;clearParticles();run={t:0,x:300,y:580,hp:5,inv:0,shots:[],foes:[],seeds:[],bolts:[],spawn:0,fire:0,seedAt:0,bossHP:65,bossAt:0,seedCount:0,ended:false};paused=false;target=null;keys.clear();$('overlay').hidden=true;$('pause').disabled=false;$('pause').textContent='Pause';canvas.focus();}
-function finish(won){if(!run||run.ended)return;run.ended=true;save=reward(save,won);persist();$('overlay').hidden=false;$('title').textContent=won?'The light returns.':'Your next flight awaits.';$('description').textContent=won?'Guardian defeated. +60 local game credits. Your endgame hangar is unlocked. Choose a hull below and fly again.':'Hull lost. +10 local game credits for the expedition. Keep moving and collect green seeds to repair your ship.';$('start').textContent='Fly again';$('pause').disabled=true;}
+function finish(won){if(!run||run.ended)return;run.ended=true;
+// Device-local personal best only. This is NOT an authenticated global score.
+const score=Math.max(0,Math.floor(run.t)) + run.seedCount*50 + (won?1000:0);
+try{
+ const keyBest='earthplay.starfall.personal-best.v1';
+ const prior=Number(localStorage.getItem(keyBest))||0;
+ if(score>prior)localStorage.setItem(keyBest,String(score));
+ $('personal-best').textContent=String(Math.max(prior,score));
+}catch{$('personal-best').textContent=String(score)+' (session only)'}
+$('last-score').textContent=String(score);
+save=reward(save,won);persist();$('overlay').hidden=false;$('title').textContent=won?'The light returns.':'Your next flight awaits.';$('description').textContent=won?'Guardian defeated. +60 local game credits. Your endgame hangar is unlocked. Choose a hull below and fly again.':'Hull lost. +10 local game credits for the expedition. Keep moving and collect green seeds to repair your ship.';$('start').textContent='Fly again';$('pause').disabled=true;}
 function pause(){if(!run||run.ended)return;paused=!paused;keys.clear();target=null;$('pause').textContent=paused?'Resume':'Pause';}
 $('start').onclick=launch;$('pause').onclick=pause;
 window.addEventListener('keydown',e=>{if(e.target.tagName==='BUTTON')return;const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d','p'].includes(k)){e.preventDefault();if(k==='p'&&!e.repeat)pause();else keys.add(k);}});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();if(run&&!run.ended&&!paused)pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden&&run&&!run.ended&&!paused)pause();});
