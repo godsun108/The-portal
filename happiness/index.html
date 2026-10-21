@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090318"><title>THE HAPPINESS DIMENSION — PORTAL</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090318;color:white;font-family:system-ui,sans-serif}canvas{display:block;width:100%;height:100%;touch-action:none}.hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:max(16px,env(safe-area-inset-top)) 18px max(18px,env(safe-area-inset-bottom));text-shadow:0 2px 14px #000}.hud>div{pointer-events:auto}.top{display:flex;justify-content:space-between;gap:10px;align-items:start}.title{font-size:clamp(13px,2.5vw,21px);font-weight:750;letter-spacing:.15em}.sub{font-size:10px;letter-spacing:.2em;opacity:.7;margin-top:6px}.bottom{display:flex;flex-wrap:wrap;gap:8px;align-items:center}button,a{background:#130b29b8;color:white;border:1px solid #ffffff66;border-radius:24px;padding:10px 13px;font:inherit;font-size:12px;text-decoration:none;backdrop-filter:blur(10px)}button:focus-visible,a:focus-visible{outline:3px solid #fff}button[aria-pressed=true]{border-color:#a7ffff;background:#243e58}label{font-size:12px;background:#130b29b8;border-radius:20px;padding:9px 12px}input{vertical-align:middle;accent-color:#ab9cff}@media(max-width:480px){.bottom{gap:5px}button,a,label{font-size:11px;padding:8px 10px}}
+</style></head><body><canvas id="universe" aria-label="Animated fractal cosmos and living kaleidoscope"></canvas><div class="hud"><div class="top"><div><div class="title">✧ THE HAPPINESS DIMENSION</div><div class="sub">SPECTRUM OF INTERGALACTIC HAPPINESS</div></div><a href="../">← PORTAL</a></div><div class="bottom"><button id="mode" aria-label="Switch visual world">WORLD: BOTH</button><button id="pause" aria-pressed="false">PAUSE</button><button id="motion" aria-pressed="false">GENTLE MOTION</button><button id="full">FULLSCREEN</button><label>INTENSITY <input id="intensity" type="range" min="0" max="100" value="65"></label></div></div>
+<script>
+(()=>{'use strict';const canvas=document.getElementById('universe'),gl=canvas.getContext('webgl',{alpha:false,antialias:false,powerPreference:'low-power'});if(!gl){document.querySelector('.title').textContent='This dimension needs WebGL';return}
+const vs='attribute vec2 position;void main(){gl_Position=vec4(position,0.,1.);}';
+const fs=`precision mediump float;
+uniform vec2 resolution;uniform float time;uniform float intensity;uniform float mixMode;
+#define PI 3.14159265
+vec3 palette(float x){return .55+.45*cos(6.28318*(vec3(0.,.31,.67)+x));}
+void main(){
+ vec2 uv=(gl_FragCoord.xy-.5*resolution)/min(resolution.x,resolution.y);
+ float r=length(uv)+.0001,angle=atan(uv.y,uv.x),t=time;
+ float travel=1./(r+.16)+t*.34;
+ float folds=sin(angle*8.+sin(travel*.85+t*.2)*2.);
+ float tunnel=sin(travel*5.+folds*2.+sin(angle*12.)*.6);
+ float stars=pow(max(0.,sin(angle*73.+travel*11.)*sin(travel*19.-angle*39.)),18.);
+ float kaleido=abs(mod(angle/PI*7.+.5,2.)-1.);
+ float petals=sin(kaleido*PI*12.+r*25.-t*.65);
+ float flower=sin(12.*log(r+.18)-t*.4+petals*2.);
+ float field=mix(tunnel+folds*.3,flower+petals*.45,mixMode);
+ float glow=pow(max(0.,1.-r*.8),2.)*.25;
+ float hue=field*.11+travel*.055+t*.025+sin(r*7.)*.08;
+ vec3 col=palette(hue)*(0.35+0.65*smoothstep(-1.1,1.1,field));
+ col+=palette(hue+.24)*(stars*.6+glow);
+ col*=intensity;
+ col=pow(max(col,vec3(0.)),vec3(.82));
+ gl_FragColor=vec4(col,1.);
+}`;
+function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s}
+let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('Shader link failed')}catch(e){document.querySelector('.title').textContent='Visual engine unavailable';return}
+gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const pos=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+const uniforms={resolution:gl.getUniformLocation(program,'resolution'),time:gl.getUniformLocation(program,'time'),intensity:gl.getUniformLocation(program,'intensity'),mixMode:gl.getUniformLocation(program,'mixMode')};
+let mode=0,paused=false,gentle=matchMedia('(prefers-reduced-motion: reduce)').matches,elapsed=0,last=0;
+const motion=document.getElementById('motion'),pause=document.getElementById('pause'),modeBtn=document.getElementById('mode');
+function sync(){motion.setAttribute('aria-pressed',String(gentle));pause.setAttribute('aria-pressed',String(paused));motion.textContent=gentle?'NORMAL MOTION':'GENTLE MOTION';pause.textContent=paused?'RESUME':'PAUSE';modeBtn.textContent='WORLD: '+['BOTH','COSMIC FLIGHT','KALEIDOSCOPE'][mode]}
+sync();
+modeBtn.onclick=()=>{mode=(mode+1)%3;sync()};pause.onclick=()=>{paused=!paused;sync()};motion.onclick=()=>{gentle=!gentle;sync()};document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.().catch(()=>{})};
+function frame(now){const dt=last?Math.min(.05,(now-last)/1000):0;last=now;if(!paused)elapsed+=dt*(gentle?.12:1);const scale=Math.min(devicePixelRatio||1,1.5);const w=Math.max(1,Math.floor(innerWidth*scale)),h=Math.max(1,Math.floor(innerHeight*scale));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h)}
+const blend=mode===1?0:mode===2?1:.5+.5*Math.sin(elapsed*.12);
+gl.uniform2f(uniforms.resolution,w,h);gl.uniform1f(uniforms.time,elapsed);gl.uniform1f(uniforms.mixMode,blend);gl.uniform1f(uniforms.intensity,.15+Number(document.getElementById('intensity').value)/100*.95);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(frame)}
+requestAnimationFrame(frame);document.addEventListener('visibilitychange',()=>{last=0});
+})();
+</script></body></html>
