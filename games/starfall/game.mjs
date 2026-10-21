@@ -39,6 +39,7 @@ try{
  $('personal-best').textContent=String(Math.max(prior,score));
 }catch{$('personal-best').textContent=String(score)+' (session only)'}
 $('last-score').textContent=String(score);
+$('arena-return').textContent='🏆 View '+String(score)+' points in the Arena ↗';
 save=reward(save,won);persist();$('overlay').hidden=false;$('title').textContent=won?'The light returns.':'Your next flight awaits.';$('description').textContent=won?'Guardian defeated. +60 local game credits. Your endgame hangar is unlocked. Choose a hull below and fly again.':'Hull lost. +10 local game credits for the expedition. Keep moving and collect green seeds to repair your ship.';$('start').textContent='Fly again';$('pause').disabled=true;}
 function pause(){if(!run||run.ended)return;paused=!paused;keys.clear();target=null;$('pause').textContent=paused?'Resume':'Pause';}
 $('start').onclick=launch;$('pause').onclick=pause;
