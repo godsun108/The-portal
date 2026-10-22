@@ -22,6 +22,11 @@ jobs:
           node-version: '22'
       - run: node --check scripts/probe-world-tv-streams.mjs
       - run: node scripts/probe-world-tv-streams.mjs
+      - name: Install FFmpeg probing tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          command -v ffprobe
       - name: Verify bounded HLS video decode evidence
         run: node scripts/probe-world-tv-decode.mjs
       - name: Validate authorized publication manifest (fail closed)
