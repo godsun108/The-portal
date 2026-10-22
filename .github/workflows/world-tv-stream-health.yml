@@ -22,6 +22,10 @@ jobs:
           node-version: '22'
       - run: node --check scripts/probe-world-tv-streams.mjs
       - run: node scripts/probe-world-tv-streams.mjs
+      - name: Verify bounded HLS video decode evidence
+        run: node scripts/probe-world-tv-decode.mjs
+      - name: Validate authorized publication manifest (fail closed)
+        run: node scripts/build-authorized-tv-catalog.mjs
       - name: Triage candidate review queue
         run: node scripts/review-world-tv-candidates.mjs
       - uses: actions/upload-artifact@v4
@@ -31,5 +35,8 @@ jobs:
           path: |
             world-tv-stream-health.json
             world-tv-candidate-review.json
+            world-tv-decode-evidence.json
+            tv-publication-gate-report.json
+            tv-authorized-channels.json
           if-no-files-found: warn
           retention-days: 14
