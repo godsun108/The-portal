@@ -1,0 +1,29 @@
+name: PORTAL Cinema publication gate
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/build-cinema-publication-proposal.mjs'
+      - 'cinema-publication-approvals.json'
+      - 'tv-cinema-classics.json'
+      - '.github/workflows/cinema-publication-gate.yml'
+permissions:
+  contents: read
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/build-cinema-publication-proposal.mjs
+      - run: node scripts/build-cinema-publication-proposal.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portal-cinema-publication-proposal
+          path: |
+            cinema-proposed-catalog.json
+            cinema-publication-report.json
+          retention-days: 14
