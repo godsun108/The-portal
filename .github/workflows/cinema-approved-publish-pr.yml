@@ -1,0 +1,60 @@
+name: PORTAL Cinema approved catalog PR
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cinema-publication-approvals.json'
+      - 'scripts/build-cinema-publication-proposal.mjs'
+      - '.github/workflows/cinema-approved-publish-pr.yml'
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: cinema-approved-publish
+  cancel-in-progress: false
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate evidence and build proposal
+        run: |
+          node scripts/test-cinema-publication-gate.mjs
+          node scripts/build-cinema-publication-proposal.mjs
+      - name: Apply proposal only when approved additions exist
+        id: change
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const report=JSON.parse(fs.readFileSync('cinema-publication-report.json','utf8'));
+          if(!Array.isArray(report.admitted))throw Error('Malformed publication report');
+          if(report.admitted.length){
+            fs.copyFileSync('cinema-proposed-catalog.json','tv-cinema-classics.json');
+            console.log('Approved additions proposed: '+report.admitted.length);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,'changed=true\n');
+          }else{
+            console.log('No new approved titles; no PR needed');
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,'changed=false\n');
+          }
+          NODE
+      - name: Open reviewed catalog PR
+        if: steps.change.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Cinema: propose reviewed approved title additions'
+          branch: automation/cinema-approved-catalog
+          delete-branch: true
+          title: 'Cinema Director: publish approved title batch'
+          body: |
+            Automatically prepared from explicit publication approvals.
+            Confirm exact-file rights evidence, territorial scope, metadata and device playback.
+            Requires human review and normal branch protection before merge.
+            Discovery alone cannot authorize a title.
+          labels: cinema,content-review
+          add-paths: tv-cinema-classics.json
