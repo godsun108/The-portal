@@ -1,5 +1,11 @@
 name: PORTAL World TV stream health sample
 on:
+  pull_request:
+    paths:
+      - 'tv-channel-lab.html'
+      - 'tv-cinema-classics.json'
+      - 'scripts/**'
+      - '.github/workflows/**'
   workflow_dispatch:
   schedule:
     - cron: '11 10 * * *'
