@@ -16,10 +16,14 @@ jobs:
           node-version: '22'
       - run: node --check scripts/probe-world-tv-streams.mjs
       - run: node scripts/probe-world-tv-streams.mjs
+      - name: Triage candidate review queue
+        run: node scripts/review-world-tv-candidates.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: portal-world-tv-stream-health
-          path: world-tv-stream-health.json
+          path: |
+            world-tv-stream-health.json
+            world-tv-candidate-review.json
           if-no-files-found: warn
           retention-days: 14
