@@ -1,0 +1,27 @@
+name: PORTAL Cinema discovery
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/discover-cinema-commons.mjs'
+      - '.github/workflows/cinema-discovery.yml'
+  schedule:
+    - cron: '19 9 * * *'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/discover-cinema-commons.mjs
+      - run: node scripts/discover-cinema-commons.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portal-cinema-discovery-candidates
+          path: cinema-discovery-candidates.json
+          retention-days: 14
