@@ -1,0 +1,44 @@
+name: PORTAL Directors research coordination
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 10 * * *'
+  pull_request:
+    paths:
+      - 'scripts/portal-directors-status.mjs'
+      - '.github/workflows/portal-directors.yml'
+permissions:
+  contents: read
+jobs:
+  directors:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Cinema Director discovery
+        run: |
+          node scripts/discover-cinema-commons.mjs
+          node scripts/build-cinema-review-queue.mjs
+          node scripts/build-cinema-publication-proposal.mjs
+      - name: TV Programming Director health and review
+        run: |
+          node scripts/probe-world-tv-streams.mjs
+          node scripts/review-world-tv-candidates.mjs
+          node scripts/build-authorized-tv-catalog.mjs
+      - name: Generate unified Director status
+        run: node scripts/portal-directors-status.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portal-directors-research
+          path: |
+            portal-directors-status.json
+            cinema-discovery-candidates.json
+            cinema-review-queue.json
+            cinema-publication-report.json
+            world-tv-stream-health.json
+            world-tv-candidate-review.json
+            tv-publication-gate-report.json
+          retention-days: 14
