@@ -56,5 +56,4 @@ jobs:
             Confirm exact-file rights evidence, territorial scope, metadata and device playback.
             Requires human review and normal branch protection before merge.
             Discovery alone cannot authorize a title.
-          labels: cinema,content-review
           add-paths: tv-cinema-classics.json
