@@ -1,0 +1,36 @@
+name: PORTAL World TV directory audit
+on:
+  pull_request:
+    paths:
+      - 'tv-channel-lab.html'
+      - 'tv-cinema-classics.json'
+      - 'scripts/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+  schedule:
+    - cron: '41 8 * * *'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check script syntax
+        run: node --check scripts/audit-world-tv-directory.mjs
+      - name: Check World TV Channel Lab filters
+        run: node scripts/test-world-tv-lab.mjs
+      - name: Audit global channel directory
+        run: node scripts/audit-world-tv-directory.mjs
+      - name: Upload discovery report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-world-tv-directory-audit
+          path: world-tv-directory-audit.json
+          if-no-files-found: warn
+          retention-days: 14
