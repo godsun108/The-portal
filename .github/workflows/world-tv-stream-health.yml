@@ -27,7 +27,7 @@ jobs:
       - name: Validate authorized publication manifest (fail closed)
         run: node scripts/build-authorized-tv-catalog.mjs
       - name: Install Chromium for bounded browser checks
-        run: npm ci && npx playwright install --with-deps chromium
+        run: npm install --no-audit --no-fund --package-lock=false && npx playwright install --with-deps chromium
       - name: Check browser playback evidence
         run: node scripts/test-world-tv-browser-playback.mjs
       - name: Triage candidate review queue
