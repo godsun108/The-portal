@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/build-cinema-publication-proposal.mjs'
+      - 'scripts/test-cinema-publication-gate.mjs'
       - 'cinema-publication-approvals.json'
       - 'tv-cinema-classics.json'
       - '.github/workflows/cinema-publication-gate.yml'
@@ -19,6 +20,7 @@ jobs:
         with:
           node-version: '22'
       - run: node --check scripts/build-cinema-publication-proposal.mjs
+      - run: node scripts/test-cinema-publication-gate.mjs
       - run: node scripts/build-cinema-publication-proposal.mjs
       - uses: actions/upload-artifact@v4
         with:
