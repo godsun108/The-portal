@@ -1,0 +1,25 @@
+name: PORTAL Cinema catalog audit
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 11 * * 0'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/audit-cinema-catalog.mjs
+      - run: node scripts/audit-cinema-catalog.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portal-cinema-catalog-audit
+          path: tv-cinema-catalog-audit.json
+          if-no-files-found: warn
+          retention-days: 14
