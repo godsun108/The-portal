@@ -8,6 +8,8 @@ const candidates=report.results.map(x=>({
  playbackApproved:false,publicationApproved:false,rightsStatus:'unverified',
  reason:x.status==='http_reachable'?'HTTP response is not decoded video playback':'No confirmed playable video'
 }));
-const summary={schema:'portal.tv.candidate-review.v1',generatedAt:new Date().toISOString(),sourceSchema:report.schema,reviewed:candidates.length,playbackApproved:0,publicationApproved:0,needsPlaybackTest:candidates.filter(x=>x.technicalStatus==='needs_browser_playback_test').length,candidates};
+const rank={needs_browser_playback_test:0,retry_unknown:1,retry_or_reject:2};
+candidates.sort((a,b)=>(rank[a.technicalStatus]??3)-(rank[b.technicalStatus]??3)||a.country.localeCompare(b.country)||a.name.localeCompare(b.name));
+const summary={schema:'portal.tv.candidate-review.v1',generatedAt:new Date().toISOString(),sourceSchema:report.schema,reviewed:candidates.length,playbackApproved:0,publicationApproved:0,needsPlaybackTest:candidates.filter(x=>x.technicalStatus==='needs_browser_playback_test').length,priorityReview:candidates.slice(0,20),candidates};
 writeFileSync('world-tv-candidate-review.json',JSON.stringify(summary,null,2)+'\n');
 console.log('Queued',summary.needsPlaybackTest,'streams for device playback verification; none auto-published');
