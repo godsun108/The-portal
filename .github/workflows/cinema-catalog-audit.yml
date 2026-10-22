@@ -1,5 +1,11 @@
 name: PORTAL Cinema catalog audit
 on:
+  pull_request:
+    paths:
+      - 'tv-channel-lab.html'
+      - 'tv-cinema-classics.json'
+      - 'scripts/**'
+      - '.github/workflows/**'
   workflow_dispatch:
   schedule:
     - cron: '23 11 * * 0'
