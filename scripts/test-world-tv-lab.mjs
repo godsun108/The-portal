@@ -1,0 +1,10 @@
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+const html=readFileSync('tv-channel-lab.html','utf8');
+for(const id of ['region','country','category','query'])assert.match(html,new RegExp('id="'+id+'"'));
+assert.match(html,/function refreshCountries\(/);
+assert.match(html,/function regionFor\(/);
+assert.match(html,/\(!region\|\|regionFor\(x\.country\)===region\)/);
+assert.match(html,/\(!country\|\|String\(x\.country\|\|'Unknown'\)\.toUpperCase\(\)===country\)/);
+assert.match(html,/rightsStatus:'unverified'/);
+console.log('World TV Channel Lab static smoke assertions passed');
