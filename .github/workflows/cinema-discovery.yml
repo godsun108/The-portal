@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/discover-cinema-commons.mjs'
+      - 'scripts/build-cinema-review-queue.mjs'
       - '.github/workflows/cinema-discovery.yml'
   schedule:
     - cron: '19 9 * * *'
@@ -20,8 +21,12 @@ jobs:
           node-version: '22'
       - run: node --check scripts/discover-cinema-commons.mjs
       - run: node scripts/discover-cinema-commons.mjs
+      - run: node --check scripts/build-cinema-review-queue.mjs
+      - run: node scripts/build-cinema-review-queue.mjs
       - uses: actions/upload-artifact@v4
         with:
           name: portal-cinema-discovery-candidates
-          path: cinema-discovery-candidates.json
+          path: |
+            cinema-discovery-candidates.json
+            cinema-review-queue.json
           retention-days: 14
