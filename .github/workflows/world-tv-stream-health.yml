@@ -1,0 +1,25 @@
+name: PORTAL World TV stream health sample
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '11 10 * * *'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/probe-world-tv-streams.mjs
+      - run: node scripts/probe-world-tv-streams.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portal-world-tv-stream-health
+          path: world-tv-stream-health.json
+          if-no-files-found: warn
+          retention-days: 14
