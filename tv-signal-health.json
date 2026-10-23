@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-23T04:53:06.541Z",
+  "generatedAt": "2026-10-23T11:42:07.334Z",
   "note": "Server-side manifest reachability is NOT proof of playback, authorization, geography or device compatibility.",
   "summary": {
     "checked": 5,
@@ -12,7 +12,7 @@
       "url": "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 354,
+      "latencyMs": 479,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -21,7 +21,7 @@
       "url": "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 318,
+      "latencyMs": 342,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -30,7 +30,7 @@
       "url": "https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_2300.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 233,
+      "latencyMs": 238,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -39,7 +39,7 @@
       "url": "https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 719,
+      "latencyMs": 483,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -48,7 +48,7 @@
       "url": "https://i24newsenglish-cdn.encoders.immergo.tv/master.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 468,
+      "latencyMs": 504,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     }
