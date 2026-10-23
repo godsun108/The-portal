@@ -2,8 +2,11 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 const report=JSON.parse(readFileSync('world-tv-stream-health.json','utf8'));
 if(report.schema!=='portal.tv.world-stream-health.v1'||!Array.isArray(report.results))throw Error('Unexpected health report');
+const browser=JSON.parse(readFileSync('world-tv-browser-evidence.json','utf8'));
+const browserByUrl=new Map((browser.results||[]).map(x=>[x.url,x]));
 const candidates=report.results.map(x=>({
  name:x.name,country:x.country,category:x.category,url:x.url,
+ browserEvidence:browserByUrl.get(x.url)?.classification||'not_tested',
  technicalStatus:x.status==='http_reachable'?'needs_browser_playback_test':x.status==='http_error'?'retry_or_reject':'retry_unknown',
  playbackApproved:false,publicationApproved:false,rightsStatus:'unverified',
  reason:x.status==='http_reachable'?'HTTP response is not decoded video playback':'No confirmed playable video'
