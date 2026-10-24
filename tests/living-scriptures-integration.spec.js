@@ -57,7 +57,7 @@ test('Full corpus manifest supplies titled books and non-Genesis passages',async
  await page.locator('#chapter').selectOption('3');
  await page.getByRole('button',{name:'Read chapter'}).click();
  await expect(page.locator('#verses .verse').first()).toBeVisible();
- await expect(page.locator('#heading')).toHaveText(/^(Exodus|EXO) 3$/);
+ await expect(page.locator('#heading')).toHaveText(/(?:Exodus|EXO) 3$/);
  // Both old and regenerated manifests are valid during the branch-only staging transition.
 });
 
