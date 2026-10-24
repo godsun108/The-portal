@@ -1,0 +1,161 @@
+name: Living Scriptures checks
+on:
+  pull_request:
+    paths:
+      - 'living-scriptures.html'
+      - 'scripture-compare.html'
+      - 'scripture-reader.html'
+      - 'scripture-format.js'
+      - 'scripture-sw.js'
+      - 'stations.json'
+      - 'tests/living-scriptures.spec.js'
+      - 'tests/living-scriptures-integration.spec.js'
+      - '.github/workflows/living-scriptures.yml'
+      - 'docs/living-scriptures-sources.md'
+      - 'scripts/audit-web-usfm.mjs'
+      - 'tests/audit-web-usfm.test.mjs'
+      - 'data/living-scriptures-source-manifest.json'
+      - 'scripts/convert-web-usfm.mjs'
+      - 'scripts/validate-web-chapters.mjs'
+      - 'tests/convert-web-usfm.test.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run existing PORTAL contract suite
+        run: node test-contracts.cjs
+      - name: Verify source audit utility
+        run: node --test tests/audit-web-usfm.test.mjs tests/convert-web-usfm.test.mjs
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium webkit
+      - name: Test Living Scriptures browser flows
+        run: npx playwright test tests/living-scriptures.spec.js --project=chromium
+        env:
+          CI: 'true'
+      - name: Simulated iPhone Safari-engine browser tests
+        run: npx playwright test tests/living-scriptures.spec.js --project=mobile-webkit
+        env:
+          CI: 'true'
+      - name: Start local scripture test site
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/living-scriptures-server.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/data/web-chapters/GEN/001.json -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/living-scriptures-server.log
+          exit 1
+      - name: Run real-corpus and offline browser tests
+        run: npx playwright test tests/living-scriptures-integration.spec.js --project=chromium --project=mobile-webkit
+        env:
+          CI: 'true'
+
+  official-web-source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download exact upstream WEB USFM archive
+        run: |
+          mkdir -p /tmp/web-source /tmp/web-extracted
+          curl --fail --location --retry 2 --max-time 120 --output /tmp/web-source/eng-web_usfm.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-source/eng-web_usfm.zip' | sha256sum -c
+          sha256sum /tmp/web-source/eng-web_usfm.zip | tee /tmp/web-source/archive-sha256.txt
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          archive=Path('/tmp/web-source/eng-web_usfm.zip')
+          destination=Path('/tmp/web-extracted').resolve()
+          with zipfile.ZipFile(archive) as z:
+              info=z.infolist()
+              assert len(info) < 1000, 'Unexpected archive member count'
+              assert sum(item.file_size for item in info) < 100_000_000, 'Archive too large'
+              for item in info:
+                  target=(destination/item.filename).resolve()
+                  assert target.is_relative_to(destination), 'Archive path traversal'
+              z.extractall(destination)
+          PY
+      - name: Audit source structure (do not publish text)
+        run: node scripts/audit-web-usfm.mjs /tmp/web-extracted > /tmp/web-source/source-audit.json
+      - name: Convert source into chapter review artifacts
+        run: |
+          node scripts/convert-web-usfm.mjs /tmp/web-extracted /tmp/web-chapters
+          node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058 || a.books.find(b=>b.id==='GEN')?.title==='GEN' || a.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1); console.log('Chapter counts validated')"
+      - name: Validate every generated chapter and verse
+        run: node scripts/validate-web-chapters.mjs /tmp/web-chapters
+      - name: Print source audit summary
+        run: |
+          node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
+      - name: Preserve integrity report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-scriptures-web-source-audit
+          path: |
+            /tmp/web-source/archive-sha256.txt
+            /tmp/web-source/source-audit.json
+            /tmp/web-chapters/
+          retention-days: 14
+
+  stage-chapter-corpus:
+    # Only push generated files to the same-repository feature branch, never main.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/living-scriptures-v1'
+    needs: [browser-tests, official-web-source-audit]
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download and safely extract official archive
+        run: |
+          mkdir -p /tmp/web-stage-source /tmp/web-stage-extracted
+          curl --fail --location --retry 2 --max-time 120 --output /tmp/web-stage-source/archive.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-stage-source/archive.zip' | sha256sum -c
+          python3 - <<'PY'
+          import zipfile
+          from pathlib import Path
+          dest=Path('/tmp/web-stage-extracted').resolve()
+          with zipfile.ZipFile('/tmp/web-stage-source/archive.zip') as z:
+              info=z.infolist()
+              assert len(info) < 1000
+              assert sum(x.file_size for x in info) < 100_000_000
+              for x in info:
+                  assert (dest/x.filename).resolve().is_relative_to(dest)
+              z.extractall(dest)
+          PY
+      - name: Generate local chapter files on feature branch
+        run: |
+          node scripts/audit-web-usfm.mjs /tmp/web-stage-extracted > /tmp/web-stage-source/audit.json
+          node scripts/convert-web-usfm.mjs /tmp/web-stage-extracted data/web-chapters
+          node scripts/validate-web-chapters.mjs data/web-chapters
+          node -e "const m=require('./data/web-chapters/manifest.json'); if(m.books.length!==81||m.chapters!==1402||m.verse_markers!==38058||m.books.find(b=>b.id==='GEN')?.title==='GEN'||m.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1)"
+      - name: Commit review corpus to feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/web-chapters
+          if git diff --cached --quiet; then
+            echo "Corpus already current"
+          else
+            git commit -m "Stage verified WEB chapter review corpus on feature branch"
+            git push origin HEAD:feature/living-scriptures-v1
+          fi
