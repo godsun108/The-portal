@@ -5,6 +5,9 @@ on:
       - 'living-scriptures.html'
       - 'scripture-compare.html'
       - 'scripture-reader.html'
+      - 'scripture-format.js'
+      - 'scripture-sw.js'
+      - 'stations.json'
       - 'tests/living-scriptures.spec.js'
       - '.github/workflows/living-scriptures.yml'
       - 'docs/living-scriptures-sources.md'
@@ -27,6 +30,8 @@ jobs:
           node-version: '22'
       - name: Install test dependencies
         run: npm install --no-audit --no-fund
+      - name: Run existing PORTAL contract suite
+        run: node test-contracts.cjs
       - name: Verify source audit utility
         run: node --test tests/audit-web-usfm.test.mjs tests/convert-web-usfm.test.mjs
       - name: Install Chromium
