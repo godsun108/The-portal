@@ -80,3 +80,13 @@ test('Readable projection preserves words while retaining raw notes',async ({pag
  await expect(page.locator('#verses details')).toHaveCount(1);
  await expect(page.locator('#verses pre')).toContainText('A source note');
 });
+
+test('Narrow phone viewport keeps reader controls accessible',async ({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(local('scripture-reader.html'));
+ await expect(page.getByRole('heading',{name:'Scripture Reader'})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Read chapter'})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Save this book offline'})).toBeVisible();
+ const horizontalOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2);
+ expect(horizontalOverflow).toBe(false);
+});
