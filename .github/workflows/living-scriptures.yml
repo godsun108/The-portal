@@ -81,3 +81,52 @@ jobs:
             /tmp/web-source/source-audit.json
             /tmp/web-chapters/
           retention-days: 14
+
+  stage-chapter-corpus:
+    # Only push generated files to the same-repository feature branch, never main.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/living-scriptures-v1'
+    needs: [browser-tests, official-web-source-audit]
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download and safely extract official archive
+        run: |
+          mkdir -p /tmp/web-stage-source /tmp/web-stage-extracted
+          curl --fail --location --retry 2 --max-time 120 --output /tmp/web-stage-source/archive.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          python3 - <<'PY'
+          import zipfile
+          from pathlib import Path
+          dest=Path('/tmp/web-stage-extracted').resolve()
+          with zipfile.ZipFile('/tmp/web-stage-source/archive.zip') as z:
+              info=z.infolist()
+              assert len(info) < 1000
+              assert sum(x.file_size for x in info) < 100_000_000
+              for x in info:
+                  assert (dest/x.filename).resolve().is_relative_to(dest)
+              z.extractall(dest)
+          PY
+      - name: Generate local chapter files on feature branch
+        run: |
+          node scripts/audit-web-usfm.mjs /tmp/web-stage-extracted > /tmp/web-stage-source/audit.json
+          node scripts/convert-web-usfm.mjs /tmp/web-stage-extracted data/web-chapters
+          node -e "const m=require('./data/web-chapters/manifest.json'); if(m.books.length!==81||m.chapters!==1402||m.verse_markers!==38058) process.exit(1)"
+      - name: Commit review corpus to feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/web-chapters
+          if git diff --cached --quiet; then
+            echo "Corpus already current"
+          else
+            git commit -m "Stage verified WEB chapter review corpus on feature branch"
+            git push origin HEAD:feature/living-scriptures-v1
+          fi
