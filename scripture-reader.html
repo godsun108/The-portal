@@ -33,7 +33,7 @@ document.getElementById('offline').addEventListener('click',async()=>{
  button.disabled=true;status.textContent='Saving book chapters for offline reading…';
  let saved=0;
  try{
-  const cache=await caches.open('living-scriptures-v1');
+  const cache=await caches.open('living-scriptures-v2');
   for(let i=1;i<=count;i++){
    const url='./data/web-chapters/'+selected+'/'+String(i).padStart(3,'0')+'.json';
    const response=await fetch(url,{cache:'no-store'});
