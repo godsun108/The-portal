@@ -44,7 +44,7 @@ function parseUsfm(raw, path) {
 try {
   const inputRoot=resolve(input),outRoot=resolve(output);const paths=await walk(inputRoot);
   if(!paths.length)throw Error('No USFM source files');
-  const manifest={format:'portal-usfm-raw-v1',source:'World English Bible via https://ebible.org/Scriptures/eng-web_usfm.zip',validation:'structural-only; requires manual formatting review',created_at:new Date().toISOString(),books:[],chapters:0,verse_markers:0};
+  const manifest={format:'portal-usfm-raw-v1',source:'World English Bible via https://ebible.org/Scriptures/eng-web_usfm.zip',validation:'structural-only; requires manual formatting review',source_archive_sha256:'1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0',books:[],chapters:0,verse_markers:0};
   const ids=new Set();
   for(const path of paths) {
     const bytes=await readFile(path);const parsed=parseUsfm(bytes.toString('utf8'),path);
