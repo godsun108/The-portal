@@ -8,6 +8,8 @@ on:
       - 'tests/living-scriptures.spec.js'
       - '.github/workflows/living-scriptures.yml'
       - 'docs/living-scriptures-sources.md'
+      - 'scripts/audit-web-usfm.mjs'
+      - 'tests/audit-web-usfm.test.mjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,6 +24,8 @@ jobs:
           node-version: '22'
       - name: Install test dependencies
         run: npm install --no-audit --no-fund
+      - name: Verify source audit utility
+        run: node --test tests/audit-web-usfm.test.mjs
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test Living Scriptures browser flows
