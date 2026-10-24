@@ -72,7 +72,7 @@ test('Readable projection preserves words while retaining raw notes',async ({pag
  await page.evaluate(()=>{
    window.fetch=async (url)=>new Response(JSON.stringify({
      edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
-     verses:[{number:'1',raw_usfm:'\\\\w In|strong="H1"\\\\w* \\\\w the|strong="H2"\\\\w* beginning.\\\\f + \\\\ft A source note\\\\f*'}]
+     verses:[{number:'1',raw_usfm:'\\w In|strong="H1"\\w* \\w the|strong="H2"\\w* beginning.\\f + \\ft A source note\\f*'}]
    }),{status:200,headers:{'Content-Type':'application/json'}});
  });
  await page.getByRole('button',{name:'Read chapter'}).click();
