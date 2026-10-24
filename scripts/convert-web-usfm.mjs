@@ -18,6 +18,7 @@ function parseUsfm(raw, path) {
   const id = raw.match(/^\\id\s+([A-Z0-9]{3,4})\b/m)?.[1];
   if (!id) throw Error(path+': invalid book id');
   if(peripherals.has(id))return null;
+  const title=(raw.match(/^\\\\toc1\\s+(.+)$/m)?.[1]||raw.match(/^\\\\h\\s+(.+)$/m)?.[1]||id).trim();
   const chapters = []; let chapter=null, verse=null;
   // Keep original verse material exactly, including all USFM formatting markers.
   for(const line of raw.split(/\r?\n/)) {
@@ -38,7 +39,7 @@ function parseUsfm(raw, path) {
     }
   }
   if (!chapters.length || chapters.some(c=>!c.verses.length)) throw Error(path+': missing chapter verses');
-  return {id,chapters};
+  return {id,title,chapters};
 }
 try {
   const inputRoot=resolve(input),outRoot=resolve(output);const paths=await walk(inputRoot);
@@ -56,7 +57,7 @@ try {
       await writeFile(join(target,name),JSON.stringify({edition:'eng-web',book:parsed.id,chapter:c.chapter,verses:c.verses,kind:'raw-usfm-review'},null,0)+'\n');
       manifest.verse_markers+=c.verses.length;manifest.chapters++;
     }
-    manifest.books.push({id:parsed.id,chapters:parsed.chapters.length,sha256:sha(bytes),source_file:basename(path)});
+    manifest.books.push({id:parsed.id,title:parsed.title,chapters:parsed.chapters.length,sha256:sha(bytes),source_file:basename(path)});
   }
   if(!manifest.books.length)throw Error('No canonical scripture book source files');
   await mkdir(outRoot,{recursive:true});
