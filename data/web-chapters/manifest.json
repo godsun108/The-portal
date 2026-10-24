@@ -2,7 +2,7 @@
   "format": "portal-usfm-raw-v1",
   "source": "World English Bible via https://ebible.org/Scriptures/eng-web_usfm.zip",
   "validation": "structural-only; requires manual formatting review",
-  "created_at": "2026-10-24T02:16:07.934Z",
+  "created_at": "2026-10-24T02:16:31.338Z",
   "books": [
     {
       "id": "GEN",
