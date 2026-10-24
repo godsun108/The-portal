@@ -22,6 +22,14 @@ test('saving Genesis enables offline chapter reading',async ({page,context})=>{
  await page.getByRole('button',{name:'Read chapter'}).click();
  await expect(page.locator('#verses .verse').first()).toBeVisible();
  await expect(page.locator('#status')).toContainText('Loaded');
+ // Reopen the entire reader while offline, not just fetch another chapter.
+ await page.reload();
+ await expect(page.locator('#status')).toContainText('Local review corpus detected');
+ await page.locator('#book').selectOption('GEN');
+ await page.locator('#chapter').selectOption('3');
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses .verse').first()).toBeVisible();
+ await expect(page.locator('#status')).toContainText('Loaded');
  await context.setOffline(false);
 });
 
