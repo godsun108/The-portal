@@ -16,7 +16,7 @@ async function filesIn(folder) {
   for (const entry of entries) {
     const full = join(folder, entry.name);
     if (entry.isDirectory()) output.push(...await filesIn(full));
-    else if (entry.isFile() && /\.usfm$/i.test(entry.name)) output.push(full);
+    else if (entry.isFile() && /\.(?:usfm|sfm)$/i.test(entry.name)) output.push(full);
   }
   return output;
 }
@@ -32,7 +32,7 @@ function audit(text, file) {
 }
 try {
   const files = await filesIn(root);
-  if (!files.length) throw Error('No .usfm files found');
+  if (!files.length) throw Error('No .usfm/.sfm files found');
   const books = [];
   const ids = new Set();
   for (const file of files.sort()) {
