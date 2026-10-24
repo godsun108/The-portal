@@ -66,3 +66,17 @@ test('Reader refuses mismatched chapter metadata',async ({page}) => {
   await expect(page.locator('#verses')).toBeEmpty();
   await expect(page.locator('#status')).toContainText('unavailable or could not be verified locally');
 });
+
+test('Readable projection preserves words while retaining raw notes',async ({page})=>{
+ await page.goto(local('scripture-reader.html'));
+ await page.evaluate(()=>{
+   window.fetch=async (url)=>new Response(JSON.stringify({
+     edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
+     verses:[{number:'1',raw_usfm:'\\\\w In|strong="H1"\\\\w* \\\\w the|strong="H2"\\\\w* beginning.\\\\f + \\\\ft A source note\\\\f*'}]
+   }),{status:200,headers:{'Content-Type':'application/json'}});
+ });
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses .verse span')).toContainText('In the beginning.');
+ await expect(page.locator('#verses details')).toHaveCount(1);
+ await expect(page.locator('#verses pre')).toContainText('A source note');
+});
