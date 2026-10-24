@@ -9,6 +9,7 @@ on:
       - 'scripture-sw.js'
       - 'stations.json'
       - 'tests/living-scriptures.spec.js'
+      - 'tests/living-scriptures-integration.spec.js'
       - '.github/workflows/living-scriptures.yml'
       - 'docs/living-scriptures-sources.md'
       - 'scripts/audit-web-usfm.mjs'
@@ -38,6 +39,19 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Test Living Scriptures browser flows
         run: npx playwright test tests/living-scriptures.spec.js --project=chromium
+        env:
+          CI: 'true'
+      - name: Start local scripture test site
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/living-scriptures-server.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/data/web-chapters/GEN/001.json -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/living-scriptures-server.log
+          exit 1
+      - name: Run real-corpus and offline browser tests
+        run: npx playwright test tests/living-scriptures-integration.spec.js --project=chromium
         env:
           CI: 'true'
 
