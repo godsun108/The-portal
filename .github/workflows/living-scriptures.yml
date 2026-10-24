@@ -10,6 +10,7 @@ on:
       - 'docs/living-scriptures-sources.md'
       - 'scripts/audit-web-usfm.mjs'
       - 'tests/audit-web-usfm.test.mjs'
+      - 'data/living-scriptures-source-manifest.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -32,3 +33,44 @@ jobs:
         run: npx playwright test tests/living-scriptures.spec.js --project=chromium
         env:
           CI: 'true'
+
+  official-web-source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download exact upstream WEB USFM archive
+        run: |
+          mkdir -p /tmp/web-source /tmp/web-extracted
+          curl --fail --location --retry 2 --max-time 120 --output /tmp/web-source/eng-web_usfm.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          sha256sum /tmp/web-source/eng-web_usfm.zip | tee /tmp/web-source/archive-sha256.txt
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          archive=Path('/tmp/web-source/eng-web_usfm.zip')
+          destination=Path('/tmp/web-extracted').resolve()
+          with zipfile.ZipFile(archive) as z:
+              info=z.infolist()
+              assert len(info) < 1000, 'Unexpected archive member count'
+              assert sum(item.file_size for item in info) < 100_000_000, 'Archive too large'
+              for item in info:
+                  target=(destination/item.filename).resolve()
+                  assert target.is_relative_to(destination), 'Archive path traversal'
+              z.extractall(destination)
+          PY
+      - name: Audit source structure (do not publish text)
+        run: node scripts/audit-web-usfm.mjs /tmp/web-extracted > /tmp/web-source/source-audit.json
+      - name: Print source audit summary
+        run: |
+          node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
+      - name: Preserve integrity report only
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-scriptures-web-source-audit
+          path: |
+            /tmp/web-source/archive-sha256.txt
+            /tmp/web-source/source-audit.json
+          retention-days: 14
