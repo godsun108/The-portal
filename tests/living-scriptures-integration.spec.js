@@ -83,3 +83,19 @@ test('Resume returns to last read passage',async ({page})=>{
  await expect(page.locator('#heading')).toHaveText(/(?:John|JHN) 3$/);
  await expect(page.locator('#verses .verse').first()).toBeVisible();
 });
+
+test('Genesis, Psalms and John render source words without raw Strong tags',async ({page})=>{
+ await page.goto(BASE+'scripture-reader.html');
+ await expect(page.locator('#status')).toContainText('Local review corpus detected');
+ for(const [id,no] of [['GEN','1'],['PSA','23'],['JHN','3']]){
+  await page.locator('#book').selectOption(id);
+  await page.locator('#chapter').selectOption(no);
+  await page.getByRole('button',{name:'Read chapter'}).click();
+  await expect(page.locator('#verses .verse').first()).toBeVisible();
+  const first=await page.locator('#verses .verse span').first().innerText();
+  expect(first).not.toContain('strong=');
+  expect(first).not.toContain('\\\\w ');
+  expect(first.trim().length).toBeGreaterThan(8);
+ }
+ await expect(page.locator('#source')).toHaveAttribute('href',/JHN03.htm/);
+});
