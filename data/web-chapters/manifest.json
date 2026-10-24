@@ -7,6 +7,7 @@
     {
       "id": "GEN",
       "title": "The First Book of Moses, Commonly Called Genesis",
+      "short_title": "Genesis",
       "chapters": 50,
       "sha256": "319f7de2f3f215c7d9764f67db4e556d7efd9f2995962959266ab8a37b776f74",
       "source_file": "02-GENeng-web.usfm"
@@ -14,6 +15,7 @@
     {
       "id": "EXO",
       "title": "The Second Book of Mosis, Commonly Called Exodus",
+      "short_title": "Exodus",
       "chapters": 40,
       "sha256": "609f04befd7c3334b26a2e95cc3699b289bade05ac40b0a9b9e316858d0707cd",
       "source_file": "03-EXOeng-web.usfm"
@@ -21,6 +23,7 @@
     {
       "id": "LEV",
       "title": "The Third Book of Mosis, Commonly Called Leviticus",
+      "short_title": "Leviticus",
       "chapters": 27,
       "sha256": "c85b21f6b6e71330949f2c3c6c4f518f6e9f071c18b106c2fefb3199aeaef1c3",
       "source_file": "04-LEVeng-web.usfm"
@@ -28,6 +31,7 @@
     {
       "id": "NUM",
       "title": "The Fourth Book of Moses, Commonly Called Numbers",
+      "short_title": "Numbers",
       "chapters": 36,
       "sha256": "e93f4e42541d75b0c39a7447f0007ef508bdb405c7c7cb230d56c0b3c20144d8",
       "source_file": "05-NUMeng-web.usfm"
@@ -35,6 +39,7 @@
     {
       "id": "DEU",
       "title": "The Fifth Book of Moses, Commonly Called Deuteronomy",
+      "short_title": "Deuteronomy",
       "chapters": 34,
       "sha256": "12b3198c2bb45ba2e777c1d2231d2264283b170be7691a9f517a9b34367e8a0e",
       "source_file": "06-DEUeng-web.usfm"
@@ -42,6 +47,7 @@
     {
       "id": "JOS",
       "title": "The Book of Joshua",
+      "short_title": "Joshua",
       "chapters": 24,
       "sha256": "0da4fdb9b5aa4b599e4ab5b632bb28aedcba45f9a2f77b81239a8d07f6d7aaff",
       "source_file": "07-JOSeng-web.usfm"
@@ -49,6 +55,7 @@
     {
       "id": "JDG",
       "title": "The Book of Judges",
+      "short_title": "Judges",
       "chapters": 21,
       "sha256": "a5c9a700743a5c9cb5089263713067c7f7202cd84bde2f0cab93e1f6d6adafd4",
       "source_file": "08-JDGeng-web.usfm"
@@ -56,6 +63,7 @@
     {
       "id": "RUT",
       "title": "The Book of Ruth",
+      "short_title": "Ruth",
       "chapters": 4,
       "sha256": "b2b4e0ecf9704b7cac4d19cc89c7b40a68f6c9383df8ee7feb20b6116de89fc8",
       "source_file": "09-RUTeng-web.usfm"
@@ -63,6 +71,7 @@
     {
       "id": "1SA",
       "title": "The First Book of Samuel",
+      "short_title": "1 Samuel",
       "chapters": 31,
       "sha256": "f677c52e54e9c7049a3dccfec67e4bfe770e8febb4467a57fe0d4d4af1eb080f",
       "source_file": "10-1SAeng-web.usfm"
@@ -70,6 +79,7 @@
     {
       "id": "2SA",
       "title": "The Second Book of Samuel",
+      "short_title": "2 Samuel",
       "chapters": 24,
       "sha256": "c29af573e55bbeefbc82a02b6f304a8b7a0df0766f9a035d2e6e6a60257d296f",
       "source_file": "11-2SAeng-web.usfm"
@@ -77,6 +87,7 @@
     {
       "id": "1KI",
       "title": "The First Book of Kings",
+      "short_title": "1 Kings",
       "chapters": 22,
       "sha256": "b7701b5e70cf1dbeb1c60f20264f8cd62054b483f1796ff51cf7fc7988dd3839",
       "source_file": "12-1KIeng-web.usfm"
@@ -84,6 +95,7 @@
     {
       "id": "2KI",
       "title": "The Second Book of Kings",
+      "short_title": "2 Kings",
       "chapters": 25,
       "sha256": "c4ce878f704094d03a5df7274567096aba0579ee7a03d874cbc5e7aa6fbdbbad",
       "source_file": "13-2KIeng-web.usfm"
@@ -91,6 +103,7 @@
     {
       "id": "1CH",
       "title": "The First Book of Chronicles",
+      "short_title": "1 Chronicles",
       "chapters": 29,
       "sha256": "020f43c6724260afda71983142462995134f5d50268ed84c065af73ab8db0f27",
       "source_file": "14-1CHeng-web.usfm"
@@ -98,6 +111,7 @@
     {
       "id": "2CH",
       "title": "The Second Book of Chronicles",
+      "short_title": "2 Chronicles",
       "chapters": 36,
       "sha256": "5658064805d90aef1227f6b81d75bed15bb0f6afee547feef43dc6774d7b24d6",
       "source_file": "15-2CHeng-web.usfm"
@@ -105,6 +119,7 @@
     {
       "id": "EZR",
       "title": "The Book of Ezra",
+      "short_title": "Ezra",
       "chapters": 10,
       "sha256": "a6ed7fe6c943ec11fd54693e2183ecfc80303fe9d940832e95a22d3eba1e6145",
       "source_file": "16-EZReng-web.usfm"
@@ -112,6 +127,7 @@
     {
       "id": "NEH",
       "title": "The Book of Nehemiah",
+      "short_title": "Nehemiah",
       "chapters": 13,
       "sha256": "b55b9658f7a90cc400bdb7aa74eb7b87f60fd5028105e9927dd67a894aa6a2eb",
       "source_file": "17-NEHeng-web.usfm"
@@ -119,6 +135,7 @@
     {
       "id": "EST",
       "title": "The Book of Esther",
+      "short_title": "Esther",
       "chapters": 10,
       "sha256": "5b31bc8b29e409ace2a2e93df54bcfd77bc92a9fc0f3022dd6448052fd3410e9",
       "source_file": "18-ESTeng-web.usfm"
@@ -126,6 +143,7 @@
     {
       "id": "JOB",
       "title": "The Book of Job",
+      "short_title": "Job",
       "chapters": 42,
       "sha256": "d195f5981dbd4aa045b58a933c6590fa0d61d9d45be9a395c9966b2414039547",
       "source_file": "19-JOBeng-web.usfm"
@@ -133,6 +151,7 @@
     {
       "id": "PSA",
       "title": "The Psalms",
+      "short_title": "Psalms",
       "chapters": 150,
       "sha256": "d5fea2a5caa468df4a7c346d205679bf6cb9b7999dc0b272a9da1a1abeaa2585",
       "source_file": "20-PSAeng-web.usfm"
@@ -140,6 +159,7 @@
     {
       "id": "PRO",
       "title": "The Proverbs",
+      "short_title": "Proverbs",
       "chapters": 31,
       "sha256": "95c74f5701648aff34a6b6b962d37910da6a607f71ef4a8849ed38b18ab07aff",
       "source_file": "21-PROeng-web.usfm"
@@ -147,6 +167,7 @@
     {
       "id": "ECC",
       "title": "Ecclesiates or, The Preacher",
+      "short_title": "Ecclesiastes",
       "chapters": 12,
       "sha256": "16b1ea682f91d88409e5f4220265ccb0f5dc46585043b2843d933f35749ee8cf",
       "source_file": "22-ECCeng-web.usfm"
@@ -154,6 +175,7 @@
     {
       "id": "SNG",
       "title": "The Song of Solomon",
+      "short_title": "Song of Solomon",
       "chapters": 8,
       "sha256": "491ab8290f2be95fe7a8aa785a5e34f28f7cf21b7d0394534ec79f323edd5264",
       "source_file": "23-SNGeng-web.usfm"
@@ -161,6 +183,7 @@
     {
       "id": "ISA",
       "title": "The Book of Isaiah",
+      "short_title": "Isaiah",
       "chapters": 66,
       "sha256": "89188f9dab86d9845a3b348e4ca342b2e669e9220f3f94c80501ebcc5fb5b54b",
       "source_file": "24-ISAeng-web.usfm"
@@ -168,6 +191,7 @@
     {
       "id": "JER",
       "title": "The Book of Jeremiah",
+      "short_title": "Jeremiah",
       "chapters": 52,
       "sha256": "d64f83a885f3ab6a38ff72300e77fb2ac300753da64ebfb64741fa4394e1346b",
       "source_file": "25-JEReng-web.usfm"
@@ -175,6 +199,7 @@
     {
       "id": "LAM",
       "title": "The Lamentations of Jeremiah",
+      "short_title": "Lamentations",
       "chapters": 5,
       "sha256": "acd2e25947090f5a158837c76efb3e23097f4205c306d0528276ef281bfee452",
       "source_file": "26-LAMeng-web.usfm"
@@ -182,6 +207,7 @@
     {
       "id": "EZK",
       "title": "The Book of Ezekiel",
+      "short_title": "Ezekiel",
       "chapters": 48,
       "sha256": "bd69f9637e316461afd7d4407cf2d30fd9787f2a067a94e7b3161a3af35fb75c",
       "source_file": "27-EZKeng-web.usfm"
@@ -189,6 +215,7 @@
     {
       "id": "DAN",
       "title": "The Book of Daniel",
+      "short_title": "Daniel",
       "chapters": 12,
       "sha256": "f8250c0a8a459cd63debeaac1edda58f11e081df819bb91d8f1bb22104b2517a",
       "source_file": "28-DANeng-web.usfm"
@@ -196,6 +223,7 @@
     {
       "id": "HOS",
       "title": "The Book of Hosea",
+      "short_title": "Hosea",
       "chapters": 14,
       "sha256": "1ec832c931e87cd713d0263194c3f71eccaccd807e3c66da0877596f8d9fdfeb",
       "source_file": "29-HOSeng-web.usfm"
@@ -203,6 +231,7 @@
     {
       "id": "JOL",
       "title": "The Book of Joel",
+      "short_title": "Joel",
       "chapters": 3,
       "sha256": "fb3a4d14f63d01770c7b21a7c995fb09ffa1cb64fdc28fb313958cd14db38aa4",
       "source_file": "30-JOLeng-web.usfm"
@@ -210,6 +239,7 @@
     {
       "id": "AMO",
       "title": "The Book of Amos",
+      "short_title": "Amos",
       "chapters": 9,
       "sha256": "e3c2cb3aea6ffad34aa378ba64d202930ba982261d8f09205999f0a49e5455b9",
       "source_file": "31-AMOeng-web.usfm"
@@ -217,6 +247,7 @@
     {
       "id": "OBA",
       "title": "The Book of Obadiah",
+      "short_title": "Obadiah",
       "chapters": 1,
       "sha256": "9732156009b5680739debdf65d416cfa1681833c6d840ee333527abdf3731c6a",
       "source_file": "32-OBAeng-web.usfm"
@@ -224,6 +255,7 @@
     {
       "id": "JON",
       "title": "The Book of Jonah",
+      "short_title": "Jonah",
       "chapters": 4,
       "sha256": "6f4c2184a8ec5ff90cd3e00768b6f8f39ac194ce733c3591638db36793a458c7",
       "source_file": "33-JONeng-web.usfm"
@@ -231,6 +263,7 @@
     {
       "id": "MIC",
       "title": "The Book of Micah",
+      "short_title": "Micah",
       "chapters": 7,
       "sha256": "9a0aec2dd2e20a01fea4da05ccd2d265cc6aafdb4920cca4e591e10f50e5936a",
       "source_file": "34-MICeng-web.usfm"
@@ -238,6 +271,7 @@
     {
       "id": "NAM",
       "title": "The Book of Nahum",
+      "short_title": "Nahum",
       "chapters": 3,
       "sha256": "51b1615044a7af5e028dbc2ce4904d2e2b3634235a6e78d1c763fe87fd05a204",
       "source_file": "35-NAMeng-web.usfm"
@@ -245,6 +279,7 @@
     {
       "id": "HAB",
       "title": "The Book of Habakkuk",
+      "short_title": "Habakkuk",
       "chapters": 3,
       "sha256": "b88e4f7cf56c5c7fe47861cb16764d5210abcbb53cc0b656ce8a353e661168e6",
       "source_file": "36-HABeng-web.usfm"
@@ -252,6 +287,7 @@
     {
       "id": "ZEP",
       "title": "The Book of Zephaniah",
+      "short_title": "Zephaniah",
       "chapters": 3,
       "sha256": "c5744b3ee6fcf8c9eca684ab39cec7187a4bbb5aa839d18c58f27c50e17000db",
       "source_file": "37-ZEPeng-web.usfm"
@@ -259,6 +295,7 @@
     {
       "id": "HAG",
       "title": "The Book of Haggai",
+      "short_title": "Haggai",
       "chapters": 2,
       "sha256": "1a4dba1e46a9ade38acd46a8efa861f2f65d596993016efe8934ea58129bbc98",
       "source_file": "38-HAGeng-web.usfm"
@@ -266,6 +303,7 @@
     {
       "id": "ZEC",
       "title": "The Book of Zechariah",
+      "short_title": "Zechariah",
       "chapters": 14,
       "sha256": "1a4e357cfed3a4542400f843a94b70da9c00402413217809c242275c0bd3277c",
       "source_file": "39-ZECeng-web.usfm"
@@ -273,6 +311,7 @@
     {
       "id": "MAL",
       "title": "The Book of Malachi",
+      "short_title": "Malachi",
       "chapters": 4,
       "sha256": "088e5c69b1eb658a797ddd7ce4809c9c8d229e5c258f4fde3253debe5876b077",
       "source_file": "40-MALeng-web.usfm"
@@ -280,6 +319,7 @@
     {
       "id": "TOB",
       "title": "Tobit",
+      "short_title": "Tobit",
       "chapters": 14,
       "sha256": "39da13000df54b460e003894be05575a70f03cb9cfdccd1e845a9b09dccbd35d",
       "source_file": "41-TOBeng-web.usfm"
@@ -287,6 +327,7 @@
     {
       "id": "JDT",
       "title": "Judith",
+      "short_title": "Judith",
       "chapters": 16,
       "sha256": "d8d450dec5bd9cce8e05d77a788e69f94962772f6d773b766b7424548c5cdde8",
       "source_file": "42-JDTeng-web.usfm"
@@ -294,6 +335,7 @@
     {
       "id": "ESG",
       "title": "Esther (Greek)",
+      "short_title": "Esther (Greek)",
       "chapters": 10,
       "sha256": "89e0007d08fa2daf253ab2f7c694d976fc39dc69259dbe688c8a5a3b6b139712",
       "source_file": "43-ESGeng-web.usfm"
@@ -301,6 +343,7 @@
     {
       "id": "WIS",
       "title": "The Wisdom of Solomon",
+      "short_title": "Wisdom",
       "chapters": 19,
       "sha256": "f013bcb46836d814e685747a82f9949eafe0ac129bdce9133031d96ce87e76a3",
       "source_file": "45-WISeng-web.usfm"
@@ -308,6 +351,7 @@
     {
       "id": "SIR",
       "title": "The Wisdom of Jesus the Son of Sirach, or Ecclesiasticus",
+      "short_title": "Sirach",
       "chapters": 51,
       "sha256": "102424b55c3e48a2880cad8deafd0a2bd8bf8a0dba79f774e801fb41cd599549",
       "source_file": "46-SIReng-web.usfm"
@@ -315,6 +359,7 @@
     {
       "id": "BAR",
       "title": "Baruch",
+      "short_title": "Baruch",
       "chapters": 6,
       "sha256": "59488efac7bfd4cf8b8964f7e638e9f994ddff8620f927d4ca6f2add2b64a061",
       "source_file": "47-BAReng-web.usfm"
@@ -322,6 +367,7 @@
     {
       "id": "1MA",
       "title": "The First Book of the Maccabees",
+      "short_title": "1 Maccabees",
       "chapters": 16,
       "sha256": "4bb9983c22d6e9b02b3f9a40e6d05602af64f3cd75069fe2100a180960758648",
       "source_file": "52-1MAeng-web.usfm"
@@ -329,6 +375,7 @@
     {
       "id": "2MA",
       "title": "The Second Book of the Maccabees",
+      "short_title": "2 Maccabees",
       "chapters": 15,
       "sha256": "c532fbf99ecd3eb81cbc68fe99f91c848085c0ea8ffab27dcd4e9212eada1326",
       "source_file": "53-2MAeng-web.usfm"
@@ -336,6 +383,7 @@
     {
       "id": "1ES",
       "title": "The First Book of Esdras",
+      "short_title": "1 Esdras",
       "chapters": 9,
       "sha256": "7d05bfcd8356d134b48d9b629f87cc4eb6b78ca7dc8bc4ea17aca8d2354414a7",
       "source_file": "54-1ESeng-web.usfm"
@@ -343,6 +391,7 @@
     {
       "id": "MAN",
       "title": "The Prayer of Manasses King of Judah when He was Held Captive in Babylon",
+      "short_title": "Prayer of Manasses",
       "chapters": 1,
       "sha256": "018518186f0722c3438a08c021223a6fd383d33c94e7b636dc087aa22d6e4f91",
       "source_file": "55-MANeng-web.usfm"
@@ -350,6 +399,7 @@
     {
       "id": "PS2",
       "title": "Psalm 151",
+      "short_title": "Psalm 151",
       "chapters": 1,
       "sha256": "1fb30c4c048b6fec87f9630a2afdcf212f57594dab778047e8f9813edabaaa11",
       "source_file": "56-PS2eng-web.usfm"
@@ -357,6 +407,7 @@
     {
       "id": "3MA",
       "title": "The Third Book of the Maccabees",
+      "short_title": "3 Maccabees",
       "chapters": 7,
       "sha256": "303731734159e1edbc71b7163f7251dfcae2adae9453ff7f51213e559686b934",
       "source_file": "57-3MAeng-web.usfm"
@@ -364,6 +415,7 @@
     {
       "id": "2ES",
       "title": "The Second Book of Esdras",
+      "short_title": "2 Esdras",
       "chapters": 16,
       "sha256": "96cfee2e746cb0c8dc6c84e4d5b9f315686d3a9f5e96f75508f77e191ed2b74d",
       "source_file": "58-2ESeng-web.usfm"
@@ -371,6 +423,7 @@
     {
       "id": "4MA",
       "title": "The Fourth Book of the Maccabees",
+      "short_title": "4 Maccabees",
       "chapters": 18,
       "sha256": "f1d0786ce630600424c46359908fd61181080f4a1b2e982113aec338e0adff75",
       "source_file": "59-4MAeng-web.usfm"
@@ -378,6 +431,7 @@
     {
       "id": "DAG",
       "title": "The Book of Daniel with Greek Portions",
+      "short_title": "Daniel (Greek)",
       "chapters": 14,
       "sha256": "ebfe780750f984b4239b36b85cb2a379beb10024b308bf4766ebc75ce248195e",
       "source_file": "66-DAGeng-web.usfm"
@@ -385,6 +439,7 @@
     {
       "id": "MAT",
       "title": "The Good News According to Matthew",
+      "short_title": "Matthew",
       "chapters": 28,
       "sha256": "f996e0a4633f2f24a8ce1f939fd5794b7e9e34f7be47cc49b67411070844de12",
       "source_file": "70-MATeng-web.usfm"
@@ -392,6 +447,7 @@
     {
       "id": "MRK",
       "title": "The Good News According to Mark",
+      "short_title": "Mark",
       "chapters": 16,
       "sha256": "dbc3e949fa51755a9967f45ec6862ff6a63089bd245c4bb9d9ea398cf1d80701",
       "source_file": "71-MRKeng-web.usfm"
@@ -399,6 +455,7 @@
     {
       "id": "LUK",
       "title": "The Good News According to Luke",
+      "short_title": "Luke",
       "chapters": 24,
       "sha256": "83b8c283e1466b4c4934e7446021169654c5e1c8b34757147ff8e708b178d2a8",
       "source_file": "72-LUKeng-web.usfm"
@@ -406,6 +463,7 @@
     {
       "id": "JHN",
       "title": "The Good News According to John",
+      "short_title": "John",
       "chapters": 21,
       "sha256": "3dd929d2c2b08595e8436a8cbdde057f34abd485f7bd93fdf335b1f97f8be9f0",
       "source_file": "73-JHNeng-web.usfm"
@@ -413,6 +471,7 @@
     {
       "id": "ACT",
       "title": "The Acts of the Apostles",
+      "short_title": "Acts",
       "chapters": 28,
       "sha256": "0e416064b55896bfe8d150d2bf2a36db5ce683326a511dabaaffc56d2d3f0edf",
       "source_file": "74-ACTeng-web.usfm"
@@ -420,6 +479,7 @@
     {
       "id": "ROM",
       "title": "Paul’s Letter to the Romans",
+      "short_title": "Romans",
       "chapters": 16,
       "sha256": "678ff032931688e0940333b31fc6a2ec8c1ca6c04e3e9c187307612fe145f960",
       "source_file": "75-ROMeng-web.usfm"
@@ -427,6 +487,7 @@
     {
       "id": "1CO",
       "title": "Paul’s First Letter to the Corinthians",
+      "short_title": "1 Corinthians",
       "chapters": 16,
       "sha256": "d2abce992faa8d1df4400575268b6a27b6a662dc4246b3b0315fe117dd757838",
       "source_file": "76-1COeng-web.usfm"
@@ -434,6 +495,7 @@
     {
       "id": "2CO",
       "title": "Paul’s Second Letter to the Corinthians",
+      "short_title": "2 Corinthians",
       "chapters": 13,
       "sha256": "c4f668df36c900b3b086457c5a0cf71814a48889d98053901952bf744535629c",
       "source_file": "77-2COeng-web.usfm"
@@ -441,6 +503,7 @@
     {
       "id": "GAL",
       "title": "Paul’s Letter to the Galatians",
+      "short_title": "Galatians",
       "chapters": 6,
       "sha256": "cc1c43f9b599bae4c8fcb9b36f00b38daa73fc0fa82a5dcec53b18fac3884040",
       "source_file": "78-GALeng-web.usfm"
@@ -448,6 +511,7 @@
     {
       "id": "EPH",
       "title": "Paul’s Letter to the Ephesians",
+      "short_title": "Ephesians",
       "chapters": 6,
       "sha256": "d8b5d2caca873f155590468949edd9a885a1d06d8b01665546e80df850a1e225",
       "source_file": "79-EPHeng-web.usfm"
@@ -455,6 +519,7 @@
     {
       "id": "PHP",
       "title": "Paul’s Letter to the Philippians",
+      "short_title": "Philippians",
       "chapters": 4,
       "sha256": "738bc5ecc778309be7be97fb90d60a942438b115708bba83e0ae9525fd063c9f",
       "source_file": "80-PHPeng-web.usfm"
@@ -462,6 +527,7 @@
     {
       "id": "COL",
       "title": "Paul’s Letter to the Colossians",
+      "short_title": "Colossians",
       "chapters": 4,
       "sha256": "d2cdc89b45053f49dc4052a8d629c2b1879f54ad3d62d5c53abc89b2b3bb5a2a",
       "source_file": "81-COLeng-web.usfm"
@@ -469,6 +535,7 @@
     {
       "id": "1TH",
       "title": "Paul’s First Letter to the Thessalonians",
+      "short_title": "1 Thessalonians",
       "chapters": 5,
       "sha256": "61fdd00082ff3bab4146f05c861a80efe33baef372ec4edebf989eeebc9690ab",
       "source_file": "82-1THeng-web.usfm"
@@ -476,6 +543,7 @@
     {
       "id": "2TH",
       "title": "Paul’s Second Letter to the Thessalonians",
+      "short_title": "2 Thessalonians",
       "chapters": 3,
       "sha256": "21aa102f796df39bc573bf39ddf5ba77cfa1f046c5ade165f1373e9c4b7fdeb2",
       "source_file": "83-2THeng-web.usfm"
@@ -483,6 +551,7 @@
     {
       "id": "1TI",
       "title": "Paul’s First Letter to Timothy",
+      "short_title": "1 Timothy",
       "chapters": 6,
       "sha256": "a108d659065be22014796ae42f2a30a91e9ba337675ac191b82bc948e32a7317",
       "source_file": "84-1TIeng-web.usfm"
@@ -490,6 +559,7 @@
     {
       "id": "2TI",
       "title": "Paul’s Second Letter to Timothy",
+      "short_title": "2 Timothy",
       "chapters": 4,
       "sha256": "c1ca97187e9b0f87ff43b3f291ad544871c58468cb10bb234ad8930debcd638d",
       "source_file": "85-2TIeng-web.usfm"
@@ -497,6 +567,7 @@
     {
       "id": "TIT",
       "title": "Paul’s Letter to Titus",
+      "short_title": "Titus",
       "chapters": 3,
       "sha256": "5a4659568d54885244fc9f3265b02f321dcb9d1a329cde8190a5bfe418e51d15",
       "source_file": "86-TITeng-web.usfm"
@@ -504,6 +575,7 @@
     {
       "id": "PHM",
       "title": "Paul’s Letter to Philemon",
+      "short_title": "Philemon",
       "chapters": 1,
       "sha256": "407edbdc42b135d3cbc5db1b8f585eb56c6dc6f0e7dd07f750f7f92b827c49de",
       "source_file": "87-PHMeng-web.usfm"
@@ -511,6 +583,7 @@
     {
       "id": "HEB",
       "title": "The Letter to the Hebrews",
+      "short_title": "Hebrews",
       "chapters": 13,
       "sha256": "29e07102c3dd1aa9749a229814867ceebc735375d64df2638b7f6fcfba118996",
       "source_file": "88-HEBeng-web.usfm"
@@ -518,6 +591,7 @@
     {
       "id": "JAS",
       "title": "The Letter from James",
+      "short_title": "James",
       "chapters": 5,
       "sha256": "129e0ace814ce154b8fde18b1af9ad68f03035122291951b0ca92fe8fc2afbe2",
       "source_file": "89-JASeng-web.usfm"
@@ -525,6 +599,7 @@
     {
       "id": "1PE",
       "title": "Peter’s First Letter",
+      "short_title": "1 Peter",
       "chapters": 5,
       "sha256": "099b3a0cc8531b1cb3232f2bf3a2a9f3773046845d03673da86b6c2f2b0f475a",
       "source_file": "90-1PEeng-web.usfm"
@@ -532,6 +607,7 @@
     {
       "id": "2PE",
       "title": "Peter’s Second Letter",
+      "short_title": "2 Peter",
       "chapters": 3,
       "sha256": "d221fedf6fbcd8643908f6a51cee333fa716bc3ae15ceb46400dbe0714df089d",
       "source_file": "91-2PEeng-web.usfm"
@@ -539,6 +615,7 @@
     {
       "id": "1JN",
       "title": "John’s First Letter",
+      "short_title": "1 John",
       "chapters": 5,
       "sha256": "6135f40a63dace29f6e1dc66b36b775049344f702027263fb613996c3716172b",
       "source_file": "92-1JNeng-web.usfm"
@@ -546,6 +623,7 @@
     {
       "id": "2JN",
       "title": "John’s Second Letter",
+      "short_title": "2 John",
       "chapters": 1,
       "sha256": "0d5f2e7d78908fd3baa055e6ce41e8957cf318ee948b220c48dbc888993e4104",
       "source_file": "93-2JNeng-web.usfm"
@@ -553,6 +631,7 @@
     {
       "id": "3JN",
       "title": "John’s Third Letter",
+      "short_title": "3 John",
       "chapters": 1,
       "sha256": "1f36404eedefc21f658352b35924f681c8f52b82ea123f424d1cd4705918d6d3",
       "source_file": "94-3JNeng-web.usfm"
@@ -560,6 +639,7 @@
     {
       "id": "JUD",
       "title": "The Letter from Jude",
+      "short_title": "Jude",
       "chapters": 1,
       "sha256": "680df2ff2b5b83109e6ae2f3cb01febd61f4df2ed1abfec13d2e9bab7e5591a7",
       "source_file": "95-JUDeng-web.usfm"
@@ -567,6 +647,7 @@
     {
       "id": "REV",
       "title": "The Revelation to John",
+      "short_title": "Revelation",
       "chapters": 22,
       "sha256": "9356a6e109bd8bdde044d7565f92694a2524f96cad11edd1f18a3260478c2043",
       "source_file": "96-REVeng-web.usfm"
