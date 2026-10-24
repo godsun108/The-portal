@@ -23,7 +23,7 @@ async function filesIn(folder) {
 function audit(text, file) {
   const id = text.match(/^\\id\s+(\S+)/m)?.[1];
   if (!id || !/^[A-Z0-9]{3,4}$/.test(id)) throw Error(file + ': missing/invalid USFM \\id');
-  if (id === 'FRT' || id === 'INT') return { id, front_matter: true, chapters: 0, verse_markers: 0 };
+  if (['FRT','INT','GLO','BAK','CNC','TDX','NDX'].includes(id)) return { id, front_matter: true, chapters: 0, verse_markers: 0 };
   const chapterMarkers = [...text.matchAll(/^\\c\s+(\d+)\s*$/gm)].map(x => Number(x[1]));
   if (!chapterMarkers.length) throw Error(file + ': no chapters');
   if (chapterMarkers.some((n, i) => n !== i + 1)) throw Error(file + ': chapters must be consecutive from 1');
