@@ -51,7 +51,7 @@ document.getElementById('offline').addEventListener('click',async()=>{
  const manifest=await r.json();
  if(manifest.format!=='portal-usfm-raw-v1'||!Array.isArray(manifest.books)||manifest.books.length===0)throw Error('Invalid manifest');
  const previous=book.value;book.replaceChildren();lengths={};
- for(const item of manifest.books){if(!/^[A-Z0-9]{3,4}$/.test(item.id)||!Number.isInteger(item.chapters)||item.chapters<1)throw Error('Invalid book entry');lengths[item.id]=item.chapters;const o=document.createElement('option');o.value=item.id;o.textContent=typeof item.title==='string'&&item.title.trim()?item.title:titles[item.id]||item.id;titles[item.id]=o.textContent;book.append(o);}
+ for(const item of manifest.books){if(!/^[A-Z0-9]{3,4}$/.test(item.id)||!Number.isInteger(item.chapters)||item.chapters<1)throw Error('Invalid book entry');lengths[item.id]=item.chapters;const o=document.createElement('option');o.value=item.id;o.textContent=(typeof item.short_title==='string'&&item.short_title.trim())||titles[item.id]||(typeof item.title==='string'&&item.title.trim())||item.id;titles[item.id]=o.textContent;book.append(o);}
  book.value=lengths[previous]?previous:manifest.books[0].id;fill();updateLink();
  status.textContent='Local review corpus detected. Display may include original USFM formatting markers.';
  }catch{status.textContent='Local chapter corpus not installed. Use the official source link below.';}})();
