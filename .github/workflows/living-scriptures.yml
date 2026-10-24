@@ -1,0 +1,30 @@
+name: Living Scriptures checks
+on:
+  pull_request:
+    paths:
+      - 'living-scriptures.html'
+      - 'scripture-compare.html'
+      - 'scripture-reader.html'
+      - 'tests/living-scriptures.spec.js'
+      - '.github/workflows/living-scriptures.yml'
+      - 'docs/living-scriptures-sources.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Test Living Scriptures browser flows
+        run: npx playwright test tests/living-scriptures.spec.js --project=chromium
+        env:
+          CI: 'true'
