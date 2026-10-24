@@ -40,3 +40,15 @@ test('Next chapter navigation and last-read bookmark use real source',async ({pa
  await page.getByRole('button',{name:'Previous'}).click();
  await expect(page.locator('#heading')).toHaveText('Genesis 1');
 });
+
+test('Full corpus manifest supplies titled books and non-Genesis passages',async ({page})=>{
+ await page.goto(BASE+'scripture-reader.html');
+ await expect(page.locator('#status')).toContainText('Local review corpus detected');
+ await expect(page.locator('#book option')).toHaveCount(81);
+ await page.locator('#book').selectOption('EXO');
+ await page.locator('#chapter').selectOption('3');
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses .verse').first()).toBeVisible();
+ await expect(page.locator('#heading')).toContainText('Exodus 3');
+ await expect(page.locator('#book option:checked')).toHaveText(/Exodus/i);
+});
