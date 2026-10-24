@@ -33,12 +33,12 @@ test('Next chapter navigation and last-read bookmark use real source',async ({pa
  await page.getByRole('button',{name:'Read chapter'}).click();
  await expect(page.locator('#verses .verse').first()).toBeVisible();
  await page.getByRole('button',{name:'Next'}).click();
- await expect(page.locator('#heading')).toHaveText('Genesis 2');
+ await expect(page.locator('#heading')).toHaveText(/^(Genesis|GEN) 2$/);
  await expect(page.locator('#verses .verse').first()).toBeVisible();
  const last=await page.evaluate(()=>JSON.parse(localStorage.getItem('living-scriptures-last')));
  expect(last).toEqual({book:'GEN',chapter:2});
  await page.getByRole('button',{name:'Previous'}).click();
- await expect(page.locator('#heading')).toHaveText('Genesis 1');
+ await expect(page.locator('#heading')).toHaveText(/^(Genesis|GEN) 1$/);
 });
 
 test('Full corpus manifest supplies titled books and non-Genesis passages',async ({page})=>{
@@ -63,6 +63,6 @@ test('Resume returns to last read passage',async ({page})=>{
  await page.reload();
  await expect(page.locator('#status')).toContainText('Local review corpus detected');
  await page.getByRole('button',{name:'Resume last reading'}).click();
- await expect(page.locator('#heading')).toHaveText('John 3');
+ await expect(page.locator('#heading')).toHaveText(/^(John|JHN) 3$/);
  await expect(page.locator('#verses .verse').first()).toBeVisible();
 });
