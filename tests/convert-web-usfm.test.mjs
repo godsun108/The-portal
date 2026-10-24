@@ -8,8 +8,8 @@ test('converter preserves raw verse markers and records source hashes',async()=>
  const root=await mkdtemp(join(tmpdir(),'web-fixture-'));
  try{
  const src=join(root,'src'),out=join(root,'out');await mkdir(src);
- await writeFile(join(src,'GEN.usfm'),['\\id GEN','\\c 1','\\v 1 In the \\wj beginning\\wj*.','\\v 2 Earth','\\c 2','\\v 1 Thus',''].join('\\n').replaceAll('\\n','\n'));
- await writeFile(join(src,'FRT.usfm'),'\\id FRT\n\\mt1 Preface\n');
+ await writeFile(join(src,'GEN.usfm'),"\\id GEN\n\\c 1\n\\v 1 In the \\wj beginning\\wj*.\n\\v 2 Earth\n\\c 2\n\\v 1 Thus\n");
+ await writeFile(join(src,'FRT.usfm'),"\\id FRT\n\\mt1 Preface\n");
  const r=spawnSync(process.execPath,['scripts/convert-web-usfm.mjs',src,out],{encoding:'utf8'});
  assert.equal(r.status,0,r.stderr);
  const manifest=JSON.parse(await readFile(join(out,'manifest.json'),'utf8'));
@@ -23,7 +23,7 @@ test('converter preserves raw verse markers and records source hashes',async()=>
 test('converter fails closed on skipped chapters',async()=>{
  const root=await mkdtemp(join(tmpdir(),'web-fixture-'));
  try{const src=join(root,'src'),out=join(root,'out');await mkdir(src);
- await writeFile(join(src,'GEN.usfm'),'\\id GEN\n\\c 1\n\\v 1 First\n\\c 3\n\\v 1 Third\n');
+ await writeFile(join(src,'GEN.usfm'),"\\id GEN\n\\c 1\n\\v 1 First\n\\c 3\n\\v 1 Third\n");
  const r=spawnSync(process.execPath,['scripts/convert-web-usfm.mjs',src,out],{encoding:'utf8'});
  assert.notEqual(r.status,0);assert.match(r.stderr,/nonsequential chapter/);
  }finally{await rm(root,{recursive:true,force:true});}
