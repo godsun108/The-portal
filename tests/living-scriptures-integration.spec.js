@@ -52,3 +52,17 @@ test('Full corpus manifest supplies titled books and non-Genesis passages',async
  await expect(page.locator('#heading')).toHaveText(/^(Exodus|EXO) 3$/);
  // Both old and regenerated manifests are valid during the branch-only staging transition.
 });
+
+test('Resume returns to last read passage',async ({page})=>{
+ await page.goto(BASE+'scripture-reader.html');
+ await expect(page.locator('#status')).toContainText('Local review corpus detected');
+ await page.locator('#book').selectOption('JHN');
+ await page.locator('#chapter').selectOption('3');
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses .verse').first()).toBeVisible();
+ await page.reload();
+ await expect(page.locator('#status')).toContainText('Local review corpus detected');
+ await page.getByRole('button',{name:'Resume last reading'}).click();
+ await expect(page.locator('#heading')).toHaveText('John 3');
+ await expect(page.locator('#verses .verse').first()).toBeVisible();
+});
