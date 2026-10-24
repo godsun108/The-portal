@@ -32,6 +32,37 @@ test('Reader chapter selector and source fallback', async ({ page }) => {
   await expect(page.locator('#source')).toHaveAttribute('href', 'https://ebible.org/eng-web/JHN03.htm');
   await page.route('https://ebible.org/**', route => route.abort());
   await page.getByRole('button', { name: 'Read chapter' }).click();
-  await expect(page.locator('#status')).toContainText('could not be safely displayed');
+  await expect(page.locator('#status')).toContainText('unavailable or could not be verified locally');
   await expect(page.locator('#verses')).toBeEmpty();
+});
+
+test('Reader safely renders local chapter data without interpreting markup', async ({page}) => {
+  await page.goto(local('scripture-reader.html'));
+  await page.evaluate(() => {
+    const upstream = window.fetch.bind(window);
+    window.fetch = async (url, options) => {
+      const target=String(url);
+      if (target.endsWith('/data/web-chapters/GEN/001.json')) return new Response(JSON.stringify({
+        edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
+        verses:[{number:'1',raw_usfm:'In the beginning.'},{number:'2',raw_usfm:'<img src=x onerror=alert(1)> & text'}]
+      }),{status:200,headers:{'Content-Type':'application/json'}});
+      return upstream(url,options);
+    };
+  });
+  await page.getByRole('button',{name:'Read chapter'}).click();
+  await expect(page.locator('#verses .verse')).toHaveCount(2);
+  await expect(page.locator('#verses img')).toHaveCount(0);
+  await expect(page.locator('#verses')).toContainText('<img src=x onerror=alert(1)>');
+});
+test('Reader refuses mismatched chapter metadata',async ({page}) => {
+  await page.goto(local('scripture-reader.html'));
+  await page.evaluate(() => {
+    window.fetch=async ()=>new Response(JSON.stringify({
+      edition:'eng-web',book:'JHN',chapter:1,kind:'raw-usfm-review',
+      verses:[{number:'1',raw_usfm:'Wrong book'}]
+    }),{status:200,headers:{'Content-Type':'application/json'}});
+  });
+  await page.getByRole('button',{name:'Read chapter'}).click();
+  await expect(page.locator('#verses')).toBeEmpty();
+  await expect(page.locator('#status')).toContainText('unavailable or could not be verified locally');
 });
