@@ -1,8 +1,8 @@
 /* Living Scriptures: deliberately narrow service-worker scope.
  * Cache only these public, same-origin scripture assets. Never intercept the rest of PORTAL.
  */
-const VERSION='living-scriptures-v1';
-const SHELL=['./living-scriptures.html','./scripture-reader.html','./scripture-compare.html'];
+const VERSION='living-scriptures-v2';
+const SHELL=['./living-scriptures.html','./scripture-reader.html','./scripture-compare.html','./scripture-format.js','./data/web-chapters/manifest.json'];
 const qualifies=(url)=>{
  const u=new URL(url);
  if(u.origin!==self.location.origin)return false;
