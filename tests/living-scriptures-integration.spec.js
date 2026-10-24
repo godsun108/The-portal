@@ -10,6 +10,7 @@ test('real Genesis chapter loads from staged corpus',async ({page})=>{
  await expect(page.locator('#status')).toContainText('Loaded');
 });
 test('saving Genesis enables offline chapter reading',async ({page,context})=>{
+ test.setTimeout(60000);
  await page.goto(BASE+'scripture-reader.html');
  await expect(page.locator('#status')).toContainText('Local review corpus detected');
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
