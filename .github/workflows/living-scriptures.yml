@@ -71,6 +71,7 @@ jobs:
         run: |
           mkdir -p /tmp/web-source /tmp/web-extracted
           curl --fail --location --retry 2 --max-time 120 --output /tmp/web-source/eng-web_usfm.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-source/eng-web_usfm.zip' | sha256sum -c
           sha256sum /tmp/web-source/eng-web_usfm.zip | tee /tmp/web-source/archive-sha256.txt
           python3 - <<'PY'
           from pathlib import Path
@@ -125,6 +126,7 @@ jobs:
         run: |
           mkdir -p /tmp/web-stage-source /tmp/web-stage-extracted
           curl --fail --location --retry 2 --max-time 120 --output /tmp/web-stage-source/archive.zip https://ebible.org/Scriptures/eng-web_usfm.zip
+          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-stage-source/archive.zip' | sha256sum -c
           python3 - <<'PY'
           import zipfile
           from pathlib import Path
