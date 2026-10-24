@@ -94,7 +94,7 @@ test('Genesis, Psalms and John render source words without raw Strong tags',asyn
   await expect(page.locator('#verses .verse').first()).toBeVisible();
   const first=await page.locator('#verses .verse span').first().innerText();
   expect(first).not.toContain('strong=');
-  expect(first).not.toContain('\\\\w ');
+  expect(first).not.toContain('\\w ');
   expect(first.trim().length).toBeGreaterThan(8);
  }
  await expect(page.locator('#source')).toHaveAttribute('href',/JHN03.htm/);
