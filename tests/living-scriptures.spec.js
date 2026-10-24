@@ -5,7 +5,7 @@ const local = (name) => pathToFileURL(resolve(process.cwd(), name)).href;
 
 test('Sacred Library search filters catalog and opens details', async ({ page }) => {
   await page.goto(local('living-scriptures.html'));
-  await expect(page.locator('#catalog article')).toHaveCount(8);
+  await expect(page.locator('#catalog article')).toHaveCount(9);
   await page.locator('#search').fill('Enoch');
   await expect(page.locator('#catalog article')).toHaveCount(1);
   await page.getByRole('button', { name: 'Explore evidence' }).click();
