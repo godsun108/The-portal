@@ -36,9 +36,13 @@ jobs:
       - name: Verify source audit utility
         run: node --test tests/audit-web-usfm.test.mjs tests/convert-web-usfm.test.mjs
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
       - name: Test Living Scriptures browser flows
         run: npx playwright test tests/living-scriptures.spec.js --project=chromium
+        env:
+          CI: 'true'
+      - name: Simulated iPhone Safari-engine browser tests
+        run: npx playwright test tests/living-scriptures.spec.js --project=mobile-webkit
         env:
           CI: 'true'
       - name: Start local scripture test site
@@ -51,7 +55,7 @@ jobs:
           cat /tmp/living-scriptures-server.log
           exit 1
       - name: Run real-corpus and offline browser tests
-        run: npx playwright test tests/living-scriptures-integration.spec.js --project=chromium
+        run: npx playwright test tests/living-scriptures-integration.spec.js --project=chromium --project=mobile-webkit
         env:
           CI: 'true'
 
