@@ -18,7 +18,7 @@ function parseUsfm(raw, path) {
   const id = raw.match(/^\\id\s+([A-Z0-9]{3,4})\b/m)?.[1];
   if (!id) throw Error(path+': invalid book id');
   if(peripherals.has(id))return null;
-  const title=(raw.match(/^\\\\toc1\\s+(.+)$/m)?.[1]||raw.match(/^\\\\h\\s+(.+)$/m)?.[1]||id).trim();
+  const title=(raw.match(/^\\toc1\s+(.+)$/m)?.[1]||raw.match(/^\\h\s+(.+)$/m)?.[1]||id).trim();
   const chapters = []; let chapter=null, verse=null;
   // Keep original verse material exactly, including all USFM formatting markers.
   for(const line of raw.split(/\r?\n/)) {
