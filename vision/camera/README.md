@@ -1,0 +1,1 @@
+EarthChain VISION Camera Core 0.1 iPhone smoke-test deployment. Camera and gallery are temporary in-memory only; no encryption, uploads, or persistence. Use nonsensitive test captures and export before leaving. See source package for complete application files.
