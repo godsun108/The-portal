@@ -53,7 +53,14 @@ document.getElementById('load').addEventListener('click',async()=>{
  try{
  if(!/^[A-Z0-9]{3,4}$/.test(selected)||!Number.isInteger(num)||num<1||num>(lengths[selected]||0))throw Error('Invalid chapter');
  const path='./data/web-chapters/'+selected+'/'+String(num).padStart(3,'0')+'.json';
- const response=await fetch(path);
+ let response;
+ try{response=await fetch(path);if(!response.ok)throw Error('Local chapter fetch returned '+response.status);}catch(networkError){
+  // Mobile WebKit can fail to route offline fetch through its service worker.
+  // Read explicitly from Cache Storage before declaring a saved chapter unavailable.
+  if(!('caches' in window))throw networkError;
+  response=await caches.match(new URL(path,location.href).href);
+  if(!response)throw Error('Chapter not installed or offline copy unavailable');
+ }
  if(!response.ok)throw Error('Chapter not installed');
  const data=await response.json();
  if(data.edition!=='eng-web'||data.book!==selected||data.chapter!==num||data.kind!=='raw-usfm-review'||!Array.isArray(data.verses)||data.verses.length<1)throw Error('Chapter metadata mismatch');
