@@ -93,7 +93,7 @@ jobs:
       - name: Convert source into chapter review artifacts
         run: |
           node scripts/convert-web-usfm.mjs /tmp/web-extracted /tmp/web-chapters
-          node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058) process.exit(1); console.log('Chapter counts validated')"
+          node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058 || a.books.find(b=>b.id==='GEN')?.title==='GEN' || a.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1); console.log('Chapter counts validated')"
       - name: Validate every generated chapter and verse
         run: node scripts/validate-web-chapters.mjs /tmp/web-chapters
       - name: Print source audit summary
@@ -147,7 +147,7 @@ jobs:
           node scripts/audit-web-usfm.mjs /tmp/web-stage-extracted > /tmp/web-stage-source/audit.json
           node scripts/convert-web-usfm.mjs /tmp/web-stage-extracted data/web-chapters
           node scripts/validate-web-chapters.mjs data/web-chapters
-          node -e "const m=require('./data/web-chapters/manifest.json'); if(m.books.length!==81||m.chapters!==1402||m.verse_markers!==38058) process.exit(1)"
+          node -e "const m=require('./data/web-chapters/manifest.json'); if(m.books.length!==81||m.chapters!==1402||m.verse_markers!==38058||m.books.find(b=>b.id==='GEN')?.title==='GEN'||m.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1)"
       - name: Commit review corpus to feature branch only
         run: |
           git config user.name "github-actions[bot]"
