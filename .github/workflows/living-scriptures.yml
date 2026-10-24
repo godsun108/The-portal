@@ -11,6 +11,8 @@ on:
       - 'scripts/audit-web-usfm.mjs'
       - 'tests/audit-web-usfm.test.mjs'
       - 'data/living-scriptures-source-manifest.json'
+      - 'scripts/convert-web-usfm.mjs'
+      - 'tests/convert-web-usfm.test.mjs'
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,7 +28,7 @@ jobs:
       - name: Install test dependencies
         run: npm install --no-audit --no-fund
       - name: Verify source audit utility
-        run: node --test tests/audit-web-usfm.test.mjs
+        run: node --test tests/audit-web-usfm.test.mjs tests/convert-web-usfm.test.mjs
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Test Living Scriptures browser flows
@@ -63,6 +65,10 @@ jobs:
           PY
       - name: Audit source structure (do not publish text)
         run: node scripts/audit-web-usfm.mjs /tmp/web-extracted > /tmp/web-source/source-audit.json
+      - name: Convert source into chapter review artifacts
+        run: |
+          node scripts/convert-web-usfm.mjs /tmp/web-extracted /tmp/web-chapters
+          node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058) process.exit(1); console.log('Chapter counts validated')"
       - name: Print source audit summary
         run: |
           node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
@@ -73,4 +79,5 @@ jobs:
           path: |
             /tmp/web-source/archive-sha256.txt
             /tmp/web-source/source-audit.json
+            /tmp/web-chapters/
           retention-days: 14
