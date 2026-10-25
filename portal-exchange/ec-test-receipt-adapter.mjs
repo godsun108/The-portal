@@ -2,7 +2,6 @@
  * ECTEST is valueless and MUST NOT be represented as delivered native EC.
  */
 import {verifyMutual} from '../earthchain-test/mutual-ledger.mjs';
-import {advanceAcquisition} from './ec-fiat-delivery-simulator.mjs';
 export async function inspectTestDelivery(order,bundle,config,{entryId,senderAddress}){
  if(order?.state!=='DELIVERY_PENDING')throw Error('Delivery not pending');
  const state=await verifyMutual(bundle,config);
