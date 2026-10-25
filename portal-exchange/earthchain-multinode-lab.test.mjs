@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';import {createSignedGenesis,proposeBlock} from './earthchain-signed-blocks.mjs';import {signedVoteMessage} from './earthchain-signed-votes.mjs';import {simulateIndependentNodes,compareFinalizedHistories} from './earthchain-multinode-lab.mjs';
+const keys=Array.from({length:4},()=>generateKeyPairSync('ed25519'));
+const validatorKeys=Object.fromEntries(keys.map((k,i)=>['v'+i,k.publicKey.export({type:'spki',format:'pem'})]));
+const allocations={alice:5};const genesis=createSignedGenesis('lab',allocations);
+function proposal(label,signers=[0,1,2]){
+ const block=proposeBlock(genesis,[],label);
+ const votes=signers.map(i=>{const v={validator:'v'+i,chainId:genesis.chainId,height:block.height,parent:block.parent,blockHash:block.hash};return {...v,signature:sign(null,signedVoteMessage(v),keys[i].privateKey).toString('hex')}});
+ return {block,votes,recipients:['v0','v1','v2','v3']};
+}
+test('identical signed proposal finalizes across independent nodes',()=>{const p=proposal('a'),nodes=simulateIndependentNodes({genesis,proposals:[p],validatorKeys,allocations});assert.equal(compareFinalizedHistories(nodes).consistent,true);assert.equal(nodes.v0.accepted.length,1);assert.equal(nodes.v3.accepted.length,1)});
+test('offline node remains behind but no conflict',()=>{const nodes=simulateIndependentNodes({genesis,proposals:[proposal('a')],validatorKeys,allocations,offline:['v3']});assert.equal(nodes.v3.chain.blocks.length,0);assert.equal(compareFinalizedHistories(nodes).consistent,true)});
+test('second conflicting proposal rejected on nodes with finalized block',()=>{const nodes=simulateIndependentNodes({genesis,proposals:[proposal('a'),proposal('b')],validatorKeys,allocations});assert.equal(nodes.v0.accepted.length,1);assert.equal(nodes.v0.rejected.length,1)});
+test('insufficient signed votes cannot finalize on any node',()=>{const nodes=simulateIndependentNodes({genesis,proposals:[proposal('a',[0,1])],validatorKeys,allocations});assert.equal(nodes.v0.chain.blocks.length,0);assert.equal(nodes.v2.rejected.length,1)});
+test('divergent finalized histories are explicitly reported',()=>{const a=simulateIndependentNodes({genesis,proposals:[proposal('a')],validatorKeys,allocations});const b=simulateIndependentNodes({genesis,proposals:[proposal('b')],validatorKeys,allocations});assert.equal(compareFinalizedHistories({a:a.v0,b:b.v0}).consistent,false)});
