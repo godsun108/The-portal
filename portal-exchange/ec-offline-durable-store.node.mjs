@@ -6,20 +6,24 @@
 import {open,readFile,rename,unlink,mkdir} from 'node:fs/promises';
 import {dirname,basename,join} from 'node:path';
 import {randomUUID} from 'node:crypto';
-export function createOfflineDurableStore(path){
+export function createOfflineDurableStore(path,{faultAt=null}={}){
  if(typeof path!=='string'||!path.endsWith('.json'))throw Error('Invalid store path');
  return Object.freeze({
   async saveDurably(snapshot){
    if(typeof snapshot!=='string'||snapshot.length>2000000)throw Error('Invalid snapshot bytes');
    const dir=dirname(path),tmp=join(dir,'.'+basename(path)+'.'+randomUUID()+'.tmp');
    await mkdir(dir,{recursive:true});
+   const fault=step=>{if(faultAt===step)throw Error('Injected crash: '+step)};
    let file;
    try{
     file=await open(tmp,'wx',0o600);
     await file.writeFile(snapshot,'utf8');
+    fault('before-file-sync');
     await file.sync();
     await file.close();file=undefined;
+    fault('before-rename');
     await rename(tmp,path);
+    fault('before-directory-sync');
     const directory=await open(dir,'r');
     try{await directory.sync()}finally{await directory.close()}
     return {durable:true};
