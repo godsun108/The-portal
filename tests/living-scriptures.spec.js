@@ -156,3 +156,25 @@ test('Footnotes are readable without hiding untouched source markers',async({pag
  await expect(disclosure.locator('.source-notes')).not.toContainText('\\ft');
  await expect(disclosure.locator('pre')).toContainText('\\ft A source note');
 });
+
+test('Skip-to-scripture and verse landmarks remain keyboard accessible',async({page})=>{
+ await page.goto(local('scripture-reader.html'));
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link',{name:'Skip to scripture'})).toBeFocused();
+ await page.keyboard.press('Enter');
+ await expect(page.locator('#heading')).toBeFocused();
+ await expect(page.getByRole('region',{name:'Choose a chapter'})).toHaveCount(1);
+ await page.evaluate(()=>{const upstream=window.fetch;window.fetch=async()=>new Response(JSON.stringify({edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',verses:[{number:'1',raw_usfm:'In the beginning.'}]}),{status:200});});
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses sup')).toHaveAttribute('aria-label','Verse 1');
+ await expect(page.getByRole('region',{name:'Genesis 1'})).toHaveCount(1);
+});
+test('Reader remains usable at high text scaling on narrow viewport',async({page})=>{
+ await page.setViewportSize({width:320,height:640});
+ await page.goto(local('scripture-reader.html'));
+ await page.evaluate(()=>{document.documentElement.style.fontSize='200%';});
+ await page.getByLabel('Reading text size').selectOption('extra-large');
+ await expect(page.getByRole('button',{name:'Read chapter'})).toBeVisible();
+ await expect(page.getByLabel('Book',{exact:true})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+});
