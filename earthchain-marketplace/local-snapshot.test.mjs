@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {newMarket,acquireTestCoins,listCard,purchaseCard,balance} from './simulator.mjs';
+import {serializeMarket,restoreMarket,loadDemo,saveDemo,SNAPSHOT_KEY} from './local-snapshot.mjs';
+test('snapshot survives reload and preserves test order',()=>{const m=newMarket();acquireTestCoins(m,{buyer:'buyer',credits:100,requestId:'request-100'});listCard(m,{id:'card-1',seller:'seller',name:'Dark Magician',price:75});purchaseCard(m,{listingId:'card-1',buyer:'buyer',orderId:'order-100',approved:true});const restored=restoreMarket(serializeMarket(m));assert.equal(balance(restored,'buyer'),25);assert.equal(restored.orders.get('order-100').status,'awaiting_shipment')});
+test('storage round trip',()=>{const values=new Map();const storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};const m=newMarket();saveDemo(m,storage);assert.ok(values.has(SNAPSHOT_KEY));assert.equal(loadDemo(storage).orders.size,0)});
+test('rejects invalid and counterfeit snapshots',()=>{assert.throws(()=>restoreMarket('{}'),/Invalid/);const m=newMarket();const d=JSON.parse(serializeMarket(m));d.currency='EARTH';assert.throws(()=>restoreMarket(JSON.stringify(d)),/Invalid/)});
