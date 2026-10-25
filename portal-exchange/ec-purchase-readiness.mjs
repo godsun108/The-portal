@@ -5,7 +5,7 @@ export function readiness(status=EC_PURCHASE_STATUS){
  return {ready:checks.every(k=>status[k]===true),missing:checks.filter(k=>status[k]!==true)};
 }
 export function requestPurchase({fundingMethod,amount,readinessStatus=EC_PURCHASE_STATUS}){
- if(!['card','bank','xrp'].includes(fundingMethod))throw Error('Unsupported funding method');
+ if(!['card','apple_pay','bank','xrp'].includes(fundingMethod))throw Error('Unsupported funding method');
  if(typeof amount!=='number'||!Number.isFinite(amount)||amount<=0)throw Error('Invalid source amount');
  const state=readiness(readinessStatus);
  if(!state.ready) return Object.freeze({status:'blocked',reason:'EC purchases are not enabled',missing:state.missing,charged:false,tokenDelivered:false});
