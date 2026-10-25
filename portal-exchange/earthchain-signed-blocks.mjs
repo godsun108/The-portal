@@ -4,7 +4,7 @@ import {createGenesis,applyTransaction} from './earthchain-prototype.mjs';
 const digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
 const canonicalTx=({from,to,amount,nonce,chainId})=>JSON.stringify({from,to,amount,nonce,chainId});
 export function signableTransaction(tx){return Buffer.from(canonicalTx(tx));}
-export function accountFromPublicKey(publicKey){return createPublicKey(publicKey).export({type:'spki',format:'pem'});}
+export function accountFromPublicKey(publicKey){return (typeof publicKey==='string'?createPublicKey(publicKey):publicKey).export({type:'spki',format:'pem'});}
 export function verifySignedTransaction(signed,chainId){
  if(!signed||signed.chainId!==chainId||typeof signed.publicKey!=='string'||typeof signed.signature!=='string'||!/^[0-9a-f]+$/i.test(signed.signature)||signed.signature.length%2)throw Error('Invalid signature envelope');
  const key=accountFromPublicKey(signed.publicKey);
