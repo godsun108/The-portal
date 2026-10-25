@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EarthChain SPATIAL — Scene Bridge</title>
+<style>body{font:16px system-ui;background:#08121f;color:#e6f3ff;margin:0;padding:20px}main{max-width:780px;margin:auto}button{padding:12px;margin:5px;background:#15354e;color:white;border:1px solid #6196bb;border-radius:9px}button:focus-visible{outline:3px solid #9de3ff}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#102237;padding:16px;border-radius:12px}small{color:#a9c6d9}</style>
+<main><h1>EarthChain SPATIAL</h1><p>Scene bridge v0.1 · Device-neutral demonstration</p>
+<button id="xr">PORTAL XR scene</button><button id="foundry">Reality Foundry sample</button>
+<button id="move">Move selected object</button><button id="toggle">Toggle visibility</button>
+<p id="status" role="status"></p><pre id="scene" aria-label="Current scene"></pre><small>Illustrative coordinates only. No camera, XR hardware, scanning, or engineering simulation.</small></main>
+<script type="module">
+import {normalizeScene,fromXRObjects,sceneEvent} from "./scene-contract.js";
+import {fromFoundryComponents} from "./foundry-adapter.js";
+let current=fromXRObjects([{id:"xr-orb",position:{x:0,y:1,z:-2},scale:.2},{id:"xr-cube",position:{x:.5,y:1,z:-2.4},scale:.25}]);
+const sample=[{id:"housing",name:"Illustrative housing",position:[0,0,-2]},{id:"component",name:"Illustrative component",position:[.3,0,-2]}];
+const show=()=>{document.querySelector("#scene").textContent=JSON.stringify(current,null,2);document.querySelector("#status").textContent=current.id+" · "+current.objects.length+" objects"};
+document.querySelector("#xr").onclick=()=>{current=fromXRObjects([{id:"xr-orb",position:{x:0,y:1,z:-2},scale:.2},{id:"xr-cube",position:{x:.5,y:1,z:-2.4},scale:.25}]);show()};
+document.querySelector("#foundry").onclick=()=>{current=fromFoundryComponents(sample);show()};
+document.querySelector("#move").onclick=()=>{const o=current.objects[0];current=sceneEvent(current,{type:"move",objectId:o.id,position:[o.position[0]+.1,...o.position.slice(1)]}).scene;show()};
+document.querySelector("#toggle").onclick=()=>{const o=current.objects[0];current=sceneEvent(current,{type:o.visible?"hide":"show",objectId:o.id}).scene;show()};
+show();
+</script>
