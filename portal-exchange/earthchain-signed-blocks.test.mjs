@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';
+import {createSignedGenesis,signableTransaction,proposeBlock,applySignedBlock,accountFromPublicKey} from './earthchain-signed-blocks.mjs';
+const pair=()=>generateKeyPairSync('ed25519');
+const a=pair(),b=pair(),alice=accountFromPublicKey(a.publicKey),bob=accountFromPublicKey(b.publicKey);
+const genesis=()=>createSignedGenesis('earthchain-lab-1',{[alice]:100,[bob]:0});
+function tx({amount=10,nonce='1',chainId='earthchain-lab-1'}={}){const body={from:alice,to:bob,amount,nonce,chainId,publicKey:alice};return {...body,signature:sign(null,signableTransaction(body),a.privateKey).toString('hex')}}
+test('valid Ed25519 signature transfers without inflation',()=>{const chain=genesis();const next=applySignedBlock(chain,proposeBlock(chain,[tx()],'validator-a'));assert.equal(next.state.balances[bob],10);assert.equal(next.state.supply,100);assert.equal(next.blocks.length,1)});
+test('tampering signature or amount rejected',()=>{const chain=genesis(),signed=tx();assert.throws(()=>applySignedBlock(chain,proposeBlock(chain,[{...signed,amount:20}],'validator-a')),/Signature/);assert.throws(()=>applySignedBlock(chain,proposeBlock(chain,[{...signed,signature:'00'}],'validator-a')),/Signature/)});
+test('chain separation and replay rejected',()=>{const chain=genesis(),signed=tx();assert.throws(()=>applySignedBlock(chain,proposeBlock(chain,[{...signed,chainId:'another'}],'validator-a')),/Invalid signature envelope/);const next=applySignedBlock(chain,proposeBlock(chain,[signed],'validator-a'));assert.throws(()=>applySignedBlock(next,proposeBlock(next,[signed],'validator-a')),/Replay/)});
+test('block tampering and parent mismatch rejected',()=>{const chain=genesis(),block=proposeBlock(chain,[tx()],'validator-a');assert.throws(()=>applySignedBlock(chain,{...block,proposer:'attacker'}),/hash mismatch/);assert.throws(()=>applySignedBlock(chain,{...block,parent:'bad'}),/linkage/)});
+test('deterministic independent block verification',()=>{const first=genesis(),block=proposeBlock(first,[tx()],'validator-a');assert.deepEqual(applySignedBlock(first,block),applySignedBlock(genesis(),block))});
