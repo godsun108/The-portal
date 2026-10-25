@@ -145,7 +145,7 @@ test('Footnotes are readable without hiding untouched source markers',async({pag
  await page.evaluate(()=>{
   window.fetch=async()=>new Response(JSON.stringify({
     edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
-    verses:[{number:'1',raw_usfm:'In the beginning.\\f + \\fr 1:1 \\ft A source note about the beginning.\\f*'}]
+    verses:[{number:'1',raw_usfm:String.raw`In the beginning.\f + \fr 1:1 \ft A source note about the beginning.\f*`}]
   }),{status:200,headers:{'Content-Type':'application/json'}});
  });
  await page.getByRole('button',{name:'Read chapter'}).click();
