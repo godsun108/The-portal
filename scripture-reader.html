@@ -1,0 +1,136 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EarthChain Living Scriptures | PORTAL</title><style>:root{color-scheme:dark;background:#0b0c16;color:#f1e8d6;font-family:system-ui}body{margin:0}.skip-link{position:absolute;top:-100px;left:12px;z-index:10;padding:12px;background:#e8cd8e;color:#111;border-radius:8px}.skip-link:focus{top:12px}main{max-width:850px;margin:auto;padding:24px 18px 90px}h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(38px,7vw,64px)}p{line-height:1.75;color:#c7c2cf}a{color:#e8cd8e}.panel{border:1px solid #454050;border-radius:16px;background:#171725;padding:22px;margin:20px 0}select,button{background:#252334;color:#fff;border:1px solid #6c6378;border-radius:8px;padding:12px;font:inherit}select{width:100%}button{cursor:pointer} .verse span{white-space:pre-line;overflow-wrap:anywhere}.verse details{font:13px/1.5 system-ui;margin:.5rem 0 1rem;border-left:2px solid #9d8963;padding:.5rem 1rem}.verse summary{cursor:pointer}.row>button{min-width:135px} .verse{max-width:70ch}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #e8cd8e;outline-offset:2px}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.verse{font-family:Georgia,serif;font-size:var(--scripture-size,21px);line-height:var(--scripture-leading,1.75)}.verse sup{font:12px system-ui;color:#d8b975;margin-right:8px}.find-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}.find-row input{flex:1;min-width:160px;background:#252334;color:#fff;border:1px solid #6c6378;border-radius:8px;padding:12px;font:inherit}.find-row input:focus-visible{outline:3px solid #e8cd8e;outline-offset:2px}.verse[hidden]{display:none}.reading-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-top:18px}.reading-controls label{display:block;margin-bottom:6px}.reading-controls select{width:100%}.notice{font-size:14px}.status{min-height:24px}#verses{white-space:normal}</style></head><body><a class="skip-link" href="#heading">Skip to scripture</a><main><a href="./living-scriptures.html">← Sacred Library</a><h1>EarthChain Living Scriptures</h1><p>Read the EarthChain Bible collection. The currently available text is the public-domain World English Bible; additional ancient writings will be included after verification. This development reader prefers verified, locally hosted chapter files. The complete source corpus is staged on this development branch, pending editorial review and public release.</p><section class="panel"><p><a href="./gospel-of-thomas.html">Read the Gospel of Thomas (114 sayings) →</a> · <a href="./additional-scriptures.html">Browse Gospel of Mary and additional scriptures →</a></p><label for="book">Book</label><select id="book"><option value="GEN">Genesis</option><option value="JHN">John</option></select><div class="row"><div><label for="chapter">Chapter</label><select id="chapter"></select></div><button id="load" type="button">Read chapter</button><button id="resume" type="button">Resume last reading</button><button id="previous" type="button">← Previous</button><button id="next" type="button">Next →</button><button id="offline" type="button">Save this book offline</button></div><div class="reading-controls" aria-label="Reading appearance"><div><label for="text-size">Reading text size</label><select id="text-size"><option value="small">Compact</option><option value="medium" selected>Comfortable</option><option value="large">Large</option><option value="extra-large">Extra large</option></select></div><div><label for="line-spacing">Line spacing</label><select id="line-spacing"><option value="compact">Compact</option><option value="comfortable" selected>Comfortable</option><option value="spacious">Spacious</option></select></div></div><div class="find-row"><label for="chapter-find">Find in this chapter</label><input id="chapter-find" type="search" placeholder="Search visible verses" aria-controls="verses" autocomplete="off"><button id="clear-find" type="button">Clear search</button></div><p id="find-status" role="status" aria-live="polite"></p><p id="status" class="status" role="status" aria-live="polite"></p></section><section class="panel"><h2 id="heading" tabindex="-1">Choose a chapter</h2><div id="verses" role="region" aria-labelledby="heading"></div></section><p class="notice">Display of USFM markers is intentional where formatting requires editorial review. No verses are rewritten or invented. Edition: World English Bible (WEB), public-domain English text from <a href="https://ebible.org/eng-web/" target="_blank" rel="noopener noreferrer">eBible.org</a>. Chapters are loaded from locally hosted JSON, not scraped from third-party pages. The official source remains available if a chapter is missing. Scripture is never fabricated to fill missing content.</p><p><a id="source" href="https://ebible.org/eng-web/GEN01.htm" target="_blank" rel="noopener noreferrer">Read at the official source ↗</a></p></main><script src="./scripture-format.js"></script><script>
+const book=document.getElementById('book'),chapter=document.getElementById('chapter'),status=document.getElementById('status'),verses=document.getElementById('verses'),heading=document.getElementById('heading'),source=document.getElementById('source');
+const defaultLengths={GEN:50,JHN:21},titles={GEN:'Genesis',JHN:'John'};
+let lengths={...defaultLengths},requestId=0;
+const chapterFind=document.getElementById('chapter-find'),findStatus=document.getElementById('find-status');
+function filterCurrentChapter(){
+ const term=chapterFind.value.trim().toLocaleLowerCase();
+ const entries=[...verses.querySelectorAll('.verse')];
+ let shown=0;
+ for(const entry of entries){
+  const visible=!term||entry.querySelector('span')?.textContent.toLocaleLowerCase().includes(term);
+  entry.hidden=!visible;if(visible)shown++;
+ }
+ findStatus.textContent=entries.length?(term?shown+' of '+entries.length+' verses match in this chapter.':entries.length+' verses shown.'):'Load a chapter to search its verses.';
+}
+chapterFind.addEventListener('input',filterCurrentChapter);
+document.getElementById('clear-find').addEventListener('click',()=>{chapterFind.value='';filterCurrentChapter();chapterFind.focus();});
+const textSize=document.getElementById('text-size'),lineSpacing=document.getElementById('line-spacing');
+const sizes={small:'18px',medium:'21px',large:'25px','extra-large':'29px'};
+const spacing={compact:'1.45',comfortable:'1.75',spacious:'2.05'};
+function applyReadingPreferences(){
+ const size=sizes[textSize.value]||sizes.medium,leading=spacing[lineSpacing.value]||spacing.comfortable;
+ document.documentElement.style.setProperty('--scripture-size',size);
+ document.documentElement.style.setProperty('--scripture-leading',leading);
+ try{localStorage.setItem('living-scriptures-appearance',JSON.stringify({size:textSize.value,spacing:lineSpacing.value}));}catch{}
+}
+try{
+ const saved=JSON.parse(localStorage.getItem('living-scriptures-appearance')||'null');
+ if(saved&&Object.hasOwn(sizes,saved.size))textSize.value=saved.size;
+ if(saved&&Object.hasOwn(spacing,saved.spacing))lineSpacing.value=saved.spacing;
+}catch{}
+textSize.addEventListener('change',applyReadingPreferences);
+lineSpacing.addEventListener('change',applyReadingPreferences);
+applyReadingPreferences();
+function fill(){chapter.replaceChildren();for(let i=1;i<=(lengths[book.value]||0);i++){const o=document.createElement('option');o.value=i;o.textContent=i;chapter.append(o);}}
+function url(){return 'https://ebible.org/eng-web/'+book.value+String(chapter.value).padStart(2,'0')+'.htm';}
+function updateLink(){source.href=url();}
+book.addEventListener('change',()=>{requestId++;fill();updateLink();verses.replaceChildren();filterCurrentChapter();status.textContent='';});
+chapter.addEventListener('change',()=>{requestId++;updateLink();verses.replaceChildren();filterCurrentChapter();status.textContent='';});
+fill();updateLink();
+document.getElementById('resume').addEventListener('click',()=>{
+ try{
+ const last=JSON.parse(localStorage.getItem('living-scriptures-last')||'null');
+ if(!last||!lengths[last.book]||!Number.isInteger(last.chapter)||last.chapter<1||last.chapter>lengths[last.book])throw Error('No saved reading');
+ book.value=last.book;fill();chapter.value=String(last.chapter);updateLink();
+ document.getElementById('load').click();
+ }catch{status.textContent='No valid saved reading on this device yet.';}
+});
+function turnChapter(direction){
+ const current=Number(chapter.value),total=lengths[book.value]||0;
+ const next=current+direction;
+ if(next<1||next>total){status.textContent='End of this book.';return;}
+ chapter.value=String(next);updateLink();document.getElementById('load').click();
+}
+document.getElementById('previous').addEventListener('click',()=>turnChapter(-1));
+document.getElementById('next').addEventListener('click',()=>turnChapter(1));
+if('serviceWorker' in navigator && location.protocol!=='file:'){
+ navigator.serviceWorker.register('./scripture-sw.js',{scope:'./'}).catch(()=>{});
+}
+document.getElementById('offline').addEventListener('click',async()=>{
+ const selected=book.value,count=lengths[selected]||0,button=document.getElementById('offline');
+ if(!('caches' in window)){status.textContent='Offline storage not supported in this browser.';return;}
+ button.disabled=true;status.textContent='Saving book chapters for offline reading…';
+ let saved=0;
+ try{
+  const cache=await caches.open('living-scriptures-v2');
+  for(let i=1;i<=count;i++){
+   const url='./data/web-chapters/'+selected+'/'+String(i).padStart(3,'0')+'.json';
+   const response=await fetch(url,{cache:'no-store'});
+   if(!response.ok)throw Error('Missing chapter '+i);
+   const data=await response.clone().json();
+   if(data.edition!=='eng-web'||data.book!==selected||data.chapter!==i||data.kind!=='raw-usfm-review'||!Array.isArray(data.verses)||!data.verses.length)throw Error('Unverified chapter '+i);
+   await cache.put(url,response);saved++;
+  }
+  status.textContent='Saved '+saved+' chapters for offline reading on this device (subject to browser storage limits).';
+ }catch(e){status.textContent='Only '+saved+' of '+count+' chapters cached. Full offline book not confirmed: '+e.message;}
+ finally{button.disabled=false;}
+});
+// Load the local manifest when it becomes available. No remote HTML scraping.
+(async()=>{try{const r=await fetch('./data/web-chapters/manifest.json');if(!r.ok)throw Error('No local corpus');
+ const manifest=await r.json();
+ if(manifest.format!=='portal-usfm-raw-v1'||!Array.isArray(manifest.books)||manifest.books.length===0)throw Error('Invalid manifest');
+ const previous=book.value;book.replaceChildren();lengths={};
+ for(const item of manifest.books){if(!/^[A-Z0-9]{3,4}$/.test(item.id)||!Number.isInteger(item.chapters)||item.chapters<1)throw Error('Invalid book entry');lengths[item.id]=item.chapters;const o=document.createElement('option');o.value=item.id;o.textContent=(typeof item.short_title==='string'&&item.short_title.trim())||titles[item.id]||(typeof item.title==='string'&&item.title.trim())||item.id;titles[item.id]=o.textContent;book.append(o);}
+ book.value=lengths[previous]?previous:manifest.books[0].id;fill();updateLink();
+ status.textContent='Local review corpus detected. Display may include original USFM formatting markers.';
+ }catch{status.textContent='Local chapter corpus not installed. Use the official source link below.';}})();
+document.getElementById('load').addEventListener('click',async()=>{
+ const id=++requestId,selected=book.value,num=Number(chapter.value);updateLink();
+ heading.textContent=(titles[selected]||selected)+' '+num;verses.replaceChildren();status.textContent='Loading local source chapter…';
+ try{
+ if(!/^[A-Z0-9]{3,4}$/.test(selected)||!Number.isInteger(num)||num<1||num>(lengths[selected]||0))throw Error('Invalid chapter');
+ const path='./data/web-chapters/'+selected+'/'+String(num).padStart(3,'0')+'.json';
+ let response;
+ try{response=await fetch(path);if(!response.ok)throw Error('Local chapter fetch returned '+response.status);}catch(networkError){
+  // Mobile WebKit can fail to route offline fetch through its service worker.
+  // Read explicitly from Cache Storage before declaring a saved chapter unavailable.
+  if(!('caches' in window))throw networkError;
+  response=await caches.match(new URL(path,location.href).href);
+  if(!response)throw Error('Chapter not installed or offline copy unavailable');
+ }
+ if(!response.ok)throw Error('Chapter not installed');
+ const data=await response.json();
+ if(data.edition!=='eng-web'||data.book!==selected||data.chapter!==num||data.kind!=='raw-usfm-review'||!Array.isArray(data.verses)||data.verses.length<1)throw Error('Chapter metadata mismatch');
+ const fragment=document.createDocumentFragment();
+ for(const entry of data.verses){
+ if(!/^[0-9]+(?:[-,][0-9]+)*$/.test(String(entry.number))||typeof entry.raw_usfm!=='string')throw Error('Invalid verse format');
+ const p=document.createElement('p');p.className='verse';const sup=document.createElement('sup');sup.textContent=entry.number;sup.setAttribute('aria-label','Verse '+entry.number);const span=document.createElement('span');
+ const projection=window.ScriptureFormat.projectUSFM(entry.raw_usfm);
+ span.textContent=projection.text;
+ p.append(sup,span);
+ if(projection.notes.length||projection.has_unresolved_markup){
+  const info=document.createElement('details');
+  const summary=document.createElement('summary');summary.textContent='Source formatting & notes';
+  const raw=document.createElement('pre');raw.textContent=entry.raw_usfm;raw.style.whiteSpace='pre-wrap';raw.style.overflowWrap='anywhere';
+  info.append(summary);
+  const noteText=document.createElement('div');noteText.className='source-notes';
+  if(projection.notes.length){
+   const label=document.createElement('strong');label.textContent=projection.notes.length===1?'Footnote':'Footnotes';
+   noteText.append(label);
+   for(const note of projection.notes){
+    const cleaned=note.replace(/\\f\s+|\\f\*/g,'').replace(/\\(?:fr|ft|fq|fqa|fk|fl|fp|fv)\s*/g,' ').replace(/\\\+?(?:w|wh|wg)\s+([^|\\]*?)\|[^\\]*?\\\+?(?:w|wh|wg)\*/g,'$1').replace(/\\[+a-zA-Z][a-zA-Z0-9]*\*?/g,'').replace(/\s+/g,' ').trim();
+    if(cleaned){const line=document.createElement('p');line.textContent=cleaned;noteText.append(line);}
+   }
+   info.append(noteText);
+  }
+  const rawHeading=document.createElement('div');rawHeading.textContent='Original source markers (unchanged)';
+  info.append(rawHeading,raw);p.append(info);
+ }
+ fragment.append(p);
+ }
+ if(id!==requestId)return;verses.replaceChildren(fragment);filterCurrentChapter();try{localStorage.setItem('living-scriptures-last',JSON.stringify({book:selected,chapter:num}));}catch{}
+ status.textContent='Loaded '+data.verses.length+' verse markers. Readable text is a preliminary projection; expand Source formatting & notes to inspect raw markers.';
+ }catch(e){if(id!==requestId)return;verses.replaceChildren();status.textContent='This chapter is unavailable or could not be verified locally. Read it at the official source link below. ('+e.message+')';}
+});
+</script></body></html>
