@@ -139,3 +139,20 @@ test('Extra-large reading settings do not introduce horizontal phone overflow',a
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2);
  expect(overflow).toBe(false);
 });
+
+test('Footnotes are readable without hiding untouched source markers',async({page})=>{
+ await page.goto(local('scripture-reader.html'));
+ await page.evaluate(()=>{
+  window.fetch=async()=>new Response(JSON.stringify({
+    edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
+    verses:[{number:'1',raw_usfm:'In the beginning.\\f + \\fr 1:1 \\ft A source note about the beginning.\\f*'}]
+  }),{status:200,headers:{'Content-Type':'application/json'}});
+ });
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ const disclosure=page.locator('#verses details').first();
+ await expect(disclosure).toHaveCount(1);
+ await disclosure.locator('summary').click();
+ await expect(disclosure.locator('.source-notes')).toContainText('A source note about the beginning.');
+ await expect(disclosure.locator('.source-notes')).not.toContainText('\\ft');
+ await expect(disclosure.locator('pre')).toContainText('\\ft A source note');
+});
