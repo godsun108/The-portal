@@ -101,3 +101,16 @@ test('Reader form labels, status updates and keyboard access',async ({page})=>{
  await page.keyboard.press('Tab');
  await expect(page.getByLabel('Chapter',{exact:true})).toBeFocused();
 });
+
+test('Divine-name source markers do not appear in projected scripture',async({page})=>{
+ await page.goto(local('scripture-reader.html'));
+ await page.evaluate(()=>{
+  window.fetch=async ()=>new Response(JSON.stringify({
+   edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
+   verses:[{number:'1',raw_usfm:'\\\\d Yahweh\\\\d* is my shepherd.'}]
+  }),{status:200,headers:{'Content-Type':'application/json'}});
+ });
+ await page.getByRole('button',{name:'Read chapter'}).click();
+ await expect(page.locator('#verses .verse span')).toHaveText('Yahweh is my shepherd.');
+ await expect(page.locator('#verses .verse span')).not.toContainText('\\\\d');
+});
