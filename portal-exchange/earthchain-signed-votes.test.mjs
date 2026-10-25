@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';import {signedVoteMessage,verifyValidatorVotes} from './earthchain-signed-votes.mjs';
+const pairs=Array.from({length:4},()=>generateKeyPairSync('ed25519'));
+const validatorKeys=Object.fromEntries(pairs.map((p,i)=>['v'+i,p.publicKey.export({type:'spki',format:'pem'})]));
+const chain={chainId:'lab'},block={height:1,parent:'genesis',hash:'block1'};
+const vote=(i,fields={})=>{const base={validator:'v'+i,chainId:'lab',height:1,parent:'genesis',blockHash:'block1',...fields};return {...base,signature:sign(null,signedVoteMessage(base),pairs[i].privateKey).toString('hex')}};
+test('three signed votes out of four meet quorum',()=>{assert.equal(verifyValidatorVotes({chain,block,validatorKeys,votes:[vote(0),vote(1),vote(2)]}).required,3)});
+test('two signed votes do not meet quorum',()=>{assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[vote(0),vote(1)]}),/Insufficient/)});
+test('forged and altered votes rejected',()=>{const v=vote(0);assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[{...v,signature:'00'},vote(1),vote(2)]}),/Invalid validator signature/);assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[{...v,blockHash:'other'},vote(1),vote(2)]}),/does not match/)});
+test('duplicate validator signatures rejected',()=>{assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[vote(0),vote(0),vote(1)]}),/duplicate/)});
+test('wrong height and chain rejected',()=>{assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[vote(0,{height:2}),vote(1),vote(2)]}),/does not match/);assert.throws(()=>verifyValidatorVotes({chain,block,validatorKeys,votes:[vote(0,{chainId:'other'}),vote(1),vote(2)]}),/does not match/)});
