@@ -56,3 +56,15 @@ export function releaseTestCoins(m,orderId,{approved=false}={}){
  m.events.push({type:"TEST_ESCROW_RELEASE",orderId,amount:order.amount});
  return {...order};
 }
+
+export function refundTestOrder(m,orderId,{approved=false}={}){
+ if(!approved)throw Error("Refund approval required");
+ const order=m.orders.get(orderId);
+ if(!order||!["awaiting_shipment","shipped"].includes(order.status))throw Error("Order not refundable");
+ const before=wallet(m,order.buyer);
+ if(!Number.isSafeInteger(before+order.amount))throw Error("Balance overflow");
+ m.wallets.set(order.buyer,before+order.amount);
+ order.status="refunded";
+ m.events.push({type:"TEST_REFUND",orderId,amount:order.amount});
+ return {...order};
+}
