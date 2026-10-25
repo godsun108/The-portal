@@ -24,11 +24,13 @@ if(section<0)throw Error('Main text section anchor missing');
 const title=body.lastIndexOf('THE BOOK OF ENOCH',section);
 if(title<0)throw Error('Translation title anchor missing');
 const translation=body.slice(title);
-const candidates=[...translation.matchAll(/^ {0,8}([IVXLCDM]{1,8})\. +(?=1\.|\[1\.|The book written by Enoch)/gm)];
+// The Gutenberg edition uses "I. (one) 1." headings, and some chapters
+// begin in a paragraph after a section heading. Match numeral + gloss + verse.
+const candidates=[...translation.matchAll(/\b([IVXLCDM]{1,8})\.\s*\([^\n)]{2,50}\)\s*1\.\s/g)];
 const headings=[];let expected=1;
 for(const m of candidates){if(roman(m[1])===expected){headings.push(m);expected++;if(expected===109)break}}
 if(headings.length!==108)throw Error('Found only '+headings.length+' sequential chapter starts; review source before publishing');
-const chapters=headings.map((m,i)=>({number:i+1,text:translation.slice(m.index+m[0].length,i+1<headings.length?headings[i+1].index:translation.length).trim()}));
+const chapters=headings.map((m,i)=>({number:i+1,text:'1. '+translation.slice(m.index+m[0].length,i+1<headings.length?headings[i+1].index:translation.length).trim()}));
 if(chapters.some(c=>c.text.length<40))throw Error('A chapter is suspiciously short; review source before publishing');
 if(!chapters[0].text.startsWith('1. The words of the blessing of Enoch'))throw Error('Chapter 1 does not start at its first verse');
 if(!chapters[107].text.startsWith('1. Another book which Enoch wrote'))throw Error('Chapter 108 start differs from verified source');
