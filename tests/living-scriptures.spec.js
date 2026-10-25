@@ -107,10 +107,10 @@ test('Divine-name source markers do not appear in projected scripture',async({pa
  await page.evaluate(()=>{
   window.fetch=async ()=>new Response(JSON.stringify({
    edition:'eng-web',book:'GEN',chapter:1,kind:'raw-usfm-review',
-   verses:[{number:'1',raw_usfm:'\\\\d Yahweh\\\\d* is my shepherd.'}]
+   verses:[{number:'1',raw_usfm:'\\d Yahweh\\d* is my shepherd.'}]
   }),{status:200,headers:{'Content-Type':'application/json'}});
  });
  await page.getByRole('button',{name:'Read chapter'}).click();
  await expect(page.locator('#verses .verse span')).toHaveText('Yahweh is my shepherd.');
- await expect(page.locator('#verses .verse span')).not.toContainText('\\\\d');
+ await expect(page.locator('#verses .verse span')).not.toContainText('\\d');
 });
