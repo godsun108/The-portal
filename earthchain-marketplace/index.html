@@ -10,9 +10,9 @@ button{background:#b0f5ca;color:#062013;font-weight:700;cursor:pointer;margin-to
 #status{white-space:pre-wrap;min-height:22px}ul{padding-left:18px}li{margin:9px 0}
 </style>
 <header><div><small>EarthChain · Marketplace</small><h1>Card Exchange</h1></div><span class="tag">ECTEST ONLY</span></header>
-<p class="muted">An interactive, in-memory demonstration. No real EarthCoins, USD, payment processing, blockchain transfers or shipping.</p>
+<p class="muted">An interactive, locally saved demonstration. No real EarthCoins, USD, payment processing, blockchain transfers or shipping.</p>
 <section><div class="row"><strong>Buyer wallet</strong><strong id="buyerBalance">0 ECTEST</strong></div><div class="row"><span>Seller wallet</span><strong id="sellerBalance">0 ECTEST</strong></div>
-<button id="acquire">Acquire 100 test credits</button></section>
+<button id="acquire">Acquire 100 ECTEST credits (demo only)</button></section>
 <section><h2>List a Yu-Gi-Oh! card</h2>
 <form id="listingForm"><label for="cardPhoto">Card photo (optional, local preview only)</label><input id="cardPhoto" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"><img id="cardPreview" alt="Local preview of selected card photograph"><small>Image stays on this device; it is not uploaded or saved with the listing.</small><label for="card">Card name</label><input id="card" required maxlength="120" placeholder="Dark Magician">
 <label for="set">Set / edition (optional)</label><input id="set" maxlength="80" placeholder="LOB-005">
@@ -30,6 +30,9 @@ import {previewCardPhoto} from './card-photo.mjs';
 let market;let seq=0;
 try{market=loadDemo(localStorage)}catch{localStorage.removeItem(SNAPSHOT_KEY);market=loadDemo(localStorage)}
 seq=market.events.length+market.listings.size+market.orders.size;
+const EXODIA_ID='earthchain-exodia-lcyw-en306-demo';
+function seedExodia(){if(!market.listings.has(EXODIA_ID)){listCard(market,{id:EXODIA_ID,seller:'seller',name:'Exodia the Forbidden One',setCode:'LCYW-EN306',condition:'Near Mint',price:75});persist()} }
+
 function persist(){try{saveDemo(market,localStorage)}catch{message('Storage unavailable; demo changes will not survive a refresh.')}}
 const el=id=>document.getElementById(id);
 const next=prefix=>prefix+'-'+String(++seq).padStart(8,'0');
@@ -58,5 +61,6 @@ el('acquire').addEventListener('click',()=>{try{acquireTestCoins(market,{buyer:'
 el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name,price,setCode:set,condition});message('Test listing created.');persist();e.target.reset();render()}catch(err){message(err.message)}});
 let photoUrl=null;
 el('cardPhoto').addEventListener('change',e=>{if(photoUrl){URL.revokeObjectURL(photoUrl);photoUrl=null}const file=e.target.files?.[0];const preview=el('cardPreview');preview.style.display='none';preview.removeAttribute('src');if(!file)return;try{photoUrl=previewCardPhoto(file);preview.src=photoUrl;preview.style.display='block';message('Card photo preview ready. It has not been uploaded.')}catch(err){e.target.value='';message(err.message)}});
+seedExodia();
 render();
 </script></html>
