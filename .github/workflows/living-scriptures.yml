@@ -113,6 +113,12 @@ jobs:
           node -e "const r=require('/tmp/web-source/render-audit.json'); console.log(JSON.stringify({status:r.status,verse_markers:r.verse_markers,unresolved_verse_markers:r.unresolved_verse_markers,blank_projected_verses:r.blank_projected_verses,footnotes:r.footnotes,top_unresolved_tags:r.top_unresolved_tags}))"
       - name: Build self-contained iPhone review sample
         run: node scripts/build-scripture-review.mjs /tmp/web-chapters dist/living-scriptures-review.html
+      - name: Upload iPhone review sample
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-scriptures-iphone-review
+          path: dist/living-scriptures-review.html
+          retention-days: 14
       - name: Print source audit summary
         run: |
           node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
