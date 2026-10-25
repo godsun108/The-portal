@@ -17,6 +17,7 @@ on:
       - 'data/living-scriptures-source-manifest.json'
       - 'scripts/convert-web-usfm.mjs'
       - 'scripts/validate-web-chapters.mjs'
+      - 'scripts/audit-web-render.mjs'
       - 'tests/convert-web-usfm.test.mjs'
   workflow_dispatch:
 permissions:
@@ -96,6 +97,8 @@ jobs:
           node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058 || a.books.find(b=>b.id==='GEN')?.title==='GEN' || a.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1); console.log('Chapter counts validated')"
       - name: Validate every generated chapter and verse
         run: node scripts/validate-web-chapters.mjs /tmp/web-chapters
+      - name: Audit projected rendering of every WEB verse
+        run: node scripts/audit-web-render.mjs /tmp/web-chapters > /tmp/web-source/render-audit.json
       - name: Print source audit summary
         run: |
           node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
@@ -106,6 +109,7 @@ jobs:
           path: |
             /tmp/web-source/archive-sha256.txt
             /tmp/web-source/source-audit.json
+            /tmp/web-source/render-audit.json
             /tmp/web-chapters/
           retention-days: 14
 
