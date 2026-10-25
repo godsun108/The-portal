@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {fileURLToPath} from 'node:url';import {FOUNDING_CARD} from './earthchain-founding-card.mjs';import {buildWalletScreen} from './earthwallet-screen-model.mjs';
+const html=readFileSync(fileURLToPath(new URL('./earthwallet-demo.html',import.meta.url)),'utf8');
+test('EarthWallet uses founding card source of truth',()=>{assert.match(html,/import \{FOUNDING_CARD\} from '\.\/earthchain-founding-card\.mjs'/);assert.match(html,/FOUNDING_CARD\.priceUsdCents/);assert.match(html,/FOUNDING_CARD\.id/)});
+test('Exodia draft preview computes price from 1499 cents',()=>{const s=buildWalletScreen({category:'cards',itemId:FOUNDING_CARD.id,merchantId:FOUNDING_CARD.merchantId,priceUsdCents:FOUNDING_CARD.priceUsdCents,ecUsdCents:100});assert.equal(s.checkout.displayPriceUsd,'14.99');assert.equal(s.checkout.canPay,false)});
+test('storefront labels private draft and missing verification',()=>{assert.match(html,/Private draft/);assert.match(html,/authenticity unverified/);assert.match(html,/photos not published/)});
+test('storefront review does not activate checkout',()=>{assert.match(html,/not available for purchase/);assert.match(html,/no EC is transferred/)});
