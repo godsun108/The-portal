@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {validateQuorum} from './earthchain-quorum-lab.mjs';import {createSignedGenesis,proposeBlock} from './earthchain-signed-blocks.mjs';
+const validators=['v1','v2','v3','v4'];
+const chain=createSignedGenesis('lab',{alice:5,bob:0});
+const block=proposeBlock(chain,[{from:'alice',to:'bob',amount:1,nonce:'1'}],'v1');
+const votes=validators.slice(0,3).map(validator=>({validator,blockHash:block.hash}));
+test('three of four votes reach quorum but unsigned transfers still fail',()=>{assert.throws(()=>validateQuorum({validators,chain,block,votes}),/signature envelope/)});
+test('two of four votes cannot finalize',()=>{assert.throws(()=>validateQuorum({validators,chain,block,votes:votes.slice(0,2)}),/Insufficient quorum/)});
+test('duplicate votes cannot inflate quorum',()=>{assert.throws(()=>validateQuorum({validators,chain,block,votes:[votes[0],votes[0],votes[1]]}),/Duplicate vote/)});
+test('unknown validator cannot vote',()=>{assert.throws(()=>validateQuorum({validators,chain,block,votes:[...votes,{validator:'unknown',blockHash:block.hash}]}),/Unauthorized/)});
+test('conflicting block hash is rejected',()=>{assert.throws(()=>validateQuorum({validators,chain,block,votes:[...votes.slice(0,2),{validator:'v3',blockHash:'wrong'}]}),/Conflicting/)});
