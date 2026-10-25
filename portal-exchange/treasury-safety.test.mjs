@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {assessSafeguarding,assessAssetBuckets} from './treasury-safety.mjs';
+test('full coverage does not enable real withdrawals',()=>{const r=assessSafeguarding({confirmedAssets:11000,customerLiabilities:9000,pendingWithdrawals:1000,refundObligations:1000});assert.equal(r.solvent,true);assert.equal(r.withdrawalsEnabled,false)});
+test('shortfalls are detected and not masked by other assets',()=>{const r=assessAssetBuckets({USD:{confirmedAssets:90,customerLiabilities:100},XRP:{confirmedAssets:1000,customerLiabilities:0}});assert.equal(r.allSolvent,false);assert.equal(r.results.USD.shortfall,10);assert.equal(r.withdrawalsEnabled,false)});
+test('negative, fractional and overflow obligations rejected',()=>{assert.throws(()=>assessSafeguarding({confirmedAssets:-1,customerLiabilities:0}),/Invalid/);assert.throws(()=>assessSafeguarding({confirmedAssets:10,customerLiabilities:0.5}),/Invalid/);assert.throws(()=>assessSafeguarding({confirmedAssets:10,customerLiabilities:Number.MAX_SAFE_INTEGER,pendingWithdrawals:1}),/overflow/)});
