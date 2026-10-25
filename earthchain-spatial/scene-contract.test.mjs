@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import {normalizeScene,sceneEvent,fromXRObjects} from "./scene-contract.js";
+import {readFileSync} from "node:fs";
+const source=readFileSync(new URL("./scene-contract.js",import.meta.url),"utf8");
+const {normalizeScene,sceneEvent,fromXRObjects}=await import("data:text/javascript;base64,"+Buffer.from(source).toString("base64"));
 const base=normalizeScene({id:"demo",objects:[{id:"orb",position:[1,2,3]}]});
 assert.equal(base.version,"0.1");
 assert.deepEqual(base.objects[0].position,[1,2,3]);
