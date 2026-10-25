@@ -100,7 +100,18 @@ document.getElementById('load').addEventListener('click',async()=>{
   const info=document.createElement('details');
   const summary=document.createElement('summary');summary.textContent='Source formatting & notes';
   const raw=document.createElement('pre');raw.textContent=entry.raw_usfm;raw.style.whiteSpace='pre-wrap';raw.style.overflowWrap='anywhere';
-  info.append(summary,raw);p.append(info);
+  const noteText=document.createElement('div');noteText.className='source-notes';
+  if(projection.notes.length){
+   const label=document.createElement('strong');label.textContent=projection.notes.length===1?'Footnote':'Footnotes';
+   noteText.append(label);
+   for(const note of projection.notes){
+    const cleaned=note.replace(/\\\\f\\s+|\\\\f\\*/g,'').replace(/\\\\(?:fr|ft|fq|fqa|fk|fl|fp|fv|xo|xt|xq)\\s*/g,' ').replace(/\\\\\\+?(?:w|wh|wg)\\s+([^|\\\\]*?)\\|[^\\\\]*?\\\\\\+?(?:w|wh|wg)\\\*/g,'$1').replace(/\\\\[+a-zA-Z][a-zA-Z0-9]*\\\*?/g,'').replace(/\\s+/g,' ').trim();
+    if(cleaned){const line=document.createElement('p');line.textContent=cleaned;noteText.append(line);}
+   }
+   info.append(noteText);
+  }
+  const rawHeading=document.createElement('div');rawHeading.textContent='Original source markers (unchanged)';
+  info.append(rawHeading,raw);p.append(info);
  }
  fragment.append(p);
  }
