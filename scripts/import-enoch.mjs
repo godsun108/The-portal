@@ -23,10 +23,10 @@ const section=body.indexOf('I-XXXVI.');
 if(section<0)throw Error('Main text section anchor missing');
 const title=body.lastIndexOf('THE BOOK OF ENOCH',section);
 if(title<0)throw Error('Translation title anchor missing');
-const translation=body.slice(title);
+const translation=body.slice(section);
 // The Gutenberg edition uses "I. (one) 1." headings, and some chapters
 // begin in a paragraph after a section heading. Match numeral + gloss + verse.
-const candidates=[...translation.matchAll(/\b([IVXLCDM]{1,8})\.\s*\([^\n)]{2,50}\)\s*1\.\s/g)];
+const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\. 1\. /gm)];
 const headings=[];let expected=1;
 for(const m of candidates){if(roman(m[1])===expected){headings.push(m);expected++;if(expected===109)break}}
 if(headings.length!==108)throw Error('Found only '+headings.length+' sequential chapter starts; review source before publishing');
