@@ -100,6 +100,7 @@ document.getElementById('load').addEventListener('click',async()=>{
   const info=document.createElement('details');
   const summary=document.createElement('summary');summary.textContent='Source formatting & notes';
   const raw=document.createElement('pre');raw.textContent=entry.raw_usfm;raw.style.whiteSpace='pre-wrap';raw.style.overflowWrap='anywhere';
+  info.append(summary);
   const noteText=document.createElement('div');noteText.className='source-notes';
   if(projection.notes.length){
    const label=document.createElement('strong');label.textContent=projection.notes.length===1?'Footnote':'Footnotes';
