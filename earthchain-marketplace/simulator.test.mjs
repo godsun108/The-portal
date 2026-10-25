@@ -24,3 +24,18 @@ test("cannot reuse acquisition request",()=>{
  const m=newMarket();acquireTestCoins(m,{buyer:"buyer",credits:20,requestId:"request-002"});
  assert.throws(()=>acquireTestCoins(m,{buyer:"buyer",credits:20,requestId:"request-002"}),/Duplicate/);
 });
+
+import {refundTestOrder} from "./simulator.mjs";
+test("refund returns held test credits exactly once",()=>{
+ const m=newMarket();
+ acquireTestCoins(m,{buyer:"buyer",credits:90,requestId:"request-003"});
+ listCard(m,{id:"card-refund",seller:"seller",name:"Dark Magician",price:60});
+ purchaseCard(m,{listingId:"card-refund",buyer:"buyer",orderId:"order-refund",approved:true});
+ assert.equal(balance(m,"buyer"),30);
+ assert.throws(()=>refundTestOrder(m,"order-refund"),/approval/);
+ refundTestOrder(m,"order-refund",{approved:true});
+ assert.equal(balance(m,"buyer"),90);
+ assert.equal(balance(m,"seller"),0);
+ assert.throws(()=>refundTestOrder(m,"order-refund",{approved:true}),/not refundable/);
+ assert.throws(()=>releaseTestCoins(m,"order-refund",{approved:true}),/not eligible/);
+});
