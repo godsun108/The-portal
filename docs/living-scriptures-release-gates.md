@@ -9,7 +9,12 @@ Status: **DRAFT / NOT APPROVED FOR PUBLIC DEPLOYMENT**
 - Chromium unit, browser and real-data offline tests have passed in prior CI runs.
 - Existing PORTAL contracts have passed.
 - Simulated mobile WebKit browsing, real-data chapter loading, local chapter offline reading, book navigation and resume have passed in CI. Linux WebKit full offline page reload can return an internal navigation error, so physical iOS offline reopening is still unverified.
-- Latest verified complete pass before editorial render additions: https://github.com/godsun108/The-portal/actions/runs/40093832063 .
+- Latest verified complete pass after keyboard skip link, accessible verse labels, narrow-screen text-scaling and source-note disclosure: https://github.com/godsun108/The-portal/actions/runs/40151585590 (official-web-source-audit, browser-tests, stage-chapter-corpus all succeeded).
+
+## Fixed scope for completion
+- Ship the pinned 81-book WEB source edition, without adding speculative books or claiming that the edition represents every biblical canon.
+- No new translation or unreviewed wording changes. Retain original USFM alongside readable projection.
+- Finish only the physical Safari/VoiceOver/offline reopening and editorial acceptance gates below before seeking release approval.
 
 ## Outstanding human verification
 - A qualified textual/editorial reviewer must inspect representative and edge-case passages: poetry, footnotes, cross-references, headings, deuterocanonical material, RTL scripts and alternate verse numberings. A source-preserving projection is **not** an editorially approved WEB critical edition.
