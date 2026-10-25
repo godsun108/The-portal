@@ -15,7 +15,7 @@ jobs:
           node-version: '22'
       - name: Fetch verified Project Gutenberg source
         run: |
-          curl --fail --location --retry 3 --output /tmp/enoch.txt https://www.gutenberg.org/ebooks/77935.txt.utf-8
+          curl --fail --location --retry 3 --output /tmp/enoch.txt https://www.gutenberg.org/cache/epub/77935/pg77935.txt
           test -s /tmp/enoch.txt
       - name: Validate and split into chapters
         run: node scripts/import-enoch.mjs /tmp/enoch.txt /tmp/enoch-chapters
