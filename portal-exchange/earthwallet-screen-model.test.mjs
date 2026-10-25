@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {buildWalletScreen,EARTHWALLET_NAV} from './earthwallet-screen-model.mjs';
+test('wallet screen presents five commerce destinations',()=>{const screen=buildWalletScreen();assert.equal(screen.navigation.length,5);assert.equal(new Set(EARTHWALLET_NAV.map(x=>x.id)).size,5)});
+test('checkout shows clear USD, EarthCash and EC quote',()=>{const s=buildWalletScreen({priceUsdCents:2000,ecUsdCents:200});assert.equal(s.checkout.displayPriceUsd,'20.00');assert.equal(s.checkout.displayEarthCash,'20.00');assert.equal(s.checkout.displayEarthCoin,'10.00000000')});
+test('both buy and checkout actions are explicitly disabled',()=>{const s=buildWalletScreen();assert.equal(s.actions.buyEC.enabled,false);assert.equal(s.actions.checkout.enabled,false);assert.equal(s.checkout.canPay,false)});
+test('all destinations can generate preview screens',()=>{for(const x of EARTHWALLET_NAV)assert.equal(buildWalletScreen({category:x.id}).checkout.category,x.id)});
