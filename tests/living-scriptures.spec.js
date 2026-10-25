@@ -95,7 +95,7 @@ test('Reader form labels, status updates and keyboard access',async ({page})=>{
  await page.goto(local('scripture-reader.html'));
  await expect(page.getByLabel('Book',{exact:true})).toBeVisible();
  await expect(page.getByLabel('Chapter',{exact:true})).toBeVisible();
- await expect(page.locator('[role="status"][aria-live="polite"]')).toHaveCount(1);
+ await expect(page.locator('#status[role="status"][aria-live="polite"]')).toHaveCount(1);
  await page.getByLabel('Book',{exact:true}).focus();
  await expect(page.getByLabel('Book',{exact:true})).toBeFocused();
  await page.keyboard.press('Tab');
