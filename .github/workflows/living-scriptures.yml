@@ -4,7 +4,7 @@ on:
     paths:
       - 'living-scriptures.html'
       - 'scripture-compare.html'
-      - 'scripture-reader.html'
+      - 'scripture-reader.html'\n      - 'scripts/build-full-scripture-offline.mjs'\n      - 'additional-scriptures.html'\n      - 'gospel-of-thomas.html'
       - 'scripture-format.js'
       - 'scripture-sw.js'
       - 'stations.json'
