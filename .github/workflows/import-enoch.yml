@@ -1,0 +1,29 @@
+name: Import 1 Enoch source (review only)
+on:
+  workflow_dispatch:
+jobs:
+  import-enoch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/living-scriptures-v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch verified Project Gutenberg source
+        run: |
+          curl --fail --location --retry 3 --output /tmp/enoch.txt https://www.gutenberg.org/ebooks/77935.txt.utf-8
+          test -s /tmp/enoch.txt
+      - name: Validate and split into chapters
+        run: node scripts/import-enoch.mjs /tmp/enoch.txt /tmp/enoch-chapters
+      - name: Verify chapter files
+        run: |
+          test "$(find /tmp/enoch-chapters -name '[0-9][0-9][0-9].json' | wc -l)" -eq 108
+      - uses: actions/upload-artifact@v4
+        with:
+          name: enoch-108-chapters-for-editorial-review
+          path: /tmp/enoch-chapters/
+          retention-days: 14
