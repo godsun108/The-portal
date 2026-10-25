@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {previewUsdToEc,assessEcAcquisitionReadiness,EC_ACQUISITION_GATES} from './ec-usd-acquisition.mjs';
+test('illustrative ten dollar conversion at one dollar per EC',()=>{const q=previewUsdToEc({usdCents:1000,ecUsdCents:100});assert.equal(q.ecMinorUnits,'1000000000');assert.equal(q.paymentEnabled,false);assert.equal(q.ecDeliveryEnabled,false)});
+test('fee is deducted before illustrative EC calculation',()=>{const q=previewUsdToEc({usdCents:1000,feeUsdCents:100,ecUsdCents:200});assert.equal(q.ecMinorUnits,'450000000')});
+test('invalid values cannot create quotes',()=>{assert.throws(()=>previewUsdToEc({usdCents:0,ecUsdCents:100}));assert.throws(()=>previewUsdToEc({usdCents:100,feeUsdCents:100,ecUsdCents:100}))});
+test('all launch gates are unmet without verified evidence',()=>{const r=assessEcAcquisitionReadiness();assert.equal(r.unverified.length,EC_ACQUISITION_GATES.length);assert.equal(r.canAcceptUsd,false)});
+test('even claimed gate completion does not activate money handling',()=>{const r=assessEcAcquisitionReadiness(Object.fromEntries(EC_ACQUISITION_GATES.map(g=>[g,true])));assert.equal(r.readyForIndependentReview,true);assert.equal(r.liveEnabled,false);assert.equal(r.canDeliverEC,false)});
