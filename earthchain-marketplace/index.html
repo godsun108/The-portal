@@ -24,12 +24,16 @@ button{background:#b0f5ca;color:#062013;font-weight:700;cursor:pointer;margin-to
 <section><h2>Activity</h2><ul id="activity"></ul></section>
 <p role="status" id="status" aria-live="polite"></p>
 <script type="module">
-import {newMarket,acquireTestCoins,listCard,purchaseCard,shipCard,releaseTestCoins,balance} from './simulator.mjs';
-const market=newMarket();let seq=0;
+import {acquireTestCoins,listCard,purchaseCard,shipCard,releaseTestCoins,refundTestOrder,balance} from './simulator.mjs';
+import {loadDemo,saveDemo,SNAPSHOT_KEY} from './local-snapshot.mjs';
+let market;let seq=0;
+try{market=loadDemo(localStorage)}catch{localStorage.removeItem(SNAPSHOT_KEY);market=loadDemo(localStorage)}
+seq=market.events.length+market.listings.size+market.orders.size;
+function persist(){try{saveDemo(market,localStorage)}catch{message('Storage unavailable; demo changes will not survive a refresh.')}}
 const el=id=>document.getElementById(id);
 const next=prefix=>prefix+'-'+String(++seq).padStart(8,'0');
 function message(text){el('status').textContent=text}
-function button(text,fn){const b=document.createElement('button');b.textContent=text;b.addEventListener('click',()=>{try{fn();render()}catch(e){message(e.message)}});return b}
+function button(text,fn){const b=document.createElement('button');b.textContent=text;b.addEventListener('click',()=>{try{fn();persist();render()}catch(e){message(e.message)}});return b}
 function render(){
  el('buyerBalance').textContent=balance(market,'buyer')+' ECTEST';
  el('sellerBalance').textContent=balance(market,'seller')+' ECTEST';
@@ -44,11 +48,12 @@ function render(){
  for(const order of market.orders.values()){
   const box=document.createElement('div'),label=document.createElement('p');label.textContent=order.orderId+' · '+order.status;box.append(label);
   if(order.status==='awaiting_shipment')box.append(button('Mark shipped (simulation)',()=>{shipCard(market,order.orderId,{tracking:next('DEMO-TRACK')});message('Shipment simulated.')}));
+  if(['awaiting_shipment','shipped'].includes(order.status))box.append(button('Refund test credits',()=>{if(!confirm('Refund the buyer in this simulated order?'))return;refundTestOrder(market,order.orderId,{approved:true});message('Test credits refunded.')}));
   if(order.status==='shipped')box.append(button('Approve test release to seller',()=>{if(!confirm('Simulate releasing test credits to the seller?'))return;releaseTestCoins(market,order.orderId,{approved:true});message('Seller credited with ECTEST.')}));orders.append(box);
  }
  const activity=el('activity');activity.replaceChildren();for(const event of market.events){const li=document.createElement('li');li.textContent=event.type+' · '+(event.amount??event.credits)+' ECTEST';activity.append(li)}
 }
-el('acquire').addEventListener('click',()=>{try{acquireTestCoins(market,{buyer:'buyer',credits:100,requestId:next('acquire')});message('100 valueless ECTEST credits added.');render()}catch(e){message(e.message)}});
-el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name:[name,set,condition].filter(Boolean).join(' · '),price});message('Test listing created.');e.target.reset();render()}catch(err){message(err.message)}});
+el('acquire').addEventListener('click',()=>{try{acquireTestCoins(market,{buyer:'buyer',credits:100,requestId:next('acquire')});message('100 valueless ECTEST credits added.');persist();render()}catch(e){message(e.message)}});
+el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name:[name,set,condition].filter(Boolean).join(' · '),price});message('Test listing created.');persist();e.target.reset();render()}catch(err){message(err.message)}});
 render();
 </script></html>
