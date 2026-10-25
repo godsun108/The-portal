@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {FOUNDING_CARD,foundingCardPreview} from './earthchain-founding-card.mjs';
+test('founding Exodia listing identifies exact printing',()=>{assert.equal(FOUNDING_CARD.id,'EC-YGO-0001');assert.equal(FOUNDING_CARD.cardNumber,'LCYW-EN306');assert.equal(FOUNDING_CARD.rarity,'Secret Rare')});
+test('draft retains provisional price and one card',()=>{assert.equal(FOUNDING_CARD.priceUsdCents,1499);assert.equal(FOUNDING_CARD.quantity,1);assert.equal(foundingCardPreview().priceUsd,'14.99')});
+test('seller photos and authenticity are not misrepresented',()=>{assert.deepEqual(FOUNDING_CARD.photoAssets,[]);assert.equal(FOUNDING_CARD.authenticity,'NOT_VERIFIED');assert.equal(FOUNDING_CARD.conditionCode,null)});
+test('private draft cannot be bought or published',()=>{assert.equal(FOUNDING_CARD.publiclyListed,false);assert.equal(FOUNDING_CARD.canPurchase,false);assert.equal(FOUNDING_CARD.canPayEC,false);assert.equal(FOUNDING_CARD.status,'DRAFT_PRIVATE')});
