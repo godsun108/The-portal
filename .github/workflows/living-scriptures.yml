@@ -24,7 +24,7 @@ permissions:
   contents: read
 jobs:
   browser-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
           CI: 'true'
 
   official-web-source-audit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
@@ -117,7 +117,7 @@ jobs:
     # Only push generated files to the same-repository feature branch, never main.
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/living-scriptures-v1'
     needs: [browser-tests, official-web-source-audit]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     permissions:
       contents: write
