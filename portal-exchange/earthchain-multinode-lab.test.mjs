@@ -1,9 +1,9 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';import {createSignedGenesis,proposeBlock} from './earthchain-signed-blocks.mjs';import {signedVoteMessage} from './earthchain-signed-votes.mjs';import {simulateIndependentNodes,compareFinalizedHistories} from './earthchain-multinode-lab.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';import {createSignedGenesis,proposeBlock,accountFromPublicKey,signableTransaction} from './earthchain-signed-blocks.mjs';import {signedVoteMessage} from './earthchain-signed-votes.mjs';import {simulateIndependentNodes,compareFinalizedHistories} from './earthchain-multinode-lab.mjs';
 const keys=Array.from({length:4},()=>generateKeyPairSync('ed25519'));
 const validatorKeys=Object.fromEntries(keys.map((k,i)=>['v'+i,k.publicKey.export({type:'spki',format:'pem'})]));
-const allocations={alice:5};const genesis=createSignedGenesis('lab',allocations);
+const sender=generateKeyPairSync('ed25519'),receiver=generateKeyPairSync('ed25519');const from=accountFromPublicKey(sender.publicKey),to=accountFromPublicKey(receiver.publicKey);const allocations={[from]:5,[to]:0};const genesis=createSignedGenesis('lab',allocations);
 function proposal(label,signers=[0,1,2]){
- const block=proposeBlock(genesis,[],label);
+ const tx={from,to,amount:1,nonce:label,chainId:genesis.chainId,publicKey:from};const signed={...tx,signature:sign(null,signableTransaction(tx),sender.privateKey).toString('hex')};const block=proposeBlock(genesis,[signed],label);
  const votes=signers.map(i=>{const v={validator:'v'+i,chainId:genesis.chainId,height:block.height,parent:block.parent,blockHash:block.hash};return {...v,signature:sign(null,signedVoteMessage(v),keys[i].privateKey).toString('hex')}});
  return {block,votes,recipients:['v0','v1','v2','v3']};
 }
