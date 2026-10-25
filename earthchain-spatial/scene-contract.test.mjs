@@ -1,0 +1,15 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const source=readFileSync(new URL("./scene-contract.js",import.meta.url),"utf8");
+const {normalizeScene,sceneEvent,fromXRObjects}=await import("data:text/javascript;base64,"+Buffer.from(source).toString("base64"));
+const base=normalizeScene({id:"demo",objects:[{id:"orb",position:[1,2,3]}]});
+assert.equal(base.version,"0.1");
+assert.deepEqual(base.objects[0].position,[1,2,3]);
+assert.deepEqual(sceneEvent(base,{type:"move",objectId:"orb",position:[4,5,6]}).scene.objects[0].position,[4,5,6]);
+assert.equal(sceneEvent(base,{type:"hide",objectId:"orb"}).scene.objects[0].visible,false);
+assert.deepEqual(base.objects[0].position,[1,2,3]);
+assert.throws(()=>normalizeScene({objects:[{id:"a"},{id:"a"}]}));
+assert.throws(()=>sceneEvent(base,{type:"move",objectId:"orb",position:[Infinity,0,0]}));
+assert.throws(()=>sceneEvent(base,{type:"select",objectId:"missing"}));
+assert.equal(fromXRObjects([{id:"xr-orb",position:{x:1,y:2,z:-2},scale:.2}]).objects[0].position[2],-2);
+console.log("Spatial scene contract: 8 checks passed");

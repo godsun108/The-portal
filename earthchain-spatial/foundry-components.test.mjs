@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const load=async file=>import("data:text/javascript;base64,"+Buffer.from(readFileSync(new URL(file,import.meta.url),"utf8")).toString("base64"));
+const {foundryParts}=await load("./foundry-components.js");
+assert.equal(foundryParts.length,9);
+assert.equal(new Set(foundryParts.map(x=>x.id)).size,9);
+assert.ok(foundryParts.every(x=>x.position.length===3&&x.position.every(Number.isFinite)));
+assert.ok(foundryParts.every(x=>x.scale>0));
+const {normalizeScene}=await load("./scene-contract.js");
+const scene=normalizeScene({id:"reality-foundry",objects:foundryParts.map(p=>({...p,label:p.name,kind:"model"}))});
+assert.equal(scene.objects.length,9);
+assert.equal(scene.objects[6].label,"Balance");
+console.log("Foundry spatial data: 6 checks passed");

@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const source=readFileSync(new URL("./xr-adapter.js",import.meta.url),"utf8");
+const contract=readFileSync(new URL("./scene-contract.js",import.meta.url),"utf8");
+const contractUrl="data:text/javascript;base64,"+Buffer.from(contract).toString("base64");
+const adapterUrl="data:text/javascript;base64,"+Buffer.from(source.replace('"./scene-contract.js"',JSON.stringify(contractUrl))).toString("base64");
+const {toXRObjects}=await import(adapterUrl);
+const objects=toXRObjects({objects:[{id:"visible",position:[1,2,-3],scale:.2},{id:"hidden",visible:false}]});
+assert.equal(objects.length,1);
+assert.deepEqual(objects[0].position,{x:1,y:2,z:-3});
+assert.equal(objects[0].grabbable,true);
+console.log("XR adapter: 3 checks passed");
