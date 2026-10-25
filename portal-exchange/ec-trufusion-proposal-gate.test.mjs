@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {assessTruFusionProposal} from './ec-trufusion-proposal-gate.mjs';
+const p={schema:'earthchain.trufusion.proposal.v0',ledgerHead:'head_1'};
+test('rejects unverified advisory proposals',()=>{const r=assessTruFusionProposal({proposal:p,ledgerHead:'head_1'});assert.equal(r.eligibleForOfflinePolicyEvaluation,false);assert.equal(r.canTransferNativeEC,false)});
+test('rejects stale ledger state even with independent claims',()=>{const r=assessTruFusionProposal({proposal:p,ledgerHead:'head_2',verifiedProposal:true,independentAuthorization:true});assert.ok(r.reasons.includes('stale_or_wrong_ledger_head'))});
+test('verified advisory proposal only permits offline policy evaluation',()=>{const r=assessTruFusionProposal({proposal:p,ledgerHead:'head_1',verifiedProposal:true,independentAuthorization:true});assert.equal(r.eligibleForOfflinePolicyEvaluation,true);assert.equal(r.canAcceptUSD,false);assert.equal(r.canAssertFinality,false)});
