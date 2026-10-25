@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {NATIVE_FINALITY_REQUIREMENTS,nativeFinalityReadiness,makeUnconfiguredNativeFinalityVerifier} from './ec-native-finality-adapter.mjs';
+test('unverified native consensus remains blocked',()=>{const r=nativeFinalityReadiness();assert.equal(r.missing.length,NATIVE_FINALITY_REQUIREMENTS.length);assert.equal(r.canVerifyProduction,false)});
+test('claimed evidence alone never configures a verifier',()=>{const r=nativeFinalityReadiness(Object.fromEntries(NATIVE_FINALITY_REQUIREMENTS.map(k=>[k,true])));assert.equal(r.readyForExternalAudit,true);assert.equal(r.configured,false)});
+test('unconfigured native finality verifier rejects',async()=>{await assert.rejects(makeUnconfiguredNativeFinalityVerifier()({}),/not configured/)});

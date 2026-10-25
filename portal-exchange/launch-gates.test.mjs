@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {GATES,newGateRegistry,addEvidence,report,canEnableRealPurchases} from './launch-gates.mjs';
+test('all launch gates blocked by default',()=>{const r=report(newGateRegistry());assert.equal(r.length,GATES.length);assert.ok(r.every(x=>x.status==='blocked'&&!x.approved));assert.equal(canEnableRealPurchases(),false)});
+test('evidence cannot authorize real payments',()=>{const r=newGateRegistry();addEvidence(r,{gate:'provider',reference:'draft:provider-1',reviewer:'demo',note:'Unverified note'});assert.equal(report(r).find(x=>x.id==='provider').evidenceCount,1);assert.equal(report(r).find(x=>x.id==='provider').approved,false);assert.equal(canEnableRealPurchases(),false)});
+test('invalid and duplicate evidence rejected',()=>{const r=newGateRegistry();assert.throws(()=>addEvidence(r,{gate:'unknown',reference:'x',reviewer:'y',note:'z'}),/Invalid/);const args={gate:'legal',reference:'draft:legal-1',reviewer:'demo',note:'Unverified'};addEvidence(r,args);assert.throws(()=>addEvidence(r,args),/Duplicate/)});

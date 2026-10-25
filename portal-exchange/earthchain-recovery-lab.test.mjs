@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createSignedGenesis} from './earthchain-signed-blocks.mjs';import {exportJournal,importJournal,recoverChain} from './earthchain-recovery-lab.mjs';
+test('empty genesis journal recovers deterministically',()=>{const allocations={alice:2,bob:0};const chain=createSignedGenesis('lab',allocations);assert.deepEqual(importJournal(exportJournal(chain,allocations)),chain)});
+test('invalid format rejected',()=>{assert.throws(()=>importJournal(JSON.stringify({format:'other',chainId:'lab',allocations:{alice:1},blocks:[]})),/Unknown journal/)});
+test('invalid block linkage rejected during recovery',()=>{assert.throws(()=>recoverChain({chainId:'lab',allocations:{alice:1,bob:0},blocks:[{chainId:'lab',height:1,parent:'wrong',transactions:[],proposer:'v',hash:'bad'}]}),/Invalid block linkage/)});
+test('tampered in-memory state cannot be exported as verified',()=>{const allocations={alice:2,bob:0};const chain=createSignedGenesis('lab',allocations);chain.state.balances.alice=99;assert.throws(()=>exportJournal(chain,allocations),/Journal state mismatch/)});

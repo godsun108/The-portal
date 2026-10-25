@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {inspectTestDelivery,inspectAndRecordTestDelivery} from './ec-test-receipt-adapter.mjs';import {newAcquisition,advanceAcquisition} from './ec-fiat-delivery-simulator.mjs';
+const address='ec_'+'a'.repeat(32);
+const order=()=>advanceAcquisition(advanceAcquisition(newAcquisition({id:'order_0001',walletAddress:address,usdCents:1000,ecUsdCents:100}),{eventId:'settled_1',type:'PAYMENT_SETTLED'}),{eventId:'delivery_1',type:'DELIVERY_REQUESTED'});
+test('test receipt adapter rejects any journal without independently verifiable mutual signatures',async()=>{await assert.rejects(inspectTestDelivery(order(),{journal:{entries:[{id:'fake'}]}},{},{entryId:'fake',senderAddress:address}))});
+test('test receipt adapter does not turn evidence into real EC delivery',async()=>{await assert.rejects(inspectAndRecordTestDelivery(order(),{journal:{entries:[]}},{},{entryId:'fake',senderAddress:address}));assert.equal(order().realMoneyEnabled,false)});
+test('receipt cannot be inspected before settled payment',async()=>{const o=newAcquisition({id:'order_0001',walletAddress:address,usdCents:1000,ecUsdCents:100});await assert.rejects(inspectTestDelivery(o,{}, {},{entryId:'fake',senderAddress:address}),/Delivery not pending/)});

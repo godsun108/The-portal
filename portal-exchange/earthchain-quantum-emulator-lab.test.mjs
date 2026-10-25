@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createQuantumRegister,hadamard,controlledNot,probabilities} from './earthchain-quantum-emulator-lab.mjs';
+test('single qubit superposition has 50/50 probabilities',()=>{const r=hadamard(createQuantumRegister(1),0);assert.ok(Math.abs(probabilities(r)[0]-.5)<1e-12);assert.ok(Math.abs(probabilities(r)[1]-.5)<1e-12)});
+test('Bell state exhibits entangled correlations',()=>{const r=controlledNot(hadamard(createQuantumRegister(2),0),0,1),p=probabilities(r);assert.ok(Math.abs(p[0]-.5)<1e-12);assert.ok(Math.abs(p[3]-.5)<1e-12);assert.ok(p[1]<1e-12&&p[2]<1e-12)});
+test('Hadamard applied twice restores zero state',()=>{const r=createQuantumRegister(1);hadamard(hadamard(r,0),0);assert.ok(Math.abs(probabilities(r)[0]-1)<1e-12)});
+test('reject excessive qubit counts and invalid controls',()=>{assert.throws(()=>createQuantumRegister(144000),/limit/);assert.throws(()=>controlledNot(createQuantumRegister(2),0,0),/Control equals target/)});

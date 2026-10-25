@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createCardListing,quoteCardOrder,purchaseReadiness} from './earthchain-card-marketplace-lab.mjs';
+const listing=()=>createCardListing({id:'card_1',title:'Example trading card (demo)',condition:'NM',priceCents:1500,quantity:2,sellerId:'seller-demo'});
+test('demo card quote totals integer cents and never allows payment',()=>{const q=quoteCardOrder({listing:listing(),quantity:2,shippingCents:300,taxCents:120});assert.equal(q.totalCents,3420);assert.equal(q.canPay,false);assert.equal(q.earthcoinQuote,null)});
+test('overselling and invalid pricing rejected',()=>{assert.throws(()=>quoteCardOrder({listing:listing(),quantity:3}),/Invalid/);assert.throws(()=>createCardListing({id:'x',title:'card',condition:'NM',priceCents:-1,quantity:1,sellerId:'s'}),/Invalid/)});
+test('even all approved checklist fields cannot enable real commerce',()=>{const fields=purchaseReadiness().required;const gates=Object.fromEntries(fields.map(x=>[x,true]));const r=purchaseReadiness(gates);assert.equal(r.missing.length,0);assert.equal(r.canCheckout,false);assert.equal(r.canPurchaseEarthCoin,false)});
+test('unapproved issuer and seller gates remain visible',()=>{const r=purchaseReadiness();assert.ok(r.missing.includes('issuerLegalReview'));assert.ok(r.missing.includes('sellerOnboarding'))});

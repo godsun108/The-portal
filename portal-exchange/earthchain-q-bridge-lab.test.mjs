@@ -1,0 +1,12 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync} from 'node:crypto';import {createPeerEnvelope,createPeerReceiver,peerId} from './earthchain-q-bridge-lab.mjs';
+const a=generateKeyPairSync('ed25519'),b=generateKeyPairSync('ed25519'),c=generateKeyPairSync('ed25519');
+const aid=peerId(a.publicKey),bid=peerId(b.publicKey);
+const receiver=()=>createPeerReceiver({network:'earthchain-lab',privateKey:b.privateKey,publicKey:b.publicKey,allowedPeers:[aid]});
+const send=(sequence,payload='quantum-emulator-job')=>createPeerEnvelope({network:'earthchain-lab',fromPrivateKey:a.privateKey,fromPublicKey:a.publicKey,to:bid,sequence,payload});
+test('authorized peers exchange signed research messages',()=>{assert.equal(receiver().receive(send(1)).payload,'quantum-emulator-job')});
+test('replayed message is rejected',()=>{const r=receiver(),msg=send(1);r.receive(msg);assert.throws(()=>r.receive(msg),/Replay/)});
+test('payload tampering is rejected',()=>{assert.throws(()=>receiver().receive({...send(1),payload:'altered'}),/digest mismatch/)});
+test('wrong network and destination are rejected',()=>{assert.throws(()=>receiver().receive({...send(1),network:'other'}),/Wrong network/);assert.throws(()=>receiver().receive({...send(1),to:aid}),/Wrong network/)});
+test('untrusted peer rejected',()=>{const msg=createPeerEnvelope({network:'earthchain-lab',fromPrivateKey:c.privateKey,fromPublicKey:c.publicKey,to:bid,sequence:1,payload:'hello'});assert.throws(()=>receiver().receive(msg),/Untrusted/)});
+test('forged signature rejected',()=>{const msg=send(1);assert.throws(()=>receiver().receive({...msg,signature:'00'.repeat(64)}),/signature failed/)});
+test('out-of-order sequence rejected',()=>{const r=receiver();r.receive(send(2));assert.throws(()=>r.receive(send(1)),/out-of-order/)});

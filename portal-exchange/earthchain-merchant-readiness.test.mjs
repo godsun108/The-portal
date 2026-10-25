@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {validateMerchant,validatePhysicalCardListing,EARTHCHAIN_LAUNCH_SEQUENCE} from './earthchain-merchant-readiness.mjs';
+const merchant=()=>({id:'seller-1',legalName:'Demo Seller',contactEmail:'demo@example.com',identityVerified:true,paymentProviderApproved:true,refundPolicyAccepted:true,shippingPolicyAccepted:true});
+const card=()=>({id:'card-1',title:'Example card',condition:'NM',priceCents:2000,stock:1,authenticityAttested:true,imageRightsConfirmed:true,fulfillmentPlanConfirmed:true});
+test('unverified merchants cannot sell',()=>{const m=validateMerchant({...merchant(),identityVerified:false});assert.ok(m.missing.includes('identity_verification'));assert.equal(m.canSell,false)});
+test('complete merchant documentation still requires independent approval',()=>{const m=validateMerchant(merchant());assert.equal(m.readyForReview,true);assert.equal(m.approved,false);assert.equal(m.canSell,false)});
+test('card listing requires approved seller and authenticity evidence',()=>{const l=validatePhysicalCardListing(card(),validateMerchant(merchant()));assert.ok(l.missing.includes('approved_merchant'));assert.equal(l.canPurchase,false)});
+test('missing stock and image rights are detected',()=>{const l=validatePhysicalCardListing({...card(),stock:0,imageRightsConfirmed:false},{approved:true});assert.ok(l.missing.includes('inventory'));assert.ok(l.missing.includes('image_rights'))});
+test('even complete card inputs cannot authorize a purchase',()=>{const l=validatePhysicalCardListing(card(),{approved:true});assert.equal(l.readyForReview,true);assert.equal(l.approved,false);assert.equal(l.canPurchase,false)});
+test('launch plan includes compliant EC acquisition',()=>{assert.ok(EARTHCHAIN_LAUNCH_SEQUENCE.some(x=>x.includes('regulated EC acquisition')))});
