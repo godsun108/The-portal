@@ -98,7 +98,9 @@ jobs:
       - name: Validate every generated chapter and verse
         run: node scripts/validate-web-chapters.mjs /tmp/web-chapters
       - name: Audit projected rendering of every WEB verse
-        run: node scripts/audit-web-render.mjs /tmp/web-chapters > /tmp/web-source/render-audit.json
+        run: |
+          node scripts/audit-web-render.mjs /tmp/web-chapters > /tmp/web-source/render-audit.json
+          node -e "const r=require('/tmp/web-source/render-audit.json'); console.log(JSON.stringify({status:r.status,verse_markers:r.verse_markers,unresolved_verse_markers:r.unresolved_verse_markers,blank_projected_verses:r.blank_projected_verses,footnotes:r.footnotes,top_unresolved_tags:r.top_unresolved_tags}))"
       - name: Print source audit summary
         run: |
           node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
