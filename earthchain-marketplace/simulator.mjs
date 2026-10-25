@@ -13,12 +13,13 @@ export function acquireTestCoins(m,{buyer,credits,requestId}){
  m.events.push({type:"SIMULATED_ACQUISITION",requestId,buyer,credits,simulated:true});
  return balance(m,buyer);
 }
-export function listCard(m,{id,seller,name,price}){
+export function listCard(m,{id,seller,name,price,setCode='',condition='Near Mint'}){
  amount(price);
  if(typeof id!=="string"||!id.trim()||m.listings.has(id))throw Error("Invalid or duplicate listing");
  if(typeof name!=="string"||!name.trim())throw Error("Card name required");
  wallet(m,seller);
- const listing={id,seller,name,price,currency:"ECTEST",status:"active"};
+ if(typeof setCode!=="string"||setCode.length>80||!["Near Mint","Lightly Played","Moderately Played","Heavily Played","Damaged"].includes(condition))throw Error("Invalid card details");
+ const listing={id,seller,name,price,setCode,condition,currency:"ECTEST",status:"active"};
  m.listings.set(id,listing);return {...listing};
 }
 export function purchaseCard(m,{listingId,buyer,orderId,approved=false}){
