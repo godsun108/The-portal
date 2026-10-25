@@ -39,3 +39,11 @@ test("refund returns held test credits exactly once",()=>{
  assert.throws(()=>refundTestOrder(m,"order-refund",{approved:true}),/not refundable/);
  assert.throws(()=>releaseTestCoins(m,"order-refund",{approved:true}),/not eligible/);
 });
+
+test("card set and condition are structured and validated",()=>{
+ const m=newMarket();
+ const card=listCard(m,{id:"card-set",seller:"seller",name:"Dark Magician",setCode:"LOB-005",condition:"Lightly Played",price:50});
+ assert.equal(card.setCode,"LOB-005");
+ assert.equal(card.condition,"Lightly Played");
+ assert.throws(()=>listCard(m,{id:"bad-card",seller:"seller",name:"Bad",condition:"Perfect",price:50}),/Invalid card details/);
+});
