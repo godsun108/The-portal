@@ -10,6 +10,7 @@ on:
       - 'stations.json'
       - 'tests/living-scriptures.spec.js'
       - 'tests/living-scriptures-integration.spec.js'
+      - 'tests/living-scriptures-review.spec.js'
       - '.github/workflows/living-scriptures.yml'
       - 'docs/living-scriptures-sources.md'
       - 'scripts/audit-web-usfm.mjs'
@@ -60,6 +61,13 @@ jobs:
           exit 1
       - name: Run real-corpus and offline browser tests
         run: npx playwright test tests/living-scriptures-integration.spec.js --project=chromium --project=mobile-webkit
+        env:
+          CI: 'true'
+
+      - name: Assemble offline review preview from staged corpus
+        run: node scripts/build-scripture-review.mjs data/web-chapters dist/living-scriptures-review.html
+      - name: Test review sample offline in desktop and simulated iPhone
+        run: npx playwright test tests/living-scriptures-review.spec.js --project=chromium --project=mobile-webkit
         env:
           CI: 'true'
 
