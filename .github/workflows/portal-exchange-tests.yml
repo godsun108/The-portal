@@ -1,0 +1,19 @@
+name: Portal Exchange demo tests
+on:
+  pull_request:
+    paths:
+      - 'portal-exchange/**'
+      - '.github/workflows/portal-exchange-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run demo accounting, stewardship, and purchase safety tests
+        run: node --test portal-exchange/*.test.mjs
