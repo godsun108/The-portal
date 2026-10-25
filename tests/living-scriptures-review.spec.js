@@ -18,3 +18,17 @@ test('Self-contained review shows actual source passages offline',async({page,co
  await expect(page.locator('.verse').first()).toContainText('Nicodemus');
  await expect(page.locator('#status')).toContainText('offline');
 });
+
+test('Offline iPhone review provides keyboard skip link and named passage region',async({page})=>{
+ await page.setViewportSize({width:320,height:700});
+ await page.goto(pathToFileURL(resolve('dist/living-scriptures-review.html')).href);
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link',{name:'Skip to passage'})).toBeFocused();
+ await page.keyboard.press('Enter');
+ await expect(page.locator('#heading')).toBeFocused();
+ await expect(page.getByRole('region',{name:'Genesis 1'})).toHaveCount(1);
+ await expect(page.locator('.verse sup').first()).toHaveAttribute('aria-label','Verse 1');
+ await page.locator('#passage').selectOption('2');
+ await expect(page.getByRole('region',{name:'John 3'})).toHaveCount(1);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+});
