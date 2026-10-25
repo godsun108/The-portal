@@ -18,11 +18,11 @@ export function createSignedGenesis(chainId,allocations){
 }
 export function proposeBlock(chain,transactions,proposer){
  if(!Array.isArray(transactions)||!transactions.length||typeof proposer!=='string'||!proposer)throw Error('Invalid block');
- const body={chainId:chain.chainId,height:chain.state.height+1,parent:chain.tip,proposer,transactions};
+ const body={chainId:chain.chainId,height:chain.blocks.length+1,parent:chain.tip,proposer,transactions};
  return {...body,hash:digest(body)};
 }
 export function applySignedBlock(chain,block){
- if(block.chainId!==chain.chainId||block.parent!==chain.tip||block.height!==chain.state.height+1||!Array.isArray(block.transactions)||!block.transactions.length||typeof block.proposer!=='string'||!block.proposer)throw Error('Invalid block linkage');
+ if(block.chainId!==chain.chainId||block.parent!==chain.tip||block.height!==chain.blocks.length+1||!Array.isArray(block.transactions)||!block.transactions.length||typeof block.proposer!=='string'||!block.proposer)throw Error('Invalid block linkage');
  const {hash,...body}=block;
  if(hash!==digest(body))throw Error('Block hash mismatch');
  let state=chain.state;
