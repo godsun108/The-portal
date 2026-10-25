@@ -8,8 +8,9 @@
 <script type="module">
 import {normalizeScene,fromXRObjects,sceneEvent} from "./scene-contract.js";
 import {fromFoundryComponents} from "./foundry-adapter.js";
+import {foundryParts} from "./foundry-components.js";
 let current=fromXRObjects([{id:"xr-orb",position:{x:0,y:1,z:-2},scale:.2},{id:"xr-cube",position:{x:.5,y:1,z:-2.4},scale:.25}]);
-const sample=[{id:"housing",name:"Illustrative housing",position:[0,0,-2]},{id:"component",name:"Illustrative component",position:[.3,0,-2]}];
+const sample=foundryParts;
 const show=()=>{document.querySelector("#scene").textContent=JSON.stringify(current,null,2);document.querySelector("#status").textContent=current.id+" · "+current.objects.length+" objects"};
 document.querySelector("#xr").onclick=()=>{current=fromXRObjects([{id:"xr-orb",position:{x:0,y:1,z:-2},scale:.2},{id:"xr-cube",position:{x:.5,y:1,z:-2.4},scale:.25}]);show()};
 document.querySelector("#foundry").onclick=()=>{current=fromFoundryComponents(sample);show()};
