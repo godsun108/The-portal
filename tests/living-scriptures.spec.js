@@ -114,3 +114,28 @@ test('Divine-name source markers do not appear in projected scripture',async({pa
  await expect(page.locator('#verses .verse span')).toHaveText('Yahweh is my shepherd.');
  await expect(page.locator('#verses .verse span')).not.toContainText('\\d');
 });
+
+test('Reading appearance controls persist safely between page visits',async ({page})=>{
+ await page.goto(local('scripture-reader.html'));
+ await expect(page.getByLabel('Reading text size')).toHaveValue('medium');
+ await expect(page.getByLabel('Line spacing')).toHaveValue('comfortable');
+ await page.getByLabel('Reading text size').selectOption('extra-large');
+ await page.getByLabel('Line spacing').selectOption('compact');
+ await expect(page.locator('html')).toHaveCSS('--scripture-size','29px');
+ await expect(page.locator('html')).toHaveCSS('--scripture-leading','1.45');
+ await page.reload();
+ await expect(page.getByLabel('Reading text size')).toHaveValue('extra-large');
+ await expect(page.getByLabel('Line spacing')).toHaveValue('compact');
+ await page.getByLabel('Reading text size').selectOption('small');
+ await page.getByLabel('Line spacing').selectOption('spacious');
+ await expect(page.locator('html')).toHaveCSS('--scripture-size','18px');
+ await expect(page.locator('html')).toHaveCSS('--scripture-leading','2.05');
+});
+test('Extra-large reading settings do not introduce horizontal phone overflow',async({page})=>{
+ await page.setViewportSize({width:320,height:700});
+ await page.goto(local('scripture-reader.html'));
+ await page.getByLabel('Reading text size').selectOption('extra-large');
+ await page.getByLabel('Line spacing').selectOption('spacious');
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2);
+ expect(overflow).toBe(false);
+});
