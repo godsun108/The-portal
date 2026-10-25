@@ -18,6 +18,8 @@ on:
       - 'scripts/convert-web-usfm.mjs'
       - 'scripts/validate-web-chapters.mjs'
       - 'scripts/audit-web-render.mjs'
+      - 'scripts/build-scripture-review.mjs'
+      - 'preview/living-scriptures-review.template.html'
       - 'tests/convert-web-usfm.test.mjs'
   workflow_dispatch:
 permissions:
@@ -101,6 +103,8 @@ jobs:
         run: |
           node scripts/audit-web-render.mjs /tmp/web-chapters > /tmp/web-source/render-audit.json
           node -e "const r=require('/tmp/web-source/render-audit.json'); console.log(JSON.stringify({status:r.status,verse_markers:r.verse_markers,unresolved_verse_markers:r.unresolved_verse_markers,blank_projected_verses:r.blank_projected_verses,footnotes:r.footnotes,top_unresolved_tags:r.top_unresolved_tags}))"
+      - name: Build self-contained iPhone review sample
+        run: node scripts/build-scripture-review.mjs /tmp/web-chapters dist/living-scriptures-review.html
       - name: Print source audit summary
         run: |
           node -e "const a=require('/tmp/web-source/source-audit.json'); console.log(JSON.stringify({files:a.files,chapters:a.chapters,verse_markers:a.verse_markers,status:a.status}))"
@@ -112,6 +116,7 @@ jobs:
             /tmp/web-source/archive-sha256.txt
             /tmp/web-source/source-audit.json
             /tmp/web-source/render-audit.json
+            dist/living-scriptures-review.html
             /tmp/web-chapters/
           retention-days: 14
 
