@@ -42,7 +42,7 @@ function render(){
  if(!market.listings.size)listings.textContent='No cards listed yet.';
  for(const listing of market.listings.values()){
   const box=document.createElement('div');const title=document.createElement('p');
-  title.textContent=listing.name+' — '+listing.price+' ECTEST ('+listing.status+')';box.append(title);
+  title.textContent=[listing.name,listing.setCode,listing.condition].filter(Boolean).join(' · ')+' — '+listing.price+' ECTEST ('+listing.status+')';box.append(title);
   if(listing.status==='active')box.append(button('Buy with ECTEST',()=>{if(!confirm('Approve a simulated purchase? No real money or coins will move.'))return;purchaseCard(market,{listingId:listing.id,buyer:'buyer',orderId:next('order'),approved:true});message('Test purchase placed.')}));listings.append(box);
  }
  const orders=el('orders');orders.replaceChildren();if(!market.orders.size)orders.textContent='No orders yet.';
@@ -55,7 +55,7 @@ function render(){
  const activity=el('activity');activity.replaceChildren();for(const event of market.events){const li=document.createElement('li');li.textContent=event.type+' · '+(event.amount??event.credits)+' ECTEST';activity.append(li)}
 }
 el('acquire').addEventListener('click',()=>{try{acquireTestCoins(market,{buyer:'buyer',credits:100,requestId:next('acquire')});message('100 valueless ECTEST credits added.');persist();render()}catch(e){message(e.message)}});
-el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name:[name,set,condition].filter(Boolean).join(' · '),price});message('Test listing created.');persist();e.target.reset();render()}catch(err){message(err.message)}});
+el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name,price,setCode:set,condition});message('Test listing created.');persist();e.target.reset();render()}catch(err){message(err.message)}});
 let photoUrl=null;
 el('cardPhoto').addEventListener('change',e=>{if(photoUrl){URL.revokeObjectURL(photoUrl);photoUrl=null}const file=e.target.files?.[0];const preview=el('cardPreview');preview.style.display='none';preview.removeAttribute('src');if(!file)return;try{photoUrl=previewCardPhoto(file);preview.src=photoUrl;preview.style.display='block';message('Card photo preview ready. It has not been uploaded.')}catch(err){e.target.value='';message(err.message)}});
 render();
