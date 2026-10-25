@@ -113,8 +113,7 @@ jobs:
           node -e "const r=require('/tmp/web-source/render-audit.json'); console.log(JSON.stringify({status:r.status,verse_markers:r.verse_markers,unresolved_verse_markers:r.unresolved_verse_markers,blank_projected_verses:r.blank_projected_verses,footnotes:r.footnotes,top_unresolved_tags:r.top_unresolved_tags}))"
       - name: Build self-contained iPhone review sample
         run: node scripts/build-scripture-review.mjs /tmp/web-chapters dist/living-scriptures-review.html
-      - name: Upload iPhone review sample
-        uses: actions/upload-artifact@v4
+      - name: Build full offline Bible reader for iPhone\n        run: node scripts/build-full-scripture-offline.mjs /tmp/web-chapters dist/living-scriptures-full-offline.html\n      - name: Upload full offline Bible reader\n        uses: actions/upload-artifact@v4\n        with:\n          name: living-scriptures-full-offline\n          path: dist/living-scriptures-full-offline.html\n          retention-days: 14\n      - name: Upload iPhone review sample\n        uses: actions/upload-artifact@v4
         with:
           name: living-scriptures-iphone-review
           path: dist/living-scriptures-review.html
