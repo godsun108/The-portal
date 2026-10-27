@@ -1,0 +1,39 @@
+name: Import 1 Enoch source (review only)
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_review_only:
+        description: "Run validation and upload an artifact only; do not publish or commit chapters"
+        required: true
+        type: choice
+        options:
+          - "I understand"
+jobs:
+  import-enoch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out Living Scriptures development branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/living-scriptures-v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Fetch Project Gutenberg source
+        run: |
+          curl --fail --location --retry 3 --output /tmp/enoch.txt https://www.gutenberg.org/cache/epub/77935/pg77935.txt
+          test -s /tmp/enoch.txt
+      - name: Validate and split into chapters
+        run: node scripts/import-enoch.mjs /tmp/enoch.txt /tmp/enoch-chapters
+      - name: Verify chapter files
+        run: |
+          test "$(find /tmp/enoch-chapters -name '[0-9][0-9][0-9].json' | wc -l)" -eq 108
+          test -s /tmp/enoch-chapters/manifest.json
+      - name: Upload for editorial review only
+        uses: actions/upload-artifact@v4
+        with:
+          name: enoch-108-chapters-for-editorial-review
+          path: /tmp/enoch-chapters/
+          retention-days: 14
