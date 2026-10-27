@@ -23,7 +23,7 @@ const translation=body.slice(section);
 // "III. Observe..." without an explicit verse 1. Match uppercase Roman chapter
 // labels at line starts, then require the full ordered sequence I through CVIII.
 function roman(s){const map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<s.length;i++)n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];return n}
-const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\.[ \\t]+(?:(1)\.[ \\t]+)?/gm)];
+const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\.[ \t]+(?:(1)\.[ \t]+)?/gm)];
 const headings=[];let expected=1;
 for(const m of candidates){
   if(roman(m[1])===expected){
