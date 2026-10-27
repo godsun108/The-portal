@@ -222,6 +222,19 @@
           "earthchain-observatory/"
         ]
       ]
+    },
+    {
+      "id": "library",
+      "label": "LIBRARY",
+      "glyph": "✧",
+      "line": "read the scriptures and explore ancient writings",
+      "status": "preview",
+      "rooms": [
+        [
+          "LIVING SCRIPTURES",
+          "living-scriptures.html"
+        ]
+      ]
     }
   ]
 }
