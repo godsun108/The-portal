@@ -4,28 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090c17">
-<title>Living Scriptures | The Portal</title>
+<title>Living Scriptures | THE PORTAL</title>
 <style>
 :root{color-scheme:dark;background:#090c17;color:#f1e9d6;font-family:system-ui,-apple-system,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#25213a,#090c17 70%);min-height:100vh}
-main{max-width:850px;margin:auto;padding:24px 18px 80px}a{color:#e5c98b}
-header a{text-decoration:none;font-size:13px}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#cdb57e;font-size:12px}
-h1{font:normal clamp(42px,8vw,72px) Georgia,serif;margin:32px 0 12px}h2{font:normal 28px Georgia,serif}
-p{line-height:1.7;color:#c9c4d0}.lead{font-size:18px;max-width:680px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:28px 0}
-.card{border:1px solid #393447;background:#151522dd;border-radius:16px;padding:20px}
-.card p{font-size:14px}.card a{display:inline-block;margin-top:8px}
-.note{border-left:3px solid #d6b778;padding:12px 16px;background:#151522;border-radius:0 10px 10px 0}
-footer{margin-top:42px;color:#aaa;font-size:12px}
-</style></head>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#25213a,#090c17 65%);min-height:100vh}
+main{max-width:960px;margin:auto;padding:24px 18px 80px}a{color:#e5c98b}
+header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#cdb57e}
+h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(42px,8vw,72px);line-height:1.02;margin:34px 0 12px}p{line-height:1.7;color:#c5c2cb}
+.panel,.card{border:1px solid #393447;background:#151522dd;border-radius:16px;padding:20px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.card{margin:0}
+button,select{font:inherit;background:#252334;color:#fff;border:1px solid #6c6378;border-radius:9px;padding:12px}
+button{cursor:pointer}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+iframe{display:block;width:100%;height:72vh;min-height:460px;border:1px solid #514860;border-radius:12px;background:#fff}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #e5c98b;outline-offset:3px}
+.small{font-size:13px;color:#aaa7b8}.status{min-height:1.4em}
+</style>
+</head>
 <body><main>
-<header><a href="./">← THE PORTAL</a><p class="eyebrow">Sacred Library · Preview</p></header>
-<h1>Living Scriptures</h1>
-<p class="lead">A place to read biblical texts and explore writings preserved across different traditions, with sources identified rather than hidden.</p>
-<div class="note"><p><strong>Reader status:</strong> The Portal doorway is now in place. The original integrated Bible reader and its in-page Enoch chapter text are still being restored; this preview links to established reading sources in the meantime.</p></div>
-<section class="grid" aria-label="Reading sources">
-<article class="card"><p class="eyebrow">Bible</p><h2>Read the Bible</h2><p>Open the World English Bible reading page at Bible Gateway. Choose a book and chapter there.</p><a href="https://www.biblegateway.com/versions/World-English-Bible-WEB/" target="_blank" rel="noopener noreferrer">Open World English Bible ↗</a></article>
-<article class="card"><p class="eyebrow">Ancient writing</p><h2>1 Enoch</h2><p>Explore the R. H. Charles translation (1917), hosted by Project Gutenberg. This work is part of the Ethiopian Orthodox scriptural tradition and is not canonical in most Christian traditions.</p><a href="https://www.gutenberg.org/cache/epub/77935/pg77935-images.html" target="_blank" rel="noopener noreferrer">Read 1 Enoch online ↗</a><p><a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Edition and source details ↗</a></p></article>
+<header><a href="./">← THE PORTAL</a><span class="eyebrow">Sacred Library · Living Scriptures</span></header>
+<h1>The Living<br>Scriptures</h1>
+<p>Read the Bible and explore ancient writings preserved across different traditions. Choose a reading below; the text opens in this page when the source permits embedding, with a direct-source link as a fallback.</p>
+<section class="grid" aria-label="Reading options">
+<article class="card"><p class="eyebrow">BIBLE</p><h2>World English Bible</h2><p>Choose a book and open its first chapter in the reading panel.</p>
+<div class="row"><label for="bible-book">Book</label><select id="bible-book"><option value="GEN">Genesis</option><option value="EXO">Exodus</option><option value="PSA">Psalms</option><option value="PRO">Proverbs</option><option value="ISA">Isaiah</option><option value="MAT">Matthew</option><option value="MRK">Mark</option><option value="LUK">Luke</option><option value="JHN">John</option><option value="ROM">Romans</option><option value="REV">Revelation</option></select><button id="open-bible" type="button">Read Bible</button></div>
+<a id="bible-source" href="https://ebible.org/eng-web/GEN01.htm" target="_blank" rel="noopener noreferrer">Open Bible text directly ↗</a>
+</article>
+<article class="card"><p class="eyebrow">ANCIENT WRITINGS</p><h2>1 Enoch</h2><p>Explore the R. H. Charles translation (1917), hosted by Project Gutenberg. 1 Enoch is part of the Ethiopian Orthodox scriptural tradition and is not canonical in most Christian traditions.</p>
+<button id="open-enoch" type="button">Read 1 Enoch here</button><p><a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Edition and source details ↗</a></p>
+</article>
 </section>
-<footer>PORTAL · Living Scriptures preview · External texts remain hosted by their cited providers.</footer>
-</main></body></html>
+<section class="panel" id="reader" aria-label="Reading panel">
+<h2 id="reader-title">Choose a text to begin</h2><p id="reader-status" class="status" role="status" aria-live="polite">The original locally bundled Bible reader and Enoch chapter files are still being restored. This panel loads the cited online text source where embedding is allowed.</p>
+<iframe id="reading-frame" title="Scripture text reading panel" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+</section>
+<section class="panel"><h2>About this preview</h2><p>The Portal doorway is available. The original offline Bible reader and integrated local Enoch chapter files are not yet restored, so this page uses identified source editions rather than pretending missing text is already bundled.</p></section>
+<footer class="small">PORTAL · Living Scriptures · Bible source: <a href="https://ebible.org/eng-web/">eBible.org</a> · 1 Enoch source: <a href="https://www.gutenberg.org/ebooks/77935">Project Gutenberg</a></footer>
+</main>
+<script>
+const book=document.getElementById('bible-book'),frame=document.getElementById('reading-frame'),title=document.getElementById('reader-title'),status=document.getElementById('reader-status'),bibleLink=document.getElementById('bible-source');
+function showText(name,url){title.textContent=name;status.textContent='Loading the cited source. If the source blocks in-page display, use the direct-source link below.';frame.hidden=false;frame.src=url;frame.onload=()=>{status.textContent='Source loaded. If the reading area remains blank, open the direct source link.'};bibleLink.href=url;document.getElementById('reader').scrollIntoView({behavior:'smooth',block:'start'});}
+document.getElementById('open-bible').addEventListener('click',()=>{const url='https://ebible.org/eng-web/'+book.value+'01.htm';bibleLink.href=url;showText(book.options[book.selectedIndex].text+' · Chapter 1',url);});
+document.getElementById('open-enoch').addEventListener('click',()=>{showText('1 Enoch · R. H. Charles translation', 'https://www.gutenberg.org/cache/epub/77935/pg77935-images.html');});
+</script></body></html>
