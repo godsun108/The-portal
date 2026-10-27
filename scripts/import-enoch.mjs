@@ -23,7 +23,7 @@ const translation=body.slice(section);
 // "III. Observe..." without an explicit verse 1. Match uppercase Roman chapter
 // labels at line starts, then require the full ordered sequence I through CVIII.
 function roman(s){const map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<s.length;i++)n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];return n}
-const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\.\s+(?:(1)\.\s+)?/gm)];
+const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\.[ \\t]+(?:(1)\.[ \\t]+)?/gm)];
 const headings=[];let expected=1;
 for(const m of candidates){
   if(roman(m[1])===expected){
@@ -36,7 +36,7 @@ if(headings.length!==108)throw Error('Found only '+headings.length+' sequential 
 const chapters=headings.map((m,i)=>{
   const bodyStart=m.index+m[0].length;
   const raw=translation.slice(bodyStart,i+1<headings.length?headings[i+1].index:translation.length).trim();
-  const text=(m[2]?'1. ':'')+raw;
+  const text='1. '+raw;
   return {number:i+1,text};
 });
 if(chapters.some(c=>c.text.length<40))throw Error('A chapter is suspiciously short; review source before publishing');
