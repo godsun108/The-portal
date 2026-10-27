@@ -13,24 +13,32 @@ const start=source.indexOf('*** START OF THE PROJECT GUTENBERG EBOOK');
 const end=source.indexOf('*** END OF THE PROJECT GUTENBERG EBOOK');
 if(start<0||end<start)throw Error('Missing Gutenberg boundaries');
 const body=source.slice(start,end);
-// Charles edition headings vary by formatting. Require exactly one chapter for every 1..108.
-// If the source is ambiguous, fail instead of silently omitting or misnumbering passages.
-function roman(s){const map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<s.length;i++)n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];return n}
-// Gutenberg #77935 prints chapter numbers as Roman numerals at the start of
-// the first verse (e.g. "I. 1. The words..."), not as "CHAPTER I" headings.
-// Anchor after the translation's main title, excluding introductory citations.
+// Anchor at the translation's main text so introductory citations are excluded.
 const section=body.indexOf('I-XXXVI.');
 if(section<0)throw Error('Main text section anchor missing');
 const title=body.lastIndexOf('THE BOOK OF ENOCH',section);
 if(title<0)throw Error('Translation title anchor missing');
 const translation=body.slice(section);
-// The Gutenberg edition uses "I. (one) 1." headings, and some chapters
-// begin in a paragraph after a section heading. Match numeral + gloss + verse.
-const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\. 1\. /gm)];
+// Gutenberg's chapter openings vary: some begin "I. 1." while others begin
+// "III. Observe..." without an explicit verse 1. Match uppercase Roman chapter
+// labels at line starts, then require the full ordered sequence I through CVIII.
+function roman(s){const map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<s.length;i++)n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];return n}
+const candidates=[...translation.matchAll(/^([IVXLCDM]{1,8})\.\s+(?:(1)\.\s+)?/gm)];
 const headings=[];let expected=1;
-for(const m of candidates){if(roman(m[1])===expected){headings.push(m);expected++;if(expected===109)break}}
+for(const m of candidates){
+  if(roman(m[1])===expected){
+    headings.push(m);
+    expected++;
+    if(expected===109)break;
+  }
+}
 if(headings.length!==108)throw Error('Found only '+headings.length+' sequential chapter starts; review source before publishing');
-const chapters=headings.map((m,i)=>({number:i+1,text:'1. '+translation.slice(m.index+m[0].length,i+1<headings.length?headings[i+1].index:translation.length).trim()}));
+const chapters=headings.map((m,i)=>{
+  const bodyStart=m.index+m[0].length;
+  const raw=translation.slice(bodyStart,i+1<headings.length?headings[i+1].index:translation.length).trim();
+  const text=(m[2]?'1. ':'')+raw;
+  return {number:i+1,text};
+});
 if(chapters.some(c=>c.text.length<40))throw Error('A chapter is suspiciously short; review source before publishing');
 if(!chapters[0].text.startsWith('1. The words of the blessing of Enoch'))throw Error('Chapter 1 does not start at its first verse');
 if(!chapters[107].text.startsWith('1. Another book which Enoch wrote'))throw Error('Chapter 108 start differs from verified source');
