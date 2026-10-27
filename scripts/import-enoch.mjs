@@ -36,7 +36,7 @@ if(headings.length!==108)throw Error('Found only '+headings.length+' sequential 
 const chapters=headings.map((m,i)=>{
   const bodyStart=m.index+m[0].length;
   const raw=translation.slice(bodyStart,i+1<headings.length?headings[i+1].index:translation.length).trim();
-  const text='1. '+raw;
+  const text=(m[2]?'1. ':'')+raw;
   return {number:i+1,text};
 });
 if(chapters.some(c=>c.text.length<40))throw Error('A chapter is suspiciously short; review source before publishing');
