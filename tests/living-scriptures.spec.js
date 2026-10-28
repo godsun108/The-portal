@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 const local = (name) => pathToFileURL(resolve(process.cwd(), name)).href;
 
@@ -177,4 +178,25 @@ test('Reader remains usable at high text scaling on narrow viewport',async({page
  await expect(page.getByRole('button',{name:'Read chapter'})).toBeVisible();
  await expect(page.getByLabel('Book',{exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
+});
+
+test('1 Enoch reader loads the real first and final chapter files', async ({ page }) => {
+  const chapter1 = readFileSync(resolve(process.cwd(), 'data/extra-scriptures/1-enoch/001.json'), 'utf8');
+  const chapter108 = readFileSync(resolve(process.cwd(), 'data/extra-scriptures/1-enoch/108.json'), 'utf8');
+  await page.addInitScript(({ chapter1, chapter108 }) => {
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async (input, init) => {
+      const url = String(input);
+      if (url.includes('/data/extra-scriptures/1-enoch/')) {
+        const body = url.endsWith('/108.json') ? chapter108 : chapter1;
+        return new Response(body, { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+      return nativeFetch(input, init);
+    };
+  }, { chapter1, chapter108 });
+  await page.goto(local('1-enoch.html'));
+  await expect(page.locator('#chapter option')).toHaveCount(108);
+  await expect(page.locator('#text')).toContainText('The words of the blessing of Enoch');
+  await page.locator('#chapter').selectOption('108');
+  await expect(page.locator('#text')).toContainText('Another book which Enoch wrote');
 });
