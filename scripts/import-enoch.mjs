@@ -19,25 +19,30 @@ if(section<0)throw Error('Main text section anchor missing');
 const title=body.lastIndexOf('THE BOOK OF ENOCH',section);
 if(title<0)throw Error('Translation title anchor missing');
 const translation=body.slice(section);
-// Gutenberg's chapter openings vary: some begin "I. 1." while others begin
-// "III. Observe..." without an explicit verse 1. Match uppercase Roman chapter
-// labels at line starts, then require the full ordered sequence I through CVIII.
-function roman(s){const map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<s.length;i++)n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];return n}
-const candidates=[...translation.matchAll(/^[ \t]*([IVXLCDM]{1,8})\.[ \t]+(?:(1)\.[ \t]+)?/gm)];
+// Gutenberg uses both uppercase and lowercase Roman chapter headings.
+function roman(value){
+ const s=value.toUpperCase(),map={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};
+ let n=0;
+ for(let i=0;i<s.length;i++){
+  if(!map[s[i]])return NaN;
+  n+=map[s[i]]<(map[s[i+1]]||0)?-map[s[i]]:map[s[i]];
+ }
+ return n;
+}
+const candidates=[...translation.matchAll(/^[ \t]*([IVXLCDM]{1,8})\.[ \t]+(?:(1)\.[ \t]+)?/gim)];
 const headings=[];let expected=1;
 for(const m of candidates){
-  if(roman(m[1])===expected){
-    headings.push(m);
-    expected++;
-    if(expected===109)break;
-  }
+ if(roman(m[1])===expected){
+  headings.push(m);expected++;
+  if(expected===109)break;
+ }
 }
 if(headings.length!==108)throw Error('Found only '+headings.length+' sequential chapter starts; review source before publishing');
 const chapters=headings.map((m,i)=>{
-  const bodyStart=m.index+m[0].length;
-  const raw=translation.slice(bodyStart,i+1<headings.length?headings[i+1].index:translation.length).trim();
-  const text=(m[2]?'1. ':'')+raw;
-  return {number:i+1,text};
+ const bodyStart=m.index+m[0].length;
+ const raw=translation.slice(bodyStart,i+1<headings.length?headings[i+1].index:translation.length).trim();
+ const text=(m[2]?'1. ':'')+raw;
+ return {number:i+1,text};
 });
 if(chapters.some(c=>c.text.length<40))throw Error('A chapter is suspiciously short; review source before publishing');
 if(!chapters[0].text.startsWith('1. The words of the blessing of Enoch'))throw Error('Chapter 1 does not start at its first verse');
