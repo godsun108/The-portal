@@ -6,6 +6,9 @@ on:
     paths:
       - 'scripts/build-full-scripture-offline.mjs'
       - 'scripture-reader.html'
+      - '1-enoch.html'
+      - 'scripts/import-enoch.mjs'
+      - 'data/extra-scriptures/1-enoch/**'
       - '.github/workflows/living-scriptures.yml'
       - 'data/web-chapters/**'
   pull_request:
@@ -13,6 +16,9 @@ on:
       - 'living-scriptures.html'
       - 'scripture-compare.html'
       - 'scripture-reader.html'
+      - '1-enoch.html'
+      - 'scripts/import-enoch.mjs'
+      - 'data/extra-scriptures/1-enoch/**'
       - 'scripts/build-full-scripture-offline.mjs'
       - 'additional-scriptures.html'
       - 'gospel-of-thomas.html'
