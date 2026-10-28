@@ -36,7 +36,7 @@ const starts=all.filter(m=>{
  // Skip headings/titles such as "XCV. _Enoch's Grief_", "XCII. XCI...",
  // chapter-range captions, and the all-caps appendix title.
  if(/^[IVXLCDM]{1,8}\./i.test(rest))return false;
- if(/^\d+\s*[-–]\s*\d+\./.test(rest))return false;
+ if(/^\d+\s*[-–]\s*\d+/.test(rest))return false;
  if(/^AN APPENDIX\b/.test(rest))return false;
  return true; // Some genuine chapter openings have no explicit verse 1.
 });
