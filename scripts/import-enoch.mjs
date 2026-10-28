@@ -47,8 +47,8 @@ for(const m of starts){
  const raw=translation.slice(m.index+m[0].length,next?next.index:translation.length).trim();
  const text=(m[2]?m[2]+'. ':'')+raw;
  if(!text)continue;
- if(chapterText[n])throw Error('Duplicate chapter start '+n+'; refusing to overwrite source text');
- chapterText[n]=text;
+ if(chapterText[n])chapterText[n]+='\n\n'+text;
+ else chapterText[n]=text;
 }
 // Charles' printed edition places 1 Enoch 91:12-17 after chapter 93.
 // Recover that explicitly headed fragment and place it between 91:11 and 91:18-19.
