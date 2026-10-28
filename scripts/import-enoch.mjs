@@ -29,7 +29,8 @@ function roman(value){
  }
  return n;
 }
-const candidates=[...translation.matchAll(/^[ \t]*([IVXLCDM]{1,8})\.[ \t]+(?:(1)\.[ \t]+)?/gim)];
+const candidates=[...translation.matchAll(/^[^\S\n]*([IVXLCDM]{1,8})\.[^\S\n]+(?:(1)\.[^\S\n]+)?/gim)];
+console.log('Roman headings near source end:',candidates.slice(-30).map(m=>({label:m[1],value:roman(m[1]),line:translation.slice(m.index,m.index+90).split('\n')[0]})));
 const headings=[];let expected=1;
 for(const m of candidates){
  if(roman(m[1])===expected){
