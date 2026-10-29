@@ -40,3 +40,26 @@ test("login ceremony is single-use, purpose-bound, expiry-bound, no client-selec
   assert.deepEqual(await service.finishAuthentication({handle:expired.handle,response:{id:"x"},accountId:"bob"}),{authenticated:false});
  }finally{credentialRegistry.close();}
 });
+test("expired pending ceremonies are reclaimed and the active ceremony cap is enforced",async()=>{
+ let now=1000;
+ const challengeStore=createChallengeStore(),credentialRegistry=createCredentialRegistry();
+ try{
+  credentialRegistry.addAccount("alice");
+  const service=createBrowserCeremonyService({challengeStore,credentialRegistry,
+   sessionStore:{issue(){throw Error("no session issuance expected")}},
+   expectedOrigin:origin,rpID:"id.example.org",now:()=>now,ttlMs:50});
+  const handles=[];
+  for(let i=0;i<256;i++){
+   const begun=await service.beginAuthentication({trustedAccountId:"alice"});
+   handles.push(begun.handle);
+  }
+  await assert.rejects(
+   service.beginAuthentication({trustedAccountId:"alice"}),
+   error=>error?.code==="CEREMONY_CAPACITY"
+  );
+  now=1050;
+  const afterExpiry=await service.beginAuthentication({trustedAccountId:"alice"});
+  assert.equal(afterExpiry.handle.length,43);
+  assert.deepEqual(await service.finishAuthentication({handle:handles[0],response:{id:"x"}}),{authenticated:false});
+ }finally{credentialRegistry.close();}
+});
