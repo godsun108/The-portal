@@ -2,11 +2,16 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createGenesisLocalMind } from "./local-runtime-composition.mjs";
 
-test("composes local runtime loader with Portal inference contract", async () => {
+test("composes local runtime with Portal inference and capability report", async () => {
   const events = [];
   const mind = await createGenesisLocalMind({
     modulePath: "./mock-runtime.mjs",
     mind: "muse",
+    environment: {
+      navigator: { gpu: {}, deviceMemory: 8 },
+      document: { isSecureContext: true },
+      WebAssembly: {}
+    },
     importModule: async (path) => {
       events.push("import:" + path);
       return {
@@ -25,7 +30,10 @@ test("composes local runtime loader with Portal inference contract", async () =>
   });
 
   assert.equal(mind.mode, "local");
-  assert.equal(mind.ready, true);
+  assert.equal(mind.runtimeReady, true);
+  assert.equal(mind.modelLoaded, false);
+  assert.equal(mind.capabilities.webgpu, true);
+  assert.equal(mind.capabilities.wasm, true);
   assert.deepEqual(events, ["import:./mock-runtime.mjs", "initialized"]);
   const result = await mind.respond({ messages: [{ role: "user", content: "create" }] });
   assert.equal(result.schema, "portal.chat.v1");
