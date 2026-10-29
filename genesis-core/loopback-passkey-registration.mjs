@@ -80,7 +80,10 @@ export function createLoopbackRegistrationAPI({
    }
    const result=await ceremonies.finishRegistration({handle:body.handle,response:body.response});
    return send(res,result.registered?200:403,{registered:result.registered===true});
-  }catch{return send(res,500,{error:"internal-error"});}
+  }catch(error){
+   if(error?.code==="CEREMONY_CAPACITY")return send(res,429,{error:"ceremony-capacity"});
+   return send(res,500,{error:"internal-error"});
+  }
  });
  return {server};
 }
