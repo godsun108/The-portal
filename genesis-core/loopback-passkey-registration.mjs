@@ -10,6 +10,7 @@ import {createBrowserCeremonyService} from "./browser-ceremony-service.mjs";
 const validID=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{1,128}$/.test(s);
 const validHandle=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{43}$/.test(s);
 const hash=s=>createHash("sha256").update(s).digest("hex");
+const CEREMONY_TTL_MS=120000,MAX_PENDING_HTTP_BINDINGS=256;
 export function createLoopbackRegistrationAPI({
  sessions,accountLookup,challengeStore,credentialRegistry,sessionStore,origin,rpID,now=()=>Date.now()
 }){
@@ -17,10 +18,14 @@ export function createLoopbackRegistrationAPI({
   throw new TypeError("missing trusted session/account lookup");
  const guard=createRequestGuard({trustedOrigin:origin});
  const ceremonies=createBrowserCeremonyService({
-  challengeStore,credentialRegistry,sessionStore,expectedOrigin:origin,rpID,now
+  challengeStore,credentialRegistry,sessionStore,expectedOrigin:origin,rpID,now,ttlMs:CEREMONY_TTL_MS
  });
  // HTTP request must retain the same trusted session that began registration.
  const pending=new Map();
+ const pruneExpired=()=>{
+  const time=now();
+  for(const [key,binding] of pending)if(binding.expiresAt<=time)pending.delete(key);
+ };
  const send=(res,status,value)=>{
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8",
    "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"});
@@ -46,6 +51,8 @@ export function createLoopbackRegistrationAPI({
    try{body=JSON.parse(raw||"{}");}catch{return send(res,400,{error:"invalid-json"});}
    if(!body||typeof body!=="object"||Array.isArray(body))return send(res,400,{error:"invalid-request"});
    if(req.url==="/register/options"||req.url==="/reauth/options"){
+    pruneExpired();
+    if(pending.size>=MAX_PENDING_HTTP_BINDINGS)return send(res,429,{error:"ceremony-capacity"});
     const account=await accountLookup(actor.subject);
     if(!account||account.id!==actor.subject||typeof account.userName!=="string")
      return send(res,403,{error:"account-unavailable"});
@@ -53,7 +60,7 @@ export function createLoopbackRegistrationAPI({
     const begun=isReauth
      ?await ceremonies.beginAuthentication({trustedAccountId:account.id})
      :await ceremonies.beginRegistration({trustedAccountId:account.id,trustedUserName:account.userName});
-    pending.set(hash(begun.handle),{subject:actor.subject,sessionHash:hash(token),ceremony:isReauth?"authentication":"registration"});
+    pending.set(hash(begun.handle),{subject:actor.subject,sessionHash:hash(token),ceremony:isReauth?"authentication":"registration",expiresAt:now()+CEREMONY_TTL_MS});
     return send(res,200,begun);
    }
    if(!validHandle(body.handle)||!body.response||typeof body.response!=="object")
@@ -62,6 +69,7 @@ export function createLoopbackRegistrationAPI({
    if(!binding)return send(res,403,{error:"ceremony-denied"});
    // Consume before any verification attempt, including a different session.
    pending.delete(key);
+   if(binding.expiresAt<=now())return send(res,403,{error:"ceremony-denied"});
    const requiredCeremony=req.url==="/reauth/verify"?"authentication":"registration";
    if(binding.ceremony!==requiredCeremony||binding.subject!==actor.subject||binding.sessionHash!==hash(token))
     return send(res,403,{error:"ceremony-denied"});
