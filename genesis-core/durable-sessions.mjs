@@ -8,6 +8,7 @@ import {DatabaseSync} from "node:sqlite";
 const validToken=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{43}$/.test(s);
 const validSubject=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{1,128}$/.test(s);
 const validDeviceId=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{32}$/.test(s);
+const validCredentialId=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{1,128}$/.test(s);
 const hashToken=token=>createHash("sha256").update(token).digest("hex");
 export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.now(),ttlMs=15*60*1000}={}){
  if(!Number.isSafeInteger(ttlMs)||ttlMs<1||ttlMs>86400000)throw new TypeError("invalid session TTL");
@@ -16,20 +17,22 @@ export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.
  // Backward-compatible migration for databases created before device binding.
  const columns=db.prepare("PRAGMA table_info(earthid_sessions)").all();
  if(!columns.some(column=>column.name==="device_id"))db.exec("ALTER TABLE earthid_sessions ADD COLUMN device_id TEXT");
+ if(!columns.some(column=>column.name==="credential_id"))db.exec("ALTER TABLE earthid_sessions ADD COLUMN credential_id TEXT");
  db.exec("CREATE INDEX IF NOT EXISTS earthid_sessions_subject_device_idx ON earthid_sessions(subject,device_id)");
- const put=db.prepare("INSERT INTO earthid_sessions(token_hash,subject,expires_at,device_id) VALUES(?,?,?,?)");
- const get=db.prepare("SELECT subject,expires_at,device_id FROM earthid_sessions WHERE token_hash=?");
+ const put=db.prepare("INSERT INTO earthid_sessions(token_hash,subject,expires_at,device_id,credential_id) VALUES(?,?,?,?,?)");
+ const get=db.prepare("SELECT subject,expires_at,device_id,credential_id FROM earthid_sessions WHERE token_hash=?");
  const del=db.prepare("DELETE FROM earthid_sessions WHERE token_hash=?");
  const prune=db.prepare("DELETE FROM earthid_sessions WHERE expires_at<=?");
  const allForUser=db.prepare("DELETE FROM earthid_sessions WHERE subject=?");
  const allForDevice=db.prepare("DELETE FROM earthid_sessions WHERE subject=? AND device_id=?");
  return {
-  issue(subject,{deviceId=null}={}){
+  issue(subject,{deviceId=null,credentialId=null}={}){
    if(!validSubject(subject))throw new TypeError("invalid verified subject");
    if(deviceId!==null&&!validDeviceId(deviceId))throw new TypeError("invalid verified device id");
+   if(credentialId!==null&&!validCredentialId(credentialId))throw new TypeError("invalid verified credential id");
    const token=randomBytes(32).toString("base64url"),expiresAt=now()+ttlMs;
    if(!Number.isSafeInteger(expiresAt))throw new RangeError("invalid expiration");
-   put.run(hashToken(token),subject,expiresAt,deviceId);
+   put.run(hashToken(token),subject,expiresAt,deviceId,credentialId);
    return {token,expiresAt};
   },
   resolve(token){
@@ -37,7 +40,7 @@ export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.
    const key=hashToken(token),row=get.get(key);
    if(!row)return null;
    if(row.expires_at<=now()){del.run(key);return null;}
-   return {subject:row.subject,verified:true,...(row.device_id?{deviceId:row.device_id}:{})};
+   return {subject:row.subject,verified:true,...(row.device_id?{deviceId:row.device_id}:{}),...(row.credential_id?{credentialId:row.credential_id}:{})};
   },
   revoke(token){
    if(!validToken(token))return false;
