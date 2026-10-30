@@ -77,3 +77,7 @@ The Intelligence surface now persists the last 40 user/assistant text messages i
 The dock passes the current page pathname and title as URL parameters to the Intelligence iframe. Those values are not included in the model request unless the user explicitly checks **Share this page with Genesis for this conversation**. The context is limited to pathname and title; do not pass page contents, form values, credentials, wallet data or private messages by default. The consent checkbox is per page load and starts unchecked.
 
 The model endpoint remains dormant in `intelligence/config.json`. Persistence and context consent are implemented UI behavior, not proof that a live model, remote memory or authenticated Genesis session exists.
+
+### Shared Portal rollout
+
+The Portal world bootstrap now loads the Genesis dock on top-level pages that include `world.js`, while excluding the Intelligence page itself and embedded frames. This extends the entry point beyond the two initial pilots to the broader family of Portal experiences using the shared world bootstrap. Pages that do not load `world.js` are not covered yet; other independent applications such as separate Railway-hosted Command Center deployments need their own shared shell integration. The dock is optional and its loader fails closed without blocking the host experience.
