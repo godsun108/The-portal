@@ -8,11 +8,11 @@ import {createEnrollmentFlow} from "./enrollment-flow.mjs";
 import {createAuthenticationFlow} from "./authentication-flow.mjs";
 const validHandle=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{43}$/.test(s);
 const digest=s=>createHash("sha256").update(s).digest("hex");
-export function createBrowserCeremonyService({challengeStore,credentialRegistry,sessionStore,expectedOrigin,rpID,rpName="EarthID",now=()=>Date.now(),ttlMs=120000}){
+export function createBrowserCeremonyService({challengeStore,credentialRegistry,sessionStore,deviceInventory=null,expectedOrigin,rpID,rpName="EarthID",now=()=>Date.now(),ttlMs=120000}){
  if(!Number.isSafeInteger(ttlMs)||ttlMs<=0||ttlMs>300000)throw new TypeError("invalid ceremony TTL");
  const options=createBrowserPasskeyOptions({challengeStore,rpID,rpName});
  const registration=createEnrollmentFlow({challengeStore,credentialRegistry,expectedOrigin,expectedRPID:rpID});
- const authentication=createAuthenticationFlow({challengeStore,credentialRegistry,sessionStore,expectedOrigin,expectedRPID:rpID});
+ const authentication=createAuthenticationFlow({challengeStore,credentialRegistry,sessionStore,deviceInventory,expectedOrigin,expectedRPID:rpID});
  const pending=new Map();
  function save(accountId,ceremony,challenge){
   const handle=randomBytes(32).toString("base64url");
@@ -41,10 +41,10 @@ export function createBrowserCeremonyService({challengeStore,credentialRegistry,
    const opts=await options.authentication({trustedAccountId,allowCredentialIds});
    return {handle:save(trustedAccountId,"authentication",opts.challenge),options:opts};
   },
-  async finishAuthentication({handle,response}){
+  async finishAuthentication({handle,response,device=null}){
    const record=take(handle,"authentication");
    if(!record)return {authenticated:false};
-   return authentication.completeAuthentication({accountId:record.accountId,challenge:record.challenge,response});
+   return authentication.completeAuthentication({accountId:record.accountId,challenge:record.challenge,response,device});
   }
  };
 }
