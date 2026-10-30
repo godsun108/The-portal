@@ -24,3 +24,9 @@ Do not force this into the existing two-party transfer schema or infer NFT owner
 `node --test games/starfall/economy.test.mjs`
 
 Syntax checked for game and economy modules. Automated tests cover shop locks, funds, duplicate purchases, owned-only equipment, invalid saves, and unavailable settlement. Real iPhone interaction and rendered gameplay have not been verified in this environment.
+
+## Multiplayer foundation (prototype)
+
+`multiplayer-actions.mjs` defines a small, versioned Starfall action envelope for movement, firing, pause/resume and sector completion. It validates match scope, action type, sequence number and payload size. Its tests are in `multiplayer-actions.test.mjs`.
+
+This is an integration boundary only: it is not connected to the Shared Reality relay and does not create rooms, authenticate players, synchronize a match, or validate outcomes. The existing Shared Reality relay can carry experimental room events, but it is not authoritative. Do not use client events to award credits, collectibles, leaderboard placement or EarthCoin. Next step is a separate game adapter connecting this contract to the existing room transport, followed by two-device testing and then server-side match authority.
