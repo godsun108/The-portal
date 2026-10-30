@@ -19,3 +19,15 @@ const atmosphere=w.pressure>=18?"CONVERGING":w.pressure>=12?"FRACTURED":w.pressu
 localStorage.setItem(K,JSON.stringify(w));window.PortalWorld={state:w,has,flag,event,divergence,atmosphere,awayMs,save:()=>localStorage.setItem(K,JSON.stringify(w))};
 document.documentElement.dataset.worldPressure=String(w.pressure);document.documentElement.dataset.portalAtmosphere=atmosphere.toLowerCase();document.documentElement.dataset.returnBand=w.returnBand;
 })();
+
+/* Shared Genesis entry point for top-level Portal experiences using WORLD. */
+(()=>{try{
+  if(window.top!==window||/\/intelligence\/?$/.test(location.pathname)||window.__portalGenesisDockLoader)return;
+  window.__portalGenesisDockLoader=true;
+  const source=document.currentScript&&document.currentScript.src;
+  if(!source)return;
+  const dock=document.createElement("script");
+  dock.src=new URL("genesis-dock.js",source).href;
+  dock.defer=true;
+  (document.head||document.documentElement).append(dock);
+}catch(_){/* The world experience must remain usable if the optional dock cannot load. */}})();
