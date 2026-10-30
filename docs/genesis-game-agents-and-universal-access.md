@@ -69,3 +69,11 @@ The dock is a UI entry point, not a new inference service. The existing `intelli
 4. Build Starfall observer events and deterministic playtest scenarios.
 5. Add isolated agent patch proposals, independent reviewer approvals, policy tiers and rollback records.
 6. Run the first sandbox-only improvement cycle; do not enable autonomous production deployment yet.
+
+## Conversation continuity and page-context consent (pilot)
+
+The Intelligence surface now persists the last 40 user/assistant text messages in same-origin browser localStorage under `portal-genesis-conversation.v1`, so the floating dock can reopen the same conversation as the user moves between supported pages. A **Clear local chat** control removes that browser copy after confirmation; it does not delete any server-side history. This is local browser storage, not encrypted storage or cross-device sync.
+
+The dock passes the current page pathname and title as URL parameters to the Intelligence iframe. Those values are not included in the model request unless the user explicitly checks **Share this page with Genesis for this conversation**. The context is limited to pathname and title; do not pass page contents, form values, credentials, wallet data or private messages by default. The consent checkbox is per page load and starts unchecked.
+
+The model endpoint remains dormant in `intelligence/config.json`. Persistence and context consent are implemented UI behavior, not proof that a live model, remote memory or authenticated Genesis session exists.
