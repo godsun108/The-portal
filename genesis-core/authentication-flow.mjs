@@ -40,8 +40,8 @@ export function createAuthenticationFlow({challengeStore,credentialRegistry,sess
    if(!deviceRecord?.active)return {authenticated:false};
   }
   const session=deviceRecord
-   ?sessionStore.issue(accountId,{deviceId:deviceRecord.deviceId})
-   :sessionStore.issue(accountId);
+   ?sessionStore.issue(accountId,{deviceId:deviceRecord.deviceId,credentialId:credential.id})
+   :sessionStore.issue(accountId,{credentialId:credential.id});
   return {authenticated:true,session,...(deviceRecord?{device:deviceRecord}:{})};
  }
  return {completeAuthentication};
