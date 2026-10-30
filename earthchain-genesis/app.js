@@ -41,6 +41,21 @@ for(const button of grid.querySelectorAll(".module")){
   }
  });
 }
+// Genesis reads the shared EarthConnect capability registry; this is status only.
+const connectButton=[...grid.querySelectorAll(".module")].find(button=>button.querySelector("strong")?.textContent==="EarthConnect");
+if(connectButton){
+ connectButton.addEventListener("click",async()=>{
+  if(detail.querySelector(".connected-space-status"))return;
+  const panel=document.createElement("section");panel.className="connected-space-status";panel.setAttribute("aria-label","EarthConnect service readiness");
+  const heading=document.createElement("h3");heading.textContent="Connected spaces · service readiness";panel.append(heading);
+  const loading=document.createElement("p");loading.setAttribute("role","status");loading.textContent="Reading shared capability registry…";panel.append(loading);detail.append(panel);
+  try{
+   const {loadConnectedSpaceStatus}=await import("./connected-spaces.mjs");
+   const items=await loadConnectedSpaceStatus();if(!panel.isConnected)return;loading.remove();
+   for(const item of items){const row=document.createElement("p");const label=document.createElement("strong");label.textContent=item.label+": ";const state=document.createElement("span");state.textContent=item.state+" — "+item.foundation;row.append(label,state);panel.append(row);}
+  }catch{loading.textContent="Readiness registry unavailable. No service status has been assumed.";}
+ });
+}
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
 if(typeof window!=="undefined"){
  const detailPanel=document.getElementById("detail");
