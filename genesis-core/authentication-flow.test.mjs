@@ -6,7 +6,12 @@ import {createAuthenticationFlow} from "./authentication-flow.mjs";
 test("malformed assertion does not issue a session or alter the persisted counter",async()=>{
  const challengeStore=createChallengeStore();
  const credentialRegistry=createCredentialRegistry();
- let issued=0;
+ let issued=0,deviceCalls=0;
+ const deviceInventory={
+  touch(){deviceCalls++;return false;},
+  list(){deviceCalls++;return [];},
+  enroll(){deviceCalls++;throw new Error("must not enroll an unverified device");}
+ };
  const sessionStore={issue(){issued++;throw new Error("must not issue session");}};
  try{
   credentialRegistry.addAccount("alice");
@@ -14,14 +19,15 @@ test("malformed assertion does not issue a session or alter the persisted counte
    id:"credential_1",accountId:"alice",publicKey:new Uint8Array([1,2,3,4])
   }),true);
   const flow=createAuthenticationFlow({challengeStore,credentialRegistry,sessionStore,
-   expectedOrigin:"https://id.example.org",expectedRPID:"id.example.org"});
+   expectedOrigin:"https://id.example.org",expectedRPID:"id.example.org",deviceInventory});
   const challenge=challengeStore.issue({accountId:"alice",ceremony:"authentication"});
   const forged={id:"credential_1",rawId:"YQ",type:"public-key",
    response:{clientDataJSON:"!!!",authenticatorData:"!!!",signature:"!!!"}};
-  assert.deepEqual(await flow.completeAuthentication({accountId:"alice",challenge,response:forged}),{authenticated:false});
+  assert.deepEqual(await flow.completeAuthentication({accountId:"alice",challenge,response:forged,device:{label:"My iPhone",platform:"ios"}}),{authenticated:false});
   assert.deepEqual(await flow.completeAuthentication({accountId:"alice",challenge,response:forged}),{authenticated:false});
   assert.equal(credentialRegistry.getWebAuthnCredential("credential_1","alice").counter,0);
   assert.equal(issued,0);
+  assert.equal(deviceCalls,0,"unverified assertions must not inspect or enroll devices");
  }finally{credentialRegistry.close();}
 });
 test("cross-account and revoked credentials never issue a session",async()=>{
