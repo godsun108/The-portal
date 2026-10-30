@@ -1,9 +1,13 @@
 (() => {
   "use strict";
-  if (window.__portalGenesisDock) return;
-  window.__portalGenesisDock = true;
-  const script = document.currentScript;
-  const root = new URL("./", script.src);
+  // Capture the script URL while currentScript is available. The shared loader
+  // can run in the document head before <body> exists, so mount only after DOM
+  // readiness when necessary.
+  const scriptUrl = document.currentScript && document.currentScript.src;
+  const mount = () => {
+    if (window.__portalGenesisDock || !document.body || !document.head) return;
+    window.__portalGenesisDock = true;
+    const root = new URL("./", scriptUrl || location.href);
   const ai = new URL("intelligence/", root);
   const page = new URL(location.href);
   ai.searchParams.set("source", page.pathname);
@@ -54,5 +58,8 @@
   button.addEventListener("click", () => setOpen(panel.dataset.open !== "true"));
   close.addEventListener("click", () => setOpen(false));
   document.addEventListener("keydown", event => { if (event.key === "Escape" && panel.dataset.open === "true") setOpen(false); });
-  document.body.append(button, panel);
+    document.body.append(button, panel);
+  };
+  if (document.body && document.head) mount();
+  else document.addEventListener("DOMContentLoaded", mount, { once: true });
 })();
