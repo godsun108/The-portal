@@ -9,7 +9,7 @@ export function createAuthenticationFlow({challengeStore,credentialRegistry,sess
  if(!credentialRegistry||typeof credentialRegistry.getWebAuthnCredential!=="function"||
     typeof credentialRegistry.commitVerifiedCounter!=="function"||
     !sessionStore||typeof sessionStore.issue!=="function")throw new TypeError("missing trusted stores");
- if(deviceInventory&&(!["enroll","touch"].every(name=>typeof deviceInventory[name]==="function")))
+ if(deviceInventory&&(!["enroll","touch","list"].every(name=>typeof deviceInventory[name]==="function")))
   throw new TypeError("invalid device inventory");
  const boundary=createWebAuthnBoundary({challengeStore,verifyRegistration:verifyEarthIDRegistration,
   verifyAuthentication:verifyEarthIDAuthentication,expectedOrigin,expectedRPID});
