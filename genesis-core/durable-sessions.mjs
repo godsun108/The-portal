@@ -19,6 +19,11 @@ export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.
  if(!columns.some(column=>column.name==="device_id"))db.exec("ALTER TABLE earthid_sessions ADD COLUMN device_id TEXT");
  if(!columns.some(column=>column.name==="credential_id"))db.exec("ALTER TABLE earthid_sessions ADD COLUMN credential_id TEXT");
  db.exec("CREATE INDEX IF NOT EXISTS earthid_sessions_subject_device_idx ON earthid_sessions(subject,device_id)");
+ const credentialSchema=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='credentials'").get();
+ const credentialTableExists=Boolean(credentialSchema);
+ const activeCredential=credentialTableExists
+  ?db.prepare("SELECT 1 FROM credentials WHERE id=? AND account_id=? AND revoked=0")
+  :null;
  const put=db.prepare("INSERT INTO earthid_sessions(token_hash,subject,expires_at,device_id,credential_id) VALUES(?,?,?,?,?)");
  const get=db.prepare("SELECT subject,expires_at,device_id,credential_id FROM earthid_sessions WHERE token_hash=?");
  const del=db.prepare("DELETE FROM earthid_sessions WHERE token_hash=?");
@@ -32,7 +37,24 @@ export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.
    if(credentialId!==null&&!validCredentialId(credentialId))throw new TypeError("invalid verified credential id");
    const token=randomBytes(32).toString("base64url"),expiresAt=now()+ttlMs;
    if(!Number.isSafeInteger(expiresAt))throw new RangeError("invalid expiration");
-   put.run(hashToken(token),subject,expiresAt,deviceId,credentialId);
+   const insert=()=>put.run(hashToken(token),subject,expiresAt,deviceId,credentialId);
+   if(credentialId!==null&&credentialTableExists){
+    // BEGIN IMMEDIATE serializes this check+insert against credential revocation.
+    // If issuance wins, revocation subsequently deletes the session; if revocation
+    // wins, this query sees revoked=1 and issuance fails closed.
+    db.exec("BEGIN IMMEDIATE");
+    try{
+     if(!activeCredential.get(credentialId,subject)){
+      db.exec("ROLLBACK");
+      throw new Error("credential_not_active");
+     }
+     insert();
+     db.exec("COMMIT");
+    }catch(error){
+     try{db.exec("ROLLBACK");}catch{}
+     throw error;
+    }
+   }else insert();
    return {token,expiresAt};
   },
   resolve(token){
@@ -40,6 +62,10 @@ export function createDurableSessionStore({databasePath=":memory:",now=()=>Date.
    const key=hashToken(token),row=get.get(key);
    if(!row)return null;
    if(row.expires_at<=now()){del.run(key);return null;}
+   if(row.credential_id&&credentialTableExists&&!activeCredential.get(row.credential_id,row.subject)){
+    del.run(key);
+    return null;
+   }
    return {subject:row.subject,verified:true,...(row.device_id?{deviceId:row.device_id}:{}),...(row.credential_id?{credentialId:row.credential_id}:{})};
   },
   revoke(token){
