@@ -39,9 +39,18 @@ export function createAuthenticationFlow({challengeStore,credentialRegistry,sess
     :deviceInventory.enroll(accountId,{label:device.label,platform:device.platform});
    if(!deviceRecord?.active)return {authenticated:false};
   }
-  const session=deviceRecord
-   ?sessionStore.issue(accountId,{deviceId:deviceRecord.deviceId,credentialId:credential.id})
-   :sessionStore.issue(accountId,{credentialId:credential.id});
+  // Revocation may win after assertion verification/counter commit but before
+  // durable session issuance. The session store re-checks credential activity
+  // transactionally; translate that fail-closed outcome into an auth denial.
+  let session;
+  try{
+   session=deviceRecord
+    ?sessionStore.issue(accountId,{deviceId:deviceRecord.deviceId,credentialId:credential.id})
+    :sessionStore.issue(accountId,{credentialId:credential.id});
+  }catch(error){
+   if(error?.message==="credential_not_active")return {authenticated:false};
+   throw error;
+  }
   return {authenticated:true,session,...(deviceRecord?{device:deviceRecord}:{})};
  }
  return {completeAuthentication};
