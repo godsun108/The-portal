@@ -59,3 +59,20 @@ test("parallel redemption of one registration handle is consumed once",async()=>
   assert.equal(credentialRegistry.getCredential("parallel-forgery"),null);
  }finally{credentialRegistry.close();}
 });
+
+test("pending ceremony handles are bounded and expired entries are pruned",async()=>{
+ let now=1000;
+ const challengeStore=createChallengeStore({now:()=>now,ttlMs:100});
+ const credentialRegistry=createCredentialRegistry();
+ try{
+  credentialRegistry.addAccount("alice");
+  const service=createBrowserCeremonyService({challengeStore,credentialRegistry,
+   sessionStore:{issue(){throw Error("no session expected")}},
+   expectedOrigin:origin,rpID:"id.example.org",now:()=>now,ttlMs:50,maxPendingCeremonies:1});
+  await service.beginAuthentication({trustedAccountId:"alice"});
+  await assert.rejects(()=>service.beginAuthentication({trustedAccountId:"alice"}),/capacity reached/);
+  now=1050;
+  const next=await service.beginAuthentication({trustedAccountId:"alice"});
+  assert.equal(next.handle.length,43);
+ }finally{credentialRegistry.close();}
+});
