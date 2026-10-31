@@ -40,3 +40,22 @@ test("login ceremony is single-use, purpose-bound, expiry-bound, no client-selec
   assert.deepEqual(await service.finishAuthentication({handle:expired.handle,response:{id:"x"},accountId:"bob"}),{authenticated:false});
  }finally{credentialRegistry.close();}
 });
+
+test("parallel redemption of one registration handle is consumed once",async()=>{
+ const challengeStore=createChallengeStore(),credentialRegistry=createCredentialRegistry();
+ try{
+  credentialRegistry.addAccount("alice");
+  const service=createBrowserCeremonyService({challengeStore,credentialRegistry,
+   sessionStore:{issue(){throw Error("no session expected")}},
+   expectedOrigin:origin,rpID:"id.example.org"});
+  const begin=await service.beginRegistration({trustedAccountId:"alice",trustedUserName:"Alice"});
+  const forged={id:"parallel-forgery",rawId:"YQ",type:"public-key",
+   response:{clientDataJSON:"!!!",attestationObject:"!!!"}};
+  const results=await Promise.all([
+   service.finishRegistration({handle:begin.handle,response:forged}),
+   service.finishRegistration({handle:begin.handle,response:forged})
+  ]);
+  assert.deepEqual(results,[{registered:false},{registered:false}]);
+  assert.equal(credentialRegistry.getCredential("parallel-forgery"),null);
+ }finally{credentialRegistry.close();}
+});
