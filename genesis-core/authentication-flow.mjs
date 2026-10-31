@@ -30,14 +30,23 @@ export function createAuthenticationFlow({challengeStore,credentialRegistry,sess
   let deviceRecord=null;
   if(deviceInventory){
    if(!device||typeof device.label!=="string"||typeof device.platform!=="string")
-    return {authenticated:false};
+    return {authenticated:false,reason:"device_enrollment_required"};
    // Existing device IDs are merely account-scoped metadata hints. They confer
    // no access: the passkey assertion above is the authentication proof.
-   const reused=validDeviceId(device.deviceId)&&deviceInventory.touch(accountId,device.deviceId);
-   deviceRecord=reused
-    ?deviceInventory.list(accountId).find(item=>item.deviceId===device.deviceId)??null
-    :deviceInventory.enroll(accountId,{label:device.label,platform:device.platform});
-   if(!deviceRecord?.active)return {authenticated:false};
+   try{
+    const reused=validDeviceId(device.deviceId)&&deviceInventory.touch(accountId,device.deviceId);
+    deviceRecord=reused
+     ?deviceInventory.list(accountId).find(item=>item.deviceId===device.deviceId)??null
+     :deviceInventory.enroll(accountId,{label:device.label,platform:device.platform});
+   }catch(error){
+    // A verified assertion is not enough to issue a session when this flow
+    // requires an active inventory record. Return a controlled denial rather
+    // than leaking a storage/device-limit exception to the ceremony caller.
+    if(error?.message==="active_device_limit_reached")
+     return {authenticated:false,reason:"device_enrollment_required"};
+    throw error;
+   }
+   if(!deviceRecord?.active)return {authenticated:false,reason:"device_enrollment_required"};
   }
   // Revocation may win after assertion verification/counter commit but before
   // durable session issuance. The session store re-checks credential activity
