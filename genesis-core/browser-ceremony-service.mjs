@@ -15,6 +15,9 @@ export function createBrowserCeremonyService({challengeStore,credentialRegistry,
  const authentication=createAuthenticationFlow({challengeStore,credentialRegistry,sessionStore,deviceInventory,expectedOrigin,expectedRPID:rpID});
  const pending=new Map();
  function save(accountId,ceremony,challenge){
+  const timestamp=now();
+  for(const [key,record] of pending){if(record.expiresAt<=timestamp)pending.delete(key);}
+  if(pending.size>=maxPendingCeremonies)throw new Error("pending ceremony capacity reached");
   const handle=randomBytes(32).toString("base64url");
   pending.set(digest(handle),{accountId,ceremony,challenge,expiresAt:timestamp+ttlMs});
   return handle;
