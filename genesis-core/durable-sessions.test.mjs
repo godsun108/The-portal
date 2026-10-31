@@ -5,6 +5,7 @@ import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {createDurableSessionStore} from "./durable-sessions.mjs";
 import {createCredentialRegistry} from "./credentials.mjs";
+import {createCredentialRevocationCoordinator} from "./credential-revocation.mjs";
 import {createLocalEarthIDService} from "./local-http-service.mjs";
 import {once} from "node:events";
 
@@ -105,5 +106,21 @@ test("loopback private resource denies revoked durable session",async()=>{
  }finally{
   await new Promise((resolve,reject)=>server.close(e=>e?reject(e):resolve()));
   closeDatabase();sessions.close();
+ }
+});
+
+test("credential revocation that wins before issuance prevents session creation",()=>{
+ const dir=mkdtempSync(join(tmpdir(),"earthid-revoke-before-issue-")),databasePath=join(dir,"identity.db");
+ const sessions=createDurableSessionStore({databasePath});
+ const credentials=createCredentialRegistry(databasePath);
+ const revocations=createCredentialRevocationCoordinator({databasePath});
+ try{
+  credentials.addAccount("alice");
+  credentials.addVerifiedWebAuthnCredential({id:"alice_key_1",accountId:"alice",publicKey:new Uint8Array([1,2,3])});
+  const revoked=revocations.revokeCredential("alice","alice_key_1");
+  assert.deepEqual(revoked,{revoked:true,sessionsRevoked:0});
+  assert.throws(()=>sessions.issue("alice",{credentialId:"alice_key_1"}),{message:"credential_not_active"});
+ }finally{
+  revocations.close();sessions.close();credentials.close();rmSync(dir,{recursive:true,force:true});
  }
 });
