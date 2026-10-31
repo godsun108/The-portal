@@ -64,10 +64,22 @@ export function createDeviceInventory({ databasePath = ":memory:", now = () => D
       if (!validSubject(subject)) throw new TypeError("invalid_verified_subject");
       const cleanLabel = validateLabel(label);
       if (!platforms.has(platform)) throw new TypeError("invalid_device_platform");
-      if (countActive.get(subject).count >= maxActiveDevices) throw new Error("active_device_limit_reached");
       const timestamp = validateNow(now());
       const deviceId = randomBytes(24).toString("base64url");
-      insert.run(deviceId, subject, cleanLabel, platform, timestamp, timestamp);
+      // Serialize the active-count check and insert across concurrent connections.
+      // BEGIN IMMEDIATE acquires the SQLite write lock before counting, so two
+      // enrollments cannot both observe the final available slot.
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        if (countActive.get(subject).count >= maxActiveDevices) {
+          throw new Error("active_device_limit_reached");
+        }
+        insert.run(deviceId, subject, cleanLabel, platform, timestamp, timestamp);
+        db.exec("COMMIT");
+      } catch (error) {
+        try { db.exec("ROLLBACK"); } catch {}
+        throw error;
+      }
       return present(selectOne.get(subject, deviceId));
     },
     list(subject, { includeRevoked = false } = {}) {
