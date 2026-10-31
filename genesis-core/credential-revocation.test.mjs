@@ -39,6 +39,8 @@ test("credential revocation atomically removes only sessions bound to that accou
       subject: "bob", verified: true, credentialId: "bob_key_1"
     });
     assert.equal(credentials.getWebAuthnCredential("alice_key_1", "alice"), null);
+    assert.throws(() => sessions.issue("alice", { credentialId: "alice_key_1" }), /credential_not_active/,
+      "revoked credentials must not issue fresh sessions");
     assert.deepEqual(coordinator.revokeCredential("alice", "alice_key_1"), {
       revoked: true, sessionsRevoked: 0
     });
@@ -73,6 +75,7 @@ test("legacy session database migrates and retains sessions without credential b
         revoked: true, sessionsRevoked: 1
       });
       assert.equal(sessions.resolve(bound.token), null);
+      assert.throws(() => sessions.issue("alice", { credentialId: "alice_key_1" }), /credential_not_active/);
       assert.deepEqual(sessions.resolve(legacy.token), { subject: "alice", verified: true });
     } finally { coordinator.close(); sessions.close(); credentials.close(); }
   } finally { rmSync(dir, { recursive: true, force: true }); }
