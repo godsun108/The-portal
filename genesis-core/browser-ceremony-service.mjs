@@ -9,7 +9,8 @@ import {createAuthenticationFlow} from "./authentication-flow.mjs";
 const validHandle=s=>typeof s==="string"&&/^[A-Za-z0-9_-]{43}$/.test(s);
 const digest=s=>createHash("sha256").update(s).digest("hex");
 export function createBrowserCeremonyService({challengeStore,credentialRegistry,sessionStore,deviceInventory=null,expectedOrigin,rpID,rpName="EarthID",now=()=>Date.now(),ttlMs=120000,maxPendingCeremonies=1000}){
- if(!Number.isSafeInteger(ttlMs)||ttlMs<=0||ttlMs>300000)throw new TypeError("invalid ceremony TTL");\n if(!Number.isSafeInteger(maxPendingCeremonies)||maxPendingCeremonies<=0)throw new TypeError("invalid pending ceremony limit");
+ if(!Number.isSafeInteger(ttlMs)||ttlMs<=0||ttlMs>300000)throw new TypeError("invalid ceremony TTL");
+ if(!Number.isSafeInteger(maxPendingCeremonies)||maxPendingCeremonies<=0)throw new TypeError("invalid pending ceremony limit");
  const options=createBrowserPasskeyOptions({challengeStore,rpID,rpName});
  const registration=createEnrollmentFlow({challengeStore,credentialRegistry,expectedOrigin,expectedRPID:rpID});
  const authentication=createAuthenticationFlow({challengeStore,credentialRegistry,sessionStore,deviceInventory,expectedOrigin,expectedRPID:rpID});
