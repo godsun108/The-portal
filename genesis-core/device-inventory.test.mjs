@@ -75,3 +75,22 @@ test("last-seen timestamps cannot move backwards", () => {
     assert.throws(() => inventory.touch("alice", device.deviceId), /clock_moved_backwards/);
   } finally { inventory.close(); }
 });
+
+test("device cap is enforced across inventory instances sharing a database", () => {
+  const dir = mkdtempSync(join(tmpdir(), "earthid-device-cap-"));
+  const databasePath = join(dir, "devices.db");
+  const first = createDeviceInventory({ databasePath, maxActiveDevices: 1, now: () => 1000 });
+  const second = createDeviceInventory({ databasePath, maxActiveDevices: 1, now: () => 1000 });
+  try {
+    first.enroll("alice", { label: "Phone", platform: "ios" });
+    assert.throws(
+      () => second.enroll("alice", { label: "Laptop", platform: "macos" }),
+      /active_device_limit_reached/
+    );
+    assert.equal(first.list("alice").length, 1);
+  } finally {
+    second.close();
+    first.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
