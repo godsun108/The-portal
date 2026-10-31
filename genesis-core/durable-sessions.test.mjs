@@ -4,6 +4,7 @@ import {mkdtempSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {createDurableSessionStore} from "./durable-sessions.mjs";
+import {createCredentialRegistry} from "./credentials.mjs";
 import {createLocalEarthIDService} from "./local-http-service.mjs";
 import {once} from "node:events";
 
@@ -70,6 +71,23 @@ test("legacy session database migrates and keeps unbound sessions valid",()=>{
   assert.deepEqual(sessions.resolve(token),{subject:"alice",verified:true});
   sessions.close();
  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+test("credential-bound sessions fail closed if credential is revoked while session row remains",()=>{
+ const dir=mkdtempSync(join(tmpdir(),"earthid-session-credential-active-")),databasePath=join(dir,"identity.db");
+ const sessions=createDurableSessionStore({databasePath});
+ const credentials=createCredentialRegistry(databasePath);
+ try{
+  credentials.addAccount("alice");
+  credentials.addVerifiedWebAuthnCredential({id:"alice_key_1",accountId:"alice",publicKey:new Uint8Array([1,2,3])});
+  const bound=sessions.issue("alice",{credentialId:"alice_key_1"});
+  assert.deepEqual(sessions.resolve(bound.token),{subject:"alice",verified:true,credentialId:"alice_key_1"});
+  credentials.revokeCredential("alice_key_1","alice");
+  // Deliberately leave the session row behind: resolution itself must check
+  // credential state, not rely exclusively on the revocation cleanup path.
+  assert.equal(sessions.resolve(bound.token),null);
+ }finally{
+  sessions.close();credentials.close();rmSync(dir,{recursive:true,force:true});
+ }
 });
 test("loopback private resource denies revoked durable session",async()=>{
  const sessions=createDurableSessionStore();
