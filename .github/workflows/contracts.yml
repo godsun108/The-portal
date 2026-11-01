@@ -26,3 +26,5 @@ jobs:
         run: node --check earthchain-test/protocol.mjs && node --check earthchain-test/mutual-ledger.mjs && node --check earthchain-test/wallet-crypto.mjs && node --check earthchain-test/no-server.mjs
       - name: Verify EarthChain no-server wallet guided flow
         run: node --test earthchain-test/guided-flow.test.mjs
+      - name: Verify EarthChain mutual-ledger security invariants
+        run: node --test earthchain-test/mutual-ledger.test.mjs
