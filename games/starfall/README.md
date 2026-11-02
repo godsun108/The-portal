@@ -24,3 +24,18 @@ Do not force this into the existing two-party transfer schema or infer NFT owner
 `node --test games/starfall/economy.test.mjs`
 
 Syntax checked for game and economy modules. Automated tests cover shop locks, funds, duplicate purchases, owned-only equipment, invalid saves, and unavailable settlement. Real iPhone interaction and rendered gameplay have not been verified in this environment.
+
+## Multiplayer foundation (prototype)
+
+`multiplayer-actions.mjs` defines a small, versioned Starfall action envelope for movement, firing, pause/resume and sector completion. It validates match scope, action type, sequence number and payload size. Its tests are in `multiplayer-actions.test.mjs`.
+
+This is an integration boundary only: it is not connected to the Shared Reality relay and does not create rooms, authenticate players, synchronize a match, or validate outcomes. The existing Shared Reality relay can carry experimental room events, but it is not authoritative. Do not use client events to award credits, collectibles, leaderboard placement or EarthCoin. Next step is a separate game adapter connecting this contract to the existing room transport, followed by two-device testing and then server-side match authority.
+
+### Shared Reality transport adapter
+
+`multiplayer-client.mjs` now wraps the existing Shared Reality WebSocket message envelope and carries the versioned Starfall actions. It filters wrong-room, self-originated, malformed and duplicate/out-of-order peer events. Tests are in `multiplayer-client.test.mjs`.
+
+The adapter is deliberately not wired into the single-player game loop yet. It is a transport prototype: the relay still trusts client-supplied device IDs, and the game has no server-authoritative simulation, authenticated player identity, durable matchmaking, or verified result settlement. Treat peer events as untrusted input. No credits, collectibles, rankings or EarthCoin may be awarded from them.
+
+Run the focused tests with:
+`node --test games/starfall/multiplayer-actions.test.mjs games/starfall/multiplayer-client.test.mjs`
