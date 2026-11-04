@@ -65,3 +65,5 @@ The synchronized preview vocal timeline now includes local per-take saturation, 
 The preview timeline now includes take-relative automation keyframes for gain, low-pass filter, delay wet and feedback. The canonical browser editor and offline renderer remain in Turbo Foundry; the Portal page is a synchronized preview mirror.
 
 The preview timeline now mirrors Turbo Foundry's phrase performance editor: bounded phrase repeats, reverse playback and an optional repeat at the first chorus drop. Turbo Foundry remains the canonical source.
+
+The Portal preview now mirrors the canonical Turbo Foundry vocal editor with per-take and per-lane mute/solo, isolated phrase audition, and 10 ms / 100 ms clip nudges. Mute/solo state is saved in the take manifest.
