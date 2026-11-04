@@ -69,3 +69,5 @@ The preview timeline now mirrors Turbo Foundry's phrase performance editor: boun
 The Portal preview now mirrors the canonical Turbo Foundry vocal editor with per-take and per-lane mute/solo, isolated phrase audition, and 10 ms / 100 ms clip nudges. Mute/solo state is saved in the take manifest.
 
 The Portal preview mirrors the canonical Turbo Foundry vocal editor, including two tempo-synced A/B loop regions, quarter/eighth/sixteenth/bar snapping at 127 BPM, A/B comparison playback, and bounded loop repetitions.
+
+The Portal preview mirrors the canonical Turbo Foundry editor with adjustable loop crossfades and quick recorded-take A/B audition and comparison over loop region A.
