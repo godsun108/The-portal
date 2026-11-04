@@ -523,5 +523,7 @@ assert(musicTimeline.includes("sourceOffset=0")&&musicTimeline.includes("snapped
 assert(musicTimeline.includes("loop-band")&&musicTimeline.includes("label.textContent='LOOP '+key"),"Timeline must visualize A/B loop regions");
 assert(musicTimeline.includes("loopFade")&&musicTimeline.includes("function scheduleLoopSegment")&&musicTimeline.includes("crossfade_ms"),"Loop preview must support bounded crossfades");
 assert(musicTimeline.includes("function previewTakeComparison")&&musicTimeline.includes("takeCompareA")&&musicTimeline.includes("takeCompareB")&&musicTimeline.includes("compareTakes"),"Timeline must support quick recorded-take A/B comparison");
+assert(musicTimeline.includes("function scheduleLoopSegment")&&musicTimeline.includes("linearRampToValueAtTime(0,segmentEnd)"),"Loop and take audition segments must have bounded fade envelopes");
+assert(musicTimeline.includes("refreshTakeCompare();syncManifest();draw()"),"Take comparison choices must refresh after take removal");
 assert(musicTimeline.includes("Phrase repeats exceed the 180-second take limit")&&musicTimeline.includes("Drop-triggered phrase repeat exceeds the 180-second take limit"),"Phrase performance edits must enforce duration bounds");
 assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
