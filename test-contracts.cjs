@@ -504,3 +504,12 @@ assert(musicRoom.includes("../?station=art"),"Music Foundry must return to the A
 assert(musicBooth.includes("getUserMedia")&&musicBooth.includes("recordButton.addEventListener"),"Recording booth must request microphone only through its record control");
 assert(musicBooth.includes("MAX_SESSION_SECONDS = 180")&&musicBooth.includes("MAX_TAKES = 128"),"Recording booth must retain bounded session limits");
 assert(!musicBooth.includes("fetch(")&&!musicBooth.includes("XMLHttpRequest")&&!musicBooth.includes("WebSocket"),"Recording booth must remain local-only");
+
+
+// Vocal timeline integration: local-only spoken take editing and export.
+const musicTimeline=fs.readFileSync("./music-foundry/vocal-timeline.html","utf8");
+assert(musicRoom.includes('href="vocal-timeline.html"'),"Music Foundry room must link to its vocal timeline");
+assert(musicTimeline.includes("turbo.music-foundry.spoken-takes.v1"),"Vocal timeline must import the canonical spoken-takes manifest");
+assert(musicTimeline.includes("OfflineAudioContext")&&musicTimeline.includes("spoken_vocal_mix.wav"),"Vocal timeline must render an offline WAV mix");
+assert(musicTimeline.includes("MAX_SECONDS=180")&&musicTimeline.includes("MAX_TAKES=128"),"Vocal timeline must enforce session limits");
+assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
