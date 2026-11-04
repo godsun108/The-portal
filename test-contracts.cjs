@@ -518,5 +518,6 @@ assert(musicTimeline.includes("automation-dot"),"Vocal clips must show their aut
 assert(musicTimeline.includes("phraseStart")&&musicTimeline.includes("phraseReverse")&&musicTimeline.includes("dropRepeat")&&musicTimeline.includes("DROP_SECONDS"),"Vocal timeline must support phrase chops, reverse and drop-triggered repeats");
 assert(musicTimeline.includes("muteTake")&&musicTimeline.includes("soloTake")&&musicTimeline.includes("layerStates")&&musicTimeline.includes("function audible"),"Vocal timeline must support take and lane mute/solo");
 assert(musicTimeline.includes("auditionPhrase")&&musicTimeline.includes("nudgeForward100"),"Vocal timeline must support phrase audition and fine clip nudging");
+assert(musicTimeline.includes("loopMode")&&musicTimeline.includes("loopGrid")&&musicTimeline.includes("compareAB")&&musicTimeline.includes("function startPreview"),"Vocal timeline must support tempo-synced A/B loop preview");
 assert(musicTimeline.includes("Phrase repeats exceed the 180-second take limit")&&musicTimeline.includes("Drop-triggered phrase repeat exceeds the 180-second take limit"),"Phrase performance edits must enforce duration bounds");
 assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
