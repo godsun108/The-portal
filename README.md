@@ -59,3 +59,5 @@ The ART station includes a Music Foundry room on the `music-foundry/portal-integ
 The Music Foundry preview also mirrors the browser-local vocal timeline editor from Turbo Foundry. It imports the spoken-take manifest and selected WAV files, edits five vocal layers, previews timing, and renders a WAV mix/stems in-browser. Canonical implementation and test suite remain in Turbo Foundry; keep the Portal mirror synchronized to the source commit noted in its HTML comment. Device-specific iPhone/Safari behavior is not yet verified. Preview only; not deployed.
 
 The preview timeline includes section markers for the 56-bar, 127 BPM arrangement (intro, verses, pre, choruses, half-time bridge and outro). Its canonical source remains in Turbo Foundry; this page is a synchronized preview mirror.
+
+The synchronized preview vocal timeline now includes local per-take saturation, low-pass filtering, feedback delay and tempo-locked stutter controls. The canonical effects implementation and offline assembler are maintained in Turbo Foundry; no provider or upload service is used.
