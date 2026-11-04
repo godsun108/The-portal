@@ -516,4 +516,6 @@ assert(musicTimeline.includes("connectTakeGraph")&&musicTimeline.includes("delay
 assert(musicTimeline.includes("scheduleAutomation")&&musicTimeline.includes("autoParam")&&musicTimeline.includes("automation_rendered:true"),"Vocal timeline must support local automation lanes");
 assert(musicTimeline.includes("automation-dot"),"Vocal clips must show their automation keyframes");
 assert(musicTimeline.includes("phraseStart")&&musicTimeline.includes("phraseReverse")&&musicTimeline.includes("dropRepeat")&&musicTimeline.includes("DROP_SECONDS"),"Vocal timeline must support phrase chops, reverse and drop-triggered repeats");
+assert(musicTimeline.includes("muteTake")&&musicTimeline.includes("soloTake")&&musicTimeline.includes("layerStates")&&musicTimeline.includes("function audible"),"Vocal timeline must support take and lane mute/solo");
+assert(musicTimeline.includes("auditionPhrase")&&musicTimeline.includes("nudgeForward100"),"Vocal timeline must support phrase audition and fine clip nudging");
 assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
