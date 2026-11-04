@@ -513,4 +513,5 @@ assert(musicTimeline.includes("turbo.music-foundry.spoken-takes.v1"),"Vocal time
 assert(musicTimeline.includes("OfflineAudioContext")&&musicTimeline.includes("spoken_vocal_mix.wav"),"Vocal timeline must render an offline WAV mix");
 assert(musicTimeline.includes("MAX_SECONDS=180")&&musicTimeline.includes("MAX_TAKES=128"),"Vocal timeline must enforce session limits");
 assert(musicTimeline.includes("connectTakeGraph")&&musicTimeline.includes("delay_feedback")&&musicTimeline.includes("drive_db"),"Vocal timeline must include local per-take effects");
+assert(musicTimeline.includes("scheduleAutomation")&&musicTimeline.includes("autoParam")&&musicTimeline.includes("automation_rendered:true"),"Vocal timeline must support local automation lanes");
 assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
