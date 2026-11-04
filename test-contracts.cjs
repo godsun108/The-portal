@@ -520,7 +520,7 @@ assert(musicTimeline.includes("muteTake")&&musicTimeline.includes("soloTake")&&m
 assert(musicTimeline.includes("auditionPhrase")&&musicTimeline.includes("nudgeForward100"),"Vocal timeline must support phrase audition and fine clip nudging");
 assert(musicTimeline.includes("loopMode")&&musicTimeline.includes("loopGrid")&&musicTimeline.includes("compareAB")&&musicTimeline.includes("function startPreview"),"Vocal timeline must support tempo-synced A/B loop preview");
 assert(musicTimeline.includes("sourceOffset=0")&&musicTimeline.includes("snappedEnd<=snappedStart"),"Loop playback must align automation and reject invalid snapped regions");
-assert(musicTimeline.includes("loop-band")&&musicTimeline.includes("LOOP "+ "A"),"Timeline must visualize A/B loop regions");
+assert(musicTimeline.includes("loop-band")&&musicTimeline.includes("label.textContent='LOOP '+key"),"Timeline must visualize A/B loop regions");
 assert(musicTimeline.includes("loopFade")&&musicTimeline.includes("function scheduleLoopSegment")&&musicTimeline.includes("crossfade_ms"),"Loop preview must support bounded crossfades");
 assert(musicTimeline.includes("function previewTakeComparison")&&musicTimeline.includes("takeCompareA")&&musicTimeline.includes("takeCompareB")&&musicTimeline.includes("compareTakes"),"Timeline must support quick recorded-take A/B comparison");
 assert(musicTimeline.includes("Phrase repeats exceed the 180-second take limit")&&musicTimeline.includes("Drop-triggered phrase repeat exceeds the 180-second take limit"),"Phrase performance edits must enforce duration bounds");
