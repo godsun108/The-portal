@@ -494,3 +494,13 @@ assert(navHome.includes("?station=")&&navHome.includes("← ALL STATIONS"),"Home
 assert(stationNav.includes("stations.json")&&stationNav.includes('"← "+parent.label'),"Public rooms can return to their parent station");
 assert(travelerNav.includes('import("./station-nav.js")'),"Shared traveler navigation installs station-aware room return");
 assert(legacyStations.includes("location.replace")&&legacyStations.includes("?station="),"Legacy Stations URLs redirect into canonical home hierarchy");
+
+
+// Music Foundry preview integration: canonical engine stays in Turbo Foundry.
+const musicRoom=fs.readFileSync("./music-foundry/index.html","utf8");
+const musicBooth=fs.readFileSync("./music-foundry/recording-booth.html","utf8");
+assert(musicRoom.includes('href="recording-booth.html"'),"Music Foundry room must link to its local recording booth");
+assert(musicRoom.includes("../?station=art"),"Music Foundry must return to the ART station");
+assert(musicBooth.includes("getUserMedia")&&musicBooth.includes("recordButton.addEventListener"),"Recording booth must request microphone only through its record control");
+assert(musicBooth.includes("MAX_SESSION_SECONDS = 180")&&musicBooth.includes("MAX_TAKES = 128"),"Recording booth must retain bounded session limits");
+assert(!musicBooth.includes("fetch(")&&!musicBooth.includes("XMLHttpRequest")&&!musicBooth.includes("WebSocket"),"Recording booth must remain local-only");
