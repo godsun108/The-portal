@@ -61,3 +61,5 @@ The Music Foundry preview also mirrors the browser-local vocal timeline editor f
 The preview timeline includes section markers for the 56-bar, 127 BPM arrangement (intro, verses, pre, choruses, half-time bridge and outro). Its canonical source remains in Turbo Foundry; this page is a synchronized preview mirror.
 
 The synchronized preview vocal timeline now includes local per-take saturation, low-pass filtering, feedback delay and tempo-locked stutter controls. The canonical effects implementation and offline assembler are maintained in Turbo Foundry; no provider or upload service is used.
+
+The preview timeline now includes take-relative automation keyframes for gain, low-pass filter, delay wet and feedback. The canonical browser editor and offline renderer remain in Turbo Foundry; the Portal page is a synchronized preview mirror.
