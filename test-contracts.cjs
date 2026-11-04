@@ -515,4 +515,5 @@ assert(musicTimeline.includes("MAX_SECONDS=180")&&musicTimeline.includes("MAX_TA
 assert(musicTimeline.includes("connectTakeGraph")&&musicTimeline.includes("delay_feedback")&&musicTimeline.includes("drive_db"),"Vocal timeline must include local per-take effects");
 assert(musicTimeline.includes("scheduleAutomation")&&musicTimeline.includes("autoParam")&&musicTimeline.includes("automation_rendered:true"),"Vocal timeline must support local automation lanes");
 assert(musicTimeline.includes("automation-dot"),"Vocal clips must show their automation keyframes");
+assert(musicTimeline.includes("phraseStart")&&musicTimeline.includes("phraseReverse")&&musicTimeline.includes("dropRepeat")&&musicTimeline.includes("DROP_SECONDS"),"Vocal timeline must support phrase chops, reverse and drop-triggered repeats");
 assert(!musicTimeline.includes("fetch(")&&!musicTimeline.includes("XMLHttpRequest")&&!musicTimeline.includes("WebSocket"),"Vocal timeline must remain local-only");
