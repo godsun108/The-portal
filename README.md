@@ -50,3 +50,8 @@ Before adding a substantial capability:
 ## Privacy / deployment
 
 Portal remains GitHub-Pages friendly and contains no credentials, wallets or privileged integrations. Browser-local state is used for its persistent world mechanics.
+
+
+## Music Foundry (preview integration)
+
+The ART station includes a Music Foundry room on the `music-foundry/portal-integration-preview` branch. Its local recording booth is mirrored from the canonical `godsun108/turbo-foundry` implementation; the mirror records the source commit in an HTML comment. Keep Turbo Foundry as the source of truth and refresh the Portal mirror when the canonical booth changes. The booth requests microphone permission only after an explicit Record action, exports local WAV files, and does not upload recordings. iPhone/Safari runtime behavior remains unverified until tested on a device. This preview branch is intentionally not published or merged.
