@@ -73,12 +73,14 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 <script>
 (() => {
  'use strict';
- const BASES={mix:'/The-portal/music-foundry/audio/original/',stems:'/The-portal/music-foundry/audio/original/',warehouse:'/The-portal/music-foundry/audio/warehouse-rave-v2/',warehouse_stems:'/The-portal/music-foundry/audio/warehouse-rave-v2/'};
+ const BASES={mix:'/The-portal/music-foundry/audio/original/',stems:'/The-portal/music-foundry/audio/original/',warehouse:'/The-portal/music-foundry/audio/warehouse-rave-v2/',warehouse_stems:'/The-portal/music-foundry/audio/warehouse-rave-v2/',texture:'/The-portal/music-foundry/audio/warehouse-rave-texture-a/',texture_stems:'/The-portal/music-foundry/audio/warehouse-rave-texture-a/'};
  const sets={
   mix:[{name:'Original instrumental mix',file:'instrumental_mix.wav'}],
   stems:[{name:'Lead',file:'lead.wav'},{name:'Chords',file:'chords.wav'},{name:'Bass',file:'bass.wav'},{name:'Drums',file:'drums.wav'}],
   warehouse:[{name:'Warehouse Rave V2 instrumental mix',file:'instrumental_mix.wav'}],
-  warehouse_stems:[{name:'Drums',file:'drums.wav'},{name:'Rolling bass',file:'bass.wav'},{name:'Rave synths',file:'synth.wav'},{name:'Builds and FX',file:'fx.wav'}]
+  warehouse_stems:[{name:'Drums',file:'drums.wav'},{name:'Rolling bass',file:'bass.wav'},{name:'Rave synths',file:'synth.wav'},{name:'Builds and FX',file:'fx.wav'}],
+  texture:[{name:'Texture A processed mix',file:'instrumental_mix.wav'}],
+  texture_stems:[{name:'Drums · light drive',file:'drums.wav'},{name:'Bass · saturation and low-pass',file:'bass.wav'},{name:'Synths · animated filter and 1/16 delay',file:'synth.wav'},{name:'FX · 1/8 delay and stereo placement',file:'fx.wav'}]
  };
  const $=id=>document.getElementById(id);
  const status=$('status'),summary=$('summary'),tracksEl=$('tracks'),playButton=$('play'),stopButton=$('stop'),seek=$('seek'),clock=$('clock'),master=$('master');
@@ -114,9 +116,9 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
  };
  const loadMode=async next=>{
   release();mode=next;loading=true;playButton.disabled=true;stopButton.disabled=true;seek.disabled=true;master.disabled=true;
-  for(const [key,id] of [['mix','mixMode'],['stems','stemsMode'],['warehouse','warehouseMode'],['warehouse_stems','warehouseStemsMode']]){$(id).setAttribute('aria-pressed',String(mode===key));$(id).classList.toggle('primary',mode===key);}
-  $('trackHeading').textContent=mode==='mix'?'Original full instrumental mix':mode==='stems'?'Original individual stems':mode==='warehouse'?'Warehouse Rave V2 mix':'Warehouse Rave V2 stems';
-  setStatus('Connecting to '+(mode==='mix'?'the original instrumental mix':mode==='stems'?'the original four stems':mode==='warehouse'?'Warehouse Rave V2':'Warehouse Rave V2 stems')+'…');
+  for(const [key,id] of [['mix','mixMode'],['stems','stemsMode'],['warehouse','warehouseMode'],['warehouse_stems','warehouseStemsMode'],['texture','textureMode'],['texture_stems','textureStemsMode']]){$(id).setAttribute('aria-pressed',String(mode===key));$(id).classList.toggle('primary',mode===key);}
+  $('trackHeading').textContent=mode==='mix'?'Original full instrumental mix':mode==='stems'?'Original individual stems':mode==='warehouse'?'Warehouse Rave V2 mix':mode==='warehouse_stems'?'Warehouse Rave V2 stems':mode==='texture'?'Warehouse Rave Texture A mix':'Warehouse Rave Texture A stems';
+  setStatus('Connecting to '+(mode==='mix'?'the original instrumental mix':mode==='stems'?'the original four stems':mode==='warehouse'?'Warehouse Rave V2':mode==='warehouse_stems'?'Warehouse Rave V2 stems':mode==='texture'?'Warehouse Rave Texture A':'Warehouse Rave Texture A stems')+'…');
   const selected=sets[mode];
   try{
    tracks=selected.map(item=>{const audio=new Audio();audio.preload='metadata';audio.playsInline=true;audio.crossOrigin='anonymous';audio.src=BASES[mode]+item.file;return {name:item.name,audio,muted:false,solo:false,level:1,source:null,gain:null};});
@@ -154,6 +156,8 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
  $('stemsMode').addEventListener('click',()=>{if(mode!=='stems')void loadMode('stems');});
  $('warehouseMode').addEventListener('click',()=>{if(mode!=='warehouse')void loadMode('warehouse');});
  $('warehouseStemsMode').addEventListener('click',()=>{if(mode!=='warehouse_stems')void loadMode('warehouse_stems');});
+ $('textureMode').addEventListener('click',()=>{if(mode!=='texture')void loadMode('texture');});
+ $('textureStemsMode').addEventListener('click',()=>{if(mode!=='texture_stems')void loadMode('texture_stems');});
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause();});
  void loadMode('mix');
 })();
