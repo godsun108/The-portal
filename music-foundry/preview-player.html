@@ -4,62 +4,144 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08090d">
-<meta name="description" content="Listen to locally rendered Music Foundry previews without uploading audio.">
-<title>PREVIEW PLAYER | MUSIC FOUNDRY</title>
+<meta name="description" content="Audition a Music Foundry mix and stems locally, with synchronized playback and no upload.">
+<title>STEM AUDITION | MUSIC FOUNDRY</title>
 <style>
-:root{color-scheme:dark;--bg:#08090d;--panel:#151821;--line:#303747;--ink:#f5f6fa;--muted:#aab2c0;--accent:#c8ff4d}
+:root{color-scheme:dark;--bg:#08090d;--panel:#151821;--line:#303747;--ink:#f5f6fa;--muted:#aab2c0;--accent:#c8ff4d;--danger:#ff818b}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#1b2030 0,#08090d 58%);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100svh}
-main{max-width:760px;margin:auto;padding:calc(24px + env(safe-area-inset-top)) 18px calc(40px + env(safe-area-inset-bottom))}
-a{color:var(--accent)}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.18em}
-h1{font-size:clamp(36px,9vw,58px);line-height:.98;letter-spacing:-.055em;margin:14px 0}
-p{color:var(--muted)}.panel{background:#151821dd;border:1px solid var(--line);border-radius:20px;padding:20px;margin:18px 0}
-.back{display:inline-block;margin-bottom:28px;text-decoration:none;color:var(--muted)}
-input[type=file]{display:block;width:100%;margin:18px 0;padding:14px;border:1px dashed #647084;border-radius:14px;color:var(--ink);background:#0d1017}
-audio{display:block;width:100%;margin:18px 0}button{border:1px solid #495366;border-radius:12px;padding:11px 14px;background:#252c38;color:var(--ink);font:inherit}
-.meta{font-size:12px;color:#929bad;overflow-wrap:anywhere}.status{color:var(--accent);font-weight:700}
+main{max-width:850px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
+a{color:var(--accent)}.back{display:inline-block;margin-bottom:24px;text-decoration:none;color:var(--muted)}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:850;letter-spacing:.18em}h1{font-size:clamp(36px,9vw,58px);line-height:.98;letter-spacing:-.055em;margin:12px 0}h2{font-size:18px;margin:0 0 10px}p{color:var(--muted)}
+.panel{background:#151821dd;border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0}
+input,button{font:inherit}input[type=file]{display:block;width:100%;margin:14px 0;padding:13px;border:1px dashed #647084;border-radius:13px;color:var(--ink);background:#0d1017}
+button{min-height:44px;border:1px solid #495366;border-radius:11px;padding:9px 13px;background:#252c38;color:var(--ink);font-weight:750}
+button.primary{background:var(--accent);border-color:var(--accent);color:#11170a}button:disabled{opacity:.35}
+.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:90px}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+.status{color:var(--accent);font-weight:750;min-height:24px}.meta{font-size:12px;color:#929bad;overflow-wrap:anywhere}
+.track{border:1px solid var(--line);border-radius:13px;padding:13px;margin:10px 0;background:#0e121a}
+.track-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.track-name{font-weight:800;overflow-wrap:anywhere}.track-meta{font-size:11px;color:var(--muted)}
+.track-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.track-actions button{min-height:36px;padding:5px 10px;font-size:12px}.track-actions label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.track-actions input[type=range]{width:min(190px,45vw)}
+.timeline{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.time{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);white-space:nowrap}
+.master{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.note{border-left:3px solid var(--accent);padding-left:12px;font-size:13px}
+@media(min-width:650px){main{padding-left:24px;padding-right:24px}.panel{padding:22px}}
 </style>
 </head>
 <body><main>
 <a class="back" href="index.html">← MUSIC FOUNDRY</a>
-<div class="eyebrow">LOCAL AUDIO · NO UPLOAD</div>
-<h1>PREVIEW<br>PLAYER</h1>
-<p>Choose a WAV you downloaded from Music Foundry. Playback stays in this browser; this page does not upload or transmit the file.</p>
+<div class="eyebrow">LOCAL AUDIO · SYNCHRONIZED STEMS · NO UPLOAD</div>
+<h1>STEM<br>AUDITION</h1>
+<p>Load the instrumental mix and its individual WAV stems together. Play, seek, solo, mute, and balance them on one shared timeline. Audio stays on this device.</p>
 <section class="panel">
-<h2>Instrumental audition</h2>
-<label for="audioFile">Choose an audio file</label>
-<input id="audioFile" type="file" accept="audio/wav,audio/x-wav,.wav,audio/*">
-<audio id="player" controls preload="metadata"></audio>
-<p id="status" class="status" role="status" aria-live="polite">No file selected.</p>
-<p id="details" class="meta">For the current song preview, choose <strong>instrumental_mix.wav</strong> from your downloaded preview bundle.</p>
-<button id="clear" type="button">Clear selected file</button>
+<h2>1 · Load your WAV files</h2>
+<p class="meta">Choose up to five files at once: instrumental_mix.wav, lead.wav, chords.wav, bass.wav, and drums.wav. The mix is optional. Files are decoded locally in your browser.</p>
+<label for="files">Choose mix and stems</label>
+<input id="files" type="file" accept=".wav,audio/wav,audio/x-wav" multiple>
+<div class="controls"><button id="clear" type="button" disabled>Clear all tracks</button></div>
+<p id="status" class="status" role="status" aria-live="polite">Waiting for WAV files.</p>
+<p id="summary" class="meta">No files loaded.</p>
 </section>
 <section class="panel">
-<h2>Privacy and compatibility</h2>
-<p>The selected file is read locally using a temporary browser object URL. It is not sent to a server. Clearing the selection releases that temporary URL.</p>
-<p class="meta">iPhone note: save the WAV to Files, then use Choose a file above. Actual Safari/device playback remains subject to a real-device test.</p>
+<h2>2 · Shared transport</h2>
+<div class="controls">
+<button id="play" class="primary" type="button" disabled>▶ Play</button>
+<button id="stop" type="button" disabled>■ Stop</button>
+</div>
+<div class="timeline" style="margin-top:14px">
+<input id="seek" type="range" min="0" max="1000" step="1" value="0" disabled aria-label="Playback position">
+<span id="clock" class="time">0:00 / 0:00</span>
+</div>
+<div class="master" style="margin-top:12px">
+<label for="master">Master level</label>
+<input id="master" type="range" min="0" max="1.5" step="0.01" value="1" disabled>
+</div>
+<p class="meta">All tracks start at the same audio-clock time and share the same seek position. Use headphones when comparing stems.</p>
+</section>
+<section class="panel">
+<h2>3 · Track controls</h2>
+<div id="tracks"><p class="meta">Your loaded files will appear here.</p></div>
+</section>
+<section class="panel">
+<h2>Local-only by design</h2>
+<p>Files are read into browser memory for playback. There is no upload, account connection, or server-side audio processing in this page. Clearing tracks releases the decoded audio buffers.</p>
+<p class="note">iPhone note: save the WAV files in Files, open this page in Safari, and select the mix and stems together. Multi-file selection and long-session performance still need a real iPhone/Safari test; this page does not claim that test has happened.</p>
+<p class="meta">For clean comparisons, load stems exported from the same render and beginning at the same timeline zero. Files with different lengths are shown with their individual durations.</p>
 </section>
 <script>
 (() => {
- const input=document.getElementById('audioFile');
- const player=document.getElementById('player');
- const status=document.getElementById('status');
- const details=document.getElementById('details');
- const clear=document.getElementById('clear');
- let objectUrl=null;
- function release(){if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}player.pause();player.removeAttribute('src');player.load();}
- input.addEventListener('change',()=>{
-   const file=input.files&&input.files[0];
-   release();
-   if(!file){status.textContent='No file selected.';details.textContent='Choose a WAV file saved on this device.';return;}
-   if(file.size===0){status.textContent='That file is empty. Choose another audio file.';return;}
-   objectUrl=URL.createObjectURL(file);
-   player.src=objectUrl;
-   const mb=(file.size/1048576).toFixed(2);
-   status.textContent='Ready to audition.';
-   details.textContent=file.name+' · '+mb+' MB · local browser playback';
+ 'use strict';
+ const $ = id => document.getElementById(id);
+ const input=$('files'), status=$('status'), summary=$('summary'), tracksEl=$('tracks');
+ const playButton=$('play'), stopButton=$('stop'), clearButton=$('clear'), seek=$('seek'), clock=$('clock'), master=$('master');
+ const MAX_FILES=5;
+ let context=null, masterNode=null, tracks=[], sources=[], playing=false, startAt=0, offset=0, duration=0, raf=0, loading=false;
+ const fmt=s=>{s=Math.max(0,Number(s)||0);const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+String(sec).padStart(2,'0');};
+ const setStatus=s=>{status.textContent=s;};
+ const ensureContext=()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Web Audio is not available in this browser.');if(!context){context=new C();masterNode=context.createGain();masterNode.gain.value=Number(master.value);masterNode.connect(context.destination);}return context;};
+ const stopSources=()=>{for(const s of sources){try{s.stop();}catch(_){}try{s.disconnect();}catch(_){}}sources=[];};
+ const position=()=>playing&&context?Math.min(duration,offset+Math.max(0,context.currentTime-startAt)):offset;
+ const renderClock=()=>{const p=position();clock.textContent=fmt(p)+' / '+fmt(duration);seek.value=duration?String(Math.round(p/duration*1000)):'0';};
+ const stopTicker=()=>{if(raf)cancelAnimationFrame(raf);raf=0;};
+ const tick=()=>{renderClock();if(playing&&position()>=duration){playing=false;offset=0;stopSources();playButton.textContent='▶ Play';renderClock();return;}if(playing)raf=requestAnimationFrame(tick);};
+ const refreshTransport=()=>{const ready=tracks.length>0&&!loading;playButton.disabled=!ready;stopButton.disabled=!ready;clearButton.disabled=!ready;seek.disabled=!ready;master.disabled=!ready;};
+ const audible=track=>{const hasSolo=tracks.some(t=>t.solo);return !track.muted&&(!hasSolo||track.solo);};
+ const drawTracks=()=>{
+   tracksEl.replaceChildren();
+   if(!tracks.length){tracksEl.innerHTML='<p class="meta">Your loaded files will appear here.</p>';return;}
+   tracks.forEach(track=>{
+     const card=document.createElement('div');card.className='track';
+     const head=document.createElement('div');head.className='track-head';
+     const name=document.createElement('div');name.className='track-name';name.textContent=track.file.name;
+     const meta=document.createElement('div');meta.className='track-meta';meta.textContent=fmt(track.buffer.duration)+' · '+track.buffer.numberOfChannels+' ch · '+track.buffer.sampleRate.toLocaleString()+' Hz';
+     head.append(name,meta);card.append(head);
+     const actions=document.createElement('div');actions.className='track-actions';
+     const mute=document.createElement('button');mute.type='button';mute.textContent=track.muted?'Unmute':'Mute';mute.setAttribute('aria-pressed',String(track.muted));
+     mute.addEventListener('click',()=>{track.muted=!track.muted;mute.textContent=track.muted?'Unmute':'Mute';mute.setAttribute('aria-pressed',String(track.muted));applyGains();});
+     const solo=document.createElement('button');solo.type='button';solo.textContent=track.solo?'Unsolo':'Solo';solo.setAttribute('aria-pressed',String(track.solo));
+     solo.addEventListener('click',()=>{track.solo=!track.solo;solo.textContent=track.solo?'Unsolo':'Solo';solo.setAttribute('aria-pressed',String(track.solo));tracks.forEach(t=>{const b=t.card.querySelector('[data-solo]');if(b){b.textContent=t.solo?'Unsolo':'Solo';b.setAttribute('aria-pressed',String(t.solo));}});applyGains();});
+     solo.dataset.solo='true';
+     const gainLabel=document.createElement('label');gainLabel.textContent='Level';
+     const gain=document.createElement('input');gain.type='range';gain.min='0';gain.max='1.5';gain.step='0.01';gain.value=String(track.level);gain.setAttribute('aria-label',track.file.name+' level');
+     gain.addEventListener('input',()=>{track.level=Number(gain.value);applyGains();});
+     gainLabel.append(gain);actions.append(mute,solo,gainLabel);card.append(actions);track.card=card;tracksEl.append(card);
+   });
+ };
+ const applyGains=()=>{if(!context)return;const now=context.currentTime;tracks.forEach(t=>{if(t.gainNode)t.gainNode.gain.setTargetAtTime(audible(t)?t.level:0,now,.012);});};
+ const playFrom=async at=>{
+   const ctx=ensureContext();await ctx.resume();stopSources();
+   offset=Math.max(0,Math.min(duration,at));if(offset>=duration){offset=0;}
+   const when=ctx.currentTime+.06;startAt=when;playing=true;
+   tracks.forEach(track=>{const source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=track.buffer;gain.gain.value=audible(track)?track.level:0;source.connect(gain);gain.connect(masterNode);source.start(when,Math.min(offset,Math.max(0,track.buffer.duration-.001)));track.gainNode=gain;sources.push(source);});
+   playButton.textContent='Ⅱ Pause';stopTicker();raf=requestAnimationFrame(tick);renderClock();
+ };
+ const pause=()=>{offset=position();playing=false;stopTicker();stopSources();playButton.textContent='▶ Play';renderClock();};
+ input.addEventListener('change',async()=>{
+   const selected=Array.from(input.files||[]);
+   if(!selected.length)return;
+   if(selected.length>MAX_FILES){setStatus('Please choose no more than five WAV files.');input.value='';return;}
+   if(selected.some(f=>!f.name.toLowerCase().endsWith('.wav'))){setStatus('Only WAV files are supported.');input.value='';return;}
+   loading=true;refreshTransport();pause();tracks=[];duration=0;offset=0;drawTracks();summary.textContent='Decoding '+selected.length+' file(s)…';
+   try{
+     const ctx=ensureContext();await ctx.resume();
+     const decoded=[];
+     for(const file of selected){if(!file.size)throw new Error(file.name+' is empty.');const buffer=await ctx.decodeAudioData(await file.arrayBuffer());decoded.push({file,buffer,level:1,muted:false,solo:false,gainNode:null,card:null});}
+     tracks=decoded;duration=Math.max(...tracks.map(t=>t.buffer.duration));
+     drawTracks();summary.textContent=tracks.length+' tracks · longest '+fmt(duration)+' · '+(tracks.reduce((n,t)=>n+t.file.size,0)/1048576).toFixed(2)+' MB loaded locally';
+     const lengths=tracks.map(t=>t.buffer.duration),spread=Math.max(...lengths)-Math.min(...lengths);
+     setStatus(spread>.25?'Loaded. Track durations differ by '+spread.toFixed(2)+' s; check alignment.':'All files decoded and ready to audition.');
+     refreshTransport();renderClock();
+   }catch(error){tracks=[];duration=0;drawTracks();summary.textContent='No tracks loaded.';setStatus('Could not decode the selected WAV files: '+error.message);refreshTransport();}
+   finally{loading=false;refreshTransport();input.value='';}
  });
- clear.addEventListener('click',()=>{release();input.value='';status.textContent='Selection cleared.';details.textContent='Choose a WAV file saved on this device.';});
- window.addEventListener('pagehide',release);
+ playButton.addEventListener('click',async()=>{if(loading||!tracks.length)return;try{if(playing)pause();else await playFrom(offset);}catch(error){playing=false;stopSources();playButton.textContent='▶ Play';setStatus('Playback could not start: '+error.message);}});
+ stopButton.addEventListener('click',()=>{pause();offset=0;renderClock();});
+ seek.addEventListener('input',async()=>{if(!duration)return;const next=Number(seek.value)/1000*duration;const wasPlaying=playing;if(wasPlaying)await playFrom(next);else{offset=next;renderClock();}});
+ master.addEventListener('input',()=>{if(masterNode&&context)masterNode.gain.setTargetAtTime(Number(master.value),context.currentTime,.012);});
+ clearButton.addEventListener('click',()=>{pause();tracks.forEach(t=>{t.buffer=null;t.gainNode=null;});tracks=[];duration=0;offset=0;drawTracks();summary.textContent='No files loaded.';setStatus('Tracks cleared from browser memory.');refreshTransport();renderClock();input.value='';});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause();});
+ refreshTransport();renderClock();
 })();
 </script>
 </main></body></html>
