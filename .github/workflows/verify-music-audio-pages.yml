@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/verify-music-audio-pages.yml'
+      - 'music-foundry/audio/**'
   workflow_dispatch:
 
 permissions:
