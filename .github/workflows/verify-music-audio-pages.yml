@@ -1,0 +1,27 @@
+name: Verify Music Foundry Pages audio delivery
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-audio:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify same-origin WAV assets are publicly served
+        run: |
+          set -euo pipefail
+          base="https://godsun108.github.io/The-portal/music-foundry/audio"
+          for path in             "warehouse-rave-v2/instrumental_mix.wav"             "warehouse-rave-v2/drums.wav"             "warehouse-rave-v2/bass.wav"             "warehouse-rave-v2/synth.wav"             "warehouse-rave-v2/fx.wav"             "original/instrumental_mix.wav"             "original/lead.wav"             "original/chords.wav"             "original/bass.wav"             "original/drums.wav"; do
+            file="/tmp/$(basename "$path")"
+            curl --fail --location --silent --show-error "$base/$path" -o "$file"
+            test "$(stat -c %s "$file")" -gt 1000000
+            file "$file" | grep -q 'RIFF'
+            echo "Verified $path"
+          done
