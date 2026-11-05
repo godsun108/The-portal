@@ -25,6 +25,6 @@ jobs:
       - name: Install headless browser
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          ./node_modules/.bin/playwright install --with-deps chromium
       - name: Test real WAV decoding and transport in Chromium
         run: node scripts/test-music-preview-player.browser.cjs
