@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import {createBrowserSpeechOutputAdapter} from "./browser-speech-output.mjs";
+const calls=[];
+const adapter=createBrowserSpeechOutputAdapter({locales:["en-US"],voices:[{voice_id:"device-en",name:"Device English",locale:"en-US"}],speak:async x=>calls.push(x),cancel:()=>calls.push("cancel")});
+const result=await adapter.play({text:"Genesis Portal",locale:"en-US",voice_id:"device-en"});
+assert.equal(result.played,true);
+assert.equal(result.audio_file_created,false);
+assert.equal(calls[0].text,"Genesis Portal");
+adapter.stop();
+assert.equal(calls[1],"cancel");
+await assert.rejects(adapter.play({text:"hello",locale:"fr-FR"}),/locale_unsupported/);
+console.log("Portal Genesis speech adapter passed");
