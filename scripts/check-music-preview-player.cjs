@@ -1,25 +1,23 @@
 #!/usr/bin/env node
 'use strict';
-const fs = require('node:fs');
-const { spawnSync } = require('node:child_process');
-
-const file = 'music-foundry/preview-player.html';
-const html = fs.readFileSync(file, 'utf8');
-const checks = [
-  ['file input exists', /<input[^>]+id="audioFile"[^>]+type="file"/i.test(html)],
-  ['native audio controls exist', /<audio[^>]+id="player"[^>]+controls/i.test(html)],
-  ['live status region exists', /role="status"[^>]*aria-live="polite"/i.test(html)],
-  ['local object URL is created', /URL\.createObjectURL\(file\)/.test(html)],
-  ['object URL is released', /URL\.revokeObjectURL\(objectUrl\)/.test(html)],
-  ['page-exit cleanup exists', /addEventListener\('pagehide',\s*release\)/.test(html)],
-  ['no network upload APIs are present', !/\b(fetch\s*\(|XMLHttpRequest|WebSocket)\b/.test(html)]
+const fs=require('node:fs');
+const {spawnSync}=require('node:child_process');
+const file='music-foundry/preview-player.html';
+const html=fs.readFileSync(file,'utf8');
+const checks=[
+ ['multi-file WAV picker exists',/<input[^>]+id="files"[^>]+type="file"[^>]+multiple/i.test(html)],
+ ['shared play and stop controls exist',/id="play"/.test(html)&&/id="stop"/.test(html)],
+ ['shared seek control exists',/id="seek"[^>]+type="range"/.test(html)],
+ ['track list and master control exist',/id="tracks"/.test(html)&&/id="master"/.test(html)],
+ ['Web Audio API with Safari fallback exists',/window\.AudioContext\|\|window\.webkitAudioContext/.test(html)],
+ ['synchronized shared start time exists',/const when=ctx\.currentTime\+\.06/.test(html)],
+ ['per-track gain, mute, and solo exist',/gainNode/.test(html)&&/track\.muted/.test(html)&&/track\.solo/.test(html)],
+ ['local file decode exists',/file\.arrayBuffer\(\)/.test(html)&&/decodeAudioData/.test(html)],
+ ['file count is bounded',/MAX_FILES=5/.test(html)],
+ ['no network upload APIs are present',!/\b(fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon)\b/.test(html)]
 ];
-const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)].map(m => m[1]);
-if (scripts.length !== 1) checks.push(['exactly one inline script', false]);
-else {
-  const syntax = spawnSync(process.execPath, ['--check'], { input: scripts[0], encoding: 'utf8' });
-  checks.push(['inline JavaScript syntax', syntax.status === 0]);
-  if (syntax.status !== 0) process.stderr.write(syntax.stderr || syntax.stdout);
-}
-for (const [label, ok] of checks) console.log((ok ? 'PASS ' : 'FAIL ') + label);
-if (checks.some(([, ok]) => !ok)) process.exit(1);
+const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
+if(scripts.length!==1)checks.push(['exactly one inline script',false]);
+else{const result=spawnSync(process.execPath,['--check'],{input:scripts[0],encoding:'utf8'});checks.push(['inline JavaScript syntax',result.status===0]);if(result.status!==0)process.stderr.write(result.stderr||result.stdout);}
+for(const [label,ok] of checks)console.log((ok?'PASS ':'FAIL ')+label);
+if(checks.some(([,ok])=>!ok))process.exit(1);
