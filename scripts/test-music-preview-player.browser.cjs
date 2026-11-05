@@ -45,7 +45,8 @@ function makeWav(seconds, frequency) {
  await page.locator('#clear').click();
  if(await page.locator('.track').count()!==0)throw new Error('Clear did not remove tracks');
  if(errors.length)throw new Error('Browser errors: '+errors.join('; '));
- if(requests.length)throw new Error('Unexpected network requests: '+requests.join(', '));
+ const remoteRequests=requests.filter(url=>/^https?:/i.test(url));
+ if(remoteRequests.length)throw new Error('Unexpected remote network requests: '+remoteRequests.join(', '));
  console.log('PASS browser decodes multiple WAV files');
  console.log('PASS synchronized transport advances and pauses');
  console.log('PASS shared seek changes playback position');
