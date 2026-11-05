@@ -4,25 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08090d">
-<meta name="description" content="Audition a Music Foundry mix and stems locally, with synchronized playback and no upload.">
-<title>STEM AUDITION | MUSIC FOUNDRY</title>
+<meta name="description" content="Stream the Music Foundry mix and synchronized stems directly from the public audio release.">
+<title>SOMEBODY'S GOTTA DO IT | MUSIC FOUNDRY</title>
 <style>
-:root{color-scheme:dark;--bg:#08090d;--panel:#151821;--line:#303747;--ink:#f5f6fa;--muted:#aab2c0;--accent:#c8ff4d;--danger:#ff818b}
+:root{color-scheme:dark;--bg:#08090d;--panel:#151821;--line:#303747;--ink:#f5f6fa;--muted:#aab2c0;--accent:#c8ff4d}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#1b2030 0,#08090d 58%);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100svh}
 main{max-width:850px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
 a{color:var(--accent)}.back{display:inline-block;margin-bottom:24px;text-decoration:none;color:var(--muted)}
 .eyebrow{color:var(--accent);font-size:11px;font-weight:850;letter-spacing:.18em}h1{font-size:clamp(36px,9vw,58px);line-height:.98;letter-spacing:-.055em;margin:12px 0}h2{font-size:18px;margin:0 0 10px}p{color:var(--muted)}
 .panel{background:#151821dd;border:1px solid var(--line);border-radius:18px;padding:18px;margin:16px 0}
-input,button{font:inherit}input[type=file]{display:block;width:100%;margin:14px 0;padding:13px;border:1px dashed #647084;border-radius:13px;color:var(--ink);background:#0d1017}
-button{min-height:44px;border:1px solid #495366;border-radius:11px;padding:9px 13px;background:#252c38;color:var(--ink);font-weight:750}
+button{font:inherit;min-height:44px;border:1px solid #495366;border-radius:11px;padding:9px 13px;background:#252c38;color:var(--ink);font-weight:750}
 button.primary{background:var(--accent);border-color:var(--accent);color:#11170a}button:disabled{opacity:.35}
-.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:90px}
-input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
+.controls{display:flex;gap:8px;flex-wrap:wrap}.controls button{flex:1;min-width:100px}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.modes button[aria-pressed=true]{border-color:var(--accent);color:var(--accent);background:#27301c}
 .status{color:var(--accent);font-weight:750;min-height:24px}.meta{font-size:12px;color:#929bad;overflow-wrap:anywhere}
 .track{border:1px solid var(--line);border-radius:13px;padding:13px;margin:10px 0;background:#0e121a}
 .track-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.track-name{font-weight:800;overflow-wrap:anywhere}.track-meta{font-size:11px;color:var(--muted)}
 .track-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.track-actions button{min-height:36px;padding:5px 10px;font-size:12px}.track-actions label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
 .track-actions input[type=range]{width:min(190px,45vw)}
+input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 .timeline{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.time{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);white-space:nowrap}
 .master{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
 .note{border-left:3px solid var(--accent);padding-left:12px;font-size:13px}
@@ -31,20 +31,20 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 </head>
 <body><main>
 <a class="back" href="../">← THE PORTAL</a>
-<div class="eyebrow">LOCAL AUDIO · SYNCHRONIZED STEMS · NO UPLOAD</div>
-<h1>STEM<br>AUDITION</h1>
-<p>Load the instrumental mix and its individual WAV stems together. Play, seek, solo, mute, and balance them on one shared timeline. Audio stays on this device.</p>
+<div class="eyebrow">MUSIC FOUNDRY · DIRECT STREAM · PUBLIC PREVIEW</div>
+<h1>SOMEBODY'S<br>GOTTA DO IT</h1>
+<p>Listen directly from Music Foundry. The audio streams to this device—no downloading, file picker, or re-upload.</p>
 <section class="panel">
-<h2>1 · Load your WAV files</h2>
-<p class="meta">Choose up to five files at once: instrumental_mix.wav, lead.wav, chords.wav, bass.wav, and drums.wav. The mix is optional. Files are decoded locally in your browser.</p>
-<label for="files">Choose mix and stems</label>
-<input id="files" type="file" accept=".wav,audio/wav,audio/x-wav" multiple>
-<div class="controls"><button id="clear" type="button" disabled>Clear all tracks</button></div>
-<p id="status" class="status" role="status" aria-live="polite">Waiting for WAV files.</p>
-<p id="summary" class="meta">No files loaded.</p>
+<h2>Choose your listening mode</h2>
+<div class="modes">
+<button id="mixMode" class="primary" type="button" aria-pressed="true">Full instrumental mix</button>
+<button id="stemsMode" type="button" aria-pressed="false">Individual stems</button>
+</div>
+<p id="status" class="status" role="status" aria-live="polite">Connecting to the public audio preview…</p>
+<p id="summary" class="meta">Loading audio metadata only; full WAV files are streamed during playback.</p>
 </section>
 <section class="panel">
-<h2>2 · Shared transport</h2>
+<h2>Playback</h2>
 <div class="controls">
 <button id="play" class="primary" type="button" disabled>▶ Play</button>
 <button id="stop" type="button" disabled>■ Stop</button>
@@ -55,93 +55,98 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 </div>
 <div class="master" style="margin-top:12px">
 <label for="master">Master level</label>
-<input id="master" type="range" min="0" max="1.5" step="0.01" value="1" disabled>
+<input id="master" type="range" min="0" max="1" step="0.01" value="1" disabled>
 </div>
-<p class="meta">All tracks start at the same audio-clock time and share the same seek position. Use headphones when comparing stems.</p>
 </section>
 <section class="panel">
-<h2>3 · Track controls</h2>
-<div id="tracks"><p class="meta">Your loaded files will appear here.</p></div>
+<h2 id="trackHeading">Mix</h2>
+<div id="tracks"><p class="meta">Waiting for audio stream metadata…</p></div>
 </section>
 <section class="panel">
-<h2>Local-only by design</h2>
-<p>Files are read into browser memory for playback. There is no upload, account connection, or server-side audio processing in this page. Clearing tracks releases the decoded audio buffers.</p>
-<p class="note">iPhone note: save the WAV files in Files, open this page in Safari, and select the mix and stems together. Multi-file selection and long-session performance still need a real iPhone/Safari test; this page does not claim that test has happened.</p>
-<p class="meta">For clean comparisons, load stems exported from the same render and beginning at the same timeline zero. Files with different lengths are shown with their individual durations.</p>
+<h2>About this preview</h2>
+<p>Audio is served as public, read-only release assets from the canonical Turbo Foundry project. This page uses native browser audio streaming rather than decoding five WAV files into memory. The individual stems are synchronized on one shared transport.</p>
+<p class="note">The five WAV assets are publicly accessible. No microphone, file upload, login, or third-party audio service is used. iPhone Safari playback is the next real-device check; desktop Chromium CI alone cannot certify iPhone behavior.</p>
+<p class="meta">Project: godsun108/turbo-foundry · Preview release: music-preview-latest</p>
 </section>
 <script>
 (() => {
  'use strict';
- const $ = id => document.getElementById(id);
- const input=$('files'), status=$('status'), summary=$('summary'), tracksEl=$('tracks');
- const playButton=$('play'), stopButton=$('stop'), clearButton=$('clear'), seek=$('seek'), clock=$('clock'), master=$('master');
- const MAX_FILES=5;
- let context=null, masterNode=null, tracks=[], sources=[], playing=false, startAt=0, offset=0, duration=0, raf=0, loading=false;
+ const BASE='https://github.com/godsun108/turbo-foundry/releases/download/music-preview-latest/';
+ const sets={
+  mix:[{name:'Instrumental mix',file:'instrumental_mix.wav'}],
+  stems:[{name:'Lead',file:'lead.wav'},{name:'Chords',file:'chords.wav'},{name:'Bass',file:'bass.wav'},{name:'Drums',file:'drums.wav'}]
+ };
+ const $=id=>document.getElementById(id);
+ const status=$('status'),summary=$('summary'),tracksEl=$('tracks'),playButton=$('play'),stopButton=$('stop'),seek=$('seek'),clock=$('clock'),master=$('master');
+ let mode='mix',tracks=[],duration=0,playing=false,offset=0,raf=0,loading=false;
  const fmt=s=>{s=Math.max(0,Number(s)||0);const m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+String(sec).padStart(2,'0');};
  const setStatus=s=>{status.textContent=s;};
- const ensureContext=()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Web Audio is not available in this browser.');if(!context){context=new C();masterNode=context.createGain();masterNode.gain.value=Number(master.value);masterNode.connect(context.destination);}return context;};
- const stopSources=()=>{for(const s of sources){try{s.stop();}catch(_){}try{s.disconnect();}catch(_){}}sources=[];};
- const position=()=>playing&&context?Math.min(duration,offset+Math.max(0,context.currentTime-startAt)):offset;
- const renderClock=()=>{const p=position();clock.textContent=fmt(p)+' / '+fmt(duration);seek.value=duration?String(Math.round(p/duration*1000)):'0';};
  const stopTicker=()=>{if(raf)cancelAnimationFrame(raf);raf=0;};
- const tick=()=>{renderClock();if(playing&&position()>=duration){playing=false;offset=0;stopSources();playButton.textContent='▶ Play';renderClock();return;}if(playing)raf=requestAnimationFrame(tick);};
- const refreshTransport=()=>{const ready=tracks.length>0&&!loading;playButton.disabled=!ready;stopButton.disabled=!ready;clearButton.disabled=!ready;seek.disabled=!ready;master.disabled=!ready;};
- const audible=track=>{const hasSolo=tracks.some(t=>t.solo);return !track.muted&&(!hasSolo||track.solo);};
- const drawTracks=()=>{
-   tracksEl.replaceChildren();
-   if(!tracks.length){tracksEl.innerHTML='<p class="meta">Your loaded files will appear here.</p>';return;}
-   tracks.forEach(track=>{
-     const card=document.createElement('div');card.className='track';
-     const head=document.createElement('div');head.className='track-head';
-     const name=document.createElement('div');name.className='track-name';name.textContent=track.file.name;
-     const meta=document.createElement('div');meta.className='track-meta';meta.textContent=fmt(track.buffer.duration)+' · '+track.buffer.numberOfChannels+' ch · '+track.buffer.sampleRate.toLocaleString()+' Hz';
-     head.append(name,meta);card.append(head);
-     const actions=document.createElement('div');actions.className='track-actions';
-     const mute=document.createElement('button');mute.type='button';mute.textContent=track.muted?'Unmute':'Mute';mute.setAttribute('aria-pressed',String(track.muted));
-     mute.addEventListener('click',()=>{track.muted=!track.muted;mute.textContent=track.muted?'Unmute':'Mute';mute.setAttribute('aria-pressed',String(track.muted));applyGains();});
-     const solo=document.createElement('button');solo.type='button';solo.textContent=track.solo?'Unsolo':'Solo';solo.setAttribute('aria-pressed',String(track.solo));
-     solo.addEventListener('click',()=>{track.solo=!track.solo;solo.textContent=track.solo?'Unsolo':'Solo';solo.setAttribute('aria-pressed',String(track.solo));tracks.forEach(t=>{const b=t.card.querySelector('[data-solo]');if(b){b.textContent=t.solo?'Unsolo':'Solo';b.setAttribute('aria-pressed',String(t.solo));}});applyGains();});
-     solo.dataset.solo='true';
-     const gainLabel=document.createElement('label');gainLabel.textContent='Level';
-     const gain=document.createElement('input');gain.type='range';gain.min='0';gain.max='1.5';gain.step='0.01';gain.value=String(track.level);gain.setAttribute('aria-label',track.file.name+' level');
-     gain.addEventListener('input',()=>{track.level=Number(gain.value);applyGains();});
-     gainLabel.append(gain);actions.append(mute,solo,gainLabel);card.append(actions);track.card=card;tracksEl.append(card);
-   });
+ const current=()=>{const t=tracks[0];return playing&&t?Math.max(0,t.audio.currentTime):offset;};
+ const updateClock=()=>{const p=Math.min(duration,current());clock.textContent=fmt(p)+' / '+fmt(duration);seek.value=duration?String(Math.round(p/duration*1000)):'0';};
+ const applyAudibility=()=>{const hasSolo=tracks.some(t=>t.solo);tracks.forEach(t=>{t.audio.muted=t.muted||(hasSolo&&!t.solo);});};
+ const pause=()=>{tracks.forEach(t=>t.audio.pause());offset=current();playing=false;stopTicker();playButton.textContent='▶ Play';updateClock();};
+ const tick=()=>{if(!playing)return;const p=current();tracks.slice(1).forEach(t=>{if(!t.audio.paused&&Math.abs(t.audio.currentTime-p)>.18){try{t.audio.currentTime=p;}catch(_){}}});updateClock();if(p>=duration-.08){pause();offset=0;tracks.forEach(t=>{try{t.audio.currentTime=0;}catch(_){}});updateClock();return;}raf=requestAnimationFrame(tick);};
+ const release=()=>{pause();tracks.forEach(t=>{t.audio.removeAttribute('src');t.audio.load();});tracks=[];duration=0;offset=0;tracksEl.replaceChildren();};
+ const renderTracks=()=>{
+  tracksEl.replaceChildren();
+  tracks.forEach(t=>{
+   const card=document.createElement('div');card.className='track';
+   const head=document.createElement('div');head.className='track-head';
+   const name=document.createElement('div');name.className='track-name';name.textContent=t.name;
+   const meta=document.createElement('div');meta.className='track-meta';meta.textContent=fmt(t.audio.duration)+' · streamed WAV';
+   head.append(name,meta);card.append(head);
+   const actions=document.createElement('div');actions.className='track-actions';
+   const mute=document.createElement('button');mute.type='button';mute.textContent='Mute';mute.setAttribute('aria-pressed','false');
+   mute.addEventListener('click',()=>{t.muted=!t.muted;mute.textContent=t.muted?'Unmute':'Mute';mute.setAttribute('aria-pressed',String(t.muted));applyAudibility();});
+   const solo=document.createElement('button');solo.type='button';solo.textContent='Solo';solo.setAttribute('aria-pressed','false');
+   solo.addEventListener('click',()=>{t.solo=!t.solo;solo.textContent=t.solo?'Unsolo':'Solo';solo.setAttribute('aria-pressed',String(t.solo));applyAudibility();});
+   const levelLabel=document.createElement('label');levelLabel.textContent='Level';
+   const level=document.createElement('input');level.type='range';level.min='0';level.max='1';level.step='.01';level.value='1';level.setAttribute('aria-label',t.name+' level');
+   level.addEventListener('input',()=>{t.audio.volume=Number(level.value);});
+   levelLabel.append(level);actions.append(mute,solo,levelLabel);card.append(actions);t.card=card;tracksEl.append(card);
+  });
  };
- const applyGains=()=>{if(!context)return;const now=context.currentTime;tracks.forEach(t=>{if(t.gainNode)t.gainNode.gain.setTargetAtTime(audible(t)?t.level:0,now,.012);});};
- const playFrom=async at=>{
-   const ctx=ensureContext();await ctx.resume();stopSources();
-   offset=Math.max(0,Math.min(duration,at));if(offset>=duration){offset=0;}
-   const when=ctx.currentTime+.06;startAt=when;playing=true;
-   tracks.forEach(track=>{const source=ctx.createBufferSource(),gain=ctx.createGain();source.buffer=track.buffer;gain.gain.value=audible(track)?track.level:0;source.connect(gain);gain.connect(masterNode);source.start(when,Math.min(offset,Math.max(0,track.buffer.duration-.001)));track.gainNode=gain;sources.push(source);});
-   playButton.textContent='Ⅱ Pause';stopTicker();raf=requestAnimationFrame(tick);renderClock();
+ const loadMode=async next=>{
+  release();mode=next;loading=true;playButton.disabled=true;stopButton.disabled=true;seek.disabled=true;master.disabled=true;
+  $('mixMode').setAttribute('aria-pressed',String(mode==='mix'));$('stemsMode').setAttribute('aria-pressed',String(mode==='stems'));
+  $('mixMode').classList.toggle('primary',mode==='mix');$('stemsMode').classList.toggle('primary',mode==='stems');
+  $('trackHeading').textContent=mode==='mix'?'Full instrumental mix':'Individual stems';
+  setStatus('Connecting to '+(mode==='mix'?'the instrumental mix':'four stems')+'…');
+  const selected=sets[mode];
+  try{
+   tracks=selected.map(item=>{const audio=new Audio();audio.preload='metadata';audio.playsInline=true;audio.src=BASE+item.file;return {name:item.name,audio,muted:false,solo:false};});
+   await Promise.all(tracks.map(t=>new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>reject(new Error('Audio metadata timed out for '+t.name+'.')),30000);
+    t.audio.addEventListener('loadedmetadata',()=>{clearTimeout(timer);resolve();},{once:true});
+    t.audio.addEventListener('error',()=>{clearTimeout(timer);reject(new Error('Could not load '+t.name+'. Check the public release asset.'));},{once:true});
+    t.audio.load();
+   })));
+   duration=Math.max(...tracks.map(t=>t.audio.duration));
+   const min=Math.min(...tracks.map(t=>t.audio.duration));
+   renderTracks();summary.textContent=tracks.length+' stream(s) ready · '+fmt(duration)+' · audio remains streamed, not pre-decoded';
+   setStatus(Math.abs(duration-min)>.25?'Ready, but track durations differ; check the render.':'Ready to play. No file transfer needed.');
+   playButton.disabled=false;stopButton.disabled=false;seek.disabled=false;master.disabled=false;offset=0;updateClock();
+  }catch(error){release();setStatus(error.message);summary.textContent='Audio could not be prepared.';}
+  finally{loading=false;}
  };
- const pause=()=>{offset=position();playing=false;stopTicker();stopSources();playButton.textContent='▶ Play';renderClock();};
- input.addEventListener('change',async()=>{
-   const selected=Array.from(input.files||[]);
-   if(!selected.length)return;
-   if(selected.length>MAX_FILES){setStatus('Please choose no more than five WAV files.');input.value='';return;}
-   if(selected.some(f=>!f.name.toLowerCase().endsWith('.wav'))){setStatus('Only WAV files are supported.');input.value='';return;}
-   loading=true;refreshTransport();pause();tracks=[];duration=0;offset=0;drawTracks();summary.textContent='Decoding '+selected.length+' file(s)…';
-   try{
-     const ctx=ensureContext();await ctx.resume();
-     const decoded=[];
-     for(const file of selected){if(!file.size)throw new Error(file.name+' is empty.');const buffer=await ctx.decodeAudioData(await file.arrayBuffer());decoded.push({file,buffer,level:1,muted:false,solo:false,gainNode:null,card:null});}
-     tracks=decoded;duration=Math.max(...tracks.map(t=>t.buffer.duration));
-     drawTracks();summary.textContent=tracks.length+' tracks · longest '+fmt(duration)+' · '+(tracks.reduce((n,t)=>n+t.file.size,0)/1048576).toFixed(2)+' MB loaded locally';
-     const lengths=tracks.map(t=>t.buffer.duration),spread=Math.max(...lengths)-Math.min(...lengths);
-     setStatus(spread>.25?'Loaded. Track durations differ by '+spread.toFixed(2)+' s; check alignment.':'All files decoded and ready to audition.');
-     refreshTransport();renderClock();
-   }catch(error){tracks=[];duration=0;drawTracks();summary.textContent='No tracks loaded.';setStatus('Could not decode the selected WAV files: '+error.message);refreshTransport();}
-   finally{loading=false;refreshTransport();input.value='';}
- });
- playButton.addEventListener('click',async()=>{if(loading||!tracks.length)return;try{if(playing)pause();else await playFrom(offset);}catch(error){playing=false;stopSources();playButton.textContent='▶ Play';setStatus('Playback could not start: '+error.message);}});
- stopButton.addEventListener('click',()=>{pause();offset=0;renderClock();});
- seek.addEventListener('input',async()=>{if(!duration)return;const next=Number(seek.value)/1000*duration;const wasPlaying=playing;if(wasPlaying)await playFrom(next);else{offset=next;renderClock();}});
- master.addEventListener('input',()=>{if(masterNode&&context)masterNode.gain.setTargetAtTime(Number(master.value),context.currentTime,.012);});
- clearButton.addEventListener('click',()=>{pause();tracks.forEach(t=>{t.buffer=null;t.gainNode=null;});tracks=[];duration=0;offset=0;drawTracks();summary.textContent='No files loaded.';setStatus('Tracks cleared from browser memory.');refreshTransport();renderClock();input.value='';});
+ const play=async()=>{
+  if(loading||!tracks.length)return;
+  const start=Math.min(offset,Math.max(0,duration-.05));
+  try{
+   await Promise.all(tracks.map(async t=>{if(Math.abs(t.audio.currentTime-start)>.08)t.audio.currentTime=start;}));
+   await Promise.all(tracks.map(t=>t.audio.play()));
+   playing=true;playButton.textContent='Ⅱ Pause';stopTicker();raf=requestAnimationFrame(tick);
+  }catch(error){pause();setStatus('Playback did not start: '+error.message+' Tap Play again.');}
+ };
+ playButton.addEventListener('click',()=>{if(playing)pause();else void play();});
+ stopButton.addEventListener('click',()=>{pause();offset=0;tracks.forEach(t=>{try{t.audio.currentTime=0;}catch(_){}});updateClock();});
+ seek.addEventListener('input',()=>{if(!duration)return;offset=Number(seek.value)/1000*duration;tracks.forEach(t=>{try{t.audio.currentTime=offset;}catch(_){}});updateClock();});
+ master.addEventListener('input',()=>{tracks.forEach(t=>{t.audio.volume=Number(master.value);});});
+ $('mixMode').addEventListener('click',()=>{if(mode!=='mix')void loadMode('mix');});
+ $('stemsMode').addEventListener('click',()=>{if(mode!=='stems')void loadMode('stems');});
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause();});
- refreshTransport();renderClock();
+ void loadMode('mix');
 })();
 </script>
 </main></body></html>
