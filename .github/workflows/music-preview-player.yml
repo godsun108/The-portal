@@ -4,11 +4,13 @@ on:
     paths:
       - 'music-foundry/preview-player.html'
       - 'scripts/check-music-preview-player.cjs'
+      - 'scripts/test-music-preview-player.browser.cjs'
       - '.github/workflows/music-preview-player.yml'
   pull_request:
     paths:
       - 'music-foundry/preview-player.html'
       - 'scripts/check-music-preview-player.cjs'
+      - 'scripts/test-music-preview-player.browser.cjs'
       - '.github/workflows/music-preview-player.yml'
 jobs:
   preview-player:
@@ -20,3 +22,9 @@ jobs:
           node-version: '22'
       - name: Validate local preview player
         run: node scripts/check-music-preview-player.cjs
+      - name: Install headless browser
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Test real WAV decoding and transport in Chromium
+        run: node scripts/test-music-preview-player.browser.cjs
