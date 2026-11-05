@@ -14,7 +14,7 @@ on:
       - '.github/workflows/music-preview-player.yml'
 jobs:
   preview-player:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +24,7 @@ jobs:
         run: node scripts/check-music-preview-player.cjs
       - name: Install headless browser
         run: |
-          npm install --no-save playwright
+          npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
       - name: Test real WAV decoding and transport in Chromium
         run: node scripts/test-music-preview-player.browser.cjs
