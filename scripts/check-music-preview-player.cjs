@@ -7,7 +7,7 @@ new vm.Script(match[1], { filename: 'music-foundry/preview-player.js' });
 for (const token of [
   'createMediaElementSource', 'createGain()', 'audioContext.resume()',
   'ensureAudioGraph();', 'warehouse-rave-v2/', 'warehouseStemsMode',
-  'BASES[mode]', 'setTargetAtTime'
+  'warehouse-rave-texture-a/', 'textureStemsMode', 'BASES[mode]', 'setTargetAtTime'
 ]) {
   if (!match[1].includes(token)) throw new Error('Missing player invariant: ' + token);
 }
