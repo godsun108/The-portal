@@ -44,5 +44,6 @@ jobs:
             echo "Portal audio mirror is already current."
           else
             git commit -m "Mirror Music Foundry audio for same-origin streaming"
+            git pull --rebase origin main
             git push origin HEAD:main
           fi
