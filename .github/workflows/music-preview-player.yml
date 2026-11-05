@@ -1,0 +1,22 @@
+name: Music Foundry preview player checks
+on:
+  push:
+    paths:
+      - 'music-foundry/preview-player.html'
+      - 'scripts/check-music-preview-player.cjs'
+      - '.github/workflows/music-preview-player.yml'
+  pull_request:
+    paths:
+      - 'music-foundry/preview-player.html'
+      - 'scripts/check-music-preview-player.cjs'
+      - '.github/workflows/music-preview-player.yml'
+jobs:
+  preview-player:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate local preview player
+        run: node scripts/check-music-preview-player.cjs
