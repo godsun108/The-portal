@@ -37,8 +37,10 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 <section class="panel">
 <h2>Choose your listening mode</h2>
 <div class="modes">
-<button id="mixMode" class="primary" type="button" aria-pressed="true">Full instrumental mix</button>
-<button id="stemsMode" type="button" aria-pressed="false">Individual stems</button>
+<button id="mixMode" class="primary" type="button" aria-pressed="true">Original mix</button>
+<button id="stemsMode" type="button" aria-pressed="false">Original stems</button>
+<button id="warehouseMode" type="button" aria-pressed="false">Warehouse Rave V2 mix</button>
+<button id="warehouseStemsMode" type="button" aria-pressed="false">Warehouse Rave V2 stems</button>
 </div>
 <p id="status" class="status" role="status" aria-live="polite">Connecting to the public audio preview…</p>
 <p id="summary" class="meta">Loading audio metadata only; full WAV files are streamed during playback.</p>
@@ -71,10 +73,12 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
 <script>
 (() => {
  'use strict';
- const BASE='https://github.com/godsun108/turbo-foundry/releases/download/music-preview-latest/';
+ const BASES={mix:'https://github.com/godsun108/turbo-foundry/releases/download/music-preview-latest/',stems:'https://github.com/godsun108/turbo-foundry/releases/download/music-preview-latest/',warehouse:'https://github.com/godsun108/turbo-foundry/releases/download/warehouse-rave-v2/',warehouse_stems:'https://github.com/godsun108/turbo-foundry/releases/download/warehouse-rave-v2/'};
  const sets={
-  mix:[{name:'Instrumental mix',file:'instrumental_mix.wav'}],
-  stems:[{name:'Lead',file:'lead.wav'},{name:'Chords',file:'chords.wav'},{name:'Bass',file:'bass.wav'},{name:'Drums',file:'drums.wav'}]
+  mix:[{name:'Original instrumental mix',file:'instrumental_mix.wav'}],
+  stems:[{name:'Lead',file:'lead.wav'},{name:'Chords',file:'chords.wav'},{name:'Bass',file:'bass.wav'},{name:'Drums',file:'drums.wav'}],
+  warehouse:[{name:'Warehouse Rave V2 instrumental mix',file:'instrumental_mix.wav'}],
+  warehouse_stems:[{name:'Drums',file:'drums.wav'},{name:'Rolling bass',file:'bass.wav'},{name:'Rave synths',file:'synth.wav'},{name:'Builds and FX',file:'fx.wav'}]
  };
  const $=id=>document.getElementById(id);
  const status=$('status'),summary=$('summary'),tracksEl=$('tracks'),playButton=$('play'),stopButton=$('stop'),seek=$('seek'),clock=$('clock'),master=$('master');
@@ -110,13 +114,12 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
  };
  const loadMode=async next=>{
   release();mode=next;loading=true;playButton.disabled=true;stopButton.disabled=true;seek.disabled=true;master.disabled=true;
-  $('mixMode').setAttribute('aria-pressed',String(mode==='mix'));$('stemsMode').setAttribute('aria-pressed',String(mode==='stems'));
-  $('mixMode').classList.toggle('primary',mode==='mix');$('stemsMode').classList.toggle('primary',mode==='stems');
-  $('trackHeading').textContent=mode==='mix'?'Full instrumental mix':'Individual stems';
-  setStatus('Connecting to '+(mode==='mix'?'the instrumental mix':'four stems')+'…');
+  for(const [key,id] of [['mix','mixMode'],['stems','stemsMode'],['warehouse','warehouseMode'],['warehouse_stems','warehouseStemsMode']]){$(id).setAttribute('aria-pressed',String(mode===key));$(id).classList.toggle('primary',mode===key);}
+  $('trackHeading').textContent=mode==='mix'?'Original full instrumental mix':mode==='stems'?'Original individual stems':mode==='warehouse'?'Warehouse Rave V2 mix':'Warehouse Rave V2 stems';
+  setStatus('Connecting to '+(mode==='mix'?'the original instrumental mix':mode==='stems'?'the original four stems':mode==='warehouse'?'Warehouse Rave V2':'Warehouse Rave V2 stems')+'…');
   const selected=sets[mode];
   try{
-   tracks=selected.map(item=>{const audio=new Audio();audio.preload='metadata';audio.playsInline=true;audio.crossOrigin='anonymous';audio.src=BASE+item.file;return {name:item.name,audio,muted:false,solo:false,level:1,source:null,gain:null};});
+   tracks=selected.map(item=>{const audio=new Audio();audio.preload='metadata';audio.playsInline=true;audio.crossOrigin='anonymous';audio.src=BASES[mode]+item.file;return {name:item.name,audio,muted:false,solo:false,level:1,source:null,gain:null};});
    await Promise.all(tracks.map(t=>new Promise((resolve,reject)=>{
     const timer=setTimeout(()=>reject(new Error('Audio metadata timed out for '+t.name+'.')),30000);
     t.audio.addEventListener('loadedmetadata',()=>{clearTimeout(timer);resolve();},{once:true});
@@ -149,6 +152,8 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
  master.addEventListener('input',()=>{if(masterGain&&audioContext)masterGain.gain.setTargetAtTime(Number(master.value),audioContext.currentTime,.015);});
  $('mixMode').addEventListener('click',()=>{if(mode!=='mix')void loadMode('mix');});
  $('stemsMode').addEventListener('click',()=>{if(mode!=='stems')void loadMode('stems');});
+ $('warehouseMode').addEventListener('click',()=>{if(mode!=='warehouse')void loadMode('warehouse');});
+ $('warehouseStemsMode').addEventListener('click',()=>{if(mode!=='warehouse_stems')void loadMode('warehouse_stems');});
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)pause();});
  void loadMode('mix');
 })();
