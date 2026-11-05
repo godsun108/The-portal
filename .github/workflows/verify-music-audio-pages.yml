@@ -18,7 +18,7 @@ jobs:
         run: |
           set -euo pipefail
           base="https://godsun108.github.io/The-portal/music-foundry/audio"
-          for path in             "warehouse-rave-v2/instrumental_mix.wav"             "warehouse-rave-v2/drums.wav"             "warehouse-rave-v2/bass.wav"             "warehouse-rave-v2/synth.wav"             "warehouse-rave-v2/fx.wav"             "original/instrumental_mix.wav"             "original/lead.wav"             "original/chords.wav"             "original/bass.wav"             "original/drums.wav"; do
+          for path in             "warehouse-rave-v2/instrumental_mix.wav"             "warehouse-rave-v2/drums.wav"             "warehouse-rave-v2/bass.wav"             "warehouse-rave-v2/synth.wav"             "warehouse-rave-v2/fx.wav"             "warehouse-rave-texture-a/instrumental_mix.wav"             "warehouse-rave-texture-a/drums.wav"             "warehouse-rave-texture-a/bass.wav"             "warehouse-rave-texture-a/synth.wav"             "warehouse-rave-texture-a/fx.wav"             "original/instrumental_mix.wav"             "original/lead.wav"             "original/chords.wav"             "original/bass.wav"             "original/drums.wav"; do
             file="/tmp/$(basename "$path")"
             curl --fail --location --silent --show-error "$base/$path" -o "$file"
             test "$(stat -c %s "$file")" -gt 1000000
