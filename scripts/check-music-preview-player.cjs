@@ -6,7 +6,7 @@ const { spawnSync } = require('node:child_process');
 const file = 'music-foundry/preview-player.html';
 const html = fs.readFileSync(file, 'utf8');
 const checks = [
-  ['file input exists', /<input[^>]+type="file"[^>]+id="audioFile"/i.test(html)],
+  ['file input exists', /<input[^>]+id="audioFile"[^>]+type="file"/i.test(html)],
   ['native audio controls exist', /<audio[^>]+id="player"[^>]+controls/i.test(html)],
   ['live status region exists', /role="status"[^>]*aria-live="polite"/i.test(html)],
   ['local object URL is created', /URL\.createObjectURL\(file\)/.test(html)],
