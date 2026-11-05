@@ -1,0 +1,46 @@
+name: Mirror Music Foundry audio to Portal Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'music-foundry/preview-player.html'
+
+permissions:
+  contents: write
+
+jobs:
+  mirror-audio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Download published audio assets
+        run: |
+          set -euo pipefail
+          mkdir -p music-foundry/audio/original music-foundry/audio/warehouse-rave-v2
+          base="https://github.com/godsun108/turbo-foundry/releases/download"
+          for file in instrumental_mix.wav lead.wav chords.wav bass.wav drums.wav; do
+            curl --fail --location --silent --show-error "$base/music-preview-latest/$file" -o "music-foundry/audio/original/$file"
+          done
+          for file in instrumental_mix.wav drums.wav bass.wav synth.wav fx.wav; do
+            curl --fail --location --silent --show-error "$base/warehouse-rave-v2/$file" -o "music-foundry/audio/warehouse-rave-v2/$file"
+          done
+          for file in music-foundry/audio/original/*.wav music-foundry/audio/warehouse-rave-v2/*.wav; do
+            test -s "$file"
+            file "$file" | grep -q 'RIFF'
+          done
+      - name: Commit same-origin streaming assets
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add music-foundry/audio/
+          if git diff --cached --quiet; then
+            echo "Portal audio mirror is already current."
+          else
+            git commit -m "Mirror Music Foundry audio for same-origin streaming"
+            git push origin HEAD:main
+          fi
