@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090d">
+<meta name="description" content="Listen to locally rendered Music Foundry previews without uploading audio.">
+<title>PREVIEW PLAYER | MUSIC FOUNDRY</title>
+<style>
+:root{color-scheme:dark;--bg:#08090d;--panel:#151821;--line:#303747;--ink:#f5f6fa;--muted:#aab2c0;--accent:#c8ff4d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#1b2030 0,#08090d 58%);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100svh}
+main{max-width:760px;margin:auto;padding:calc(24px + env(safe-area-inset-top)) 18px calc(40px + env(safe-area-inset-bottom))}
+a{color:var(--accent)}.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.18em}
+h1{font-size:clamp(36px,9vw,58px);line-height:.98;letter-spacing:-.055em;margin:14px 0}
+p{color:var(--muted)}.panel{background:#151821dd;border:1px solid var(--line);border-radius:20px;padding:20px;margin:18px 0}
+.back{display:inline-block;margin-bottom:28px;text-decoration:none;color:var(--muted)}
+input[type=file]{display:block;width:100%;margin:18px 0;padding:14px;border:1px dashed #647084;border-radius:14px;color:var(--ink);background:#0d1017}
+audio{display:block;width:100%;margin:18px 0}button{border:1px solid #495366;border-radius:12px;padding:11px 14px;background:#252c38;color:var(--ink);font:inherit}
+.meta{font-size:12px;color:#929bad;overflow-wrap:anywhere}.status{color:var(--accent);font-weight:700}
+</style>
+</head>
+<body><main>
+<a class="back" href="index.html">← MUSIC FOUNDRY</a>
+<div class="eyebrow">LOCAL AUDIO · NO UPLOAD</div>
+<h1>PREVIEW<br>PLAYER</h1>
+<p>Choose a WAV you downloaded from Music Foundry. Playback stays in this browser; this page does not upload or transmit the file.</p>
+<section class="panel">
+<h2>Instrumental audition</h2>
+<label for="audioFile">Choose an audio file</label>
+<input id="audioFile" type="file" accept="audio/wav,audio/x-wav,.wav,audio/*">
+<audio id="player" controls preload="metadata"></audio>
+<p id="status" class="status" role="status" aria-live="polite">No file selected.</p>
+<p id="details" class="meta">For the current song preview, choose <strong>instrumental_mix.wav</strong> from your downloaded preview bundle.</p>
+<button id="clear" type="button">Clear selected file</button>
+</section>
+<section class="panel">
+<h2>Privacy and compatibility</h2>
+<p>The selected file is read locally using a temporary browser object URL. It is not sent to a server. Clearing the selection releases that temporary URL.</p>
+<p class="meta">iPhone note: save the WAV to Files, then use Choose a file above. Actual Safari/device playback remains subject to a real-device test.</p>
+</section>
+<script>
+(() => {
+ const input=document.getElementById('audioFile');
+ const player=document.getElementById('player');
+ const status=document.getElementById('status');
+ const details=document.getElementById('details');
+ const clear=document.getElementById('clear');
+ let objectUrl=null;
+ function release(){if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}player.pause();player.removeAttribute('src');player.load();}
+ input.addEventListener('change',()=>{
+   const file=input.files&&input.files[0];
+   release();
+   if(!file){status.textContent='No file selected.';details.textContent='Choose a WAV file saved on this device.';return;}
+   if(file.size===0){status.textContent='That file is empty. Choose another audio file.';return;}
+   objectUrl=URL.createObjectURL(file);
+   player.src=objectUrl;
+   const mb=(file.size/1048576).toFixed(2);
+   status.textContent='Ready to audition.';
+   details.textContent=file.name+' · '+mb+' MB · local browser playback';
+ });
+ clear.addEventListener('click',()=>{release();input.value='';status.textContent='Selection cleared.';details.textContent='Choose a WAV file saved on this device.';});
+ window.addEventListener('pagehide',release);
+})();
+</script>
+</main></body></html>
