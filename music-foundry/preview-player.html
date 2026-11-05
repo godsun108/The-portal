@@ -84,7 +84,8 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
  const stopTicker=()=>{if(raf)cancelAnimationFrame(raf);raf=0;};
  const current=()=>{const t=tracks[0];return playing&&t?Math.max(0,t.audio.currentTime):offset;};
  const updateClock=()=>{const p=Math.min(duration,current());clock.textContent=fmt(p)+' / '+fmt(duration);seek.value=duration?String(Math.round(p/duration*1000)):'0';};
- const ensureAudioGraph=()=>{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw new Error('This browser does not support the audio mixer required for track levels.');if(!audioContext){audioContext=new Ctx();masterGain=audioContext.createGain();masterGain.gain.value=Number(master.value);masterGain.connect(audioContext.destination);}tracks.forEach(t=>{if(!t.source){t.source=audioContext.createMediaElementSource(t.audio);t.gain=audioContext.createGain();t.source.connect(t.gain);t.gain.connect(masterGain);}});};\n const applyAudibility=()=>{const hasSolo=tracks.some(t=>t.solo);tracks.forEach(t=>{if(t.gain)t.gain.gain.setTargetAtTime((t.muted||(hasSolo&&!t.solo))?0:t.level, audioContext.currentTime,.015);});};
+ const ensureAudioGraph=()=>{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw new Error('This browser does not support the audio mixer required for track levels.');if(!audioContext){audioContext=new Ctx();masterGain=audioContext.createGain();masterGain.gain.value=Number(master.value);masterGain.connect(audioContext.destination);}tracks.forEach(t=>{if(!t.source){t.source=audioContext.createMediaElementSource(t.audio);t.gain=audioContext.createGain();t.source.connect(t.gain);t.gain.connect(masterGain);}});};
+ const applyAudibility=()=>{const hasSolo=tracks.some(t=>t.solo);tracks.forEach(t=>{if(t.gain)t.gain.gain.setTargetAtTime((t.muted||(hasSolo&&!t.solo))?0:t.level, audioContext.currentTime,.015);});};
  const pause=()=>{tracks.forEach(t=>t.audio.pause());offset=current();playing=false;stopTicker();playButton.textContent='▶ Play';updateClock();};
  const tick=()=>{if(!playing)return;const p=current();tracks.slice(1).forEach(t=>{if(!t.audio.paused&&Math.abs(t.audio.currentTime-p)>.18){try{t.audio.currentTime=p;}catch(_){}}});updateClock();if(p>=duration-.08){pause();offset=0;tracks.forEach(t=>{try{t.audio.currentTime=0;}catch(_){}});updateClock();return;}raf=requestAnimationFrame(tick);};
  const release=()=>{pause();tracks.forEach(t=>{t.audio.removeAttribute('src');t.audio.load();});tracks=[];duration=0;offset=0;tracksEl.replaceChildren();};
@@ -134,7 +135,10 @@ input[type=range]{width:100%;accent-color:var(--accent);min-height:32px}
   if(loading||!tracks.length)return;
   const start=Math.min(offset,Math.max(0,duration-.05));
   try{
+   ensureAudioGraph();
+   if(audioContext.state==='suspended')await audioContext.resume();
    await Promise.all(tracks.map(async t=>{if(Math.abs(t.audio.currentTime-start)>.08)t.audio.currentTime=start;}));
+   applyAudibility();
    await Promise.all(tracks.map(t=>t.audio.play()));
    playing=true;playButton.textContent='Ⅱ Pause';stopTicker();raf=requestAnimationFrame(tick);
   }catch(error){pause();setStatus('Playback did not start: '+error.message+' Tap Play again.');}
