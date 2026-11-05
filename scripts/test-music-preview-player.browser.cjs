@@ -30,7 +30,7 @@ function makeWav(seconds, frequency) {
  if(await page.locator('.track').count()!==2)throw new Error('Expected two decoded tracks');
  if((await page.locator('#summary').textContent()).includes('2 tracks')===false)throw new Error('Track summary missing');
  await page.locator('#play').click();
- await page.waitForTimeout(350);
+ await page.waitForTimeout(1150);
  const afterPlay=await page.locator('#clock').textContent();
  if(afterPlay.startsWith('0:00'))throw new Error('Shared transport clock did not advance');
  await page.locator('#play').click();
