@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'music-foundry/preview-player.html'
+      - '.github/workflows/mirror-music-audio.yml'
 
 permissions:
   contents: write
@@ -20,15 +21,16 @@ jobs:
       - name: Download published audio assets
         run: |
           set -euo pipefail
-          mkdir -p music-foundry/audio/original music-foundry/audio/warehouse-rave-v2
+          mkdir -p music-foundry/audio/original music-foundry/audio/warehouse-rave-v2 music-foundry/audio/warehouse-rave-texture-a
           base="https://github.com/godsun108/turbo-foundry/releases/download"
           for file in instrumental_mix.wav lead.wav chords.wav bass.wav drums.wav; do
             curl --fail --location --silent --show-error "$base/music-preview-latest/$file" -o "music-foundry/audio/original/$file"
           done
           for file in instrumental_mix.wav drums.wav bass.wav synth.wav fx.wav; do
             curl --fail --location --silent --show-error "$base/warehouse-rave-v2/$file" -o "music-foundry/audio/warehouse-rave-v2/$file"
+            curl --fail --location --silent --show-error "$base/warehouse-rave-texture-a/$file" -o "music-foundry/audio/warehouse-rave-texture-a/$file"
           done
-          for file in music-foundry/audio/original/*.wav music-foundry/audio/warehouse-rave-v2/*.wav; do
+          for file in music-foundry/audio/original/*.wav music-foundry/audio/warehouse-rave-v2/*.wav music-foundry/audio/warehouse-rave-texture-a/*.wav; do
             test -s "$file"
             file "$file" | grep -q 'RIFF'
           done
