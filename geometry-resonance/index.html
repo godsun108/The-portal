@@ -20,6 +20,25 @@ button{cursor:pointer;background:#292437;color:#fff;border:1px solid #746789;bor
 .readout{font:22px ui-monospace,monospace;color:#fff}.note{border-left:3px solid var(--gold);padding:5px 0 5px 14px;color:#c8c3d0}
 footer{margin-top:40px;color:#858091;font-size:11px}code{color:#e6d3a9}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* Expanded observatory experience */
+.experience-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.experience-nav a{display:inline-block;padding:9px 12px;border:1px solid #51495f;border-radius:999px;text-decoration:none;font-size:12px;background:#151522}
+.lab-canvas{display:block;width:100%;height:auto;max-width:100%;background:radial-gradient(ellipse at center,#1d1a2b,#090b13);border:1px solid #393548;border-radius:12px;touch-action:pan-y}
+.control-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0}
+.control-grid label{display:grid;gap:7px;color:#c5c1ce;font-size:13px}
+input[type=range],select,textarea{width:100%;accent-color:var(--gold)}
+select,textarea{background:#0c0d16;color:#eee9dc;border:1px solid #625873;border-radius:8px;padding:10px}
+textarea{min-height:84px;resize:vertical}
+.experiment-card{border:1px solid var(--line);background:#11111d;border-radius:14px;padding:16px;margin:14px 0}
+.statline{font:12px ui-monospace,monospace;color:var(--gold);min-height:1.5em}
+.path-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.path-list a{display:block;padding:14px;border:1px solid var(--line);border-radius:12px;background:#11111d;text-decoration:none}
+.path-list strong{display:block;color:#eee9dc;margin-bottom:5px}
+.path-list span{font-size:12px;color:var(--muted);line-height:1.5}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:520px){.panel{padding:15px}.experience-nav a{font-size:11px}.lab-canvas{min-height:180px}}
 </style>
 </head>
 <body><main>
@@ -79,6 +98,102 @@ footer{margin-top:40px;color:#858091;font-size:11px}code{color:#e6d3a9}
 <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font:12px ui-monospace,monospace"><thead><tr><th style="text-align:left;padding:8px">Time</th><th style="text-align:left;padding:8px">Shape</th><th style="text-align:right;padding:8px">Peak Hz</th><th style="text-align:right;padding:8px">Level dBFS</th></tr></thead><tbody id="measurement-rows"><tr><td colspan="4" style="padding:8px;color:#aaa7b5">No measurements yet.</td></tr></tbody></table></div>
 <div class="note">For a fair comparison: keep microphone and speaker positions fixed, use the same playback level and frequency sweep, measure each geometry several times, and record background noise. Change only one variable at a time. Do not put a phone inside a vibrating or pressurized object.</div>
 <p class="small">Privacy: audio is analysed live in this page and is not recorded or uploaded. CSV export contains only measurement values and notes. Measurements disappear when the page is closed unless exported.</p>
+</section>
+
+
+<section class="panel" id="observatory" aria-labelledby="observatory-title">
+<p class="eyebrow">THE PORTAL OBSERVATORY · NEW EXPERIENCE</p>
+<h2 id="observatory-title">Enter the exploration rooms</h2>
+<p>Move between interactive models, sound experiments, natural mathematics and field visualizations. Everything in this observatory runs in your browser; simulations are illustrations of mathematical models, not physical measurements.</p>
+<nav class="experience-nav" aria-label="Exploration rooms">
+<a href="#geometry-room">01 · Geometry</a><a href="#wave-room">02 · Waves</a><a href="#nature-room">03 · Nature</a><a href="#field-room">04 · Fields</a><a href="#discovery-room">05 · Discoveries</a>
+</nav>
+<div class="path-list">
+<a href="#geometry-room"><strong>Living Geometry</strong><span>Rotate forms, inspect proportions and explore symmetry.</span></a>
+<a href="#wave-room"><strong>Sound & Wave Room</strong><span>Watch interference and standing-wave patterns respond to controls.</span></a>
+<a href="#nature-room"><strong>Nature's Mathematics</strong><span>Explore phyllotaxis, branching and fractal growth.</span></a>
+<a href="#field-room"><strong>Fields & Waves</strong><span>Explore a mathematical dipole-field visualization.</span></a>
+<a href="#discovery-room"><strong>Discovery Journal</strong><span>Record questions, methods, observations and interpretations.</span></a>
+</div>
+</section>
+
+<section class="panel" id="geometry-room" aria-labelledby="geometry-room-title">
+<p class="eyebrow">ROOM 01 · INTERACTIVE FORM STUDY</p><h2 id="geometry-room-title">The Living Geometry Room</h2>
+<p>Choose a form and rotate the wireframe. The display is a perspective projection of mathematical geometry; it does not imply that the form has a unique resonant frequency.</p>
+<div class="control-grid">
+<label>Form<select id="form-choice"><option value="sphere">Sphere</option><option value="cube">Cube</option><option value="pyramid">Square pyramid</option><option value="torus">Torus</option><option value="dodeca">Dodecahedron (wireframe approximation)</option><option value="spiral">Golden logarithmic spiral</option></select></label>
+<label>Rotation <span id="rotation-label" class="statline">35°</span><input id="form-rotation" type="range" min="0" max="360" value="35"></label>
+<label>Scale <span id="scale-label" class="statline">1.0×</span><input id="form-scale" type="range" min="50" max="150" value="100"></label>
+</div>
+<canvas id="geometry-canvas" class="lab-canvas" width="720" height="400" role="img" aria-label="Rotatable wireframe geometry visualization"></canvas>
+<p class="statline" id="geometry-caption" aria-live="polite">Sphere · continuous rotational symmetry</p>
+<p class="small">The dodecahedron display uses a symmetric wireframe approximation for visual exploration. Use a geometry library or exact vertices before treating it as a precision model.</p>
+</section>
+
+<section class="panel" id="wave-room" aria-labelledby="wave-room-title">
+<p class="eyebrow">ROOM 02 · WAVE INTERFERENCE SIMULATOR</p><h2 id="wave-room-title">Sound & Wave Room</h2>
+<p>Two point sources create an interference pattern. Change their separation and wavelength to see constructive and destructive regions move. This is a 2D scalar-wave model, not a recording of a real room.</p>
+<div class="control-grid">
+<label>Source separation <span class="statline" id="separation-label">120 px</span><input id="wave-separation" type="range" min="30" max="260" value="120"></label>
+<label>Wavelength <span class="statline" id="wavelength-label">48 px</span><input id="wave-wavelength" type="range" min="18" max="100" value="48"></label>
+<label>Phase offset <span class="statline" id="phase-label">0°</span><input id="wave-phase" type="range" min="0" max="360" value="0"></label>
+</div>
+<canvas id="wave-canvas" class="lab-canvas" width="720" height="360" role="img" aria-label="Simulated two-source wave interference pattern"></canvas>
+<p class="statline" id="wave-caption" aria-live="polite">Equal-phase sources · bright and dark bands show relative amplitude.</p>
+<div class="action-row"><button id="wave-animate" type="button" class="primary">Animate pattern</button><button id="wave-pause" type="button">Pause</button></div>
+<p class="small">The colors encode the calculated instantaneous scalar amplitude. Real acoustic pressure fields are three-dimensional and depend on boundaries, frequency, source directivity and medium properties.</p>
+</section>
+
+<section class="panel" id="nature-room" aria-labelledby="nature-room-title">
+<p class="eyebrow">ROOM 03 · NATURAL MATHEMATICS</p><h2 id="nature-room-title">Patterns in Nature</h2>
+<p>Explore simple mathematical constructions that help describe patterns found in plants and branching structures. Natural specimens vary; these are models, not templates every organism follows.</p>
+<div class="control-grid">
+<label>Pattern<select id="nature-choice"><option value="phyllotaxis">Sunflower-style phyllotaxis</option><option value="fern">Fern-like branching</option><option value="tree">Branching tree</option></select></label>
+<label>Growth amount <span id="growth-label" class="statline">220</span><input id="growth-amount" type="range" min="40" max="600" value="220" step="10"></label>
+<label>Spiral angle <span id="angle-label" class="statline">137.5°</span><input id="spiral-angle" type="range" min="90" max="180" value="137.5" step="0.1"></label>
+</div>
+<canvas id="nature-canvas" class="lab-canvas" width="720" height="400" role="img" aria-label="Generated natural mathematical pattern"></canvas>
+<p class="statline" id="nature-caption" aria-live="polite">Phyllotaxis model · golden angle ≈ 137.5°</p>
+<p class="small">The golden angle is approximately 137.50776°. Phyllotaxis models can illustrate efficient packing and spiral families, but plant growth is influenced by genetics, development and environment.</p>
+</section>
+
+<section class="panel" id="field-room" aria-labelledby="field-room-title">
+<p class="eyebrow">ROOM 04 · VECTOR FIELD VISUALIZATION</p><h2 id="field-room-title">Fields & Waves</h2>
+<p>Explore the field-line structure around a simple idealized magnetic dipole. Move the dipole orientation and strength. This is a mathematical visualization of a dipole field—not a live measurement or a complete model of Earth's magnetosphere.</p>
+<div class="control-grid">
+<label>Dipole angle <span id="dipole-angle-label" class="statline">0°</span><input id="dipole-angle" type="range" min="0" max="180" value="0"></label>
+<label>Field strength <span id="dipole-strength-label" class="statline">1.0×</span><input id="dipole-strength" type="range" min="2" max="20" value="10"></label>
+</div>
+<canvas id="field-canvas" class="lab-canvas" width="720" height="400" role="img" aria-label="Magnetic dipole vector field visualization"></canvas>
+<p class="statline" id="field-caption" aria-live="polite">Ideal dipole · field-line density is illustrative, not calibrated.</p>
+<p class="small">The model uses the standard dipole field expression away from the source. It omits material response, external currents, time variation and boundary effects.</p>
+</section>
+
+<section class="panel" id="discovery-room" aria-labelledby="discovery-title">
+<p class="eyebrow">ROOM 05 · RESEARCH & REFLECTION</p><h2 id="discovery-title">The Discovery Journal</h2>
+<p>Write down what you want to test, how you tested it, what you observed, and what you think it means. Keep observation separate from interpretation. Entries are stored only in this browser until exported.</p>
+<div class="control-grid">
+<label>Experiment / question<input id="journal-title" type="text" maxlength="120" placeholder="e.g. Does cavity shape change the measured peaks?"></label>
+<label>Category<select id="journal-category"><option>Geometry</option><option>Sound & vibration</option><option>Natural patterns</option><option>Fields & waves</option><option>Open question</option></select></label>
+</div>
+<label for="journal-method">Method / setup</label><textarea id="journal-method" maxlength="2000" placeholder="What did you change? What did you keep constant?"></textarea>
+<label for="journal-observation">Observation / data</label><textarea id="journal-observation" maxlength="3000" placeholder="What did you actually observe or measure?"></textarea>
+<label for="journal-interpretation">Interpretation / next question</label><textarea id="journal-interpretation" maxlength="2000" placeholder="What might explain it? What would distinguish competing explanations?"></textarea>
+<div class="action-row"><button class="primary" id="journal-save" type="button">Save journal entry</button><button id="journal-export" type="button">Export journal JSON</button><button id="journal-clear" type="button">Clear journal</button></div>
+<p class="statline" id="journal-status" role="status" aria-live="polite">No entries loaded.</p>
+<div id="journal-entries" class="experiment-card" aria-live="polite">Your saved entries will appear here.</div>
+<div class="note">Research discipline: label simulated outputs as simulated; record units and instrument limitations; repeat trials; preserve raw data; and do not turn a correlation into a causal claim without a suitable test.</div>
+</section>
+
+<section class="panel" id="guided-journeys" aria-labelledby="journey-title">
+<p class="eyebrow">SELF-GUIDED EXPLORATIONS</p><h2 id="journey-title">Choose a journey</h2>
+<div class="path-list">
+<a href="#geometry-room"><strong>Journey A · Form & proportion</strong><span>Compare a cube, sphere and torus. Ask which symmetries each has and what changes when dimensions change.</span></a>
+<a href="#wave-room"><strong>Journey B · How waves combine</strong><span>Set two sources in phase, then shift one by 180°. Notice where constructive and destructive interference occur.</span></a>
+<a href="#nature-room"><strong>Journey C · The golden angle</strong><span>Change the phyllotaxis angle and compare the resulting packing. Treat the model as a hypothesis about pattern formation.</span></a>
+<a href="#field-room"><strong>Journey D · Invisible fields</strong><span>Rotate an ideal dipole and inspect how the field direction changes through space.</span></a>
+<a href="#discovery-room"><strong>Journey E · Think like an experimentalist</strong><span>Write a testable question, define controlled variables, record results and identify uncertainty.</span></a>
+</div>
 </section>
 
 <section aria-labelledby="shapes-title"><p class="eyebrow">SHAPE STUDIES</p><h2 id="shapes-title">Six geometries to investigate</h2>
@@ -149,6 +264,46 @@ function renderSamples(){document.querySelector("#sample-count").textContent=sam
 recordButton.addEventListener("click",()=>{if(!micAnalyser)return;const distance=Number(document.querySelector("#trial-distance").value);if(!Number.isFinite(distance)||distance<0||distance>100){document.querySelector("#mic-status").textContent="Enter a valid microphone distance from 0 to 100 metres.";return}samples.push({time:new Date().toISOString(),shape:document.querySelector("#trial-shape").value,material:document.querySelector("#trial-material").value,distanceM:distance,peakHz:lastPeak,levelDbfs:lastLevel,note:document.querySelector("#trial-note").value});renderSamples()});
 document.querySelector("#clear-samples").addEventListener("click",()=>{samples.length=0;renderSamples()});
 document.querySelector("#export-samples").addEventListener("click",()=>{const cols=["record_type","time","shape","material","distance_m","peak_hz","relative_level_dbfs","sweep_frequency_hz","sweep_level_dbfs","notes"],esc=v=>'"'+String(v??"").replace(/"/g,'""')+'"';const lines=[cols.join(","),...samples.map(s=>["spot",s.time,s.shape,s.material,s.distanceM,s.peakHz.toFixed(2),s.levelDbfs.toFixed(2),"","",s.note].map(esc).join(",")),...sweepSamples.map(s=>["sweep",s.time,document.querySelector("#trial-shape").value,document.querySelector("#trial-material").value,document.querySelector("#trial-distance").value,"","",s.freq.toFixed(2),s.level.toFixed(2),"log sweep 80-2000 Hz"].map(esc).join(","))];const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="portal-resonance-measurements.csv";a.click();URL.revokeObjectURL(url)});
+
+
+/* Observatory room engines: dependency-free, local-first visual models. */
+(()=>{
+ const $=s=>document.querySelector(s), gold="#dfc28a", pale="#eee9dc";
+ const project=(p,rot,scale)=>{const [x,y,z]=p, c=Math.cos(rot),s=Math.sin(rot),u=x*c-z*s,v=x*s+z*c, tilt=-.28,ct=Math.cos(tilt),st=Math.sin(tilt),yy=y*ct-v*st,zz=y*st+v*ct,k=270/(zz+4.5);return [360+u*k*scale,200-yy*k*scale]};
+ const gc=$("#geometry-canvas"),gx=gc.getContext("2d"),choice=$("#form-choice"),rot=$("#form-rotation"),scale=$("#form-scale");
+ function geometry(){const name=choice.value,r=Number(rot.value)*Math.PI/180,z=Number(scale.value)/100;gx.clearRect(0,0,720,400);gx.strokeStyle=gold;gx.lineWidth=1.5;gx.fillStyle="#bba77b";
+ let points=[],edges=[];
+ const edge=(a,b)=>edges.push([a,b]);
+ if(name==="cube"){points=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(e=>edge(...e))}
+ else if(name==="pyramid"){points=[[-1,-.9,-1],[1,-.9,-1],[1,-.9,1],[-1,-.9,1],[0,1.25,0]];[[0,1],[1,2],[2,3],[3,0],[0,4],[1,4],[2,4],[3,4]].forEach(e=>edge(...e))}
+ else if(name==="torus"){for(let i=0;i<32;i++)for(let j=0;j<12;j++){const a=i*Math.PI*2/32,b=j*Math.PI*2/12,idx=i*12+j;points[idx]=[(1+.36*Math.cos(b))*Math.cos(a),.36*Math.sin(b),(1+.36*Math.cos(b))*Math.sin(a)];edge(idx,((i+1)%32)*12+j);edge(idx,i*12+(j+1)%12)}}
+ else if(name==="spiral"){gx.strokeStyle=gold;gx.lineWidth=2;gx.beginPath();for(let i=0;i<=900;i++){const t=i/900*Math.PI*6,rr=.035*Math.exp(.19*t),p=project([rr*Math.cos(t),rr*Math.sin(t),0],r,z);if(i===0)gx.moveTo(...p);else gx.lineTo(...p)}gx.stroke();$("#geometry-caption").textContent="Golden logarithmic spiral · radius increases exponentially with angle";$("#rotation-label").textContent=rot.value+"°";$("#scale-label").textContent=z.toFixed(1)+"×";return}
+ else if(name==="sphere"||name==="dodeca"){const n=name==="sphere"?18:10,m=12;for(let i=0;i<=n;i++){const lat=-Math.PI/2+i*Math.PI/n;for(let j=0;j<m;j++){const lon=j*Math.PI*2/m;points.push([Math.cos(lat)*Math.cos(lon),Math.sin(lat),Math.cos(lat)*Math.sin(lon)])}}for(let i=0;i<=n;i++)for(let j=0;j<m;j++){const q=i*m+j;if(i<n)edge(q,q+m);edge(q,i*m+(j+1)%m)}}
+ const pts=points.map(p=>project(p,r,z));for(const [a,b] of edges){gx.beginPath();gx.moveTo(...pts[a]);gx.lineTo(...pts[b]);gx.stroke()}pts.forEach(p=>{gx.beginPath();gx.arc(p[0],p[1],2,0,Math.PI*2);gx.fill()});
+ const caps={sphere:"Sphere · continuous rotational symmetry",cube:"Cube · six square faces and high symmetry",pyramid:"Square pyramid · one apex and a square base",torus:"Torus · ring surface with two circular directions",dodeca:"Dodecahedron-inspired spherical wireframe · visual approximation"};$("#geometry-caption").textContent=caps[name];$("#rotation-label").textContent=rot.value+"°";$("#scale-label").textContent=z.toFixed(1)+"×";
+ }
+ [choice,rot,scale].forEach(e=>e.addEventListener("input",geometry));geometry();
+ const wc=$("#wave-canvas"),wx=wc.getContext("2d"),sep=$("#wave-separation"),wl=$("#wave-wavelength"),phase=$("#wave-phase");let waveT=0,waveRAF=0;
+ function wave(){const im=wx.createImageData(wc.width,wc.height),d=im.data,s=Number(sep.value),lam=Number(wl.value),ph=Number(phase.value)*Math.PI/180,k=2*Math.PI/lam;for(let y=0;y<wc.height;y++)for(let x=0;x<wc.width;x++){const a=Math.hypot(x-(360-s/2),y-180),b=Math.hypot(x-(360+s/2),y-180),v=(Math.sin(k*a-waveT)+Math.sin(k*b-waveT+ph))/2,idx=(y*wc.width+x)*4,t=(v+1)/2;d[idx]=Math.round(18+35*t);d[idx+1]=Math.round(14+105*t);d[idx+2]=Math.round(28+185*t);d[idx+3]=255}wx.putImageData(im,0,0);wx.fillStyle="#fff";wx.beginPath();wx.arc(360-s/2,180,5,0,Math.PI*2);wx.arc(360+s/2,180,5,0,Math.PI*2);wx.fill();$("#separation-label").textContent=s+" px";$("#wavelength-label").textContent=lam+" px";$("#phase-label").textContent=phase.value+"°";$("#wave-caption").textContent="Two coherent point-source model · separation "+s+" px · wavelength "+lam+" px · phase "+phase.value+"°"}
+ [sep,wl,phase].forEach(e=>e.addEventListener("input",wave));wave();
+ $("#wave-animate").addEventListener("click",()=>{if(waveRAF)return;const tick=()=>{waveT+=.18;wave();waveRAF=requestAnimationFrame(tick)};waveRAF=requestAnimationFrame(tick)});
+ $("#wave-pause").addEventListener("click",()=>{if(waveRAF)cancelAnimationFrame(waveRAF);waveRAF=0});
+ const nc=$("#nature-canvas"),nx=nc.getContext("2d"),nchoice=$("#nature-choice"),growth=$("#growth-amount"),angle=$("#spiral-angle");
+ function nature(){nx.clearRect(0,0,720,400);nx.strokeStyle=gold;nx.fillStyle=gold;const n=Number(growth.value);if(nchoice.value==="phyllotaxis"){const a=Number(angle.value)*Math.PI/180;for(let i=0;i<n;i++){const rr=5.5*Math.sqrt(i),t=i*a-Math.PI/2,x=360+rr*Math.cos(t),y=200+rr*Math.sin(t),rad=Math.max(1.4,4.2-i/n*2);nx.globalAlpha=.45+.5*(i/n);nx.beginPath();nx.ellipse(x,y,rad,rad*1.35,t,0,Math.PI*2);nx.fill()}nx.globalAlpha=1;$("#nature-caption").textContent="Phyllotaxis model · "+n+" points · angle "+Number(angle.value).toFixed(1)+"°"}
+ else{const branch=(x,y,len,a,depth)=>{if(depth<=0||len<2)return;const ex=x+Math.cos(a)*len,ey=y+Math.sin(a)*len;nx.globalAlpha=.25+depth/12;nx.lineWidth=Math.max(.7,depth*.65);nx.beginPath();nx.moveTo(x,y);nx.lineTo(ex,ey);nx.stroke();const factor=nchoice.value==="fern"?.72:.74;branch(ex,ey,len*factor,a-.48,depth-1);branch(ex,ey,len*factor,a+.48,depth-1);if(nchoice.value==="fern"&&depth>3){branch(ex,ey,len*.45,a-.95,depth-2);branch(ex,ey,len*.45,a+.95,depth-2)}};branch(360,370,Math.min(125,n/3),-Math.PI/2,Math.min(11,Math.max(4,Math.round(n/45))));nx.globalAlpha=1;$("#nature-caption").textContent=(nchoice.value==="fern"?"Fern-like branching":"Binary tree branching")+" · recursive geometric model"}$("#growth-label").textContent=n;$("#angle-label").textContent=Number(angle.value).toFixed(1)+"°"}
+ [nchoice,growth,angle].forEach(e=>e.addEventListener("input",nature));nature();
+ const fc=$("#field-canvas"),fx=fc.getContext("2d"),da=$("#dipole-angle"),ds=$("#dipole-strength");
+ function field(){fx.clearRect(0,0,720,400);const a=Number(da.value)*Math.PI/180,mx=Math.cos(a),my=Math.sin(a),strength=Number(ds.value)/10;fx.strokeStyle="#dfc28a";fx.fillStyle="#eee9dc";fx.lineWidth=1.1;
+ const bx=(x,y)=>{const rr=x*x+y*y+20, dot=mx*x+my*y;return [strength*(3*x*dot/Math.pow(rr,2.5)-mx/Math.pow(rr,1.5)),strength*(3*y*dot/Math.pow(rr,2.5)-my/Math.pow(rr,1.5))]};
+ for(let y=25;y<400;y+=27)for(let x=25;x<720;x+=27){const xx=(x-360)/85,yy=(200-y)/85,[u,v]=bx(xx,yy),mag=Math.hypot(u,v);if(mag<.0001)continue;const dx=u/mag*9,dy=-v/mag*9;fx.globalAlpha=.35;fx.beginPath();fx.moveTo(x-dx*.5,y-dy*.5);fx.lineTo(x+dx,y+dy);fx.stroke();const ang=Math.atan2(-v,u),hx=x+dx,hy=y+dy;fx.beginPath();fx.moveTo(hx,hy);fx.lineTo(hx-4*Math.cos(ang-.5),hy-4*Math.sin(ang-.5));fx.moveTo(hx,hy);fx.lineTo(hx-4*Math.cos(ang+.5),hy-4*Math.sin(ang+.5));fx.stroke()}
+ fx.globalAlpha=1;fx.fillStyle="#b99b65";fx.beginPath();fx.arc(360,200,9,0,Math.PI*2);fx.fill();fx.strokeStyle="#fff";fx.beginPath();fx.moveTo(360-22*mx,200+22*my);fx.lineTo(360+22*mx,200-22*my);fx.stroke();$("#dipole-angle-label").textContent=da.value+"°";$("#dipole-strength-label").textContent=strength.toFixed(1)+"×";$("#field-caption").textContent="Ideal point dipole · orientation "+da.value+"° · relative strength "+strength.toFixed(1)+"×"}
+ [da,ds].forEach(e=>e.addEventListener("input",field));field();
+ const key="portal.geometryResonance.journal.v1";let entries=[];try{entries=JSON.parse(localStorage.getItem(key)||"[]");if(!Array.isArray(entries))entries=[]}catch{entries=[]}
+ function renderJournal(){const box=$("#journal-entries");box.replaceChildren();if(!entries.length){box.textContent="Your saved entries will appear here.";$("#journal-status").textContent="0 saved entries.";return}entries.slice().reverse().forEach(e=>{const article=document.createElement("article");article.style.borderBottom="1px solid #393548";article.style.padding="10px 0";const title=document.createElement("strong");title.textContent=e.title+" · "+e.category;const time=document.createElement("p");time.className="small";time.textContent=new Date(e.date).toLocaleString();const body=document.createElement("p");body.style.whiteSpace="pre-wrap";body.textContent="METHOD: "+e.method+"\nOBSERVATION: "+e.observation+"\nINTERPRETATION: "+e.interpretation;article.append(title,time,body);box.append(article)});$("#journal-status").textContent=entries.length+" saved entr"+(entries.length===1?"y":"ies")+" in this browser."}
+ $("#journal-save").addEventListener("click",()=>{const title=$("#journal-title").value.trim();if(!title){$("#journal-status").textContent="Give this entry a question or experiment title first.";return}const e={id:Date.now(),date:new Date().toISOString(),title,category:$("#journal-category").value,method:$("#journal-method").value,observation:$("#journal-observation").value,interpretation:$("#journal-interpretation").value};entries.push(e);try{localStorage.setItem(key,JSON.stringify(entries));$("#journal-title").value="";$("#journal-method").value="";$("#journal-observation").value="";$("#journal-interpretation").value="";renderJournal()}catch(err){entries.pop();$("#journal-status").textContent="Could not save in this browser. Export or reduce the entry size."}});
+ $("#journal-export").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({format:"portal-observatory-journal-v1",exported_at:new Date().toISOString(),entries},null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="portal-observatory-journal.json";a.click();URL.revokeObjectURL(url)});
+ $("#journal-clear").addEventListener("click",()=>{if(!confirm("Delete all Discovery Journal entries stored in this browser? Export first if you want to keep them."))return;entries=[];try{localStorage.removeItem(key)}catch{}renderJournal()});renderJournal();
+})();
 
 </script>
 <script type="module">import{installTravelerHUD}from"../traveler-hud.js";import{installTransitions}from"../transitions.js";installTravelerHUD();installTransitions("geometry-resonance");</script>
