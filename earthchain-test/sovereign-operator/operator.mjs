@@ -1,6 +1,6 @@
 import {createLocalBridge,parseSignal,sdpFingerprint} from "./local-bridge.mjs";
 import {createPeerApproval} from "./peer-approval.mjs";
-import {createExecutionClient} from "./sovereign-execution-bridge.mjs";
+import {createExecutionClient} from "./sovereign-execution-bridge.mjs";\n\nif("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});
 
 const $=id=>document.getElementById(id);
 const peerApproval=createPeerApproval();
