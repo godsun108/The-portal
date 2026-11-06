@@ -63,5 +63,6 @@
       "campfire/",
       "stations/"
     ]
-  }
+  },
+  "research_endpoint": null
 }
