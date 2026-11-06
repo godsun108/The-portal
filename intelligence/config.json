@@ -1,7 +1,7 @@
 {
   "schema": "portal.intelligence.v1",
-  "endpoint": null,
-  "mode": "dormant",
+  "endpoint": "https://portal-intelligence-production.up.railway.app/chat",
+  "mode": "live",
   "transport": "portal.chat.v1",
   "memory": "browser-local",
   "minds": [
@@ -64,5 +64,5 @@
       "stations/"
     ]
   },
-  "research_endpoint": null
+  "research_endpoint": "https://portal-intelligence-production.up.railway.app/research"
 }
