@@ -84,6 +84,31 @@ function calculate(){const n=Number(base.value);if(!Number.isFinite(n)||n<1||n>2
 document.querySelector("#calculate").addEventListener("click",calculate);base.addEventListener("change",calculate);calculate();
 async function tone(which){if(!calculate())return;const n=Number(base.value)*(which==="gold"?phi:1);try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){status.textContent="Audio is not supported in this browser.";return}if(!audio)audio=new AC();await audio.resume();if(osc){try{osc.stop()}catch{}osc.disconnect()}osc=audio.createOscillator();gain=audio.createGain();osc.type="sine";osc.frequency.value=n;gain.gain.setValueAtTime(0,audio.currentTime);gain.gain.linearRampToValueAtTime(.07,audio.currentTime+.04);osc.connect(gain);gain.connect(audio.destination);osc.start();status.textContent="Playing "+n.toFixed(2)+" Hz locally. Press Stop sound to end."; }catch(e){status.textContent="Audio could not start. Check browser sound permissions."}}
 document.querySelector("#play-base").addEventListener("click",()=>tone("base"));document.querySelector("#play-gold").addEventListener("click",()=>tone("gold"));document.querySelector("#stop").addEventListener("click",()=>{if(osc){try{osc.stop()}catch{}osc.disconnect();osc=null}status.textContent="Sound stopped."});
+
+const dimensions={x:document.querySelector("#length-x"),y:document.querySelector("#length-y"),z:document.querySelector("#length-z")};
+const modeList=document.querySelector("#mode-list"),volumeOut=document.querySelector("#cavity-volume"),firstOut=document.querySelector("#first-mode"),modeStatus=document.querySelector("#mode-status");
+function calculateModes(){
+ const L=[Number(dimensions.x.value),Number(dimensions.y.value),Number(dimensions.z.value)];
+ if(L.some(v=>!Number.isFinite(v)||v<0.1||v>20)){modeStatus.textContent="Each internal dimension must be between 0.1 and 20 metres.";return}
+ const speed=343,modes=[];
+ for(let a=0;a<=6;a++)for(let b=0;b<=6;b++)for(let d=0;d<=6;d++){
+  if(a===0&&b===0&&d===0)continue;
+  const frequency=speed/2*Math.sqrt((a/L[0])**2+(b/L[1])**2+(d/L[2])**2);
+  modes.push({frequency,a,b,d});
+ }
+ modes.sort((u,v)=>u.frequency-v.frequency);
+ const unique=[];
+ for(const m of modes){if(!unique.some(u=>Math.abs(u.frequency-m.frequency)<0.01))unique.push(m);if(unique.length===12)break}
+ volumeOut.textContent=(L[0]*L[1]*L[2]).toFixed(3)+" m³";
+ firstOut.textContent=unique[0].frequency.toFixed(2)+" Hz";
+ modeList.replaceChildren(...unique.map(m=>{const li=document.createElement("li");li.textContent=m.frequency.toFixed(2)+" Hz · ("+m.a+","+m.b+","+m.d+")";return li}));
+ modeStatus.textContent="Calculated with sound speed 343 m/s. Mode indices (m,n,p) identify the standing-wave pattern along X, Y and Z.";
+}
+document.querySelector("#mode-calculate").addEventListener("click",calculateModes);
+document.querySelector("#cube-dimensions").addEventListener("click",()=>{dimensions.x.value="1.00";dimensions.y.value="1.00";dimensions.z.value="1.00";calculateModes()});
+document.querySelector("#gold-dimensions").addEventListener("click",()=>{const phi=(1+Math.sqrt(5))/2;dimensions.x.value=Math.sqrt(phi).toFixed(4);dimensions.y.value=(1/Math.sqrt(phi)).toFixed(4);dimensions.z.value="1.00";calculateModes()});
+calculateModes();
+
 </script>
 <script type="module">import{installTravelerHUD}from"../traveler-hud.js";import{installTransitions}from"../transitions.js";installTravelerHUD();installTransitions("geometry-resonance");</script>
 </body></html>
