@@ -103,7 +103,7 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
         research: Boolean(env.MODEL_URL)
       }, corsHeaders);
     }
-    if (req.method !== "POST" || !["/chat","/research"].includes(req.url)) {
+    if (req.method !== "POST" || !["/chat","/research","/self-test"].includes(req.url)) {
       return json(res, 404, { error: "not_found" }, corsHeaders);
     }
 
@@ -118,7 +118,7 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
       return json(res, 415, { error: "content_type_required" }, corsHeaders);
     }
     if (!env.MODEL_URL) {
-      const schema = req.url === "/chat" ? "portal.chat.v1" : "portal.research.analysis.v1";
+      const schema = req.url === "/chat" ? "portal.chat.v1" : req.url === "/self-test" ? "portal.self-test.result.v1" : "portal.research.analysis.v1";
       return json(res, 503, { schema, verified: false, error: "engine_dormant" }, corsHeaders);
     }
     const body = await readBody(req);
@@ -126,6 +126,27 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
     if (!body || typeof body !== "object" || Array.isArray(body)) return json(res, 400, { error: "invalid_json" }, corsHeaders);
 
     try {
+      if (req.url === "/chat") {
+        if (req.url === "/self-test") {
+        if (body.schema !== "portal.self-test.v1") return json(res, 400, { schema: "portal.self-test.result.v1", verified: false, passed: false, error: "invalid_request" }, corsHeaders);
+        const marker = "PORTAL_GENESIS_LINK_OK";
+        const content = await callModel({
+          env, fetchImpl,
+          messages: [
+            { role: "system", content: "This is a connectivity diagnostic. Reply with exactly this token and nothing else: " + marker },
+            { role: "user", content: "Return the exact diagnostic token." }
+          ],
+          temperature: 0
+        });
+        const passed = content.trim() === marker;
+        return json(res, 200, {
+          schema: "portal.self-test.result.v1",
+          verified: passed,
+          passed,
+          message: passed ? "Exact diagnostic response received." : "Model responded, but did not return the exact diagnostic token."
+        }, corsHeaders);
+      }
+
       if (req.url === "/chat") {
         if (body.schema !== "portal.chat.v1" || !validMessages(body.messages)) {
           return json(res, 400, { schema: "portal.chat.v1", verified: false, error: "invalid_request" }, corsHeaders);
