@@ -85,3 +85,35 @@ test("research route rejects empty or oversized row sets", async () => {
     assert.equal(calls, 0);
   });
 });
+
+
+test("self-test proves the upstream returns the exact diagnostic token", async () => {
+  let seen = false;
+  const fetchImpl = async (_url, options) => {
+    const body = JSON.parse(options.body);
+    seen = body.messages[1].content === "Return the exact diagnostic token.";
+    return new Response(JSON.stringify({ choices: [{ message: { content: "PORTAL_GENESIS_LINK_OK" } }] }), { status: 200 });
+  };
+  await withServer({ env: { MODEL_URL: "https://model.example/v1/chat/completions" }, fetchImpl }, async base => {
+    const r = await fetch(base + "/self-test", { method: "POST", headers, body: JSON.stringify({ schema: "portal.self-test.v1" }) });
+    const d = await r.json();
+    assert.equal(r.status, 200);
+    assert.equal(d.schema, "portal.self-test.result.v1");
+    assert.equal(d.verified, true);
+    assert.equal(d.passed, true);
+    assert.equal(seen, true);
+  });
+});
+
+test("self-test does not claim success for a non-matching model response", async () => {
+  await withServer({
+    env: { MODEL_URL: "https://model.example/v1/chat/completions" },
+    fetchImpl: async () => new Response(JSON.stringify({ choices: [{ message: { content: "I am connected." } }] }), { status: 200 })
+  }, async base => {
+    const r = await fetch(base + "/self-test", { method: "POST", headers, body: JSON.stringify({ schema: "portal.self-test.v1" }) });
+    const d = await r.json();
+    assert.equal(r.status, 200);
+    assert.equal(d.verified, false);
+    assert.equal(d.passed, false);
+  });
+});
