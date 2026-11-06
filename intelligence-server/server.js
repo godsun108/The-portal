@@ -126,8 +126,7 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
     if (!body || typeof body !== "object" || Array.isArray(body)) return json(res, 400, { error: "invalid_json" }, corsHeaders);
 
     try {
-      if (req.url === "/chat") {
-        if (req.url === "/self-test") {
+      if (req.url === "/self-test") {
         if (body.schema !== "portal.self-test.v1") return json(res, 400, { schema: "portal.self-test.result.v1", verified: false, passed: false, error: "invalid_request" }, corsHeaders);
         const marker = "PORTAL_GENESIS_LINK_OK";
         const content = await callModel({
@@ -193,7 +192,7 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
         records_analyzed: body.records.length
       }, corsHeaders);
     } catch {
-      const schema = req.url === "/chat" ? "portal.chat.v1" : "portal.research.analysis.v1";
+      const schema = req.url === "/chat" ? "portal.chat.v1" : req.url === "/self-test" ? "portal.self-test.result.v1" : "portal.research.analysis.v1";
       return json(res, 502, { schema, verified: false, error: "engine_error" }, corsHeaders);
     }
   });
