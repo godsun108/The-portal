@@ -110,7 +110,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </nav>
 <div class="path-list">
 <a href="#geometry-room"><strong>Living Geometry</strong><span>Rotate forms, inspect proportions and explore symmetry.</span></a>
-<a href="#wave-room"><strong>Sound & Wave Room</strong><span>Watch interference and standing-wave patterns respond to controls.</span></a>
+<a href="#wave-room"><strong>Sound & Wave Room</strong><span>Watch interference patterns respond to controls.</span></a>
 <a href="#nature-room"><strong>Nature's Mathematics</strong><span>Explore phyllotaxis, branching and fractal growth.</span></a>
 <a href="#field-room"><strong>Fields & Waves</strong><span>Explore a mathematical dipole-field visualization.</span></a>
 <a href="#discovery-room"><strong>Discovery Journal</strong><span>Record questions, methods, observations and interpretations.</span></a>
@@ -121,13 +121,13 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <p class="eyebrow">ROOM 01 · INTERACTIVE FORM STUDY</p><h2 id="geometry-room-title">The Living Geometry Room</h2>
 <p>Choose a form and rotate the wireframe. The display is a perspective projection of mathematical geometry; it does not imply that the form has a unique resonant frequency.</p>
 <div class="control-grid">
-<label>Form<select id="form-choice"><option value="sphere">Sphere</option><option value="cube">Cube</option><option value="pyramid">Square pyramid</option><option value="torus">Torus</option><option value="dodeca">Dodecahedron (wireframe approximation)</option><option value="spiral">Golden logarithmic spiral</option></select></label>
+<label>Form<select id="form-choice"><option value="sphere">Sphere</option><option value="cube">Cube</option><option value="pyramid">Square pyramid</option><option value="torus">Torus</option><option value="dodeca">Dodecahedron</option><option value="spiral">Golden logarithmic spiral</option></select></label>
 <label>Rotation <span id="rotation-label" class="statline">35°</span><input id="form-rotation" type="range" min="0" max="360" value="35"></label>
 <label>Scale <span id="scale-label" class="statline">1.0×</span><input id="form-scale" type="range" min="50" max="150" value="100"></label>
 </div>
 <canvas id="geometry-canvas" class="lab-canvas" width="720" height="400" role="img" aria-label="Rotatable wireframe geometry visualization"></canvas>
 <p class="statline" id="geometry-caption" aria-live="polite">Sphere · continuous rotational symmetry</p>
-<p class="small">The dodecahedron display uses a symmetric wireframe approximation for visual exploration. Use a geometry library or exact vertices before treating it as a precision model.</p>
+<p class="small">The dodecahedron uses its standard 20-vertex coordinate construction and equal-edge connections. It is still a perspective illustration, not a CAD export.</p>
 </section>
 
 <section class="panel" id="wave-room" aria-labelledby="wave-room-title">
@@ -278,11 +278,13 @@ document.querySelector("#export-samples").addEventListener("click",()=>{const co
  else if(name==="pyramid"){points=[[-1,-.9,-1],[1,-.9,-1],[1,-.9,1],[-1,-.9,1],[0,1.25,0]];[[0,1],[1,2],[2,3],[3,0],[0,4],[1,4],[2,4],[3,4]].forEach(e=>edge(...e))}
  else if(name==="torus"){for(let i=0;i<32;i++)for(let j=0;j<12;j++){const a=i*Math.PI*2/32,b=j*Math.PI*2/12,idx=i*12+j;points[idx]=[(1+.36*Math.cos(b))*Math.cos(a),.36*Math.sin(b),(1+.36*Math.cos(b))*Math.sin(a)];edge(idx,((i+1)%32)*12+j);edge(idx,i*12+(j+1)%12)}}
  else if(name==="spiral"){gx.strokeStyle=gold;gx.lineWidth=2;gx.beginPath();for(let i=0;i<=900;i++){const t=i/900*Math.PI*6,rr=.035*Math.exp(.19*t),p=project([rr*Math.cos(t),rr*Math.sin(t),0],r,z);if(i===0)gx.moveTo(...p);else gx.lineTo(...p)}gx.stroke();$("#geometry-caption").textContent="Golden logarithmic spiral · radius increases exponentially with angle";$("#rotation-label").textContent=rot.value+"°";$("#scale-label").textContent=z.toFixed(1)+"×";return}
- else if(name==="sphere"||name==="dodeca"){const n=name==="sphere"?18:10,m=12;for(let i=0;i<=n;i++){const lat=-Math.PI/2+i*Math.PI/n;for(let j=0;j<m;j++){const lon=j*Math.PI*2/m;points.push([Math.cos(lat)*Math.cos(lon),Math.sin(lat),Math.cos(lat)*Math.sin(lon)])}}for(let i=0;i<=n;i++)for(let j=0;j<m;j++){const q=i*m+j;if(i<n)edge(q,q+m);edge(q,i*m+(j+1)%m)}}
+ else if(name==="sphere"){const n=18,m=12;for(let i=0;i<=n;i++){const lat=-Math.PI/2+i*Math.PI/n;for(let j=0;j<m;j++){const lon=j*Math.PI*2/m;points.push([Math.cos(lat)*Math.cos(lon),Math.sin(lat),Math.cos(lat)*Math.sin(lon)])}}for(let i=0;i<=n;i++)for(let j=0;j<m;j++){const q=i*m+j;if(i<n)edge(q,q+m);edge(q,i*m+(j+1)%m)}}
+ else if(name==="dodeca"){const p=(1+Math.sqrt(5))/2,ip=1/p;for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])points.push([x,y,z]);for(const y of [-ip,ip])for(const z of [-p,p])points.push([0,y,z]);for(const x of [-ip,ip])for(const y of [-p,p])points.push([x,y,0]);for(const x of [-p,p])for(const z of [-ip,ip])points.push([x,0,z]);for(let i=0;i<points.length;i++)for(let j=i+1;j<points.length;j++){const d=Math.hypot(points[i][0]-points[j][0],points[i][1]-points[j][1],points[i][2]-points[j][2]);if(d<1.24)edge(i,j)}}
  const pts=points.map(p=>project(p,r,z));for(const [a,b] of edges){gx.beginPath();gx.moveTo(...pts[a]);gx.lineTo(...pts[b]);gx.stroke()}pts.forEach(p=>{gx.beginPath();gx.arc(p[0],p[1],2,0,Math.PI*2);gx.fill()});
- const caps={sphere:"Sphere · continuous rotational symmetry",cube:"Cube · six square faces and high symmetry",pyramid:"Square pyramid · one apex and a square base",torus:"Torus · ring surface with two circular directions",dodeca:"Dodecahedron-inspired spherical wireframe · visual approximation"};$("#geometry-caption").textContent=caps[name];$("#rotation-label").textContent=rot.value+"°";$("#scale-label").textContent=z.toFixed(1)+"×";
+ const caps={sphere:"Sphere · continuous rotational symmetry",cube:"Cube · six square faces and high symmetry",pyramid:"Square pyramid · one apex and a square base",torus:"Torus · ring surface with two circular directions",dodeca:"Dodecahedron · 12 pentagonal faces"};$("#geometry-caption").textContent=caps[name];$("#rotation-label").textContent=rot.value+"°";$("#scale-label").textContent=z.toFixed(1)+"×";
  }
- [choice,rot,scale].forEach(e=>e.addEventListener("input",geometry));geometry();
+ [choice,rot,scale].forEach(e=>e.addEventListener("input",geometry));
+let dragX=null;gc.addEventListener("pointerdown",e=>{dragX=e.clientX;gc.setPointerCapture(e.pointerId)});gc.addEventListener("pointermove",e=>{if(dragX===null||e.buttons===0)return;const dx=e.clientX-dragX;dragX=e.clientX;rot.value=String((Number(rot.value)+dx*.7+360)%360);geometry()});gc.addEventListener("pointerup",()=>{dragX=null});gc.addEventListener("pointercancel",()=>{dragX=null});geometry();
  const wc=$("#wave-canvas"),wx=wc.getContext("2d"),sep=$("#wave-separation"),wl=$("#wave-wavelength"),phase=$("#wave-phase");let waveT=0,waveRAF=0;
  function wave(){const im=wx.createImageData(wc.width,wc.height),d=im.data,s=Number(sep.value),lam=Number(wl.value),ph=Number(phase.value)*Math.PI/180,k=2*Math.PI/lam;for(let y=0;y<wc.height;y++)for(let x=0;x<wc.width;x++){const a=Math.hypot(x-(360-s/2),y-180),b=Math.hypot(x-(360+s/2),y-180),v=(Math.sin(k*a-waveT)+Math.sin(k*b-waveT+ph))/2,idx=(y*wc.width+x)*4,t=(v+1)/2;d[idx]=Math.round(18+35*t);d[idx+1]=Math.round(14+105*t);d[idx+2]=Math.round(28+185*t);d[idx+3]=255}wx.putImageData(im,0,0);wx.fillStyle="#fff";wx.beginPath();wx.arc(360-s/2,180,5,0,Math.PI*2);wx.arc(360+s/2,180,5,0,Math.PI*2);wx.fill();$("#separation-label").textContent=s+" px";$("#wavelength-label").textContent=lam+" px";$("#phase-label").textContent=phase.value+"°";$("#wave-caption").textContent="Two coherent point-source model · separation "+s+" px · wavelength "+lam+" px · phase "+phase.value+"°"}
  [sep,wl,phase].forEach(e=>e.addEventListener("input",wave));wave();
