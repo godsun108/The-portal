@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b13">
+<meta name="description" content="Explore golden-ratio mathematics, geometry, sound and resonance through an interactive Portal laboratory.">
+<title>GEOMETRY & RESONANCE // THE PORTAL</title>
+<style>
+:root{color-scheme:dark;background:#090b13;color:#eee9dc;font-family:system-ui,-apple-system,sans-serif;--gold:#dfc28a;--muted:#aaa7b5;--line:#393548;--panel:#151522}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#29223b,#090b13 62%);min-height:100vh}
+main{width:min(980px,100%);margin:auto;padding:24px 18px 80px}a{color:var(--gold)}header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px}
+.eyebrow{font:10px ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(42px,9vw,76px);line-height:.98;margin:34px 0 16px;letter-spacing:-.04em}h2{font-size:27px;margin:0 0 10px}h3{font-size:20px;margin:8px 0}
+p{line-height:1.7;color:#c5c1ce}.lede{font-size:17px;max-width:760px}.panel,.shape{border:1px solid var(--line);background:#151522e8;border-radius:16px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.shape{margin:0;min-height:190px}.shape .symbol{height:74px;display:grid;place-items:center;color:var(--gold);font-size:52px}.shape p{font-size:13px;margin-bottom:0}
+.math{font:clamp(21px,5vw,34px) Georgia,serif;color:var(--gold);overflow-wrap:anywhere}.small{font-size:12px;color:var(--muted)}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0}
+input,button{font:inherit}input[type=number],input[type=range]{accent-color:var(--gold)}input[type=number]{width:120px;background:#0c0d16;color:#fff;border:1px solid #625873;border-radius:8px;padding:10px}
+button{cursor:pointer;background:#292437;color:#fff;border:1px solid #746789;border-radius:9px;padding:11px 15px}button.primary{background:#59472d;border-color:#b99b65}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.readout{font:22px ui-monospace,monospace;color:#fff}.note{border-left:3px solid var(--gold);padding:5px 0 5px 14px;color:#c8c3d0}
+footer{margin-top:40px;color:#858091;font-size:11px}code{color:#e6d3a9}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body><main>
+<header><a href="../">← THE PORTAL</a><span class="eyebrow">FIELD NOTES · MATHEMATICS / PHYSICS</span></header>
+<p class="eyebrow" style="margin-top:54px">AN INTERACTIVE EXPLORATION</p>
+<h1>Geometry<br>& Resonance</h1>
+<p class="lede">Can shape influence vibration? Yes. Can the golden ratio connect mathematical patterns, natural forms and resonant systems? It can appear in all three—but a shape does not automatically emit a special “golden frequency.” This room separates measurable physics from intriguing ideas still waiting for evidence.</p>
+<section class="panel">
+<p class="eyebrow">THE GOLDEN RATIO</p><div class="math">φ = (1 + √5) / 2 ≈ 1.618034</div>
+<p>The golden ratio is a proportion, not a frequency or a source of energy. When two frequencies have this ratio, they are mathematically related; whether they sound harmonious or produce a useful effect depends on context.</p>
+</section>
+<section class="panel" aria-labelledby="calculator-title">
+<p class="eyebrow">INTERACTIVE INSTRUMENT 01</p><h2 id="calculator-title">Golden-ratio frequency calculator</h2>
+<p>Choose a starting frequency and calculate the frequency one golden-ratio step above it.</p>
+<div class="row"><label for="base">Starting frequency (Hz)</label><input id="base" type="number" min="1" max="20000" step="1" value="432"><button class="primary" id="calculate" type="button">Calculate</button></div>
+<div class="grid"><div><p class="small">STARTING TONE</p><div class="readout" id="base-out">432 Hz</div></div><div><p class="small">× φ</p><div class="readout" id="gold-out">698.99 Hz</div></div></div>
+<p class="small" id="calc-status" aria-live="polite">A mathematical comparison only—not a claim of healing or a naturally emitted frequency.</p>
+<div class="row"><button id="play-base" type="button">Hear starting tone</button><button id="play-gold" type="button">Hear golden-ratio tone</button><button id="stop" type="button">Stop sound</button></div>
+<p class="small">Sound is generated locally by your browser after you press a button. Keep the volume low. The tone may be uncomfortable at high volume.</p>
+</section>
+<section aria-labelledby="shapes-title"><p class="eyebrow">SHAPE STUDIES</p><h2 id="shapes-title">Six geometries to investigate</h2>
+<div class="grid">
+<article class="shape"><div class="symbol">⬭</div><h3>Egg / ellipsoid</h3><p>A curved, non-uniform cavity can support acoustic modes shaped by its dimensions, wall material and contents. Egg shapes do not have one universal resonance.</p></article>
+<article class="shape"><div class="symbol">△</div><h3>Pyramid</h3><p>Interior cavities and external structures can reflect sound or interact with electromagnetic waves. Claims of exceptional energy concentration require controlled measurement.</p></article>
+<article class="shape"><div class="symbol">◎</div><h3>Torus</h3><p>A ring-shaped geometry appears in fluid flow, magnetic configurations and resonant devices. The actual field depends on the source and boundary conditions.</p></article>
+<article class="shape"><div class="symbol">⬡</div><h3>Dodecahedron</h3><p>Its twelve pentagonal faces contain golden-ratio relationships. Symmetry can influence resonant mode patterns, depending on construction.</p></article>
+<article class="shape"><div class="symbol">◯</div><h3>Sphere</h3><p>Spherical symmetry gives well-studied acoustic and electromagnetic modes. A useful baseline for comparing other shapes.</p></article>
+<article class="shape"><div class="symbol">〰</div><h3>Golden spiral</h3><p>A logarithmic spiral whose radius grows by φ every quarter-turn. It is a geometric construction, not a frequency generator.</p></article>
+</div></section>
+<section class="panel"><p class="eyebrow">WHAT SCIENCE CAN TEST</p><h2>Geometry changes the boundary conditions</h2>
+<p>Resonant frequencies depend on shape, size, material properties, what fills the space, and how energy enters the system. For a fair comparison, experiments should control those variables and measure the output rather than infer an effect from appearance.</p>
+<div class="note">A strong experiment: compare equal-volume cavities made from the same material, excite them with the same calibrated frequency sweep, then record resonance peaks with a microphone. Repeat trials and publish the raw measurements.</div>
+</section>
+<section class="panel"><p class="eyebrow">THE RESEARCH MAP</p><h2>Three layers, kept distinct</h2>
+<div class="grid">
+<div><h3>Established physics</h3><p>Acoustic standing waves, cavity resonances, electromagnetic modes and geometry-dependent field distributions.</p></div>
+<div><h3>Mathematical patterns</h3><p>Golden-ratio proportions, Fibonacci arrangements, symmetry, spirals and fractal growth patterns.</p></div>
+<div><h3>Open questions</h3><p>Whether particular environments or sound patterns measurably affect attention, relaxation or subjective experience—and under what conditions.</p></div>
+</div>
+<p class="small">No medical, healing, consciousness-enhancement or energy-amplification claims are made here. Those claims require specific evidence and reproducible tests.</p>
+</section>
+<footer><a href="../stations/?s=world">← RETURN TO STATIONS</a><p>THE PORTAL · Curiosity with measurement. Wonder without pretending certainty.</p></footer>
+</main>
+<script>
+const phi=(1+Math.sqrt(5))/2;const base=document.querySelector("#base"),baseOut=document.querySelector("#base-out"),goldOut=document.querySelector("#gold-out"),status=document.querySelector("#calc-status");let audio=null,osc=null,gain=null;
+function calculate(){const n=Number(base.value);if(!Number.isFinite(n)||n<1||n>20000){status.textContent="Enter a frequency between 1 and 20,000 Hz.";return false}baseOut.textContent=n.toFixed(2)+" Hz";goldOut.textContent=(n*phi).toFixed(2)+" Hz";status.textContent="Ratio: "+phi.toFixed(6)+" · Calculated values, not a special emitted frequency.";return true}
+document.querySelector("#calculate").addEventListener("click",calculate);base.addEventListener("change",calculate);calculate();
+async function tone(which){if(!calculate())return;const n=Number(base.value)*(which==="gold"?phi:1);try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC){status.textContent="Audio is not supported in this browser.";return}if(!audio)audio=new AC();await audio.resume();if(osc){try{osc.stop()}catch{}osc.disconnect()}osc=audio.createOscillator();gain=audio.createGain();osc.type="sine";osc.frequency.value=n;gain.gain.setValueAtTime(0,audio.currentTime);gain.gain.linearRampToValueAtTime(.07,audio.currentTime+.04);osc.connect(gain);gain.connect(audio.destination);osc.start();status.textContent="Playing "+n.toFixed(2)+" Hz locally. Press Stop sound to end."; }catch(e){status.textContent="Audio could not start. Check browser sound permissions."}}
+document.querySelector("#play-base").addEventListener("click",()=>tone("base"));document.querySelector("#play-gold").addEventListener("click",()=>tone("gold"));document.querySelector("#stop").addEventListener("click",()=>{if(osc){try{osc.stop()}catch{}osc.disconnect();osc=null}status.textContent="Sound stopped."});
+</script>
+<script type="module">import{installTravelerHUD}from"../traveler-hud.js";import{installTransitions}from"../transitions.js";installTravelerHUD();installTransitions("geometry-resonance");</script>
+</body></html>
