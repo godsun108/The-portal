@@ -72,8 +72,8 @@ export function createExecutionHost({
     let raw;
     try { raw = JSON.stringify(value); } catch { return false; }
     if (new TextEncoder().encode(raw).byteLength > MAX_MESSAGE_BYTES) return false;
-    channel.send(raw);
-    return true;
+    try { channel.send(raw); return true; }
+    catch { return false; }
   };
   const remember = request => {
     if (seen.has(request.requestId) || seen.has(request.nonce)) return false;
@@ -83,7 +83,7 @@ export function createExecutionHost({
   };
   const reject = (requestId, reason) => reply({
     schema: RESPONSE_SCHEMA, requestId: typeof requestId === "string" ? requestId : null,
-    status: "rejected", reason, completedAt: new Date(now()).toISOString()
+    deviceId, status: "rejected", reason, completedAt: new Date(now()).toISOString()
   });
 
   async function handle(event) {
@@ -161,7 +161,7 @@ export function createExecutionClient({ channel, deviceId, now = Date.now, respo
     let response;
     try { response = JSON.parse(event.data); } catch { return; }
     if (response?.schema !== RESPONSE_SCHEMA || typeof response.requestId !== "string" ||
-        !["succeeded", "rejected"].includes(response.status)) return;
+        response.deviceId !== deviceId || !["succeeded", "rejected"].includes(response.status)) return;
     const entry = pending.get(response.requestId);
     if (!entry) return;
     clearTimeout(entry.timer);
