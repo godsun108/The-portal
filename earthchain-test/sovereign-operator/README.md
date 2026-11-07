@@ -22,3 +22,16 @@ The service worker caches the static controller and its owned modules after the 
 The protocol and transport source of truth lives in Sovereign-Core/earthchain/web-os/. This Portal folder contains exact copies of the transport, peer-approval and execution-protocol modules for GitHub Pages delivery. Keep them byte-identical when the source modules change.
 
 This is experimental. Device identity, enrollment, revocation and replay persistence are not yet durable. The manual DTLS fingerprint check is mandatory. Do not use this controller for secrets, wallet operations, financial actions or destructive commands.
+## Genesis Sight device intake
+
+Open `sight.html` from the HTTPS Portal deployment and allow camera access when prompted. Sight can capture a frame locally, scan supported QR/barcodes, and collect user-entered device details. The frame is not uploaded and is cleared when the page is closed.
+
+Choose **Assess connection options** to generate a preliminary category-based assessment. It reports browser APIs exposed in the current browser and lists integrations that would require a native agent, vendor support, or a future authenticated pairing flow. It does not probe the local network or contact the target device.
+
+Choose **Build device profile** to create a JSON record containing the observations, evidence provenance, preliminary assessment, and all-false permission flags. Manufacturer/model entries remain unverified, and QR/barcode values are treated as untrusted observations. AI visual recognition, QR-based pairing, and universal casting are not implemented.
+
+The assessment unit tests run with:
+
+```sh
+node --test earthchain-test/sovereign-operator/assessment.test.mjs
+```
