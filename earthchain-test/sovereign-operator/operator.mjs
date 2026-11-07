@@ -1,16 +1,41 @@
 import {createLocalBridge,parseSignal,sdpFingerprint} from "./local-bridge.mjs";
 import {createPeerApproval} from "./peer-approval.mjs";
 import {createExecutionClient} from "./sovereign-execution-bridge.mjs";
+import {createPairingCode} from "./pairing-code.mjs";
+import {makeInviteLink} from "./invite-link.mjs";
+import {createBridgeIdentity,signBridgeOffer} from "./signed-bridge-offer.mjs";
+import {verifyBridgeAnswer} from "./signed-bridge-answer.mjs";
 
 if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("./sw.js").catch(()=>{});
 
 const $=id=>document.getElementById(id);
 const peerApproval=createPeerApproval();
-let bridge=null,channel=null,client=null,hostId="";
+let bridge=null,channel=null,client=null,hostId="",bridgeIdentity=null,currentInvitation="",currentInviteLink="",activeSignedOffer="";
+const hex=bytes=>Array.from(bytes,x=>x.toString(16).padStart(2,"0")).join("");
 const capabilities=["workspace.list","workspace.read","command.run"];
 const buttons=["list-workspace","read-file","run-command"].map($);
 function status(message){$("connection-status").textContent=message;}
 function executionStatus(message){$("execution-status").textContent=message;}
+$("create-invite").addEventListener("click",async()=>{
+ try{
+  if(!globalThis.crypto?.subtle||!globalThis.crypto?.getRandomValues)throw Error("Secure browser context required.");
+  client?.close();client=null;hostId="";peerApproval.revoke();updateButtons();bridge?.close();bridge=null;channel=null;activeSignedOffer="";
+  bridgeIdentity=await createBridgeIdentity();
+  const nonce=hex(crypto.getRandomValues(new Uint8Array(24)));
+  currentInvitation=await createPairingCode({publicKey:bridgeIdentity.publicKey,nonce});
+  currentInviteLink=makeInviteLink($("desktop-url").value.trim(),currentInvitation);
+  const qr=$("invite-qr");qr.replaceChildren();
+  if(typeof QRCode!=="function")throw Error("QR renderer unavailable. Copy the invitation link instead.");
+  new QRCode(qr,{text:currentInviteLink,width:240,height:240,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.L});
+  $("invite-link").textContent=currentInviteLink;
+  $("invite-status").textContent="Fresh two-minute invitation created. Show this QR to the desktop Web OS and use its Scan QR invitation control. It grants no access by itself.";
+ }catch(error){$("invite-status").textContent="Could not create invitation: "+(error.message||"unknown error");}
+});
+$("copy-invite").addEventListener("click",async()=>{
+ if(!currentInviteLink)return;
+ try{await navigator.clipboard.writeText(currentInviteLink);$("invite-status").textContent="Invitation link copied. Paste it into the desktop Web OS invitation field; do not open it on this iPhone."; }
+ catch{$("invite-status").textContent="Clipboard unavailable. Select and copy the invitation link manually."; }
+});
 function updateButtons(){
  const ready=Boolean(client&&peerApproval.approved&&channel?.readyState==="open");
  for(const button of buttons)button.disabled=!ready;
@@ -43,12 +68,14 @@ async function copy(text){
 $("create-offer").addEventListener("click",async()=>{
  try{
   client?.close();client=null;hostId="";peerApproval.revoke();updateButtons();
-  bridge?.close();channel=null;
+  bridge?.close();channel=null;activeSignedOffer="";
   bridge=createLocalBridge({onChannel:onChannelReady,onStatus:s=>status("Peer connection: "+s)});
   const offer=await bridge.offer();
-  $("signal-out").value=offer;
+  const outgoing=currentInvitation&&bridgeIdentity?await signBridgeOffer({invitation:currentInvitation,offer,identity:bridgeIdentity}):offer;
+  if(currentInvitation&&bridgeIdentity){activeSignedOffer=outgoing;$("invite-status").textContent="Invitation-bound signed offer created. Paste it into the desktop Web OS after it scans this phone QR. Invitation expires after two minutes.";}
+  $("signal-out").value=outgoing;
   $("own-fingerprint").textContent=sdpFingerprint(parseSignal(offer,"offer").sdp);
-  status("Offer created. Copy it to the desktop host and paste the desktop answer here.");
+  status(activeSignedOffer?"Signed phone offer created. Send it only to the desktop that scanned your current invitation.":"Unsigned offer created. Copy it to the desktop host and paste the desktop answer here.");
  }catch(error){status("Could not create offer: "+error.message);}
 });
 $("copy-offer").addEventListener("click",async()=>{
@@ -58,12 +85,15 @@ $("copy-offer").addEventListener("click",async()=>{
 $("accept-answer").addEventListener("click",async()=>{
  try{
   if(!bridge)throw Error("Create the phone offer first.");
-  const answer=parseSignal($("signal-in").value.trim(),"answer");
+  let answerText=$("signal-in").value.trim();
+  if(activeSignedOffer){const checked=await verifyBridgeAnswer(answerText,{invitation:currentInvitation,signedOffer:activeSignedOffer});answerText=checked.answer;}
+  else if(JSON.parse(answerText)?.schema==="earthchain.bridge.signed-answer.v0")throw Error("Signed answer requires the matching active phone invitation and offer.");
+  const answer=parseSignal(answerText,"answer");
   $("peer-fingerprint").textContent=sdpFingerprint(answer.sdp);
   peerApproval.present(sdpFingerprint(answer.sdp));
   $("approve-peer").disabled=false;
-  await bridge.acceptAnswer($("signal-in").value.trim());
-  status("Desktop answer accepted. Waiting for direct connection. Verify the fingerprint independently.");
+  await bridge.acceptAnswer(answerText);
+  status(activeSignedOffer?"Signed answer verified for this invitation and offer. Waiting for direct connection; independently verify the DTLS fingerprint.":"Desktop answer accepted. Waiting for direct connection. Verify the fingerprint independently.");
  }catch(error){status("Answer rejected: "+error.message);}
 });
 $("approve-peer").addEventListener("click",()=>{
