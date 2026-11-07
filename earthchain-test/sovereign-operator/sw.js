@@ -1,5 +1,5 @@
-const CACHE="sovereign-operator-v4";
-const ASSETS=["./","./index.html","./operator.mjs","./local-bridge.mjs","./peer-approval.mjs","./sovereign-execution-bridge.mjs","./manifest.webmanifest","./sight.html","./sight.mjs","./assessment.mjs","./pairing-code.mjs","./invite-link.mjs","./signed-bridge-offer.mjs","./signed-bridge-answer.mjs","./qrcode.js"];
+const CACHE="sovereign-operator-v5";
+const ASSETS=["./","./index.html","./arrival.html","./arrival.mjs","./operator.mjs","./local-bridge.mjs","./peer-approval.mjs","./sovereign-execution-bridge.mjs","./manifest.webmanifest","./sight.html","./sight.mjs","./assessment.mjs","./pairing-code.mjs","./invite-link.mjs","./signed-bridge-offer.mjs","./signed-bridge-answer.mjs","./qrcode.js"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",event=>{
