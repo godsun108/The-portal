@@ -70,9 +70,9 @@ $("create-offer").addEventListener("click",async()=>{
  try{
   client?.close();client=null;hostId="";peerApproval.revoke();updateButtons();
   bridge?.close();channel=null;activeSignedOffer="";
+  if(currentInvitation)inspectPairingCode(currentInvitation);
   bridge=createLocalBridge({onChannel:onChannelReady,onStatus:s=>status("Peer connection: "+s)});
   const offer=await bridge.offer();
-  if(currentInvitation)inspectPairingCode(currentInvitation);
   const outgoing=currentInvitation&&bridgeIdentity?await signBridgeOffer({invitation:currentInvitation,offer,identity:bridgeIdentity}):offer;
   if(currentInvitation&&bridgeIdentity){activeSignedOffer=outgoing;$("invite-status").textContent="Invitation-bound signed offer created. Paste it into the desktop Web OS after it scans this phone QR. Invitation expires after two minutes.";}
   $("signal-out").value=outgoing;
