@@ -24,3 +24,18 @@ jobs:
         run: npm install --prefix genesis-core --no-package-lock --ignore-scripts
       - name: Verify Genesis and EarthID Node test suites
         run: node --test earthchain-genesis/*.test.mjs genesis-core/*.test.mjs
+      - name: Syntax-check Genesis Sight and signed pairing modules
+        run: >-
+          node --check earthchain-test/sovereign-operator/operator.mjs
+          && node --check earthchain-test/sovereign-operator/sight.mjs
+          && node --check earthchain-test/sovereign-operator/assessment.mjs
+          && node --check earthchain-test/sovereign-operator/local-bridge.mjs
+          && node --check earthchain-test/sovereign-operator/peer-approval.mjs
+          && node --check earthchain-test/sovereign-operator/sovereign-execution-bridge.mjs
+          && node --check earthchain-test/sovereign-operator/pairing-code.mjs
+          && node --check earthchain-test/sovereign-operator/invite-link.mjs
+          && node --check earthchain-test/sovereign-operator/signed-bridge-offer.mjs
+          && node --check earthchain-test/sovereign-operator/signed-bridge-answer.mjs
+          && node --check earthchain-test/sovereign-operator/qrcode.js
+      - name: Verify Genesis Sight device assessment tests
+        run: node --test earthchain-test/sovereign-operator/*.test.mjs

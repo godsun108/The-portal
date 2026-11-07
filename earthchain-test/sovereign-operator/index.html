@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101b19">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sovereign Operator">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Sovereign · iPhone Operator</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#101b19;color:#e9f7ed}
+*{box-sizing:border-box}body{margin:0 auto;max-width:760px;padding:18px 16px 48px}
+h1{font-size:clamp(32px,8vw,48px);line-height:1.05;margin:18px 0}
+p{line-height:1.55;color:#b7cbbf}.panel{background:#1b3028;border:1px solid #426a51;border-radius:16px;padding:16px;margin:14px 0}
+label{display:block;margin:12px 0 6px;color:#d7e9dc;font-weight:600}
+input,textarea{width:100%;font:inherit;color:#f1fff4;background:#102119;border:1px solid #6d9276;border-radius:9px;padding:12px;min-height:46px}
+textarea{min-height:120px;overflow-wrap:anywhere}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:13px 15px;background:#b2e8bf;color:#12241a;margin:5px 4px 5px 0;min-height:46px}
+button:disabled{opacity:.45}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1712;padding:12px;border-radius:10px;min-height:44px}
+.status{padding:12px;border-radius:10px;background:#203d30;overflow-wrap:anywhere}
+small{color:#a4d4b4;letter-spacing:.12em}
+</style>
+</head>
+<body>
+<small>SOVEREIGN / PRIVATE DEVICE OPERATOR</small>
+<h1>Your phone.<br>Your own machine.</h1>
+<p>This is a direct, peer-to-peer controller for your own Sovereign desktop host. No cloud command runner, hosted relay, STUN/TURN service, or third-party execution provider is used. Connection setup uses manual offer/answer exchange; direct connectivity depends on the network.</p>
+<div class="panel"><h2>Genesis Sight</h2><p>Point your iPhone camera at a device to capture a local frame, scan a supported QR/barcode, and create an unverified device-intake profile.</p><a href="./sight.html" style="color:#b2e8bf;font-weight:700">Open Genesis Sight →</a></div>
+<div class="panel">
+<h2>1 · Connect to your desktop</h2>
+<p>On the desktop, open the Sovereign Web OS from its local Sovereign Node with <code>?sovereignHost=1</code>, then create an offer/answer pair. Compare the complete DTLS fingerprints over a separate trusted channel before approving either peer.</p>
+<div class="panel">
+<h3>Secure QR invitation · two minutes</h3>
+<p>Generate this invitation on your phone, then use the desktop Web OS <strong>Scan QR invitation</strong> control to scan the QR displayed here. This invitation binds a short-lived public-key fingerprint; it does not grant access.</p>
+<label for="desktop-url">Desktop Web OS URL (the address open on the desktop)</label>
+<input id="desktop-url" value="http://127.0.0.1:7777/webos/?sovereignHost=1" maxlength="512" autocomplete="url">
+<button id="create-invite">Create pairing QR</button> <button id="copy-invite">Copy invitation link</button>
+<div id="invite-qr" aria-label="Temporary pairing invitation QR code" style="background:white;display:inline-block;max-width:100%;padding:10px;border-radius:8px"></div>
+<pre id="invite-link">No invitation created.</pre>
+<p id="invite-status" class="status" role="status" aria-live="polite">Create a fresh invitation, then let the desktop Web OS scan this phone QR code.</p>
+</div>
+<button id="create-offer">Create phone offer</button>
+<label for="signal-out">Phone offer · send this to your desktop</label>
+<textarea id="signal-out" readonly></textarea>
+<button id="copy-offer">Copy phone offer</button>
+<label for="signal-in">Desktop answer · paste it here</label>
+<textarea id="signal-in" placeholder="Paste the desktop's WebRTC answer JSON"></textarea>
+<button id="accept-answer">Accept desktop answer</button>
+<label for="own-fingerprint">Phone DTLS fingerprint</label>
+<pre id="own-fingerprint">Not created yet.</pre>
+<label for="peer-fingerprint">Desktop DTLS fingerprint · verify independently</label>
+<pre id="peer-fingerprint">Waiting for answer.</pre>
+<label for="verified-fingerprint">Type the complete desktop fingerprint to approve</label>
+<input id="verified-fingerprint" autocomplete="off" spellcheck="false" placeholder="AA:BB:…">
+<button id="approve-peer" disabled>Approve verified desktop</button>
+<p id="connection-status" class="status" role="status" aria-live="polite">Not connected.</p>
+</div>
+<div class="panel">
+<h2>2 · Request work from your desktop</h2>
+<p>Every request is checked against the desktop's peer approval, local owner confirmation, and Sovereign Offline's workspace/command allowlist. The phone cannot grant itself additional capabilities.</p>
+<p id="execution-status" class="status" role="status" aria-live="polite">Waiting for an approved desktop host.</p>
+<label for="workspace-path">Workspace path on desktop</label>
+<input id="workspace-path" value="." maxlength="1024">
+<button id="list-workspace" disabled>List workspace</button>
+<label for="read-path">File path on desktop</label>
+<input id="read-path" value="README.md" maxlength="1024">
+<button id="read-file" disabled>Read file</button>
+<label for="command">Command name · must be allowlisted on desktop</label>
+<input id="command" value="node" maxlength="128">
+<label for="arguments">Arguments · JSON array</label>
+<input id="arguments" value='["--version"]' maxlength="8192">
+<label for="working-directory">Working directory on desktop</label>
+<input id="working-directory" value="." maxlength="1024">
+<button id="run-command" disabled>Request command execution</button>
+<label for="receipt">Execution receipt / result</label>
+<pre id="receipt">No execution requested.</pre>
+</div>
+<div class="panel">
+<h2>Security notes</h2>
+<p>Peer fingerprint approval is manual and applies only to this connection. Host identity and replay storage are currently experimental and not yet durable across restarts. The desktop must remain running. If a request times out or disconnects, check the desktop's local audit log before retrying; the operation may have completed even if the phone did not receive its receipt.</p>
+<p>This controller is experimental. Do not use it for financial actions, secrets, or destructive commands.</p>
+</div>
+<script src="./qrcode.js"></script>
+<script type="module" src="./operator.mjs"></script>
+</body>
+</html>

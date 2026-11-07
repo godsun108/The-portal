@@ -1,0 +1,11 @@
+import {createBridgeIdentity} from "./signed-bridge-offer.mjs";
+import {inspectPairingCode} from "./pairing-code.mjs";
+import {parseSignal} from "./local-bridge.mjs";
+// Answer binds receiver's ephemeral key to the exact signed offer and invitation.
+const enc=new TextEncoder(),hex=b=>Array.from(b,x=>x.toString(16).padStart(2,"0")).join("");
+const bytes=h=>{if(typeof h!=="string"||h.length%2||!/^[a-f0-9]+$/.test(h))throw Error("invalid_hex");return Uint8Array.from(h.match(/../g),x=>parseInt(x,16));};
+async function digest(text){return hex(new Uint8Array(await crypto.subtle.digest("SHA-256",enc.encode(text))));}
+async function transcript(invitation,signedOffer,answer){const invite=inspectPairingCode(invitation,{now:JSON.parse(invitation).issuedAt});parseSignal(answer,"answer");return JSON.stringify(["earthchain.bridge.signed-answer.v0",invite.nonce,invite.expiresAt,await digest(signedOffer),answer]);}
+export async function signBridgeAnswer({invitation,signedOffer,answer,identity}){if(!identity?.privateKey||!identity.publicKey)throw Error("receiver_identity_required");const signature=hex(new Uint8Array(await crypto.subtle.sign({name:"ECDSA",hash:"SHA-256"},identity.privateKey,enc.encode(await transcript(invitation,signedOffer,answer)))));return JSON.stringify({schema:"earthchain.bridge.signed-answer.v0",answer,publicKey:identity.publicKey,signature});}
+export async function verifyBridgeAnswer(raw,{invitation,signedOffer,now=Date.now()}={}){if(typeof raw!=="string"||raw.length>210000)throw Error("invalid_signed_answer");inspectPairingCode(invitation,{now});let proof;try{proof=JSON.parse(raw);}catch{throw Error("invalid_signed_answer");}if(proof?.schema!=="earthchain.bridge.signed-answer.v0"||typeof proof.publicKey!=="string"||typeof proof.signature!=="string")throw Error("invalid_signed_answer");const key=await crypto.subtle.importKey("spki",bytes(proof.publicKey),{name:"ECDSA",namedCurve:"P-256"},false,["verify"]);const valid=await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},key,bytes(proof.signature),enc.encode(await transcript(invitation,signedOffer,proof.answer)));if(!valid)throw Error("invalid_answer_signature");return Object.freeze({answer:proof.answer,receiverPublicKey:proof.publicKey,signatureVerified:true,receiverIdentityUnpinned:true});}
+export {createBridgeIdentity};
