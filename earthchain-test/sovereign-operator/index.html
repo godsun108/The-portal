@@ -35,7 +35,7 @@ small{color:#a4d4b4;letter-spacing:.12em}
 <h3>Secure QR invitation · two minutes</h3>
 <p>Generate this invitation on your phone, then use the desktop Web OS <strong>Scan QR invitation</strong> control to scan the QR displayed here. This invitation binds a short-lived public-key fingerprint; it does not grant access.</p>
 <label for="desktop-url">Desktop Web OS URL (the address open on the desktop)</label>
-<input id="desktop-url" value="http://127.0.0.1:7777/webos/" maxlength="512" autocomplete="url">
+<input id="desktop-url" value="http://127.0.0.1:7777/webos/?sovereignHost=1" maxlength="512" autocomplete="url">
 <button id="create-invite">Create pairing QR</button> <button id="copy-invite">Copy invitation link</button>
 <div id="invite-qr" aria-label="Temporary pairing invitation QR code" style="background:white;display:inline-block;max-width:100%;padding:10px;border-radius:8px"></div>
 <pre id="invite-link">No invitation created.</pre>
