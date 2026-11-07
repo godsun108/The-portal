@@ -37,5 +37,9 @@ jobs:
           && node --check earthchain-test/sovereign-operator/signed-bridge-offer.mjs
           && node --check earthchain-test/sovereign-operator/signed-bridge-answer.mjs
           && node --check earthchain-test/sovereign-operator/qrcode.js
+      - name: Syntax-check portable offline Arrival script
+        run: >-
+          python3 -c "from pathlib import Path; import re; html=Path('earthchain-test/sovereign-operator/arrival-portable.html').read_text(); scripts=re.findall(r'<script>(.*?)</script>', html, re.S); assert len(scripts)==1; Path('/tmp/genesis-arrival-portable.js').write_text(scripts[0])"
+          && node --check /tmp/genesis-arrival-portable.js
       - name: Verify Genesis Sight device assessment tests
         run: node --test earthchain-test/sovereign-operator/*.test.mjs
