@@ -1,0 +1,5 @@
+import {inspectPairingCode} from "./pairing-code.mjs";
+// URL fragment is not sent in the HTTP request. A copied URL is still a bearer invitation:
+export function makeInviteLink(baseUrl,code){inspectPairingCode(code,{now:JSON.parse(code).issuedAt});const u=new URL(baseUrl);if(u.protocol!=="https:"&&!((u.hostname==="localhost"||u.hostname==="127.0.0.1")&&u.protocol==="http:"))throw Error("secure_origin_required");u.search="";u.hash="invite="+encodeURIComponent(code);return u.toString();}
+export function readInviteLink(url,{now=Date.now()}={}){const u=new URL(url);if(!u.hash.startsWith("#invite="))return null;let code;try{code=decodeURIComponent(u.hash.slice(8));}catch{throw Error("invalid_invite_link");}return inspectPairingCode(code,{now});}
+export function inviteSmsText(link){const u=new URL(link);if(!u.hash.startsWith("#invite="))throw Error("invalid_invite_link");return "You're invited to EarthChain Bridge. Open this link to review a pairing request (joining is never automatic): "+link;}
