@@ -26,11 +26,11 @@ small{color:#a4d4b4;letter-spacing:.12em}
 <body>
 <small>SOVEREIGN / PRIVATE DEVICE OPERATOR</small>
 <h1>Your phone.<br>Your own machine.</h1>
-<p>This is a direct, peer-to-peer controller for your own Sovereign desktop host. No cloud command runner, hosted relay, STUN/TURN service, or third-party execution provider is used. Connection setup uses manual offer/answer exchange; direct connectivity depends on the network.</p>
+<p>This is a direct, peer-to-peer controller for your own Sovereign desktop host. Create a short-lived QR invitation here, scan it with the desktop Web OS, then exchange invitation-bound signed WebRTC offer/answer messages. No cloud command runner, hosted relay, STUN/TURN service, or third-party execution provider is used. Direct connectivity depends on the network.</p>
 <div class="panel"><h2>Genesis Sight</h2><p>Point your iPhone camera at a device to capture a local frame, scan a supported QR/barcode, and create an unverified device-intake profile.</p><a href="./sight.html" style="color:#b2e8bf;font-weight:700">Open Genesis Sight →</a></div>
 <div class="panel">
 <h2>1 · Connect to your desktop</h2>
-<p>On the desktop, open the Sovereign Web OS from its local Sovereign Node with <code>?sovereignHost=1</code>, then create an offer/answer pair. Compare the complete DTLS fingerprints over a separate trusted channel before approving either peer.</p>
+<p>On the desktop, open the Sovereign Web OS from its local Sovereign Node with <code>?sovereignHost=1</code>. Create a two-minute QR invitation on this phone and scan it on the desktop. Then create the signed phone offer, answer it on the desktop, and return the signed answer here. Compare complete DTLS fingerprints through a separate trusted channel and approve both peers manually.</p>
 <div class="panel">
 <h3>Secure QR invitation · two minutes</h3>
 <p>Generate this invitation on your phone, then use the desktop Web OS <strong>Scan QR invitation</strong> control to scan the QR displayed here. This invitation binds a short-lived public-key fingerprint; it does not grant access.</p>
