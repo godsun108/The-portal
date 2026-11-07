@@ -33,7 +33,7 @@ Choose **Build device profile** to create a JSON record containing the observati
 The assessment unit tests run with:
 
 ```sh
-node --test earthchain-test/sovereign-operator/assessment.test.mjs
+node --test earthchain-test/sovereign-operator/*.test.mjs
 ```
 
 ## QR-assisted signed pairing
