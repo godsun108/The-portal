@@ -31,6 +31,16 @@ small{color:#a4d4b4;letter-spacing:.12em}
 <div class="panel">
 <h2>1 · Connect to your desktop</h2>
 <p>On the desktop, open the Sovereign Web OS from its local Sovereign Node with <code>?sovereignHost=1</code>, then create an offer/answer pair. Compare the complete DTLS fingerprints over a separate trusted channel before approving either peer.</p>
+<div class="panel">
+<h3>Secure QR invitation · two minutes</h3>
+<p>Generate this invitation on your phone, then use the desktop Web OS <strong>Scan QR invitation</strong> control to scan the QR displayed here. This invitation binds a short-lived public-key fingerprint; it does not grant access.</p>
+<label for="desktop-url">Desktop Web OS URL (the address open on the desktop)</label>
+<input id="desktop-url" value="http://127.0.0.1:7777/webos/" maxlength="512" autocomplete="url">
+<button id="create-invite">Create pairing QR</button> <button id="copy-invite">Copy invitation link</button>
+<div id="invite-qr" aria-label="Temporary pairing invitation QR code" style="background:white;display:inline-block;max-width:100%;padding:10px;border-radius:8px"></div>
+<pre id="invite-link">No invitation created.</pre>
+<p id="invite-status" class="status" role="status" aria-live="polite">Create a fresh invitation, then let the desktop Web OS scan this phone QR code.</p>
+</div>
 <button id="create-offer">Create phone offer</button>
 <label for="signal-out">Phone offer · send this to your desktop</label>
 <textarea id="signal-out" readonly></textarea>
@@ -72,6 +82,7 @@ small{color:#a4d4b4;letter-spacing:.12em}
 <p>Peer fingerprint approval is manual and applies only to this connection. Host identity and replay storage are currently experimental and not yet durable across restarts. The desktop must remain running. If a request times out or disconnects, check the desktop's local audit log before retrying; the operation may have completed even if the phone did not receive its receipt.</p>
 <p>This controller is experimental. Do not use it for financial actions, secrets, or destructive commands.</p>
 </div>
+<script src="./qrcode.js"></script>
 <script type="module" src="./operator.mjs"></script>
 </body>
 </html>
