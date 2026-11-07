@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101b19">
+<title>Genesis Sight · Device Intake</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui;background:#101b19;color:#e9f7ed}
+*{box-sizing:border-box}body{margin:0 auto;max-width:820px;padding:18px 16px 48px}
+h1{font-size:clamp(32px,8vw,48px);line-height:1.05;margin:16px 0}
+p{line-height:1.55;color:#b7cbbf}.panel{background:#1b3028;border:1px solid #426a51;border-radius:16px;padding:16px;margin:14px 0}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 15px;background:#b2e8bf;color:#12241a;margin:5px 4px 5px 0;min-height:46px}
+button:disabled{opacity:.45}input,select,textarea{width:100%;font:inherit;color:#f1fff4;background:#102119;border:1px solid #6d9276;border-radius:9px;padding:12px;min-height:46px}
+label{display:block;margin:12px 0 6px;color:#d7e9dc;font-weight:600}
+video{width:100%;max-height:55vh;background:#07100c;border-radius:12px;object-fit:cover}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1712;padding:12px;border-radius:10px;min-height:44px}
+.status{padding:12px;border-radius:10px;background:#203d30;overflow-wrap:anywhere}
+small{color:#a4d4b4;letter-spacing:.12em}
+.actions{display:flex;flex-wrap:wrap;gap:6px}
+.notice{border-left:3px solid #b2e8bf;padding-left:12px}
+</style>
+</head>
+<body>
+<small>GENESIS / SIGHT / DEVICE INTAKE</small>
+<h1>Show Genesis<br>what you're looking at.</h1>
+<p>Use your camera to inspect a device, read a QR code or barcode when supported, and create a local device-intake profile. This first version does not connect to or control the device. Pairing and access always require a separate, explicit approval.</p>
+<section class="panel">
+<h2>1 · Camera</h2>
+<video id="camera" playsinline muted hidden></video>
+<div class="actions">
+<button id="start-camera">Open camera</button>
+<button id="capture" disabled>Capture device</button>
+<button id="scan" disabled>Scan QR / barcode</button>
+<button id="stop-camera" disabled>Stop camera</button>
+</div>
+<p id="camera-status" class="status" role="status" aria-live="polite">Camera is off. Nothing is being recorded.</p>
+<canvas id="frame" hidden></canvas>
+</section>
+<section class="panel">
+<h2>2 · Describe the device</h2>
+<label for="kind">Device category</label>
+<select id="kind">
+<option value="computer">Computer / laptop</option><option value="phone">Phone / tablet</option><option value="display">TV / display</option><option value="network">Router / network equipment</option><option value="audio">Speaker / audio equipment</option><option value="embedded">Single-board / embedded computer</option><option value="wearable">Wearable</option><option value="vehicle">Vehicle system</option><option value="smart-home">Smart-home device</option><option value="other">Other / unknown</option>
+</select>
+<label for="manufacturer">Manufacturer (if known)</label><input id="manufacturer" maxlength="120" placeholder="e.g. Dell, Apple, Samsung">
+<label for="model">Model (if known)</label><input id="model" maxlength="160" placeholder="Model name or number">
+<label for="identifier">Visible QR / barcode / model identifier</label><input id="identifier" maxlength="512" placeholder="Scanned or entered identifier">
+<label for="notes">What should Genesis know?</label><textarea id="notes" rows="3" maxlength="2000" placeholder="Condition, ports, what you want to use it for…"></textarea>
+<div class="actions"><button id="build-profile">Build device profile</button><button id="copy-profile" disabled>Copy profile JSON</button></div>
+<pre id="profile" aria-live="polite">No profile created yet.</pre>
+</section>
+<section class="panel">
+<h2>3 · What happens next</h2>
+<p class="notice">Genesis can use this profile as a starting point for compatibility research. A visual match is not proof of identity, ownership, compatibility or permission. The next step is to verify the exact model and choose a supported pairing method.</p>
+<p id="next-step" class="status">Capture an image or enter the device details, then build a profile.</p>
+</section>
+<script type="module" src="./sight.mjs"></script>
+</body>
+</html>
