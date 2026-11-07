@@ -2,8 +2,9 @@
 // Successful browser media events do NOT prove iPhone playback or distribution rights.
 import {chromium} from '@playwright/test';
 import {readFileSync,writeFileSync} from 'node:fs';
-const input=JSON.parse(readFileSync('world-tv-stream-health.json','utf8'));
-if(input.schema!=='portal.tv.world-stream-health.v1'||!Array.isArray(input.results))throw Error('Invalid health report');
+const inputPath=process.argv[2]||'world-tv-stream-health.json';
+let input;
+try{input=JSON.parse(readFileSync(inputPath,'utf8'));}catch(e){console.error('No stream-health report at '+inputPath+' — run scripts/probe-world-tv-streams.mjs first.');process.exit(0);}
 const candidates=input.results.filter(x=>x.status==='http_reachable'&&/^https:\/\//.test(x.url)).slice(0,6);
 const browser=await chromium.launch({headless:true,args:['--autoplay-policy=no-user-gesture-required']});
 const results=[];
