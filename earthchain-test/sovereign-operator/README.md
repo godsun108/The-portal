@@ -38,7 +38,7 @@ node --test earthchain-test/sovereign-operator/*.test.mjs
 
 ## QR-assisted signed pairing
 
-1. The desktop-side execution host currently depends on Sovereign-Core PR #59, and the local static host depends on Sovereign-Offline PR #8. Once those changes are available in the desktop checkout, open the Sovereign Web OS at the URL entered on the phone (the default is the local loopback host).
+1. The desktop-side execution host currently depends on Sovereign-Core PR #59, and the local static host depends on Sovereign-Offline PR #8. Once those changes are available in the desktop checkout, open the Sovereign Web OS at `http://127.0.0.1:7777/webos/?sovereignHost=1` (or enter the exact matching desktop origin in the phone's invitation field).
 2. On the phone, create a fresh two-minute pairing QR and show it to the desktop.
 3. On the desktop Web OS, use **Scan QR invitation**. The QR is an invitation envelope, not an access grant.
 4. Create the phone offer and paste it into the desktop Web OS connection controls. The desktop verifies the invitation-bound P-256 signature before answering.
