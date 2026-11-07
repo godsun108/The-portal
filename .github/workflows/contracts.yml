@@ -25,4 +25,4 @@ jobs:
       - name: Verify Genesis and EarthID Node test suites
         run: node --test earthchain-genesis/*.test.mjs genesis-core/*.test.mjs
       - name: Verify Genesis Sight device assessment tests
-        run: node --test earthchain-test/sovereign-operator/assessment.test.mjs
+        run: node --test earthchain-test/sovereign-operator/*.test.mjs
