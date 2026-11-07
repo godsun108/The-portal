@@ -24,3 +24,9 @@ jobs:
         run: npm install --prefix genesis-core --no-package-lock --ignore-scripts
       - name: Verify Genesis and EarthID Node test suites
         run: node --test earthchain-genesis/*.test.mjs genesis-core/*.test.mjs
+      - name: Syntax-check EarthChain no-server wallet modules
+        run: node --check earthchain-test/protocol.mjs && node --check earthchain-test/mutual-ledger.mjs && node --check earthchain-test/wallet-crypto.mjs && node --check earthchain-test/no-server.mjs
+      - name: Verify EarthChain no-server wallet guided flow
+        run: node --test earthchain-test/guided-flow.test.mjs
+      - name: Verify EarthChain mutual-ledger security invariants
+        run: node --test earthchain-test/mutual-ledger.test.mjs
