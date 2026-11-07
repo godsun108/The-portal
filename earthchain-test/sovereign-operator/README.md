@@ -35,3 +35,14 @@ The assessment unit tests run with:
 ```sh
 node --test earthchain-test/sovereign-operator/assessment.test.mjs
 ```
+
+## QR-assisted signed pairing
+
+1. Open the desktop Sovereign Web OS at the URL entered on the phone (the default is the local loopback host).
+2. On the phone, create a fresh two-minute pairing QR and show it to the desktop.
+3. On the desktop Web OS, use **Scan QR invitation**. The QR is an invitation envelope, not an access grant.
+4. Create the phone offer and paste it into the desktop Web OS connection controls. The desktop verifies the invitation-bound P-256 signature before answering.
+5. Paste the desktop's signed answer back into the phone. The phone verifies it against the exact invitation and offer.
+6. Both sides still compare and approve the DTLS fingerprint through a separate trusted channel.
+
+The QR invitation, signed offer, and signed answer modules are copied from their current Sovereign-Core sources. They are experimental and do not establish durable device enrollment or revocation. The invitation expires after two minutes. Keep the manual unsigned flow available only for controlled lab use.
