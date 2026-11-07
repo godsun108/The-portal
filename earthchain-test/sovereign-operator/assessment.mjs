@@ -1,4 +1,3 @@
-const has = (name) => typeof globalThis[name] !== "undefined";
 const CATEGORY_GUIDANCE = {
   computer: [
     ["sovereign-webrtc-host", "Supported Sovereign desktop host", "requires_owned_desktop_agent", "Best route for an authorized computer with the Sovereign host installed and running."],
@@ -43,17 +42,20 @@ const CATEGORY_GUIDANCE = {
     ["identify-first", "Identify exact model", "manual_verification_required", "Confirm the model and supported interface before selecting a connection method."]
   ]
 };
-function apiStatus(method) {
-  if (method === "web-bluetooth") return globalThis.navigator?.bluetooth ? "browser_api_available" : "not_exposed_in_this_browser";
-  if (method === "web-usb") return globalThis.navigator?.usb ? "browser_api_available" : "not_exposed_in_this_browser";
-  if (method === "web-serial") return globalThis.navigator?.serial ? "browser_api_available" : "not_exposed_in_this_browser";
-  if (method === "sovereign-webrtc-host") return typeof globalThis.RTCPeerConnection === "function" ? "browser_webrtc_available_host_required" : "browser_api_unavailable";
+
+function apiStatus(method, environment) {
+  const nav = environment.navigator || {};
+  if (method === "web-bluetooth") return nav.bluetooth ? "browser_api_available" : "not_exposed_in_this_browser";
+  if (method === "web-usb") return nav.usb ? "browser_api_available" : "not_exposed_in_this_browser";
+  if (method === "web-serial") return nav.serial ? "browser_api_available" : "not_exposed_in_this_browser";
+  if (method === "sovereign-webrtc-host") return typeof environment.RTCPeerConnection === "function" ? "browser_webrtc_available_host_required" : "browser_api_unavailable";
   return "integration_required";
 }
+
 export function assessDevice(device, environment = globalThis) {
   const category = CATEGORY_GUIDANCE[device?.category] ? device.category : "other";
   const methods = CATEGORY_GUIDANCE[category].map(([id, label, requirement, rationale]) => ({
-    id, label, requirement, browserStatus: apiStatus(id), rationale
+    id, label, requirement, browserStatus: apiStatus(id, environment), rationale
   }));
   const identityComplete = Boolean(String(device?.manufacturer || "").trim() && String(device?.model || "").trim());
   return {
@@ -87,6 +89,7 @@ export function assessDevice(device, environment = globalThis) {
       : ["confirm_manufacturer_and_exact_model", "inspect_ports_and_supported_protocols", "repeat_assessment"]
   };
 }
+
 export function renderAssessment(assessment) {
   return JSON.stringify(assessment, null, 2);
 }
