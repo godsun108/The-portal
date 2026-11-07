@@ -1,7 +1,7 @@
 import {createLocalBridge,parseSignal,sdpFingerprint} from "./local-bridge.mjs";
 import {createPeerApproval} from "./peer-approval.mjs";
 import {createExecutionClient} from "./sovereign-execution-bridge.mjs";
-import {createPairingCode} from "./pairing-code.mjs";
+import {createPairingCode,inspectPairingCode} from "./pairing-code.mjs";
 import {makeInviteLink} from "./invite-link.mjs";
 import {createBridgeIdentity,signBridgeOffer} from "./signed-bridge-offer.mjs";
 import {verifyBridgeAnswer} from "./signed-bridge-answer.mjs";
@@ -18,6 +18,7 @@ function status(message){$("connection-status").textContent=message;}
 function executionStatus(message){$("execution-status").textContent=message;}
 $("create-invite").addEventListener("click",async()=>{
  try{
+  currentInvitation="";currentInviteLink="";bridgeIdentity=null;activeSignedOffer="";$("invite-qr").replaceChildren();$("invite-link").textContent="No invitation created.";
   if(!globalThis.crypto?.subtle||!globalThis.crypto?.getRandomValues)throw Error("Secure browser context required.");
   client?.close();client=null;hostId="";peerApproval.revoke();updateButtons();bridge?.close();bridge=null;channel=null;activeSignedOffer="";
   bridgeIdentity=await createBridgeIdentity();
@@ -71,6 +72,7 @@ $("create-offer").addEventListener("click",async()=>{
   bridge?.close();channel=null;activeSignedOffer="";
   bridge=createLocalBridge({onChannel:onChannelReady,onStatus:s=>status("Peer connection: "+s)});
   const offer=await bridge.offer();
+  if(currentInvitation)inspectPairingCode(currentInvitation);
   const outgoing=currentInvitation&&bridgeIdentity?await signBridgeOffer({invitation:currentInvitation,offer,identity:bridgeIdentity}):offer;
   if(currentInvitation&&bridgeIdentity){activeSignedOffer=outgoing;$("invite-status").textContent="Invitation-bound signed offer created. Paste it into the desktop Web OS after it scans this phone QR. Invitation expires after two minutes.";}
   $("signal-out").value=outgoing;
