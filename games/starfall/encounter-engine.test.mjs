@@ -12,10 +12,10 @@ test('enemy movement is deterministic, bounded, and type-specific', () => {
 
 test('Guardian phases advance as health falls', () => {
   assert.equal(guardianPhase(65), 1);
-  assert.equal(guardianPhase(43), 1);
+  assert.equal(guardianPhase(44), 1);
   assert.equal(guardianPhase(40), 2);
-  assert.equal(guardianPhase(21), 2);
-  assert.equal(guardianPhase(20), 3);
+  assert.equal(guardianPhase(22), 2);
+  assert.equal(guardianPhase(21), 3);
   assert.equal(guardianPhase(0), 3);
 });
 
