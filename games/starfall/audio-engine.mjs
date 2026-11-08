@@ -27,7 +27,7 @@ export function createSoundEngine({AudioContextCtor=globalThis.AudioContext||glo
    startBed();return true;
   }catch{return false;}
  }
- function setEnabled(value){enabled=!!value;if(master)master.gain.setTargetAtTime(enabled?.55:0,now(),.025);if(enabled&&context)startBed();return enabled;}
+ function setEnabled(value){enabled=!!value;if(master)master.gain.setTargetAtTime(enabled ? 0.55 : 0,now(),.025);if(enabled&&context)startBed();return enabled;}
  return Object.freeze({
   unlock,setEnabled,get enabled(){return enabled;},
   shot(){const t=now();if(t-lastShot<.11)return;lastShot=t;tone(740,{endFrequency:510,duration:.055,wave:'square',volume:.006});},
