@@ -22,5 +22,7 @@ jobs:
           node-version: '22'
       - name: Check animation and atlas math
         run: node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs games/starfall/audio-engine.test.mjs games/starfall/encounter-engine.test.mjs games/starfall/weapon-progression.test.mjs games/starfall/assets/intake-contract.test.mjs
+      - name: Check game module syntax
+        run: node --check games/starfall/game.mjs
       - name: Validate shipped atlas files
         run: node games/starfall/assets/validate-assets.mjs
