@@ -24,7 +24,8 @@ function update(dt){const g=game;if(!g?.alive)return;g.elapsed+=dt;g.fire-=dt;g.
  spawnAhead();
  for(const p of g.platforms){if(p.kind==='moving')p.x=clamp(p.x+Math.sin(g.elapsed*1.7+p.phase)*48*dt,4,W-p.w-4)}
  for(const e of g.enemies){if(e.dead)continue;e.x+=e.vx*dt;if(e.x<20||e.x>W-20)e.vx*=-1;e.phase+=dt*3}
- for(const e of g.enemies){if(!e.dead&&g.invuln<=0&&Math.hypot(e.x-g.x,e.y-g.y)<29){g.hp--;g.invuln=1.25;g.vy=-360;burst(g.x,g.y,'#d75b48',18);if(g.hp<=0){finish();return}}}\n for(const s of g.shots){s.y+=s.vy*dt;s.life-=dt;for(const e of g.enemies){if(!e.dead&&Math.abs(s.x-e.x)<20&&Math.abs(s.y-e.y)<22){e.hp--;s.life=0;burst(e.x,e.y,'#ffc66d',5);if(e.hp<=0){e.dead=true;g.score+=80;burst(e.x,e.y,'#b58a50',16)}break}}}
+ for(const e of g.enemies){if(!e.dead&&g.invuln<=0&&Math.hypot(e.x-g.x,e.y-g.y)<29){g.hp--;g.invuln=1.25;g.vy=-360;burst(g.x,g.y,'#d75b48',18);if(g.hp<=0){finish();return}}}
+ for(const s of g.shots){s.y+=s.vy*dt;s.life-=dt;for(const e of g.enemies){if(!e.dead&&Math.abs(s.x-e.x)<20&&Math.abs(s.y-e.y)<22){e.hp--;s.life=0;burst(e.x,e.y,'#ffc66d',5);if(e.hp<=0){e.dead=true;g.score+=80;burst(e.x,e.y,'#b58a50',16)}break}}}
  for(const r of g.relics){r.phase+=dt*2;if(!r.taken&&Math.hypot(r.x-g.x,r.y-g.y)<27){r.taken=true;g.count++;burst(r.x,r.y,'#ffc66d',15)}}
  g.shots=g.shots.filter(s=>s.life>0&&s.y>g.camera-H-80);g.enemies=g.enemies.filter(e=>!e.dead&&e.y<g.camera+H+100);g.platforms=g.platforms.filter(p=>p.y<g.camera+H+100);g.relics=g.relics.filter(r=>!r.taken&&r.y<g.camera+H+100);
  for(const p of g.sparks){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=280*dt;p.life-=dt}g.sparks=g.sparks.filter(p=>p.life>0);
