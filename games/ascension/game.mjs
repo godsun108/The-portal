@@ -2,14 +2,19 @@ const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),cabinet
 const heightEl=document.querySelector('#height'),relicEl=document.querySelector('#relics'),armorEl=document.querySelector('#armor'),intro=document.querySelector('#intro'),end=document.querySelector('#end');
 const boostBtn=document.querySelector('#boost'),blastBtn=document.querySelector('#blast'),controls=document.querySelector('.controls');
 let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false,leftHeld=false,rightHeld=false;
+const GHOST_KEY='ascension.ghost.v1',GHOST_SCHEMA=1,GHOST_SAMPLE=.1;
+function loadBestGhost(){try{const raw=localStorage.getItem(GHOST_KEY);if(!raw)return null;const data=JSON.parse(raw);if(data.schema!==GHOST_SCHEMA||!Array.isArray(data.samples)||data.samples.length<2||data.samples.length>12000||!Number.isFinite(data.height))return null;let prev=-1;for(const s of data.samples){if(!Array.isArray(s)||s.length!==3||!s.every(Number.isFinite)||s[0]<=prev||s[1]<0||s[2]<0||s[2]>1)return null;prev=s[0]}return data}catch{return null}}
+function saveBestGhost(g){if(!g?.recording||g.recording.length<2)return false;const old=loadBestGhost();if(old&&old.height>=g.height)return false;const data={schema:GHOST_SCHEMA,height:Math.floor(g.height),relics:g.count,duration:g.elapsed,samples:g.recording.slice(0,12000)};try{localStorage.setItem(GHOST_KEY,JSON.stringify(data));return true}catch{return false}}
+function sampleGhost(g){if(g.elapsed-g.lastGhostSample<GHOST_SAMPLE)return;g.lastGhostSample=g.elapsed;g.recording.push([Number(g.elapsed.toFixed(2)),Number(g.height.toFixed(1)),Number(clamp(g.x/W,0,1).toFixed(4))]);if(g.recording.length>12000)g.recording.shift()}
+function ghostAt(data,t){if(!data||t<data.samples[0][0]||t>data.samples[data.samples.length-1][0])return null;let lo=0,hi=data.samples.length-1;while(lo+1<hi){const mid=(lo+hi)>>1;if(data.samples[mid][0]<=t)lo=mid;else hi=mid}const a=data.samples[lo],b=data.samples[hi],span=b[0]-a[0],k=span>0?(t-a[0])/span:0;return{height:a[1]+(b[1]-a[1])*k,x:a[2]+(b[2]-a[2])*k}}
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a);
 function resize(){D=Math.min(devicePixelRatio||1,2);const r=cabinet.getBoundingClientRect();W=r.width;H=r.height;canvas.width=Math.round(W*D);canvas.height=Math.round(H*D);ctx.setTransform(D,0,0,D,0,0)}
 new ResizeObserver(resize).observe(cabinet);resize();
 function platform(y,x=rand(20,W-100),w=rand(62,96),kind='solid'){return{x,y,w,h:10,kind,phase:rand(0,6.28),used:false}}
 function start(){cancelAnimationFrame(raf);pointer=null;boostHeld=false;leftHeld=false;rightHeld=false;const ps=[platform(H-100,W*.38,100)];for(let i=1;i<12;i++)ps.push(platform(H-100-i*78,rand(12,W-92),rand(62,98),i%7===0?'moving':'solid'));
- game={x:W*.5,y:H-142,vx:0,vy:-470,camera:0,platforms:ps,enemies:[],shots:[],sparks:[],relics:[],height:0,count:0,boost:100,boosting:false,pulse:0,hp:3,invuln:0,score:0,alive:true,elapsed:0,fire:0,spawnY:-900};
+ game={x:W*.5,y:H-142,vx:0,vy:-470,camera:0,platforms:ps,enemies:[],shots:[],sparks:[],relics:[],height:0,count:0,boost:100,boosting:false,pulse:0,hp:3,invuln:0,score:0,alive:true,elapsed:0,fire:0,spawnY:-900,recording:[],lastGhostSample:-1,ghost:loadBestGhost()};
  intro.hidden=true;end.hidden=true;last=performance.now();raf=requestAnimationFrame(loop)}
-function finish(){if(!game?.alive)return;game.alive=false;cancelAnimationFrame(raf);document.querySelector('#endtag').textContent='ASCENT RECORDED';document.querySelector('#endtitle').textContent='FALLEN';document.querySelector('#endcopy').textContent='HEIGHT '+Math.floor(game.height)+' M · RELICS '+game.count+'. THE SPIRE REMEMBERS.';end.hidden=false}
+function finish(){if(!game?.alive)return;game.alive=false;cancelAnimationFrame(raf);const becameBest=saveBestGhost(game);document.querySelector('#endtag').textContent=becameBest?'NEW PERSONAL GHOST':'ASCENT RECORDED';document.querySelector('#endtitle').textContent='FALLEN';document.querySelector('#endcopy').textContent='HEIGHT '+Math.floor(game.height)+' M · RELICS '+game.count+'. '+(becameBest?'YOUR NEW BEST CLIMB IS SAVED AS A GHOST.':'THE SPIRE REMEMBERS.');end.hidden=false}
 function burst(x,y,color,n=12){for(let i=0;i<n;i++){const a=rand(0,Math.PI*2),s=rand(40,210);game.sparks.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rand(.2,.6),max:.6,color})}}
 function fire(){if(game.fire>0)return;game.fire=.28;game.shots.push({x:game.x,y:game.y-23,vy:-560,life:1})}
 function pulse(){if(!game?.alive||game.pulse>0)return;game.pulse=4;for(const e of game.enemies){if(Math.hypot(e.x-game.x,e.y-game.y)<190){e.dead=true;burst(e.x,e.y,'#ffc66d',18)}}burst(game.x,game.y,'#ffc66d',28)}
@@ -20,7 +25,7 @@ function update(dt){const g=game;if(!g?.alive)return;g.elapsed+=dt;g.fire-=dt;g.
  g.vy+=900*dt;const oldY=g.y;g.y+=g.vy*dt;
  if(g.vy>0){for(const p of g.platforms){const py=p.y;if(oldY+22<=py&&g.y+22>=py&&g.x+13>p.x&&g.x-13<p.x+p.w){g.y=py-22;g.vy=-510;if(p.kind==='moving')p.used=true;burst(g.x,py,'#b58a50',4);break}}}
  if(g.boosting)burst(g.x+rand(-8,8),g.y+22,'#ffc66d',1);
- g.camera=Math.min(g.camera,g.y-H*.53);g.height=Math.max(g.height,-g.camera);g.score=Math.floor(g.height);
+ g.camera=Math.min(g.camera,g.y-H*.53);g.height=Math.max(g.height,-g.camera);g.score=Math.floor(g.height);sampleGhost(g);
  spawnAhead();
  for(const p of g.platforms){if(p.kind==='moving')p.x=clamp(p.x+Math.sin(g.elapsed*1.7+p.phase)*48*dt,4,W-p.w-4)}
  for(const e of g.enemies){if(e.dead)continue;e.x+=e.vx*dt;if(e.x<20||e.x>W-20)e.vx*=-1;e.phase+=dt*3}
