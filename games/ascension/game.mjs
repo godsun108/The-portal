@@ -1,12 +1,12 @@
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),cabinet=document.querySelector('#cabinet');
 const heightEl=document.querySelector('#height'),relicEl=document.querySelector('#relics'),armorEl=document.querySelector('#armor'),intro=document.querySelector('#intro'),end=document.querySelector('#end');
 const boostBtn=document.querySelector('#boost'),blastBtn=document.querySelector('#blast');
-let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false;
+let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false,leftHeld=false,rightHeld=false;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a);
 function resize(){D=Math.min(devicePixelRatio||1,2);const r=cabinet.getBoundingClientRect();W=r.width;H=r.height;canvas.width=Math.round(W*D);canvas.height=Math.round(H*D);ctx.setTransform(D,0,0,D,0,0)}
 new ResizeObserver(resize).observe(cabinet);resize();
 function platform(y,x=rand(20,W-100),w=rand(62,96),kind='solid'){return{x,y,w,h:10,kind,phase:rand(0,6.28),used:false}}
-function start(){cancelAnimationFrame(raf);const ps=[platform(H-100,W*.38,100)];for(let i=1;i<12;i++)ps.push(platform(H-100-i*78,rand(12,W-92),rand(62,98),i%7===0?'moving':'solid'));
+function start(){cancelAnimationFrame(raf);pointer=null;boostHeld=false;leftHeld=false;rightHeld=false;const ps=[platform(H-100,W*.38,100)];for(let i=1;i<12;i++)ps.push(platform(H-100-i*78,rand(12,W-92),rand(62,98),i%7===0?'moving':'solid'));
  game={x:W*.5,y:H-142,vx:0,vy:-470,camera:0,platforms:ps,enemies:[],shots:[],sparks:[],relics:[],height:0,count:0,boost:100,boosting:false,pulse:0,hp:3,invuln:0,score:0,alive:true,elapsed:0,fire:0,spawnY:-900};
  intro.hidden=true;end.hidden=true;last=performance.now();raf=requestAnimationFrame(loop)}
 function finish(){if(!game?.alive)return;game.alive=false;cancelAnimationFrame(raf);document.querySelector('#endtag').textContent='ASCENT RECORDED';document.querySelector('#endtitle').textContent='FALLEN';document.querySelector('#endcopy').textContent='HEIGHT '+Math.floor(game.height)+' M · RELICS '+game.count+'. THE SPIRE REMEMBERS.';end.hidden=false}
@@ -15,8 +15,8 @@ function fire(){if(game.fire>0)return;game.fire=.28;game.shots.push({x:game.x,y:
 function pulse(){if(!game?.alive||game.pulse>0)return;game.pulse=4;for(const e of game.enemies){if(Math.hypot(e.x-game.x,e.y-game.y)<190){e.dead=true;burst(e.x,e.y,'#ffc66d',18)}}burst(game.x,game.y,'#ffc66d',28)}
 function spawnAhead(){while(game.spawnY>game.camera-H*1.6){const y=game.spawnY;game.platforms.push(platform(y,rand(8,W-90),rand(58,96),Math.random()<.14?'moving':'solid'));if(Math.random()<.36)game.enemies.push({x:rand(30,W-30),y:y-rand(65,135),vx:rand(35,85)*(Math.random()<.5?-1:1),hp:2,dead:false,phase:rand(0,6)});if(Math.random()<.26)game.relics.push({x:rand(24,W-24),y:y-rand(25,60),taken:false,phase:rand(0,6)});game.spawnY-=rand(70,104)}}
 function update(dt){const g=game;if(!g?.alive)return;g.elapsed+=dt;g.fire-=dt;g.pulse=Math.max(0,g.pulse-dt);g.invuln=Math.max(0,g.invuln-dt);g.boosting=boostHeld&&g.boost>0;if(g.boosting){g.vy-=930*dt;g.boost=Math.max(0,g.boost-42*dt)}else g.boost=Math.min(100,g.boost+18*dt);
- const target=pointer===null?g.x:pointer;g.vx+=(clamp(target,g.x-1e4,g.x+1e4)-g.x)*0; if(pointer!==null)g.vx+=(clamp(pointer,0,W)-g.x)*16*dt;else g.vx*=Math.pow(.08,dt);
- g.vx=clamp(g.vx,-390,390);g.x+=g.vx*dt;if(g.x< -12)g.x=W+12;if(g.x>W+12)g.x=-12;
+ let steer=0;if(leftHeld&&!rightHeld)steer=-1;else if(rightHeld&&!leftHeld)steer=1;else if(pointer!==null){const delta=pointer-g.x;steer=Math.abs(delta)<10?0:Math.sign(delta)}
+ const targetV=steer*540;g.vx+=(targetV-g.vx)*(1-Math.exp(-13*dt));g.vx=clamp(g.vx,-540,540);g.x+=g.vx*dt;if(g.x< -12)g.x=W+12;if(g.x>W+12)g.x=-12;
  g.vy+=900*dt;const oldY=g.y;g.y+=g.vy*dt;
  if(g.vy>0){for(const p of g.platforms){const py=p.y;if(oldY+22<=py&&g.y+22>=py&&g.x+13>p.x&&g.x-13<p.x+p.w){g.y=py-22;g.vy=-510;if(p.kind==='moving')p.used=true;burst(g.x,py,'#b58a50',4);break}}}
  if(g.boosting)burst(g.x+rand(-8,8),g.y+22,'#ffc66d',1);
@@ -52,6 +52,8 @@ function draw(){const g=game;if(!g)return;ctx.clearRect(0,0,W,H);const grad=ctx.
 }
 function loop(t){const dt=Math.min(.032,(t-last)/1000||.016);last=t;update(dt);draw();if(game?.alive)raf=requestAnimationFrame(loop)}
 canvas.addEventListener('pointerdown',e=>{if(!game?.alive)return;pointer=e.clientX-canvas.getBoundingClientRect().left;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(pointer!==null)pointer=e.clientX-canvas.getBoundingClientRect().left});canvas.addEventListener('pointerup',()=>pointer=null);canvas.addEventListener('pointercancel',()=>pointer=null);
+function bindHold(id,setter){const el=document.querySelector(id);el.addEventListener('pointerdown',e=>{e.preventDefault();setter(true);el.setPointerCapture(e.pointerId)});for(const type of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(type,()=>setter(false))}
+bindHold('#left',v=>leftHeld=v);bindHold('#right',v=>rightHeld=v);
 boostBtn.addEventListener('pointerdown',e=>{e.preventDefault();boostHeld=true;boostBtn.setPointerCapture(e.pointerId)});boostBtn.addEventListener('pointerup',()=>boostHeld=false);boostBtn.addEventListener('pointercancel',()=>boostHeld=false);boostBtn.addEventListener('lostpointercapture',()=>boostHeld=false);blastBtn.addEventListener('click',pulse);
 document.querySelector('#start').addEventListener('click',start);document.querySelector('#retry').addEventListener('click',start);
-document.addEventListener('visibilitychange',()=>{if(document.hidden){boostHeld=false;pointer=null}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){boostHeld=false;leftHeld=false;rightHeld=false;pointer=null}});
