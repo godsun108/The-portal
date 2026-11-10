@@ -24,3 +24,13 @@ An original portrait-first 2.5D vertical combat platformer. This first playable 
 - Local-only game state; no wallet, purchases, multiplayer claims, external assets, or external runtime dependencies.
 - This is a mechanics and visual-direction slice, not the complete campaign or final art.
 - Touch behavior must be tested on iPhone before promoting or cataloguing as live.
+
+
+## Ghost Climb prototype status
+
+- Local best-run ghost replay is implemented as the first visual prototype.
+- The game records compact timestamped height and normalized horizontal-position samples during a run.
+- A new personal height record is saved in browser local storage; later runs replay it as a translucent, non-colliding warrior and show a height comparison strip.
+- Replay data is schema-versioned, bounded, and validated before playback. Storage failures safely fall back to ordinary solo play.
+- This is **local personal-best ghost playback only**. It is not yet online, does not yet show another player's run, and does not synchronize live progress.
+- Next milestones: export/import or service-backed run sharing, then friend challenges and live progress updates.
