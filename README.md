@@ -71,3 +71,8 @@ The Portal preview now mirrors the canonical Turbo Foundry vocal editor with per
 The Portal preview mirrors the canonical Turbo Foundry vocal editor, including two tempo-synced A/B loop regions, quarter/eighth/sixteenth/bar snapping at 127 BPM, A/B comparison playback, and bounded loop repetitions.
 
 The Portal preview mirrors the canonical Turbo Foundry editor with adjustable loop crossfades and quick recorded-take A/B audition and comparison over loop region A.
+
+
+## ART Studio (foundation branch)
+
+The `music-foundry/art-studio-foundation` branch adds `music-foundry/studio.html`, a browser-local multitrack audio workspace linked from the Music Foundry room. It supports importing multiple audio files, track arrangement by start offset, gain, pan, mute/solo, playback, and stereo 48 kHz WAV mix export. Audio is processed locally in the browser and is not uploaded. This is a first DAW foundation, not yet a full MIDI/plugin-hosting DAW; project persistence, time-stretching, instruments, automation, and Genesis integration remain future work. The existing Turbo Foundry vocal editor/recording booth remain canonical for their current workflows. iPhone/Safari testing is still required before deployment.
