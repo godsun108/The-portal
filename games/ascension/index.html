@@ -13,9 +13,9 @@ main{height:100dvh;display:grid;place-items:center;padding:env(safe-area-inset-t
 canvas{display:block;width:100%;height:100%;touch-action:none}
 .hud{position:absolute;z-index:2;inset:calc(env(safe-area-inset-top) + 12px) 14px auto;display:flex;justify-content:space-between;gap:8px;pointer-events:none;text-shadow:0 2px 8px #000;font-size:10px;letter-spacing:.1em}
 .hud strong{display:block;color:var(--amber);font-size:18px;margin-top:4px}
-.controls{position:absolute;z-index:3;inset:auto 14px calc(env(safe-area-inset-bottom) + 14px);display:flex;justify-content:space-between;align-items:end;pointer-events:none}
+.controls{position:absolute;z-index:3;inset:auto 10px calc(env(safe-area-inset-bottom) + 14px);display:flex;justify-content:space-between;align-items:end;gap:7px;pointer-events:none}
 .controls button{pointer-events:auto;border:1px solid #b58a5070;background:#101014d9;color:#f2d5a2;border-radius:50%;width:68px;height:68px;font:10px ui-monospace;letter-spacing:.08em;touch-action:none;box-shadow:0 4px 20px #0008}
-.controls button:active{background:#604a2d}
+.controls button:active{background:#604a2d}.controls button.direction{width:54px;height:62px;border-radius:18px;font-size:21px;color:#f2d5a2;background:#171513e8}.controls button#blast{width:58px;height:58px;font-size:9px}.controls button#boost{width:72px;height:72px;font-size:9px}
 #boost{width:82px;height:82px;border-color:#ffc66d;background:#332312e8}
 .screen{position:absolute;z-index:5;inset:0;display:grid;place-items:center;text-align:center;padding:28px;background:linear-gradient(#08080beF,#09090bf7)}
 .screen[hidden]{display:none}.panel{max-width:360px}.eyebrow{color:var(--bronze);letter-spacing:.28em;font-size:10px}
@@ -29,8 +29,8 @@ button.primary{border:1px solid var(--bronze);border-radius:999px;background:lin
 <body><main><div id="cabinet">
 <canvas id="game" aria-label="ASCENSION vertical platform combat game"></canvas>
 <div class="hud"><div>ASCENT<strong id="height">0000 m</strong></div><div style="text-align:center">ARMOR<strong id="armor">♥ ♥ ♥</strong></div><div style="text-align:right">RELICS<strong id="relics">00</strong></div></div>
-<div class="controls"><button id="blast" type="button">PULSE<br>READY</button><button id="boost" type="button">JET<br>BOOST</button></div>
-<section class="screen" id="intro"><div class="panel"><div class="eyebrow">A NEW UNIVERSE // PROTOTYPE 01</div><h1>ASCEN<span>SION</span></h1><p>THE OLD WORLD IS BURIED BENEATH THE SPIRE.<br>CLIMB. SURVIVE. REMEMBER.</p><p>Drag left and right to steer. Land to bounce. Hold JET BOOST to thrust upward. Your weapon fires automatically. Tap PULSE to clear nearby threats.</p><button class="primary" id="start">BEGIN ASCENT</button><div class="meta">BLACK IRON ORDER · FIELD TEST BUILD</div></div></section>
+<div class="controls"><button class="direction" id="left" type="button" aria-label="Move left">◀</button><button class="direction" id="right" type="button" aria-label="Move right">▶</button><button id="blast" type="button">PULSE<br>READY</button><button id="boost" type="button">JET<br>BOOST</button></div>
+<section class="screen" id="intro"><div class="panel"><div class="eyebrow">A NEW UNIVERSE // PROTOTYPE 01</div><h1>ASCEN<span>SION</span></h1><p>THE OLD WORLD IS BURIED BENEATH THE SPIRE.<br>CLIMB. SURVIVE. REMEMBER.</p><p>Use the LEFT and RIGHT controls—or drag anywhere on the playfield—to steer. Land to bounce. Hold JET BOOST to thrust upward. Your weapon fires automatically. Tap PULSE to clear nearby threats.</p><button class="primary" id="start">BEGIN ASCENT</button><div class="meta">BLACK IRON ORDER · FIELD TEST BUILD</div></div></section>
 <section class="screen" id="end" hidden><div class="panel"><div class="eyebrow" id="endtag">ASCENT ENDED</div><h1 id="endtitle">FALLEN</h1><p id="endcopy"></p><button class="primary" id="retry">ASCEND AGAIN</button></div></section>
 </div></main>
 <script type="module" src="./game.mjs"></script>
