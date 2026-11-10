@@ -1,6 +1,6 @@
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),cabinet=document.querySelector('#cabinet');
 const heightEl=document.querySelector('#height'),relicEl=document.querySelector('#relics'),armorEl=document.querySelector('#armor'),intro=document.querySelector('#intro'),end=document.querySelector('#end');
-const boostBtn=document.querySelector('#boost'),blastBtn=document.querySelector('#blast');
+const boostBtn=document.querySelector('#boost'),blastBtn=document.querySelector('#blast'),controls=document.querySelector('.controls');
 let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false,leftHeld=false,rightHeld=false;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a);
 function resize(){D=Math.min(devicePixelRatio||1,2);const r=cabinet.getBoundingClientRect();W=r.width;H=r.height;canvas.width=Math.round(W*D);canvas.height=Math.round(H*D);ctx.setTransform(D,0,0,D,0,0)}
@@ -33,15 +33,16 @@ function update(dt){const g=game;if(!g?.alive)return;g.elapsed+=dt;g.fire-=dt;g.
  if(g.y-g.camera>H+100)finish();
  heightEl.textContent=String(Math.floor(g.height)).padStart(4,'0')+' m';relicEl.textContent=String(g.count).padStart(2,'0');armorEl.textContent='♥ '.repeat(g.hp).trim()||'—';boostBtn.style.opacity=g.boost>0?'.95':'.45';boostBtn.textContent=g.boosting?'THRUST':'JET '+Math.ceil(g.boost)+'%';blastBtn.textContent=g.pulse>0?'PULSE '+g.pulse.toFixed(1):'PULSE READY';
 }
-function draw(){const g=game;if(!g)return;ctx.clearRect(0,0,W,H);const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#111116');grad.addColorStop(1,'#08080b');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+const ZONES=[{name:'GOTHIC BASTION',sky:'#17151b',deep:'#08080d',layers:['#211d27','#302631','#3a3030'],dust:'#c39a6133',platform:'#b58a50',edge:'#6f5638',enemy:'#713b39',glow:'#ffc66d'},{name:'ASHEN EXPANSE',sky:'#211a19',deep:'#0c0909',layers:['#382522','#4a3028','#58392d'],dust:'#e08b5938',platform:'#c47b52',edge:'#754632',enemy:'#a34c3c',glow:'#ffb16b'},{name:'FOUNDRY ORBIT',sky:'#101c23',deep:'#070b12',layers:['#172b35','#203944','#2a4650'],dust:'#72c5d044',platform:'#6ca9a5',edge:'#345c61',enemy:'#a35b55',glow:'#8de2d5'},{name:'THE BURIED SPIRE',sky:'#1c1728',deep:'#08070f',layers:['#28213d','#382b4b','#483653'],dust:'#b99be044',platform:'#b49bd0',edge:'#66527f',enemy:'#a65d80',glow:'#e0b7ff'}];
+function draw(){const g=game;if(!g)return;const zone=ZONES[Math.min(ZONES.length-1,Math.floor(g.height/1200))];ctx.clearRect(0,0,W,H);const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,zone.sky);grad.addColorStop(1,zone.deep);ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
  // layered parallax silhouettes: distant spires, mid-level buttresses, foreground machinery
- for(let layer=0;layer<3;layer++){const par=g.camera*(.12+layer*.16),step=layer===0?118:layer===1?174:226;ctx.fillStyle=['#19191f','#202026','#29272a'][layer];for(let i=-2;i<Math.ceil(W/step)+2;i++){const x=i*step+((i*37)%29),y=((i*71-par*.42)%(H+260)+H+260)%(H+260)-110;ctx.beginPath();ctx.moveTo(x,y+180);ctx.lineTo(x+8,y+70);ctx.lineTo(x+27,y+48);ctx.lineTo(x+46,y+70);ctx.lineTo(x+54,y+180);ctx.closePath();ctx.fill();ctx.fillRect(x+18,y+90,18,90)}}
+ for(let layer=0;layer<3;layer++){const par=g.camera*(.12+layer*.16),step=layer===0?118:layer===1?174:226;ctx.fillStyle=zone.layers[layer];for(let i=-2;i<Math.ceil(W/step)+2;i++){const x=i*step+((i*37)%29),y=((i*71-par*.42)%(H+260)+H+260)%(H+260)-110;ctx.beginPath();ctx.moveTo(x,y+180);ctx.lineTo(x+8,y+70);ctx.lineTo(x+27,y+48);ctx.lineTo(x+46,y+70);ctx.lineTo(x+54,y+180);ctx.closePath();ctx.fill();ctx.fillRect(x+18,y+90,18,90)}}
  // faint amber dust
- for(let i=0;i<34;i++){const x=(i*83)%W,y=((i*127-g.camera*.28)%(H+20)+H+20)%(H+20);ctx.fillStyle='#c39a6133';ctx.fillRect(x,y,1.5,1.5)}
+ for(let i=0;i<34;i++){const x=(i*83)%W,y=((i*127-g.camera*.28)%(H+20)+H+20)%(H+20);ctx.fillStyle=zone.dust;ctx.fillRect(x,y,1.5,1.5)}
  ctx.save();ctx.translate(0,-g.camera);
- for(const p of g.platforms){ctx.fillStyle='#29272a';ctx.fillRect(p.x,p.y,p.w,p.h);ctx.fillStyle='#b58a50';ctx.fillRect(p.x,p.y,p.w,2);ctx.fillStyle='#6f5638';ctx.fillRect(p.x+5,p.y+5,p.w-10,2);ctx.fillStyle='#474047';ctx.fillRect(p.x+9,p.y+10,4,7)}
+ for(const p of g.platforms){ctx.fillStyle=zone.layers[2];ctx.fillRect(p.x,p.y,p.w,p.h);ctx.fillStyle=zone.platform;ctx.fillRect(p.x,p.y,p.w,2);ctx.fillStyle=zone.edge;ctx.fillRect(p.x+5,p.y+5,p.w-10,2);ctx.fillStyle='#474047';ctx.fillRect(p.x+9,p.y+10,4,7)}
  for(const r of g.relics){ctx.save();ctx.translate(r.x,r.y);ctx.rotate(Math.sin(r.phase)*.25);ctx.shadowBlur=18;ctx.shadowColor='#ffc66d';ctx.fillStyle='#ffc66d';ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(8,0);ctx.lineTo(0,10);ctx.lineTo(-8,0);ctx.closePath();ctx.fill();ctx.restore()}
- for(const e of g.enemies){ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle='#6e3533';ctx.shadowBlur=14;ctx.shadowColor='#b34c38';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(15,0);ctx.lineTo(0,15);ctx.lineTo(-15,0);ctx.closePath();ctx.fill();ctx.fillStyle='#ffc66d';ctx.fillRect(-4,-2,8,4);ctx.restore()}
+ for(const e of g.enemies){ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=zone.enemy;ctx.shadowBlur=14;ctx.shadowColor='#b34c38';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(15,0);ctx.lineTo(0,15);ctx.lineTo(-15,0);ctx.closePath();ctx.fill();ctx.fillStyle='#ffc66d';ctx.fillRect(-4,-2,8,4);ctx.restore()}
  for(const s of g.shots){ctx.fillStyle='#ffc66d';ctx.shadowBlur=12;ctx.shadowColor='#ffc66d';ctx.fillRect(s.x-2,s.y-9,4,14);ctx.shadowBlur=0}
  // armored warrior silhouette, heavy shoulders, helmet, bronze plates, twin jetpack
  ctx.save();ctx.translate(g.x,g.y);ctx.globalAlpha=g.invuln>0&&Math.floor(g.elapsed*14)%2===0?.35:1;if(g.boosting){ctx.fillStyle='#ffc66d';ctx.shadowBlur=18;ctx.shadowColor='#ff9d3d';ctx.beginPath();ctx.moveTo(-8,19);ctx.lineTo(-3,42+rand(0,9));ctx.lineTo(0,23);ctx.fill();ctx.beginPath();ctx.moveTo(5,19);ctx.lineTo(10,40+rand(0,9));ctx.lineTo(13,20);ctx.fill()}
@@ -53,6 +54,9 @@ function draw(){const g=game;if(!g)return;ctx.clearRect(0,0,W,H);const grad=ctx.
 function loop(t){const dt=Math.min(.032,(t-last)/1000||.016);last=t;update(dt);draw();if(game?.alive)raf=requestAnimationFrame(loop)}
 canvas.addEventListener('pointerdown',e=>{if(!game?.alive)return;e.preventDefault();pointer=e.clientX-canvas.getBoundingClientRect().left;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(pointer!==null){e.preventDefault();pointer=e.clientX-canvas.getBoundingClientRect().left}});canvas.addEventListener('pointerup',e=>{e.preventDefault();pointer=null});canvas.addEventListener('pointercancel',()=>pointer=null);
 function bindHold(id,setter){const el=document.querySelector(id);el.addEventListener('pointerdown',e=>{e.preventDefault();setter(true);el.setPointerCapture(e.pointerId)});for(const type of ['pointerup','pointercancel','lostpointercapture'])el.addEventListener(type,()=>setter(false))}
+// The control rail absorbs touches in the gaps: dead space never steers the player.
+for(const type of ['pointerdown','pointermove','pointerup','pointercancel','contextmenu'])controls.addEventListener(type,e=>{e.preventDefault();e.stopPropagation()});
+for(const type of ['contextmenu','selectstart','dragstart'])document.addEventListener(type,e=>e.preventDefault());
 bindHold('#left',v=>leftHeld=v);bindHold('#right',v=>rightHeld=v);
 boostBtn.addEventListener('pointerdown',e=>{e.preventDefault();boostHeld=true;boostBtn.setPointerCapture(e.pointerId)});boostBtn.addEventListener('pointerup',()=>boostHeld=false);boostBtn.addEventListener('pointercancel',()=>boostHeld=false);boostBtn.addEventListener('lostpointercapture',()=>boostHeld=false);blastBtn.addEventListener('click',pulse);
 document.querySelector('#start').addEventListener('click',start);document.querySelector('#retry').addEventListener('click',start);
