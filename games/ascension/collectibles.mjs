@@ -35,13 +35,13 @@ export const ASCENSION_COLLECTIBLES=Object.freeze([
     {type:'earnable',rule:'campaign_completed',required:1},
     {accent:'#d5b5f2',glow:'#f0dcff',slot:'helmet'}),
   cosmetic('obsidian-regent','Obsidian Regent','armor-skin','limited',
-    {type:'purchase',edition:'limited',editionLimit:250,priceQuote:'issuer-defined'},
+    {type:'purchase',edition:'limited',editionLimit:1,priceQuote:'issuer-defined'},
     {accent:'#c18b55',glow:'#ffca7a',slot:'armor'}),
   cosmetic('ashen-phoenix','Ashen Phoenix','jet-trail','limited',
-    {type:'purchase',edition:'limited',editionLimit:150,priceQuote:'issuer-defined'},
+    {type:'purchase',edition:'limited',editionLimit:1,priceQuote:'issuer-defined'},
     {accent:'#dc7652',glow:'#ffc18b',slot:'jet-trail'}),
   cosmetic('buried-crown','Crown of the Buried','helmet-skin','mythic',
-    {type:'purchase',edition:'limited',editionLimit:50,priceQuote:'issuer-defined'},
+    {type:'purchase',edition:'limited',editionLimit:1,priceQuote:'issuer-defined'},
     {accent:'#b99be0',glow:'#e7d3ff',slot:'helmet'})
 ]);
 
