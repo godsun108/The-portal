@@ -18,7 +18,7 @@ An original portrait-first 2.5D vertical combat platformer. The four-world campa
 
 ## Modes planned
 - Campaign: four world arcs — Gothic Bastion, Ashen Expanse, Foundry Orbit, The Buried Spire — with boss gates and a final ASCENDED ending.
-- Endless Ascension: platform/enemy progression continues beyond the campaign for score and relic records.
+- Endless Ascension: after the fourth boss, continue the same run into an endless survival climb. Enemy health and movement pressure scale with ascent depth; the run ends only when the player falls or is defeated.
 
 ## Prototype boundary
 - Core campaign and combat are playable in the standalone preview. Hosted friend challenges use the preview API and persistent staging storage.
@@ -49,7 +49,7 @@ This is a read-only crossover entitlement. The ASCENSION Armory at `market.html`
 
 ## Four-world campaign loop
 
-The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. Bosses now fire aimed and spreading projectile volleys, with a faster five-shot second phase below half health. Later campaign bosses attack more frequently. Defeated enemies can drop repair, boost, pulse-reset, and temporary shield pickups; every boss guarantees a repair and shield drop. A shield absorbs one hit and grants a short invulnerability window. The endless climb beyond the fourth chapter is not the campaign completion condition.
+The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. Bosses now fire aimed and spreading projectile volleys, with a faster five-shot second phase below half health. Later campaign bosses attack more frequently. Defeated enemies can drop repair, boost, pulse-reset, and temporary shield pickups; every boss guarantees a repair and shield drop. A shield absorbs one hit and grants a short invulnerability window. Defeating the fourth boss ends the campaign with the ASCENDED victory screen. Players can continue that same run into Endless Ascension; enemy health and movement pressure scale in depth tiers, and survival continues until the player falls or is defeated.
 
 
 ## Combat update
