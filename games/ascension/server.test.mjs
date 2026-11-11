@@ -27,17 +27,25 @@ test('hosted friend challenge creates and retrieves a validated, expiring run',a
   assert.equal(ready,true,'server should start');
   const health=await fetch(base+'/api/health');
   assert.equal(health.status,200);
-  assert.deepEqual(await health.json(),{schema:'ascension.health.v1',status:'ok',service:'ascension-preview'});
+  const healthBody=await health.json();
+  assert.equal(healthBody.schema,'ascension.health.v1');
+  assert.equal(healthBody.status,'ok');
+  assert.equal(healthBody.friendRuns,'untrusted-ghost-only');
+  assert.equal(healthBody.achievementIssuance,false);
   const created=await fetch(base+'/api/challenges',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({run})});
   assert.equal(created.status,201);
   const item=await created.json();
   assert.match(item.id,/^[a-f0-9]{20}$/);
   assert.ok(item.expiresAt>Date.now());
+  assert.equal(item.trust,'unverified-friend-ghost');
+  assert.equal(item.achievementEligible,false);
   const fetched=await fetch(base+'/api/challenges/'+item.id);
   assert.equal(fetched.status,200);
   const payload=await fetched.json();
   assert.deepEqual(payload.run.samples,run.samples);
   assert.equal(payload.run.height,420);
+  assert.equal(payload.trust,'unverified-friend-ghost');
+  assert.equal(payload.achievementEligible,false);
   const missing=await fetch(base+'/api/challenges/00000000000000000000');
   assert.equal(missing.status,404);
  }finally{child.kill('SIGTERM')}
