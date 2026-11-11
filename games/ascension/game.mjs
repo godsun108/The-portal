@@ -65,4 +65,28 @@ for(const type of ['contextmenu','selectstart','dragstart'])document.addEventLis
 bindHold('#left',v=>leftHeld=v);bindHold('#right',v=>rightHeld=v);
 boostBtn.addEventListener('pointerdown',e=>{e.preventDefault();boostHeld=true;boostBtn.setPointerCapture(e.pointerId)});boostBtn.addEventListener('pointerup',()=>boostHeld=false);boostBtn.addEventListener('pointercancel',()=>boostHeld=false);boostBtn.addEventListener('lostpointercapture',()=>boostHeld=false);blastBtn.addEventListener('click',pulse);
 document.querySelector('#start').addEventListener('click',start);document.querySelector('#retry').addEventListener('click',start);
+
+// Keyboard support for desktop browsers; the same game loop serves touch, mouse, and keyboard.
+const heldKeys=new Set();
+function keyDown(e){
+ const k=e.key.toLowerCase();
+ if(['arrowleft','arrowright',' ','a','d','q','e','enter'].includes(k))e.preventDefault();
+ if(k==='arrowleft'||k==='a')leftHeld=true;
+ if(k==='arrowright'||k==='d')rightHeld=true;
+ if(k===' '||k==='shift')boostHeld=true;
+ if((k==='q'||k==='e')&&!e.repeat)pulse();
+ if(k==='enter'&&!game?.alive){if(!intro.hidden||!end.hidden)start()}
+ heldKeys.add(k);
+}
+function keyUp(e){
+ const k=e.key.toLowerCase();
+ if(k==='arrowleft'||k==='a')leftHeld=false;
+ if(k==='arrowright'||k==='d')rightHeld=false;
+ if(k===' '||k==='shift')boostHeld=false;
+ heldKeys.delete(k);
+}
+window.addEventListener('keydown',keyDown,{passive:false});
+window.addEventListener('keyup',keyUp);
+window.addEventListener('blur',()=>{leftHeld=false;rightHeld=false;boostHeld=false;heldKeys.clear();pointer=null});
+
 document.addEventListener('visibilitychange',()=>{if(document.hidden){boostHeld=false;leftHeld=false;rightHeld=false;pointer=null}});
