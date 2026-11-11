@@ -7,7 +7,7 @@ Status: **catalogue and policy scaffold committed; not minted, not purchasable y
 ASCENSION uses the existing Portal EarthChain identity and wallet. It does not create a second wallet or a parallel token ledger.
 
 - Earnable collectibles reward verified accomplishments: four boss seals, campaign completion, and verified relic milestones.
-- Limited drops are collectible cosmetics with explicit edition caps.
+- Limited drops are collectible cosmetics with explicit one-of-one pilot one-of-one pilot edition caps.
 - Every asset is cosmetic/identity only. Damage, armor, boost, pulse, and score multipliers remain zero. No pay-to-win and no gameplay-stat advantage from owning or buying an NFT.
 - Prices are not hardcoded into game metadata. Each sale must present an issuer-signed quote with exact network, asset, buyer, seller, amount, expiry, and nonce before the wallet signs.
 
@@ -43,3 +43,7 @@ These are useful foundations, but the current hosted commerce service is a centr
 - No new wallet, duplicate inventory, private-key upload, or client-controlled issuer.
 - No NFT grants combat power or ranking advantage.
 - Public metadata contains no personal information.
+
+## ECTEST limited-drop pilot
+
+The hosted checkout integration now registers the exact three purchase-item metadata digests with the existing issuer and publishes signed ECTEST offers. The first pilot deliberately uses one token per canonical series because the current signed ledger has no atomic batch-mint/supply primitive. The issuer's unique token IDs and journal enforce the one-of-one pilot supply; the three initial test prices are 60, 90, and 120 ECTEST. These are valueless test units. Larger 250/150/50 editions require a batch supply-enforcement change before those caps can honestly be advertised. This does not enable earned rewards: those remain blocked until server-authoritative deterministic replay verification and transactional achievement deduplication exist.
