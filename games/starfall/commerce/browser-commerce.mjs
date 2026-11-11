@@ -1,4 +1,5 @@
 // Browser adapter for signed coordinator TEST attestations. No network calls or key storage.
+import {ASCENSION_COLLECTIBLES} from '../../ascension/collectibles.mjs';
 export const SCHEMA='earthchain.signed-exchange-test.v1';
 export const VIEW='earthchain.commerce-view-test.v1';
 export function canonical(x){if(x===null||typeof x==='string'||typeof x==='boolean')return JSON.stringify(x);if(typeof x==='number'&&Number.isSafeInteger(x))return JSON.stringify(x);if(Array.isArray(x))return '['+x.map(canonical).join(',')+']';if(x&&Object.getPrototypeOf(x)===Object.prototype)return '{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canonical(x[k])).join(',')+'}';throw Error('non_json_value');}
@@ -55,6 +56,20 @@ export async function starfallSkins(view,address){
   if(!match)continue;
   const skinId=match[1],metadata={schema:'earthchain.game-collectible.v1',gameId:'starfall',skinId,tokenId,testOnly:true};
   if(await hash(metadata)===token.metadataHash)owned.push({skinId,tokenId});
+ }
+ return owned;
+}
+
+/** Return only ASCENSION items whose current owner and immutable metadata hash match the pinned signed view. */
+export async function ascensionCollectibles(view,address){
+ const owned=[];
+ if(typeof address!=='string'||!view?.collectibles)return owned;
+ for(const item of ASCENSION_COLLECTIBLES){
+  const token=view.collectibles[item.tokenId];
+  if(token?.owner!==address||typeof token.metadataHash!=='string')continue;
+  if(await hash(item.metadata)===token.metadataHash){
+   owned.push({assetId:item.assetId,tokenId:item.tokenId,label:item.name,accent:item.visual.accent,glow:item.visual.glow,metadataHash:token.metadataHash});
+  }
  }
  return owned;
 }
