@@ -49,3 +49,10 @@ This is a read-only crossover entitlement. ASCENSION-native earned collectibles 
 ## Four-world campaign loop
 
 The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. The endless climb beyond the fourth chapter is not the campaign completion condition.
+
+
+## Hosted friend links (preview service)
+
+The Node preview service exposes `POST /api/challenges` and `GET /api/challenges/:id`. It validates every submitted replay using the same bounded friend-run schema, returns a random 20-character challenge ID, and makes the run available by URL for up to 24 hours. The browser uses the Web Share sheet when available, copies the URL where clipboard access is available, and retains JSON file export as a fallback.
+
+**Preview limitation:** challenge records currently live in the service process memory. They are not durable across a service restart/redeploy and are not a permanent leaderboard. The API applies a request-size limit, basic per-IP rate limit, record cap, expiry pruning, and rejects invalid samples. Durable challenges, player identity, anti-cheat replay simulation, rankings, and signed achievement awards require persistent storage and server-side verification before production.
