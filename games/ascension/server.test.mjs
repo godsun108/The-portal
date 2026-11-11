@@ -32,6 +32,9 @@ test('hosted friend challenge creates and retrieves a validated, expiring run',a
   assert.equal(healthBody.status,'ok');
   assert.equal(healthBody.friendRuns,'untrusted-ghost-only');
   assert.equal(healthBody.achievementIssuance,false);
+  const armory=await fetch(base+'/market.html',{redirect:'manual'});
+  assert.equal(armory.status,302);
+  assert.equal(armory.headers.get('location'),'https://godsun108.github.io/The-portal/games/ascension/market.html');
   const created=await fetch(base+'/api/challenges',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({run})});
   assert.equal(created.status,201);
   const item=await created.json();
