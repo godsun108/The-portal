@@ -33,4 +33,7 @@ An original portrait-first 2.5D vertical combat platformer. This first playable 
 - A new personal height record is saved in browser local storage; later runs replay it as a translucent, non-colliding warrior and show a height comparison strip.
 - Replay data is schema-versioned, bounded, and validated before playback. Storage failures safely fall back to ordinary solo play.
 - This is **local personal-best ghost playback only**. It is not yet online, does not yet show another player's run, and does not synchronize live progress.
-- Next milestones: export/import or service-backed run sharing, then friend challenges and live progress updates.
+- Portable friend-run sharing is now implemented as a versioned JSON replay file. Players can export a completed climb and send it to a friend; the friend can import it and race a translucent, non-colliding ghost.
+- Imported runs are size-bounded and validated for schema, sample count, monotonic timestamps, plausible height, and normalized horizontal coordinates.
+- Sharing is currently file-based and works across devices without a game account or network service. It is not yet server-hosted multiplayer, a ranked leaderboard, or on-chain achievement issuance.
+- Next milestones: hosted friend challenges with server-side replay validation, then read-only EarthChain test-wallet proof and independently verified test collectibles.
