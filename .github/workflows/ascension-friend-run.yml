@@ -24,7 +24,7 @@ jobs:
       - run: npm test
   deploy-staging:
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/ascension-vertical-arcade-v1'
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/feature/ascension-vertical-arcade-v1') || (github.event_name == 'pull_request' && github.event.action == 'synchronize' && github.event.pull_request.head.ref == 'feature/ascension-vertical-arcade-v1')
     runs-on: ubuntu-latest
     env:
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
