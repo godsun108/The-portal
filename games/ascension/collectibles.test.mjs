@@ -36,7 +36,7 @@ test('limited drops declare finite edition caps but do not invent prices',()=>{
  assert.equal(drops.length,3);
  for(const item of drops){
   assert.ok(Number.isSafeInteger(item.acquisition.editionLimit));
-  assert.ok(item.acquisition.editionLimit>0);
+  assert.equal(item.acquisition.editionLimit,1,'pilot issuer supports one token per canonical series');
   assert.equal(item.acquisition.priceQuote,'issuer-defined');
  }
 });
