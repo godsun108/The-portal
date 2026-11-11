@@ -24,14 +24,15 @@ jobs:
       - run: npm test
   deploy-staging:
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/ascension-vertical-arcade-v1' && secrets.RAILWAY_TOKEN != ''
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/ascension-vertical-arcade-v1'
     runs-on: ubuntu-latest
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - name: Deploy existing ASCENSION staging service
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        if: env.RAILWAY_TOKEN != ''
         run: npx --yes @railway/cli up --ci --project a08e3701-1f77-402b-8f5b-ef077a638004 --environment staging --service ascension-preview
