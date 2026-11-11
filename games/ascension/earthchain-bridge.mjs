@@ -14,8 +14,7 @@ export async function verifiedAscensionCosmetics(){
   return {state:'unavailable',cosmetics:[]};
 }
 
-export function applyAscensionCosmetic(game,cosmetic){
-  if(!game||!cosmetic||typeof cosmetic!=='object')return false;
-  game.cosmetic={...cosmetic};
-  return true;
+export function applyAscensionCosmetic(){
+  // No cosmetic can be applied until its wallet proof is verifiable here.
+  return false;
 }
