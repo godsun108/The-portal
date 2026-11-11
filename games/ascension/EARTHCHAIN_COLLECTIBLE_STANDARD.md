@@ -1,6 +1,6 @@
 # ASCENSION — EarthChain Collectible Standard (Design v1)
 
-Status: DESIGN ONLY. This document defines the intended game/asset contract. It does not create tokens, deploy contracts, enable minting, or claim that NFT ownership is live.
+Status: DESIGN + INTEGRATION. ASCENSION consumes the existing Starfall EarthChain signed test-wallet ownership projection for approved cosmetic crossover display. This is not a new minting implementation. ASCENSION-native earned issuance remains gated on authoritative result verification and the trusted issuer.
 
 ## 1. Product rules
 - ASCENSION supports both gameplay-earned collectibles and curated limited releases.
@@ -101,3 +101,12 @@ No phase is considered complete based only on UI appearance. Require tests and i
 - Missing/expired verifier proof fails closed to standard cosmetics.
 - No secret material leaves the existing wallet boundary.
 - iPhone performance and wallet-switch/reconnect behavior are tested before release.
+
+## Existing Starfall wallet reuse (implemented client adapter)
+
+- Reuse the existing `earthchain.starfall.hosted.v1` signed view and `earthchain.no-server.v1` wallet address from the same-origin Portal wallet.
+- Pin verification to the existing Starfall hosted checkout configuration and verify the signed view, expiry, rollback guard, network, current wallet address, metadata hash, and Starfall ownership projection using the existing commerce module.
+- Only mapped Starfall assets receive visual crossover treatments in ASCENSION. The original asset remains a Starfall collectible; this adapter does not relabel it as an ASCENSION-native token.
+- No private key, password, bearer token, wallet unlock, purchase, or mint operation is performed by ASCENSION.
+- Any missing, stale, invalid, or mismatched proof fails closed to standard armor.
+- ASCENSION-native rewards remain separate and require trusted server-side replay validation plus issuer-side idempotency before issuance.
