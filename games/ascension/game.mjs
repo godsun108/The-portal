@@ -73,12 +73,42 @@ bindHold('#left',v=>leftHeld=v);bindHold('#right',v=>rightHeld=v);
 boostBtn.addEventListener('pointerdown',e=>{e.preventDefault();boostHeld=true;boostBtn.setPointerCapture(e.pointerId)});boostBtn.addEventListener('pointerup',()=>boostHeld=false);boostBtn.addEventListener('pointercancel',()=>boostHeld=false);boostBtn.addEventListener('lostpointercapture',()=>boostHeld=false);blastBtn.addEventListener('click',pulse);
 document.querySelector('#start').addEventListener('click',start);document.querySelector('#retry').addEventListener('click',start);
 
-document.querySelector('#share-run').addEventListener('click',()=>{
+document.querySelector('#share-run').addEventListener('click',async()=>{
+ const button=document.querySelector('#share-run');
  try{
   if(!game||game.recording.length<2)throw new Error('Complete a little more of the climb before sharing your run.');
-  downloadFriendRun(createFriendRun(game));
- }catch(error){document.querySelector('#endcopy').textContent=error.message||'Unable to create friend run.'}
+  const run=createFriendRun(game);
+  button.disabled=true;button.textContent='CREATING CHALLENGE…';
+  let hosted=null;
+  try{const response=await fetch('./api/challenges',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({run})});if(response.ok)hosted=await response.json()}catch{}
+  if(hosted?.id){
+   const url=new URL(location.href);url.search='?challenge='+hosted.id;url.hash='';
+   const shareData={title:'ASCENSION friend challenge',text:'Race my ASCENSION climb. Open this link within 24 hours:',url:url.href};
+   if(navigator.share){try{await navigator.share(shareData)}catch(error){if(error.name!=='AbortError')throw error}}
+   else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url.href);document.querySelector('#endcopy').textContent='CHALLENGE LINK COPIED. IT EXPIRES IN 24 HOURS. SEND IT TO YOUR FRIEND.'}
+   else{document.querySelector('#endcopy').textContent='CHALLENGE LINK: '+url.href}
+  }else{
+   downloadFriendRun(run);
+   document.querySelector('#endcopy').textContent='HOSTED LINK UNAVAILABLE HERE — EXPORTED A PORTABLE RUN FILE INSTEAD.';
+  }
+ }catch(error){document.querySelector('#endcopy').textContent=error.message||'Unable to create friend challenge.'}
+ finally{button.disabled=false;button.textContent='SHARE THIS RUN'}
 });
+async function loadHostedChallenge(){
+ const id=new URLSearchParams(location.search).get('challenge');
+ if(!id||!/^[a-f0-9]{20}$/.test(id))return;
+ try{
+  const response=await fetch('./api/challenges/'+id,{cache:'no-store'});
+  if(!response.ok)throw Error('That friend challenge has expired or is unavailable. Ask them to share a fresh run.');
+  const payload=await response.json();
+  importedGhost=payload.run;
+  const expires=new Date(payload.expiresAt).toLocaleString();
+  document.querySelector('#intro p').textContent='FRIEND CHALLENGE LOADED · '+importedGhost.height+' M · '+importedGhost.relics+' RELICS. Expires '+expires+'. Begin your climb to race their ghost.';
+  document.querySelector('#import-run').textContent='FRIEND CHALLENGE READY';
+ }catch(error){document.querySelector('#intro p').textContent=error.message||'Could not load this friend challenge.'}
+}
+loadHostedChallenge();
+
 const friendFile=document.querySelector('#friend-file');
 document.querySelector('#import-run').addEventListener('click',()=>friendFile.click());
 friendFile.addEventListener('change',async()=>{
