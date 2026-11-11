@@ -61,7 +61,7 @@ const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://localhost'),pathname=decodeURIComponent(url.pathname),ip=req.socket.remoteAddress||'unknown';
   if(pathname==='/api/challenges'&&req.method==='POST'){
    if(limited(ip))return send(res,429,{error:'rate_limited'});
-   const input=await bodyJson(req),run=validateFriendRun(input.run);
+   const input=await bodyJson(req);let run;try{run=validateFriendRun(input.run)}catch(error){error.status=400;throw error}
    prune();const id=randomUUID().replaceAll('-','').slice(0,20),createdAt=Date.now(),expiresAt=createdAt+TTL;
    challenges.set(id,{run,createdAt,expiresAt});
    await persist();
