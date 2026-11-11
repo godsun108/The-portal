@@ -21,9 +21,10 @@ An original portrait-first 2.5D vertical combat platformer. The four-world campa
 - Endless Ascension: platform/enemy progression continues beyond the campaign for score and relic records.
 
 ## Prototype boundary
-- Local-only game state; no wallet, purchases, multiplayer claims, external assets, or external runtime dependencies.
-- The campaign and core combat loop are playable; final art/audio balance and broader accessibility polish remain future quality passes.
-- Touch behavior must be tested on iPhone before promoting or cataloguing as live.
+- Core campaign and combat are playable in the standalone preview. Hosted friend challenges use the preview API and persistent staging storage.
+- The EarthChain Armory is a separate Portal-integrated page that reuses the existing Portal wallet and signed ECTEST commerce coordinator. It is a valueless test-network trial only; no public-chain NFT sale or live-chain mint is enabled.
+- ASCENSION's six-item collectible catalogue is defined and metadata-validated. Limited drops remain unavailable until the trusted issuer registers matching metadata and publishes signed offers. Earnable rewards remain disabled until authoritative replay verification and issuer-side deduplication are deployed.
+- Final art/audio balance, broader accessibility polish, and hands-on iPhone/desktop playtesting remain before public release.
 
 
 ## Ghost Climb prototype status
@@ -43,7 +44,7 @@ An original portrait-first 2.5D vertical combat platformer. The four-world campa
 
 ASCENSION reuses the existing Portal Starfall EarthChain test-wallet session and its pinned, signed ownership projection. It does not create another wallet or issue tokens from game code. When the same browser has a fresh verified Starfall ownership view, approved Starfall cosmetics can appear as ASCENSION-only visual armor treatments. The proof is short-lived; missing, expired, wrong-network, or invalid proof falls back to standard armor. Open the existing Starfall wallet checkout from the ASCENSION intro to connect or refresh the existing wallet session.
 
-This is a read-only crossover entitlement. ASCENSION-native earned collectibles and campaign rewards still require an authoritative game-result verifier and trusted issuer integration; a local score, relic count, or browser save never triggers minting.
+This is a read-only crossover entitlement. The ASCENSION Armory at `market.html` reuses the same Portal wallet and pinned ECTEST coordinator for signed ownership checks and (once the issuer lists canonical ASCENSION drops) signed test purchases. The current catalogue is not itself a mint or listing; no ASCENSION limited drop is purchasable until the issuer registers the exact metadata digest and signs an offer. ASCENSION-native earned collectibles and campaign rewards still require an authoritative game-result verifier and trusted issuer integration; a local score, relic count, or browser save never triggers minting.
 
 
 ## Four-world campaign loop
