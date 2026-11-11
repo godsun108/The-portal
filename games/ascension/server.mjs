@@ -62,6 +62,12 @@ const server=http.createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost'),pathname=decodeURIComponent(url.pathname),ip=req.socket.remoteAddress||'unknown';
   if(pathname==='/api/health'&&req.method==='GET')return send(res,200,{schema:'ascension.health.v1',status:'ok',service:'ascension-preview',storage:persistentStorage?'mounted-volume':'ephemeral-container',activeChallenges:challenges.size,friendRuns:'untrusted-ghost-only',achievementIssuance:false});
+  // The standalone game container intentionally excludes Portal wallet siblings.
+  // Send Armory visitors to the full Portal origin, where the existing wallet
+  // and signed ECTEST coordinator modules are available on the same origin.
+  if(pathname==='/market.html'&&req.method==='GET'){
+   res.writeHead(302,{location:'https://godsun108.github.io/The-portal/games/ascension/market.html','cache-control':'no-store'});res.end();return;
+  }
   if(pathname==='/api/challenges'&&req.method==='POST'){
    if(limited(ip))return send(res,429,{error:'rate_limited'});
    const input=await bodyJson(req);let run;try{run=validateFriendRun(input.run)}catch(error){error.status=400;throw error}
