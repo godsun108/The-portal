@@ -37,3 +37,10 @@ An original portrait-first 2.5D vertical combat platformer. This first playable 
 - Imported runs are size-bounded and validated for schema, sample count, monotonic timestamps, plausible height, and normalized horizontal coordinates.
 - Sharing is currently file-based and works across devices without a game account or network service. It is not yet server-hosted multiplayer, a ranked leaderboard, or on-chain achievement issuance.
 - Next milestones: hosted friend challenges with server-side replay validation, then read-only EarthChain test-wallet proof and independently verified test collectibles.
+
+
+## EarthChain / Starfall crossover
+
+ASCENSION reuses the existing Portal Starfall EarthChain test-wallet session and its pinned, signed ownership projection. It does not create another wallet or issue tokens from game code. When the same browser has a fresh verified Starfall ownership view, approved Starfall cosmetics can appear as ASCENSION-only visual armor treatments. The proof is short-lived; missing, expired, wrong-network, or invalid proof falls back to standard armor. Open the existing Starfall wallet checkout from the ASCENSION intro to connect or refresh the existing wallet session.
+
+This is a read-only crossover entitlement. ASCENSION-native earned collectibles and campaign rewards still require an authoritative game-result verifier and trusted issuer integration; a local score, relic count, or browser save never triggers minting.
