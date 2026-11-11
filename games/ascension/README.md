@@ -1,6 +1,6 @@
-# ASCENSION — prototype brief
+# ASCENSION — campaign build
 
-An original portrait-first 2.5D vertical combat platformer. This first playable slice establishes the movement and combat feel before campaign scope expands.
+An original portrait-first 2.5D vertical combat platformer. The four-world campaign is playable from the Gothic Bastion through the Buried Spire, with escalating boss encounters, survival pickups, personal-best ghosts, and hosted friend challenges.
 
 ## Creative identity
 - Original grimdark science-fiction universe; no borrowed Warhammer names, factions, characters, iconography, or designs.
@@ -17,12 +17,12 @@ An original portrait-first 2.5D vertical combat platformer. This first playable 
 6. Climb for distance, gather relics, and survive increasingly dense threats.
 
 ## Modes planned
-- Endless Ascension: endless platform/enemy progression, score and relic record.
-- Campaign: four world arcs — Gothic Bastion, Ashen Expanse, Foundry Orbit, The Buried Spire — each with authored encounters, a boss, and story fragments.
+- Campaign: four world arcs — Gothic Bastion, Ashen Expanse, Foundry Orbit, The Buried Spire — with boss gates and a final ASCENDED ending.
+- Endless Ascension: platform/enemy progression continues beyond the campaign for score and relic records.
 
 ## Prototype boundary
 - Local-only game state; no wallet, purchases, multiplayer claims, external assets, or external runtime dependencies.
-- This is a mechanics and visual-direction slice, not the complete campaign or final art.
+- The campaign and core combat loop are playable; final art/audio balance and broader accessibility polish remain future quality passes.
 - Touch behavior must be tested on iPhone before promoting or cataloguing as live.
 
 
@@ -48,8 +48,14 @@ This is a read-only crossover entitlement. ASCENSION-native earned collectibles 
 
 ## Four-world campaign loop
 
-The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. The endless climb beyond the fourth chapter is not the campaign completion condition.
+The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. Bosses now fire aimed and spreading projectile volleys, with a faster five-shot second phase below half health. Later campaign bosses attack more frequently. Defeated enemies can drop repair, boost, pulse-reset, and temporary shield pickups; every boss guarantees a repair and shield drop. A shield absorbs one hit and grants a short invulnerability window. The endless climb beyond the fourth chapter is not the campaign completion condition.
 
+
+## Combat update
+
+- Boss encounters now actively attack instead of serving as stationary health bars. Their projectile spread widens below half health and attack cadence increases across worlds.
+- Enemy kills can drop four tactical pickups: repair, boost refill, pulse reset, and temporary shield. Boss defeats guarantee repair and shield drops.
+- Combat rules are isolated in `combat.mjs` and covered by unit tests; shield absorption grants a brief hit-protection window to prevent same-frame multi-hit damage.
 
 ## Hosted friend links (preview service)
 
