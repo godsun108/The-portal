@@ -25,6 +25,9 @@ test('hosted friend challenge creates and retrieves a validated, expiring run',a
    if(!ready)await new Promise(resolve=>setTimeout(resolve,50));
   }
   assert.equal(ready,true,'server should start');
+  const health=await fetch(base+'/api/health');
+  assert.equal(health.status,200);
+  assert.deepEqual(await health.json(),{schema:'ascension.health.v1',status:'ok',service:'ascension-preview'});
   const created=await fetch(base+'/api/challenges',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({run})});
   assert.equal(created.status,201);
   const item=await created.json();
