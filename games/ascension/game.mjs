@@ -1,5 +1,5 @@
 import {createFriendRun,downloadFriendRun,readFriendRun} from './friend-run.mjs';
-import {verifiedAscensionCosmetics,applyAscensionCosmetic} from './earthchain-bridge.mjs';
+import {verifiedAscensionCosmetics} from './earthchain-bridge.mjs';
 import {WORLDS,nextBoss,bossHealth,campaignComplete} from './campaign.mjs';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),cabinet=document.querySelector('#cabinet');
 const heightEl=document.querySelector('#height'),chapterEl=document.querySelector('#chapter'),relicEl=document.querySelector('#relics'),armorEl=document.querySelector('#armor'),intro=document.querySelector('#intro'),end=document.querySelector('#end');
