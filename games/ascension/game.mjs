@@ -31,10 +31,10 @@ function update(dt){const g=game;if(!g?.alive)return;g.elapsed+=dt;g.fire-=dt;g.
  if(g.vy>0){for(const p of g.platforms){const py=p.y;if(oldY+22<=py&&g.y+22>=py&&g.x+13>p.x&&g.x-13<p.x+p.w){g.y=py-22;g.vy=-510;if(p.kind==='moving')p.used=true;burst(g.x,py,'#b58a50',4);break}}}
  if(g.boosting)burst(g.x+rand(-8,8),g.y+22,'#ffc66d',1);
  g.camera=Math.min(g.camera,g.y-H*.53);g.height=Math.max(g.height,-g.camera);g.score=Math.floor(g.height);sampleGhost(g);
- const gate=nextBoss(g.chapter);if(gate&&!g.boss&&g.height>=gate.bossAt){const hp=bossHealth(g.chapter);g.boss={x:W*.5,y:g.y-H*.62,vx:78,hp,maxHp:hp,dead:false,phase:0,isBoss:true};g.enemies.push(g.boss);burst(g.boss.x,g.boss.y,'#e0b7ff',32);}
+ const gate=nextBoss(g.chapter);if(gate&&!g.boss&&g.height>=gate.bossAt){const hp=bossHealth(g.chapter);g.boss={x:W*.5,y:g.y-H*.28,vx:78,hp,maxHp:hp,dead:false,phase:0,isBoss:true,entrance:1.2};g.enemies.push(g.boss);burst(g.boss.x,g.boss.y,'#e0b7ff',32);}
  spawnAhead();
  for(const p of g.platforms){if(p.kind==='moving')p.x=clamp(p.x+Math.sin(g.elapsed*1.7+p.phase)*48*dt,4,W-p.w-4)}
- for(const e of g.enemies){if(e.dead)continue;e.x+=e.vx*dt;if(e.x<(e.isBoss?54:20)||e.x>W-(e.isBoss?54:20))e.vx*=-1;e.phase+=dt*3}
+ for(const e of g.enemies){if(e.dead)continue;e.x+=e.vx*dt;if(e.x<(e.isBoss?54:20)||e.x>W-(e.isBoss?54:20))e.vx*=-1;e.phase+=dt*3;if(e.isBoss&&e.entrance>0){e.entrance=Math.max(0,e.entrance-dt);e.y+=Math.sin(e.phase*.7)*9*dt}}
  for(const e of g.enemies){if(!e.dead&&g.invuln<=0&&Math.hypot(e.x-g.x,e.y-g.y)<(e.isBoss?52:29)){g.hp--;g.invuln=1.25;g.vy=-360;burst(g.x,g.y,'#d75b48',18);if(g.hp<=0){finish();return}}}
  for(const s of g.shots){s.y+=s.vy*dt;s.life-=dt;for(const e of g.enemies){if(!e.dead&&Math.abs(s.x-e.x)<(e.isBoss?46:20)&&Math.abs(s.y-e.y)<(e.isBoss?48:22)){e.hp--;s.life=0;burst(e.x,e.y,'#ffc66d',5);if(e.hp<=0){e.dead=true;g.score+=e.isBoss?1200:80;burst(e.x,e.y,e.isBoss?'#e0b7ff':'#b58a50',e.isBoss?54:16);if(e.isBoss){g.boss=null;g.chapter++;if(campaignComplete(g.chapter)){finish(true);return}}}break}}}
  for(const r of g.relics){r.phase+=dt*2;if(!r.taken&&Math.hypot(r.x-g.x,r.y-g.y)<27){r.taken=true;g.count++;burst(r.x,r.y,'#ffc66d',15)}}
