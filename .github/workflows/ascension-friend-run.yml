@@ -1,0 +1,24 @@
+name: ASCENSION friend-run tests
+on:
+  pull_request:
+    paths:
+      - 'games/ascension/**'
+      - '.github/workflows/ascension-friend-run.yml'
+  push:
+    branches:
+      - feature/ascension-vertical-arcade-v1
+    paths:
+      - 'games/ascension/**'
+      - '.github/workflows/ascension-friend-run.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: games/ascension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
