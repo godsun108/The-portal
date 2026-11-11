@@ -44,3 +44,8 @@ An original portrait-first 2.5D vertical combat platformer. This first playable 
 ASCENSION reuses the existing Portal Starfall EarthChain test-wallet session and its pinned, signed ownership projection. It does not create another wallet or issue tokens from game code. When the same browser has a fresh verified Starfall ownership view, approved Starfall cosmetics can appear as ASCENSION-only visual armor treatments. The proof is short-lived; missing, expired, wrong-network, or invalid proof falls back to standard armor. Open the existing Starfall wallet checkout from the ASCENSION intro to connect or refresh the existing wallet session.
 
 This is a read-only crossover entitlement. ASCENSION-native earned collectibles and campaign rewards still require an authoritative game-result verifier and trusted issuer integration; a local score, relic count, or browser save never triggers minting.
+
+
+## Four-world campaign loop
+
+The playable ascent now has four authored chapter gates across the four environment palettes. Each chapter introduces a named boss with increasing health; automatic fire and pulse combat apply to the boss, and defeating all four opens the ASCENDED victory ending. The chapter HUD shows the current world, seal count, and active boss health. The endless climb beyond the fourth chapter is not the campaign completion condition.
