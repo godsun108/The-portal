@@ -1,7 +1,8 @@
+import {createFriendRun,downloadFriendRun,readFriendRun} from './friend-run.mjs';
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),cabinet=document.querySelector('#cabinet');
 const heightEl=document.querySelector('#height'),relicEl=document.querySelector('#relics'),armorEl=document.querySelector('#armor'),intro=document.querySelector('#intro'),end=document.querySelector('#end');
 const boostBtn=document.querySelector('#boost'),blastBtn=document.querySelector('#blast'),controls=document.querySelector('.controls');
-let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false,leftHeld=false,rightHeld=false;
+let W=360,H=640,D=1,raf=0,last=0,game=null,pointer=null,boostHeld=false,leftHeld=false,rightHeld=false,importedGhost=null;
 const GHOST_KEY='ascension.ghost.v1',GHOST_SCHEMA=1,GHOST_SAMPLE=.1;
 function loadBestGhost(){try{const raw=localStorage.getItem(GHOST_KEY);if(!raw)return null;const data=JSON.parse(raw);if(data.schema!==GHOST_SCHEMA||!Array.isArray(data.samples)||data.samples.length<2||data.samples.length>12000||!Number.isFinite(data.height))return null;let prev=-1;for(const s of data.samples){if(!Array.isArray(s)||s.length!==3||!s.every(Number.isFinite)||s[0]<=prev||s[1]<0||s[2]<0||s[2]>1)return null;prev=s[0]}return data}catch{return null}}
 function saveBestGhost(g){if(!g?.recording||g.recording.length<2)return false;const old=loadBestGhost();if(old&&old.height>=g.height)return false;const data={schema:GHOST_SCHEMA,height:Math.floor(g.height),relics:g.count,duration:g.elapsed,samples:g.recording.slice(0,12000)};try{localStorage.setItem(GHOST_KEY,JSON.stringify(data));return true}catch{return false}}
@@ -12,7 +13,7 @@ function resize(){D=Math.min(devicePixelRatio||1,2);const r=cabinet.getBoundingC
 new ResizeObserver(resize).observe(cabinet);resize();
 function platform(y,x=rand(20,W-100),w=rand(62,96),kind='solid'){return{x,y,w,h:10,kind,phase:rand(0,6.28),used:false}}
 function start(){cancelAnimationFrame(raf);pointer=null;boostHeld=false;leftHeld=false;rightHeld=false;const ps=[platform(H-100,W*.38,100)];for(let i=1;i<12;i++)ps.push(platform(H-100-i*78,rand(12,W-92),rand(62,98),i%7===0?'moving':'solid'));
- game={x:W*.5,y:H-142,vx:0,vy:-470,camera:0,platforms:ps,enemies:[],shots:[],sparks:[],relics:[],height:0,count:0,boost:100,boosting:false,pulse:0,hp:3,invuln:0,score:0,alive:true,elapsed:0,fire:0,spawnY:-900,recording:[],lastGhostSample:-1,ghost:loadBestGhost()};
+ game={x:W*.5,y:H-142,vx:0,vy:-470,camera:0,platforms:ps,enemies:[],shots:[],sparks:[],relics:[],height:0,count:0,boost:100,boosting:false,pulse:0,hp:3,invuln:0,score:0,alive:true,elapsed:0,fire:0,spawnY:-900,recording:[],lastGhostSample:-1,ghost:importedGhost||loadBestGhost()};
  intro.hidden=true;end.hidden=true;last=performance.now();raf=requestAnimationFrame(loop)}
 function finish(){if(!game?.alive)return;game.alive=false;cancelAnimationFrame(raf);const becameBest=saveBestGhost(game);document.querySelector('#endtag').textContent=becameBest?'NEW PERSONAL GHOST':'ASCENT RECORDED';document.querySelector('#endtitle').textContent='FALLEN';document.querySelector('#endcopy').textContent='HEIGHT '+Math.floor(game.height)+' M · RELICS '+game.count+'. '+(becameBest?'YOUR NEW BEST CLIMB IS SAVED AS A GHOST.':'THE SPIRE REMEMBERS.');end.hidden=false}
 function burst(x,y,color,n=12){for(let i=0;i<n;i++){const a=rand(0,Math.PI*2),s=rand(40,210);game.sparks.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:rand(.2,.6),max:.6,color})}}
@@ -48,6 +49,7 @@ function draw(){const g=game;if(!g)return;const zone=ZONES[Math.min(ZONES.length
  for(const p of g.platforms){ctx.fillStyle=zone.layers[2];ctx.fillRect(p.x,p.y,p.w,p.h);ctx.fillStyle=zone.platform;ctx.fillRect(p.x,p.y,p.w,2);ctx.fillStyle=zone.edge;ctx.fillRect(p.x+5,p.y+5,p.w-10,2);ctx.fillStyle='#474047';ctx.fillRect(p.x+9,p.y+10,4,7)}
  for(const r of g.relics){ctx.save();ctx.translate(r.x,r.y);ctx.rotate(Math.sin(r.phase)*.25);ctx.shadowBlur=18;ctx.shadowColor='#ffc66d';ctx.fillStyle='#ffc66d';ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(8,0);ctx.lineTo(0,10);ctx.lineTo(-8,0);ctx.closePath();ctx.fill();ctx.restore()}
  for(const e of g.enemies){ctx.save();ctx.translate(e.x,e.y);ctx.fillStyle=zone.enemy;ctx.shadowBlur=14;ctx.shadowColor='#b34c38';ctx.beginPath();ctx.moveTo(0,-15);ctx.lineTo(15,0);ctx.lineTo(0,15);ctx.lineTo(-15,0);ctx.closePath();ctx.fill();ctx.fillStyle='#ffc66d';ctx.fillRect(-4,-2,8,4);ctx.restore()}
+ const rival=ghostAt(g.ghost,g.elapsed);if(rival){const gx=rival.x*W,gy=-rival.height;ctx.save();ctx.translate(gx,gy);ctx.globalAlpha=.34;ctx.fillStyle='#8de2d5';ctx.strokeStyle='#8de2d5';ctx.lineWidth=2;ctx.fillRect(-13,-5,26,23);ctx.strokeRect(-13,-5,26,23);ctx.beginPath();ctx.roundRect(-9,-25,18,19,5);ctx.fill();ctx.fillStyle='#e0fff7';ctx.fillRect(-5,-16,10,3);ctx.restore()}
  for(const s of g.shots){ctx.fillStyle='#ffc66d';ctx.shadowBlur=12;ctx.shadowColor='#ffc66d';ctx.fillRect(s.x-2,s.y-9,4,14);ctx.shadowBlur=0}
  // armored warrior silhouette, heavy shoulders, helmet, bronze plates, twin jetpack
  ctx.save();ctx.translate(g.x,g.y);ctx.globalAlpha=g.invuln>0&&Math.floor(g.elapsed*14)%2===0?.35:1;if(g.boosting){ctx.fillStyle='#ffc66d';ctx.shadowBlur=18;ctx.shadowColor='#ff9d3d';ctx.beginPath();ctx.moveTo(-8,19);ctx.lineTo(-3,42+rand(0,9));ctx.lineTo(0,23);ctx.fill();ctx.beginPath();ctx.moveTo(5,19);ctx.lineTo(10,40+rand(0,9));ctx.lineTo(13,20);ctx.fill()}
@@ -65,6 +67,24 @@ for(const type of ['contextmenu','selectstart','dragstart'])document.addEventLis
 bindHold('#left',v=>leftHeld=v);bindHold('#right',v=>rightHeld=v);
 boostBtn.addEventListener('pointerdown',e=>{e.preventDefault();boostHeld=true;boostBtn.setPointerCapture(e.pointerId)});boostBtn.addEventListener('pointerup',()=>boostHeld=false);boostBtn.addEventListener('pointercancel',()=>boostHeld=false);boostBtn.addEventListener('lostpointercapture',()=>boostHeld=false);blastBtn.addEventListener('click',pulse);
 document.querySelector('#start').addEventListener('click',start);document.querySelector('#retry').addEventListener('click',start);
+
+document.querySelector('#share-run').addEventListener('click',()=>{
+ try{
+  if(!game||game.recording.length<2)throw new Error('Complete a little more of the climb before sharing your run.');
+  downloadFriendRun(createFriendRun(game));
+ }catch(error){document.querySelector('#endcopy').textContent=error.message||'Unable to create friend run.'}
+});
+const friendFile=document.querySelector('#friend-file');
+document.querySelector('#import-run').addEventListener('click',()=>friendFile.click());
+friendFile.addEventListener('change',async()=>{
+ try{
+  importedGhost=await readFriendRun(friendFile.files?.[0]);
+  document.querySelector('#intro p').textContent='FRIEND RUN LOADED · '+importedGhost.height+' M · '+importedGhost.relics+' RELICS. Begin your climb to race their translucent replay.';
+  document.querySelector('#import-run').textContent='FRIEND RUN READY';
+ }catch(error){document.querySelector('#intro p').textContent=error.message||'Could not load that run.'}
+ finally{friendFile.value=''}
+});
+
 
 // Keyboard support for desktop browsers; the same game loop serves touch, mouse, and keyboard.
 const heldKeys=new Set();
