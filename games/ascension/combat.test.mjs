@@ -1,6 +1,6 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {bossAttackCadence,bossVolley,applyPickupEffect} from './combat.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {bossAttackCadence,bossVolley,applyPickupEffect,pulseDamage} from './combat.mjs';
 test('boss attacks accelerate with campaign progress and phase two',()=>{assert.ok(bossAttackCadence(3,0)<bossAttackCadence(0,0));assert.ok(bossAttackCadence(1,1)<bossAttackCadence(1,0));assert.ok(bossAttackCadence(99,1)>=.62)});
 test('boss volleys aim at the player and widen in phase two',()=>{const a=bossVolley(0,0,100,100,100,300),b=bossVolley(3,1,100,100,100,300);assert.equal(a.length,3);assert.equal(b.length,5);assert.ok(a[1].vy>0);assert.ok(b.every(s=>Number.isFinite(s.vx)&&Number.isFinite(s.vy)))});
 test('pickups restore only their intended resource',()=>{const base={hp:2,boost:60,pulse:3,shield:0};assert.equal(applyPickupEffect('repair',base).hp,3);assert.equal(applyPickupEffect('boost',base).boost,100);assert.equal(applyPickupEffect('pulse',base).pulse,0);assert.equal(applyPickupEffect('shield',base).shield,8);assert.equal(applyPickupEffect('repair',{...base,hp:3}).hp,3)});
 
-test('pulse clears ordinary enemies and damages bosses without skipping campaign kill thresholds',()=>{assert.equal(pulseDamage(2,false),2);assert.equal(pulseDamage(18,true),6);assert.equal(pulseDamage(3,true),3)});
+test('pulse clears ordinary enemies and applies bounded boss damage',()=>{assert.equal(pulseDamage(2,false),2);assert.equal(pulseDamage(18,true),6);assert.equal(pulseDamage(3,true),3)});
