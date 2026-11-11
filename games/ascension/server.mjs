@@ -11,6 +11,7 @@ const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset
 const MAX_BODY=2_000_000,TTL=24*60*60*1000,MAX_CHALLENGES=1000,MAX_RATE_ENTRIES=10000;
 const challenges=new Map(),rate=new Map();
 let persistQueue=Promise.resolve();
+const persistentStorage=Boolean(process.env.ASCENSION_DATA_DIR);
 const send=(res,status,body)=>{res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(body))};
 function limited(ip){
  const now=Date.now();
@@ -34,7 +35,8 @@ function prune(){
 }
 async function persist(){
  const snapshot=JSON.stringify([...challenges.entries()]);
- persistQueue=persistQueue.then(async()=>{
+ // A failed write must not poison the queue forever; the next request may retry.
+ persistQueue=persistQueue.catch(()=>{}).then(async()=>{
   await mkdir(dataDir,{recursive:true});
   const temp=storeFile+'.tmp';
   await writeFile(temp,snapshot,{encoding:'utf8',mode:0o600});
@@ -59,21 +61,21 @@ async function hydrate(){
 const server=http.createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost'),pathname=decodeURIComponent(url.pathname),ip=req.socket.remoteAddress||'unknown';
-  if(pathname==='/api/health'&&req.method==='GET')return send(res,200,{schema:'ascension.health.v1',status:'ok',service:'ascension-preview'});
+  if(pathname==='/api/health'&&req.method==='GET')return send(res,200,{schema:'ascension.health.v1',status:'ok',service:'ascension-preview',storage:persistentStorage?'mounted-volume':'ephemeral-container',activeChallenges:challenges.size,friendRuns:'untrusted-ghost-only',achievementIssuance:false});
   if(pathname==='/api/challenges'&&req.method==='POST'){
    if(limited(ip))return send(res,429,{error:'rate_limited'});
    const input=await bodyJson(req);let run;try{run=validateFriendRun(input.run)}catch(error){error.status=400;throw error}
    prune();const id=randomUUID().replaceAll('-','').slice(0,20),createdAt=Date.now(),expiresAt=createdAt+TTL;
    challenges.set(id,{run,createdAt,expiresAt});
    await persist();
-   return send(res,201,{id,createdAt,expiresAt,sharePath:'?challenge='+id});
+   return send(res,201,{id,createdAt,expiresAt,sharePath:'?challenge='+id,trust:'unverified-friend-ghost',achievementEligible:false});
   }
   const challengeId=pathname.startsWith('/api/challenges/')?pathname.slice('/api/challenges/'.length):'';
   const match=/^[a-f0-9]{20}$/.test(challengeId)?[null,challengeId]:null;
   if(match&&req.method==='GET'){
    const item=challenges.get(match[1]);
    if(!item||item.expiresAt<=Date.now()){challenges.delete(match[1]);return send(res,404,{error:'challenge_not_found_or_expired'})}
-   return send(res,200,{run:item.run,createdAt:item.createdAt,expiresAt:item.expiresAt});
+   return send(res,200,{run:item.run,createdAt:item.createdAt,expiresAt:item.expiresAt,trust:'unverified-friend-ghost',achievementEligible:false});
   }
   if(pathname.startsWith('/api/'))return send(res,404,{error:'not_found'});
   const rel=pathname==='/'?'/index.html':pathname,file=resolve(root,'.'+rel);
