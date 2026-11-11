@@ -67,7 +67,8 @@ const server=http.createServer(async(req,res)=>{
    await persist();
    return send(res,201,{id,createdAt,expiresAt,sharePath:'?challenge='+id});
   }
-  const match=pathname.match(/^\\/api\\/challenges\\/([a-f0-9]{20})$/);
+  const challengeId=pathname.startsWith('/api/challenges/')?pathname.slice('/api/challenges/'.length):'';
+  const match=/^[a-f0-9]{20}$/.test(challengeId)?[null,challengeId]:null;
   if(match&&req.method==='GET'){
    const item=challenges.get(match[1]);
    if(!item||item.expiresAt<=Date.now()){challenges.delete(match[1]);return send(res,404,{error:'challenge_not_found_or_expired'})}
