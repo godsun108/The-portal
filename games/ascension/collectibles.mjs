@@ -9,19 +9,20 @@
 export const ASCENSION_ASSET_SCHEMA='earthchain.game-collectible.v1';
 export const ASCENSION_GAME_ID='ascension';
 
-const cosmetic=(id,name,kind,rarity,acquisition,visual,extra={})=>Object.freeze({
-  schema:ASCENSION_ASSET_SCHEMA,
-  gameId:ASCENSION_GAME_ID,
-  tokenId:'ascension-'+id,
-  assetId:id,
-  name,
-  kind,
-  rarity,
-  acquisition:Object.freeze(acquisition),
-  visual:Object.freeze(visual),
-  gameplay:Object.freeze({damage:0,armor:0,boost:0,pulse:0,scoreMultiplier:0}),
-  ...extra
-});
+const cosmetic=(id,name,kind,rarity,acquisition,visual,extra={})=>{
+  const tokenId='ascension-'+id;
+  const metadata=Object.freeze({
+    schema:ASCENSION_ASSET_SCHEMA,gameId:ASCENSION_GAME_ID,
+    assetId:id,tokenId,testOnly:true,kind,rarity,visual:Object.freeze(visual)
+  });
+  return Object.freeze({
+    schema:ASCENSION_ASSET_SCHEMA,gameId:ASCENSION_GAME_ID,
+    tokenId,assetId:id,name,kind,rarity,
+    acquisition:Object.freeze(acquisition),visual:Object.freeze(visual),
+    gameplay:Object.freeze({damage:0,armor:0,boost:0,pulse:0,scoreMultiplier:0}),
+    metadata,...extra
+  });
+};
 
 export const ASCENSION_COLLECTIBLES=Object.freeze([
   cosmetic('sealbreaker-crest','Sealbreaker Crest','emblem','rare',
@@ -54,6 +55,7 @@ export function validateAscensionCollectible(item){
   if(!canonical||canonical.tokenId!==item.tokenId||canonical.name!==item.name)return false;
   if(JSON.stringify(canonical.acquisition)!==JSON.stringify(item.acquisition))return false;
   if(JSON.stringify(canonical.gameplay)!==JSON.stringify(item.gameplay))return false;
+  if(JSON.stringify(canonical.metadata)!==JSON.stringify(item.metadata))return false;
   return true;
 }
 
