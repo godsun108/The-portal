@@ -1,7 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {webcrypto} from 'node:crypto';
-globalThis.crypto=webcrypto;
 import {ASCENSION_COLLECTIBLES} from './collectibles.mjs';
 import {hash,ascensionCollectibles} from '../starfall/commerce/browser-commerce.mjs';
 
