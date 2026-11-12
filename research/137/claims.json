@@ -1,0 +1,204 @@
+{
+  "version": "1.0.0",
+  "project": "Project 137",
+  "updated": "2026-11-12",
+  "claims": [
+    {
+      "id": "alpha.value.low-energy",
+      "statement": "The low-energy fine-structure constant is approximately 1/137.035999, with the precise recommended value depending on the adopted CODATA adjustment and measurement context.",
+      "grade": "A",
+      "domain": [
+        "QED",
+        "fundamental-constants"
+      ],
+      "claim_type": "measured-parameter",
+      "status": "accepted",
+      "scope": "The inverse is near 137 but is not exactly the integer 137.",
+      "limitations": "Use the latest CODATA recommended value for precision work; do not present 137 as the exact inverse.",
+      "sources": [
+        "nist.codata.constants"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        1,
+        4,
+        5,
+        8,
+        15,
+        16,
+        18,
+        19
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "alpha.dimensionless",
+      "statement": "The fine-structure constant is dimensionless and characterizes the strength of electromagnetic interaction in the relevant regime.",
+      "grade": "A",
+      "domain": [
+        "QED",
+        "fundamental-constants"
+      ],
+      "claim_type": "theoretical-and-measured",
+      "status": "accepted",
+      "scope": "Its numerical value is independent of the choice of measurement units.",
+      "limitations": "The effective electromagnetic coupling runs with energy scale; specify the regime.",
+      "sources": [
+        "nist.codata.constants",
+        "cern.standard-model"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        1,
+        2,
+        3,
+        4,
+        8,
+        18
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "alpha.running",
+      "statement": "The effective electromagnetic coupling depends on energy scale because of quantum corrections including vacuum polarization.",
+      "grade": "A",
+      "domain": [
+        "QED",
+        "renormalization"
+      ],
+      "claim_type": "theoretical-and-experimental",
+      "status": "accepted",
+      "scope": "The inverse coupling is lower at electroweak scales than in the low-energy limit.",
+      "limitations": "Numerical values depend on scheme and scale; state conventions when quoting them.",
+      "sources": [
+        "cern.standard-model"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        2,
+        3,
+        4,
+        8
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "golden-angle.value",
+      "statement": "The golden angle is approximately 137.508 degrees and arises from the golden ratio in an idealized divergence-angle construction.",
+      "grade": "A",
+      "domain": [
+        "mathematics",
+        "phyllotaxis"
+      ],
+      "claim_type": "mathematical",
+      "status": "accepted",
+      "scope": "Some plant arrangements approximate related phyllotactic patterns.",
+      "limitations": "Biological patterns vary; the golden angle is not universal. Numerical proximity to inverse alpha does not establish a physical connection.",
+      "sources": [
+        "mathworld.golden-angle"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        15
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "alpha.golden-angle-no-link",
+      "statement": "There is no established physical derivation connecting the golden angle to the inverse fine-structure constant.",
+      "grade": "A",
+      "domain": [
+        "fundamental-constants",
+        "mathematics"
+      ],
+      "claim_type": "evidence-boundary",
+      "status": "accepted",
+      "scope": "The numerical resemblance is not evidence of a causal or theoretical relationship.",
+      "limitations": "A future claim would require a precise mechanism and independent, risky predictions.",
+      "sources": [
+        "nist.codata.constants",
+        "mathworld.golden-angle"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        1,
+        15,
+        19
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "quantum-consciousness",
+      "statement": "There is no accepted experimental evidence that human consciousness is required for quantum measurement outcomes or causes wavefunction collapse.",
+      "grade": "B",
+      "domain": [
+        "quantum-foundations",
+        "neuroscience"
+      ],
+      "claim_type": "interpretive-boundary",
+      "status": "accepted",
+      "scope": "Physical interactions with detectors and environments are sufficient to produce decoherence.",
+      "limitations": "The measurement problem remains debated; decoherence alone does not settle every interpretive question.",
+      "sources": [
+        "nobel.quantum-entanglement"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        6,
+        12,
+        18
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "quantum-gravity-unsolved",
+      "statement": "A complete experimentally confirmed theory unifying quantum mechanics with general relativity has not been established.",
+      "grade": "A",
+      "domain": [
+        "quantum-gravity",
+        "unification"
+      ],
+      "claim_type": "consensus-status",
+      "status": "accepted",
+      "scope": "String theory, loop quantum gravity, and emergent-spacetime approaches remain research programs.",
+      "limitations": "Individual approaches have mathematical results and domain-specific successes; this statement concerns complete empirical confirmation.",
+      "sources": [
+        "cern.standard-model",
+        "nasa.universe"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        3,
+        5,
+        8,
+        10,
+        18,
+        19
+      ],
+      "last_reviewed": "2026-11-12"
+    },
+    {
+      "id": "life-origin-unsolved",
+      "statement": "The transition from prebiotic chemistry to the first evolving life remains unresolved; several research hypotheses are under investigation.",
+      "grade": "A",
+      "domain": [
+        "origin-of-life",
+        "astrobiology"
+      ],
+      "claim_type": "research-status",
+      "status": "accepted",
+      "scope": "RNA-world, metabolism-first, and compartment-first ideas are not mutually exclusive in all formulations.",
+      "limitations": "No complete, experimentally established pathway from geochemistry to the last universal common ancestor is known.",
+      "sources": [
+        "nasa.astrobiology"
+      ],
+      "challenges": [],
+      "exhibit_chapters": [
+        13,
+        14,
+        19
+      ],
+      "last_reviewed": "2026-11-12"
+    }
+  ]
+}
