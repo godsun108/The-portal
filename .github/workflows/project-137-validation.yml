@@ -4,10 +4,12 @@ on:
   push:
     paths:
       - "research/137/**"
+      - "137/research/**"
       - ".github/workflows/project-137-validation.yml"
   pull_request:
     paths:
       - "research/137/**"
+      - "137/research/**"
       - ".github/workflows/project-137-validation.yml"
   workflow_dispatch:
 
@@ -22,3 +24,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Validate research records
         run: python research/137/scripts/validate.py
+      - name: Validate Research Desk JavaScript
+        run: python research/137/scripts/validate_desk.py
