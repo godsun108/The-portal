@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070912">
+<meta name="description" content="An immersive, interactive visual journey into the fine-structure constant and the architecture of the atom.">
+<title>137 · THE OBSERVATORY</title>
+<style>
+:root{color-scheme:dark;--bg:#070912;--panel:#101625;--panel2:#151d2d;--ink:#f4f1e9;--muted:#a8b0c2;--line:#29344a;--gold:#e9cb8c;--cyan:#83dce8;--violet:#b7a0ff;--green:#9ad8b2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#202644 0%,#0a0d18 42%,var(--bg) 76%);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--cyan)}button,input{font:inherit}.wrap{width:min(1120px,100% - 36px);margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;color:var(--muted);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase}.top a{text-decoration:none}.hero{min-height:690px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:24px;padding:35px 0 75px}.eyebrow{color:var(--gold);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase}.hero h1{font-size:clamp(5.5rem,17vw,12rem);line-height:.8;letter-spacing:-.09em;margin:24px 0;color:transparent;background:linear-gradient(145deg,#fff4d8 10%,#e7c98d 48%,#8ca6c9 95%);background-clip:text}.hero h2{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:450;line-height:1.2;max-width:520px;margin:25px 0}.lede{color:var(--muted);max-width:490px}.hero-art{position:relative;min-height:440px;display:grid;place-items:center}.orbital{width:min(100%,490px);aspect-ratio:1;filter:drop-shadow(0 0 35px #718bc333)}.orbit{fill:none;stroke:#91b6d966;stroke-width:1.1}.orbit:nth-child(2){transform:rotate(60deg);transform-origin:center}.orbit:nth-child(3){transform:rotate(-60deg);transform-origin:center}.nucleus{fill:#f3d99e;filter:drop-shadow(0 0 18px #f0ca7d)}.electron{fill:#a9efff;filter:drop-shadow(0 0 12px #72dfff)}.ring{fill:none;stroke:#9b8cff66;stroke-width:1;stroke-dasharray:3 8;animation:spin 42s linear infinite;transform-origin:250px 250px}@keyframes spin{to{transform:rotate(360deg)}}.scroll{color:var(--muted);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;margin-top:35px}.section{padding:76px 0;border-top:1px solid var(--line)}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:28px}.section h2{font-size:clamp(2rem,6vw,4rem);line-height:1.02;letter-spacing:-.055em;margin:10px 0}.section p{color:var(--muted);max-width:650px}.tag{display:inline-flex;border:1px solid #4b5368;border-radius:99px;padding:6px 10px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{background:linear-gradient(145deg,#151c2cdd,#0c111dcc);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 20px 70px #0003}.canvasbox{height:340px;position:relative;overflow:hidden;border-radius:15px;background:radial-gradient(circle at center,#1c2942,#080d18 68%)}canvas{width:100%;height:100%;display:block}.overlay{position:absolute;left:15px;bottom:12px;color:#b8c5d8;font-size:.72rem}.stat{font-size:clamp(2.5rem,7vw,4.8rem);letter-spacing:-.07em;color:var(--gold);line-height:1.1}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#f1dfb7;background:#0a0e18;border:1px solid #30384a;border-radius:12px;padding:15px;overflow-wrap:anywhere}.controls{display:flex;align-items:center;gap:12px;margin:20px 0}.controls input{width:100%;accent-color:var(--gold)}.readout{font-variant-numeric:tabular-nums;color:var(--cyan);font-size:1.2rem}.small{font-size:.82rem;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.mini{background:#101625;border:1px solid var(--line);border-radius:18px;padding:18px;min-height:170px}.mini strong{display:block;font-size:1.05rem;margin:8px 0}.mini p{font-size:.86rem;margin:0}.number{font-size:2.4rem;color:var(--gold);letter-spacing:-.06em}.caution{border-left:2px solid var(--violet);padding:12px 16px;background:#17152a;color:#c6c0dc;border-radius:0 12px 12px 0;font-size:.85rem}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.btn{border:1px solid #59647c;background:#192236;color:var(--ink);padding:11px 15px;border-radius:99px;cursor:pointer}.btn.primary{background:var(--gold);border-color:var(--gold);color:#15120c}.btn:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.footer{padding:40px 0 65px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}.footer a{margin-right:16px}
+@media(max-width:760px){.hero{grid-template-columns:1fr;min-height:auto;padding:55px 0 60px}.hero-art{min-height:310px;grid-row:1}.orbital{max-width:340px}.hero-copy{grid-row:2}.grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.section{padding:55px 0}.section-head{display:block}.canvasbox{height:280px}.top{font-size:.65rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<header class="wrap top"><a href="../index.html">← THE 137 EXHIBIT</a><span>INQUIRY / OBSERVATORY 001</span></header>
+<main>
+<section class="wrap hero">
+ <div class="hero-art" aria-label="Stylized visualization of an atom with orbital probability shapes">
+  <svg class="orbital" viewBox="0 0 500 500" role="img" aria-label="Illustrative atomic orbital visualization">
+   <circle class="ring" cx="250" cy="250" r="225"/>
+   <ellipse class="orbit" cx="250" cy="250" rx="205" ry="78"/>
+   <ellipse class="orbit" cx="250" cy="250" rx="205" ry="78" transform="rotate(60 250 250)"/>
+   <ellipse class="orbit" cx="250" cy="250" rx="205" ry="78" transform="rotate(-60 250 250)"/>
+   <circle class="nucleus" cx="250" cy="250" r="12"/>
+   <circle class="electron" cx="250" cy="45" r="5"><animate attributeName="opacity" values=".45;1;.45" dur="2.4s" repeatCount="indefinite"/></circle>
+   <circle cx="250" cy="250" r="34" fill="none" stroke="#f1d49a" stroke-opacity=".25"/>
+  </svg>
+ </div>
+ <div class="hero-copy"><div class="eyebrow">A journey into the architecture of reality</div><h1>137</h1><h2>A small number at the edge of a very big mystery.</h2><p class="lede">Enter the fine-structure constant: the dimensionless strength of electromagnetism. Follow its fingerprints from atomic structure to quantum fields—and see where knowledge ends and the questions begin.</p><div class="actions"><a class="btn primary" href="#constant">Explore the constant ↓</a><a class="btn" href="#interaction">Watch an interaction</a></div><div class="scroll">Scroll to explore · designed for touch</div></div>
+</section>
+<section class="section" id="constant"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">01 / The measured constant</div><h2>Not exactly 137.</h2></div><span class="tag">Established science</span></div>
+ <div class="grid">
+  <div class="panel"><div class="small">Low-energy inverse fine-structure constant</div><div class="stat">137.035999</div><p>The famous 137 is a memorable approximation. The measured low-energy value is more precise—and the constant itself is dimensionless.</p><div class="formula">α = e² / (4π ε₀ ℏ c)</div></div>
+  <div class="panel"><div class="small">Why dimensionless matters</div><p>It compares the strength of electromagnetic interaction without depending on our choice of units. That makes it a particularly meaningful number to compare across experiments and theories.</p><p class="small">The value shown is rounded for display. Consult CODATA for the recommended value and uncertainty.</p><a href="https://physics.nist.gov/constants" target="_blank" rel="noopener">Explore NIST fundamental constants ↗</a></div>
+ </div>
+</div></section>
+<section class="section" id="interaction"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">02 / A quantum encounter</div><h2>Fields meet particles.</h2></div><span class="tag">Conceptual visualization</span></div>
+ <div class="grid">
+  <div class="panel"><div class="canvasbox"><canvas id="field" aria-label="Animated conceptual visualization of a photon wave approaching an electron"></canvas><div class="overlay">SCHEMATIC · NOT A LITERAL PARTICLE TRAJECTORY</div></div><div class="actions"><button class="btn primary" id="play">Pause animation</button><button class="btn" id="pulse">Send a photon</button></div></div>
+  <div class="panel"><div class="small">The interaction strength changes with energy</div><h3>One coupling. Different scales.</h3><p>In quantum electrodynamics, vacuum polarization makes the effective electromagnetic coupling depend on the energy scale at which it is measured.</p><label for="energy" class="small">Move from low energy toward the Z-boson scale</label><div class="controls"><input id="energy" type="range" min="0" max="100" value="0" aria-label="Energy scale from low energy to Z boson scale"></div><div class="readout" id="alphaValue">α⁻¹ ≈ 137.036</div><p class="small" id="energyLabel">Low-energy reference</p><div class="caution">The slider interpolates between two reference values to illustrate running coupling. It is not a precision renormalization-group calculator.</div></div>
+ </div>
+</div></section>
+<section class="section"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">03 / From constant to cosmos</div><h2>Follow the consequences.</h2></div><span class="tag">Established science</span></div>
+ <div class="cards">
+  <article class="mini"><div class="number">01</div><strong>Atomic structure</strong><p>Electromagnetic interactions help determine atomic energy levels and the structure of matter.</p></article>
+  <article class="mini"><div class="number">02</div><strong>Light & matter</strong><p>Alpha governs the strength of electromagnetic coupling in quantum electrodynamics.</p></article>
+  <article class="mini"><div class="number">03</div><strong>Cosmic fingerprints</strong><p>Atomic spectra from distant objects let researchers constrain whether physical constants could have changed.</p></article>
+ </div>
+</div></section>
+<section class="section"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">04 / A beautiful coincidence?</div><h2>137.036 meets 137.508°.</h2></div><span class="tag">Open exploration</span></div>
+ <div class="grid">
+  <div class="panel"><div class="small">Inverse fine-structure constant</div><div class="stat">137.036</div><p>A dimensionless physical coupling written as its inverse.</p></div>
+  <div class="panel"><div class="small">Golden angle</div><div class="stat">137.508°</div><p>An angle associated with efficient packing patterns in some plant growth arrangements.</p></div>
+ </div>
+ <p class="caution" style="margin-top:16px">The numerical resemblance is intriguing, but these quantities describe different things. No established physical theory derives one from the other. A visual comparison is not evidence of a causal connection.</p>
+</div></section>
+<section class="section"><div class="wrap">
+ <div class="section-head"><div><div class="eyebrow">05 / The frontier</div><h2>The question remains.</h2></div><span class="tag">Active research</span></div>
+ <div class="panel"><h3>Why this value?</h3><p>We can measure the fine-structure constant with extraordinary precision and calculate how it behaves across energy scales. But no experimentally confirmed deeper theory explains why its low-energy value is what it is.</p><p>That is the open door: not a solved mystery, but a well-defined question.</p><div class="actions"><a class="btn primary" href="../research/">Open the research desk ↗</a><a class="btn" href="../index.html">Return to all 19 chapters ↗</a></div></div>
+</div></section>
+</main>
+<footer class="wrap footer"><strong>THE 137 OBSERVATORY</strong><p>Visual models are labeled by evidence status. The atomic artwork and interaction animation are explanatory illustrations, not direct images of quantum events.</p><a href="https://physics.nist.gov/constants">NIST constants</a><a href="https://home.cern/science/physics/standard-model">CERN · Standard Model</a><a href="../research/">Research Desk</a></footer>
+<script>
+(()=>{'use strict';
+const canvas=document.getElementById('field'),ctx=canvas.getContext('2d'),play=document.getElementById('play'),pulse=document.getElementById('pulse');
+let running=true,t=0,burst=0,raf=0;
+function size(){const r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(r.width*d));canvas.height=Math.max(1,Math.floor(r.height*d));ctx.setTransform(d,0,0,d,0,0)}
+function draw(){const w=canvas.clientWidth,h=canvas.clientHeight,cx=w*.68,cy=h*.5;t+=running?.012:0;ctx.clearRect(0,0,w,h);
+const g=ctx.createRadialGradient(cx,cy,2,cx,cy,Math.max(w,h)*.65);g.addColorStop(0,'#1b3651');g.addColorStop(1,'#080d18');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+for(let i=0;i<7;i++){ctx.beginPath();ctx.ellipse(cx,cy,Math.min(w*.34,145),Math.min(h*.3,95),i*Math.PI/7,0,Math.PI*2);ctx.strokeStyle='rgba(137,177,224,.22)';ctx.lineWidth=1;ctx.stroke()}
+ctx.beginPath();ctx.arc(cx,cy,11,0,Math.PI*2);ctx.fillStyle='#f0d49b';ctx.shadowBlur=22;ctx.shadowColor='#f0d49b';ctx.fill();ctx.shadowBlur=0;
+const ex=cx+Math.cos(t*1.2)*Math.min(w*.25,95),ey=cy+Math.sin(t*1.2)*Math.min(h*.24,72);ctx.beginPath();ctx.arc(ex,ey,5,0,Math.PI*2);ctx.fillStyle='#a9efff';ctx.shadowBlur=18;ctx.shadowColor='#72dfff';ctx.fill();ctx.shadowBlur=0;
+const travel=(t*55)% (w+100),px=travel-40,py=h*.25+Math.sin(t*1.7)*h*.06;
+ctx.beginPath();for(let x=0;x<Math.min(travel,w*.72);x+=2){const y=py+Math.sin(x*.09-t*2)*9;if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle='#8bdde8';ctx.lineWidth=2;ctx.shadowBlur=10;ctx.shadowColor='#8bdde8';ctx.stroke();ctx.shadowBlur=0;
+if(burst>0){ctx.beginPath();ctx.arc(cx,cy,Math.max(0,(1-burst)*Math.min(w,h)*.6),0,Math.PI*2);ctx.strokeStyle='rgba(233,203,140,'+burst+')';ctx.lineWidth=2;ctx.stroke();burst=Math.max(0,burst-.014)}
+raf=requestAnimationFrame(draw)}
+function start(){cancelAnimationFrame(raf);size();draw()}new ResizeObserver(size).observe(canvas);start();
+play.addEventListener('click',()=>{running=!running;play.textContent=running?'Pause animation':'Resume animation'});
+pulse.addEventListener('click',()=>{burst=1;t+=.4});
+const slider=document.getElementById('energy'),value=document.getElementById('alphaValue'),label=document.getElementById('energyLabel');
+function update(){const p=Number(slider.value)/100;const a=137.036+(128.95-137.036)*p;value.textContent='α⁻¹ ≈ '+a.toFixed(3);label.textContent=p<.01?'Low-energy reference':p>.99?'Near the Z-boson mass scale':'Illustrative intermediate energy';}
+slider.addEventListener('input',update);update();
+})();
+</script>
+</body></html>
