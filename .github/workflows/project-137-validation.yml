@@ -1,0 +1,24 @@
+name: Project 137 Research Validation
+
+on:
+  push:
+    paths:
+      - "research/137/**"
+      - ".github/workflows/project-137-validation.yml"
+  pull_request:
+    paths:
+      - "research/137/**"
+      - ".github/workflows/project-137-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate research records
+        run: python research/137/scripts/validate.py
