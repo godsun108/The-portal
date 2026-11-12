@@ -146,6 +146,19 @@
       ]
     },
     {
+      "id": "inquiry",
+      "label": "INQUIRY",
+      "glyph": "∴",
+      "line": "follow the questions from 137 into the architecture of reality",
+      "status": "live",
+      "rooms": [
+        [
+          "THE 137 EXHIBIT",
+          "137/"
+        ]
+      ]
+    },
+    {
       "id": "intelligence",
       "label": "INTELLIGENCE",
       "glyph": "◇",
