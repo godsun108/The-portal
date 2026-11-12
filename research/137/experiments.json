@@ -1,0 +1,86 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-11-12",
+  "experiments": [
+    {
+      "id": "PA-001",
+      "title": "Constant provenance and precision baseline",
+      "status": "proposed",
+      "question": "What are the current best-supported values, uncertainties, and energy-scale conventions for alpha and related couplings?",
+      "prediction": "A traceable table can be built from authoritative reference data without treating 137 as exact.",
+      "method": [
+        "Retrieve the latest CODATA recommended values and source notes.",
+        "Record adjustment year, uncertainty, units, and applicable regime.",
+        "Compare low-energy alpha with electroweak-scale effective coupling using a cited convention."
+      ],
+      "controls": [
+        "Do not mix renormalization schemes or energy scales without labeling them.",
+        "Retain uncertainty and source version."
+      ],
+      "falsification_or_failure": "The baseline fails quality control if values cannot be traced to a dated authoritative source or if incompatible conventions are mixed.",
+      "outputs": [
+        "versioned constants table",
+        "source provenance",
+        "uncertainty notes"
+      ],
+      "related_claims": [
+        "alpha.value.low-energy",
+        "alpha.dimensionless",
+        "alpha.running"
+      ]
+    },
+    {
+      "id": "PA-002",
+      "title": "Numerical-coincidence guardrail",
+      "status": "proposed",
+      "question": "Does any proposed relationship between inverse alpha, prime 137, and the golden angle yield a mechanism and independent prediction beyond numerical resemblance?",
+      "prediction": "A valid physical relationship must specify a derivation, dimensions/conventions, and a prediction not used to construct the relationship.",
+      "method": [
+        "Pre-register the candidate equation before comparing values.",
+        "Check dimensional consistency and parameter independence.",
+        "Generate predictions for at least one independent observable.",
+        "Compare against null models and account for multiple comparisons."
+      ],
+      "controls": [
+        "No post-hoc digit matching.",
+        "No selecting constants or units to manufacture agreement.",
+        "Separate symbolic/cultural meaning from physical evidence."
+      ],
+      "falsification_or_failure": "Reject the candidate if it only reproduces known numbers by fitted parameters, lacks a mechanism, or fails its independent prediction.",
+      "outputs": [
+        "candidate derivation",
+        "null comparison",
+        "independent prediction test"
+      ],
+      "related_claims": [
+        "alpha.golden-angle-no-link",
+        "golden-angle.value"
+      ]
+    },
+    {
+      "id": "PA-003",
+      "title": "Evidence map for quantum measurement and observer claims",
+      "status": "proposed",
+      "question": "Which parts of the measurement process are experimentally established, and which interpretations add distinct testable predictions?",
+      "prediction": "Operational results can be separated from interpretation-specific claims.",
+      "method": [
+        "Map detector interaction and decoherence evidence.",
+        "Compare interpretation claims only where they produce distinguishable predictions.",
+        "Document the status of consciousness-related proposals separately."
+      ],
+      "controls": [
+        "Do not equate observation with human awareness.",
+        "Do not claim decoherence alone resolves the measurement problem."
+      ],
+      "falsification_or_failure": "The map is inadequate if it conflates formalism, detector physics, and metaphysical interpretation.",
+      "outputs": [
+        "claim graph",
+        "interpretation comparison",
+        "open-problem list"
+      ],
+      "related_claims": [
+        "quantum-consciousness"
+      ]
+    }
+  ]
+}
