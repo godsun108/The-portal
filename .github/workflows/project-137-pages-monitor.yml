@@ -1,0 +1,69 @@
+name: Project 137 Pages Deployment Monitor
+
+on:
+  schedule:
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: project-137-pages-deployment-monitor
+  cancel-in-progress: false
+
+jobs:
+  verify-publication:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check whether publication was already confirmed
+        id: completed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          count="$(gh issue list --state all --search '"Project 137 Atlas deployment verified" in:title' --json number --jq 'length')"
+          if [ "$count" -gt 0 ]; then
+            echo "done=true" >> "$GITHUB_OUTPUT"
+            echo "Publication was already confirmed; no further checks are needed."
+          else
+            echo "done=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify the published Reality Atlas
+        if: steps.completed.outputs.done != 'true'
+        env:
+          ATLAS_URL: https://godsun108.github.io/The-portal/137/worlds/
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-delay 10 \
+            -H 'Cache-Control: no-cache' \
+            "$ATLAS_URL" -o /tmp/atlas.html
+
+          required=(
+            "Black Holes"
+            "Quantum Entanglement"
+            "Stars"
+            "Inside the Atom"
+            "Entropy"
+            "Evolution"
+          )
+          for phrase in "${required[@]}"; do
+            if ! grep -Fqi "$phrase" /tmp/atlas.html; then
+              echo "Published page does not yet contain: $phrase"
+              exit 1
+            fi
+          done
+          echo "All six new Reality Atlas worlds are present on the public page."
+          echo "ATLAS_URL=$ATLAS_URL" >> "$GITHUB_ENV"
+
+      - name: Create one-time publication confirmation
+        if: steps.completed.outputs.done != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATLAS_URL: https://godsun108.github.io/The-portal/137/worlds/
+        run: |
+          gh issue create \
+            --title "Project 137 Atlas deployment verified" \
+            --body "The public GitHub Pages Reality Atlas has been verified to contain all six additions from merge commit 11ce35d40aa6077f6ceb18bed8eb4a2d93db932d: black holes, quantum entanglement, stars, atoms, entropy, and evolution.\n\nVerified URL: $ATLAS_URL\n\nThis issue is the one-time completion marker for the scheduled monitor. Future scheduled runs will detect it and skip further checks."
