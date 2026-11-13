@@ -6,148 +6,28 @@
       "label": "REALITY",
       "glyph": "◉",
       "line": "look outward — things that do not need your belief",
-      "rooms": [
-        [
-          "EARTH NOW",
-          "earth/"
-        ],
-        [
-          "WINDOW",
-          "window/"
-        ],
-        [
-          "EARTH PULSE",
-          "pulse/"
-        ],
-        [
-          "WEATHER ELSEWHERE",
-          "weather/"
-        ],
-        [
-          "SKY",
-          "sky/"
-        ],
-        [
-          "LIVE STREAM",
-          "live-stream/"
-        ]
-      ]
+      "rooms": [["EARTH NOW", "earth/"], ["WINDOW", "window/"], ["EARTH PULSE", "pulse/"], ["WEATHER ELSEWHERE", "weather/"], ["SKY", "sky/"], ["LIVE STREAM", "live-stream/"]]
     },
     {
       "id": "play",
       "label": "PLAY",
       "glyph": "♜",
       "line": "enter the arcade — or find the games that escaped it",
-      "rooms": [
-        [
-          "ARCADE",
-          "arcade/"
-        ],
-        [
-          "EARTHPLAY ARENA",
-          "earthplay-arena/"
-        ],
-        [
-          "ORBIT",
-          "orbit/"
-        ],
-        [
-          "SIGNAL HUNT",
-          "games/signal-hunt/"
-        ],
-        [
-          "CHAOS",
-          "#chaos"
-        ]
-      ]
+      "rooms": [["ARCADE", "arcade/"], ["EARTHPLAY ARENA", "earthplay-arena/"], ["ORBIT", "orbit/"], ["SIGNAL HUNT", "games/signal-hunt/"], ["CHAOS", "#chaos"]]
     },
     {
       "id": "art",
       "label": "ART",
       "glyph": "✧",
       "line": "make something — then let it change the world",
-      "rooms": [
-        [
-          "COLOR",
-          "color/"
-        ],
-        [
-          "RELEASE",
-          "release/"
-        ],
-        [
-          "THE HAPPINESS DIMENSION",
-          "happiness/"
-        ],
-        [
-          "DREAM",
-          "dream/"
-        ],
-        [
-          "MARKS",
-          "marks/"
-        ],
-        [
-          "CAPSULE",
-          "capsule/"
-        ],
-        [
-          "BLACK BOX",
-          "blackbox/"
-        ]
-      ]
+      "rooms": [["COLOR", "color/"], ["RELEASE", "release/"], ["THE HAPPINESS DIMENSION", "happiness/"], ["DREAM", "dream/"], ["MARKS", "marks/"], ["CAPSULE", "capsule/"], ["BLACK BOX", "blackbox/"]]
     },
     {
       "id": "world",
       "label": "WORLD",
       "glyph": "⌁",
       "line": "listen inward — not every room explains itself",
-      "rooms": [
-        [
-          "SIGNAL",
-          "signal/"
-        ],
-        [
-          "VOID",
-          "void/"
-        ],
-        [
-          "RADIO",
-          "radio/"
-        ],
-        [
-          "GEOMETRY & RESONANCE",
-          "geometry-resonance/"
-        ],
-        [
-          "NUMBERS STATION",
-          "numbers/"
-        ],
-        [
-          "PORTAL TV",
-          "tv.html"
-        ],
-        [
-          "WONDER",
-          "wonder/"
-        ],
-        [
-          "MACHINE",
-          "machine/"
-        ],
-        [
-          "TIME MACHINE",
-          "time/"
-        ],
-        [
-          "DEAD INTERNET",
-          "dead/"
-        ],
-        [
-          "BEHIND THE VEIL",
-          "internet-veil/"
-        ]
-      ]
+      "rooms": [["SIGNAL", "signal/"], ["VOID", "void/"], ["RADIO", "radio/"], ["GEOMETRY & RESONANCE", "geometry-resonance/"], ["NUMBERS STATION", "numbers/"], ["PORTAL TV", "tv.html"], ["WONDER", "wonder/"], ["MACHINE", "machine/"], ["TIME MACHINE", "time/"], ["DEAD INTERNET", "dead/"], ["BEHIND THE VEIL", "internet-veil/"]]
     },
     {
       "id": "inquiry",
@@ -155,24 +35,7 @@
       "glyph": "∴",
       "line": "follow the questions from 137 into the architecture of reality",
       "status": "live",
-      "rooms": [
-        [
-          "REALITY ATLAS",
-          "137/worlds/"
-        ],
-        [
-          "137 OBSERVATORY",
-          "137/observatory/"
-        ],
-        [
-          "THE 137 EXHIBIT",
-          "137/"
-        ],
-        [
-          "137 RESEARCH DESK",
-          "137/research/"
-        ]
-      ]
+      "rooms": [["REALITY ATLAS", "137/worlds/"], ["137 OBSERVATORY", "137/observatory/"], ["THE 137 EXHIBIT", "137/"], ["137 RESEARCH DESK", "137/research/"], ["STAR OF LAKSHMI", "star-of-lakshmi/"]]
     },
     {
       "id": "intelligence",
@@ -180,60 +43,22 @@
       "glyph": "◇",
       "line": "ask, reason, notice patterns — without pretending certainty",
       "status": "live",
-      "rooms": [
-        [
-          "PORTAL INTELLIGENCE",
-          "intelligence/"
-        ],
-        [
-          "ORACLE",
-          "oracle/"
-        ]
-      ]
+      "rooms": [["PORTAL INTELLIGENCE", "intelligence/"], ["ORACLE", "oracle/"]]
     },
     {
       "id": "connection",
       "label": "CONNECTION",
       "glyph": "♨",
       "line": "other people, only when they are actually there",
-      "rooms": [
-        [
-          "CAMPFIRE",
-          "campfire/"
-        ]
-      ]
+      "status": "live",
+      "rooms": [["CAMPFIRE", "campfire/"]]
     },
     {
       "id": "traveler",
       "label": "TRAVELER",
       "glyph": "▤",
       "line": "what this browser has carried, found and changed",
-      "rooms": [
-        [
-          "PASSPORT",
-          "passport/"
-        ],
-        [
-          "MAP",
-          "map/"
-        ],
-        [
-          "DAILY DOOR",
-          "daily/"
-        ],
-        [
-          "WORLD CLOCK",
-          "clock/"
-        ],
-        [
-          "TRACES",
-          "traces/"
-        ],
-        [
-          "TAKE SOMETHING",
-          "take/"
-        ]
-      ]
+      "rooms": [["PASSPORT", "passport/"], ["MAP", "map/"], ["DAILY DOOR", "daily/"], ["WORLD CLOCK", "clock/"], ["TRACES", "traces/"], ["TAKE SOMETHING", "take/"]]
     },
     {
       "id": "economy",
@@ -241,20 +66,7 @@
       "glyph": "⌬",
       "line": "agents build, test and measure — settlement is the truth",
       "status": "live",
-      "rooms": [
-        [
-          "MARKETS NOW",
-          "markets/"
-        ],
-        [
-          "AI COMPANY",
-          "company/"
-        ],
-        [
-          "EARTHCHAIN OBSERVATORY",
-          "earthchain-observatory/"
-        ]
-      ]
+      "rooms": [["MARKETS NOW", "markets/"], ["AI COMPANY", "company/"], ["EARTHCHAIN OBSERVATORY", "earthchain-observatory/"]]
     },
     {
       "id": "library",
@@ -262,12 +74,7 @@
       "glyph": "✧",
       "line": "read the scriptures and explore ancient writings",
       "status": "preview",
-      "rooms": [
-        [
-          "LIVING SCRIPTURES",
-          "living-scriptures.html"
-        ]
-      ]
+      "rooms": [["LIVING SCRIPTURES", "living-scriptures.html"]]
     }
   ]
 }
