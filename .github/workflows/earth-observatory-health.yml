@@ -1,0 +1,45 @@
+name: Earth Observatory camera health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 12 * * 1'
+      timezone: "America/Chicago"
+  push:
+    paths:
+      - 'earth-observatory/index.html'
+      - 'live-stream/index.html'
+      - 'scripts/audit-earth-observatory.py'
+      - '.github/workflows/earth-observatory-health.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out Portal
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit Portal pages and camera provider links
+        run: python scripts/audit-earth-observatory.py
+      - name: Add report to workflow summary
+        if: always()
+        run: |
+          if [ -f earth-observatory-health-summary.txt ]; then
+            cat earth-observatory-health-summary.txt >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Audit did not produce a report. Inspect the job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Preserve machine-readable and human-readable reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: earth-observatory-health
+          path: |
+            earth-observatory-health.json
+            earth-observatory-health.md
+          if-no-files-found: warn
+          retention-days: 30
