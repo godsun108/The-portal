@@ -1,0 +1,73 @@
+name: Portal internal runner
+
+on:
+  push:
+    branches: [main, "feature/**", "feat/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  internal-contracts:
+    if: github.repository == 'godsun108/The-portal'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+
+      - name: Package exact checked-out commit
+        run: git archive --format=tar HEAD | gzip -n > source.tar.gz
+
+      - name: Submit and await internal runner test job
+        env:
+          RUNNER_URL: https://genesis-v5-v8-test-runner-staging.up.railway.app
+          REPOSITORY: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.actor }}" != "godsun108" ]]; then
+            echo "Internal runner is restricted to owner-authored workflows."
+            exit 1
+          fi
+          get_oidc_token() {
+            curl --fail --silent --show-error \
+              -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+              "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sovereign-internal-runner" | jq -r .value
+          }
+          token="$(get_oidc_token)"
+          response="$(curl --fail-with-body --silent --show-error \
+            -X POST "${RUNNER_URL%/}/v1/jobs" \
+            -H "Authorization: Bearer ${token}" \
+            -H "Content-Type: application/gzip" \
+            -H "X-Runner-Repository: ${REPOSITORY}" \
+            -H "X-Runner-Sha: ${COMMIT_SHA}" \
+            --data-binary @source.tar.gz)"
+          poll_path="$(jq -r .poll <<< "${response}")"
+          if [[ -z "${poll_path}" || "${poll_path}" == "null" ]]; then
+            echo "Runner did not return a job poll path."
+            exit 1
+          fi
+          for attempt in $(seq 1 180); do
+            token="$(get_oidc_token)"
+            status_json="$(curl --fail-with-body --silent --show-error \
+              "${RUNNER_URL%/}${poll_path}" \
+              -H "Authorization: Bearer ${token}" \
+              -H "X-Runner-Repository: ${REPOSITORY}")"
+            status="$(jq -r .status <<< "${status_json}")"
+            if [[ "${status}" == "succeeded" || "${status}" == "failed" ]]; then
+              jq -r '.log // ""' <<< "${status_json}"
+              exit_code="$(jq -r '.exitCode // 1' <<< "${status_json}")"
+              exit "${exit_code}"
+            fi
+            sleep 10
+          done
+          echo "Timed out waiting for internal runner result."
+          exit 1
