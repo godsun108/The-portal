@@ -503,4 +503,5 @@ const intelligenceServer=read("intelligence-server/server.js");
 assert(stations.stations.some(s=>s.id==="inquiry"&&s.rooms.some(r=>r[1]==="star-of-lakshmi/")),"Star of Lakshmi must be discoverable from the canonical INQUIRY station");
 assert(intelligenceRegistry.discovery.allowed_destinations.includes("star-of-lakshmi/")&&intelligenceServer.includes('"star-of-lakshmi/"'),"Genesis discovery must allow only the registered Star of Lakshmi room");
 assert(lakshmiRoom.includes("portal.chat.v1")&&lakshmiRoom.includes("data.verified!==true")&&lakshmiRoom.includes("genesisForm"),"Star of Lakshmi must use the versioned verified intelligence chat contract");
+assert(intelligenceRegistry.minds.some(m=>m.id==="genesis")&&intelligenceServer.includes("genesis:")&&lakshmiRoom.includes("mind:'genesis'"),"Star of Lakshmi must address the explicit Genesis research companion mind");
 assert(lakshmiRoom.includes("body.textContent=content")&&lakshmiRoom.includes("genesisClear"),"Model output must render as text and the page-session conversation must be clearable");
