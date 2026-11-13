@@ -49,11 +49,11 @@ for key, title, url in cameras:
 
 print("# Earth Observatory weekly health audit")
 print(f"Checked: {results['checked_at_utc']}")
-print("\\n## Portal pages")
+print("\n## Portal pages")
 for row in results["pages"]:
     print(f"- [{'OK' if row['ok'] else 'CHECK'}] {row['name']}: HTTP {row['status'] or 'unavailable'} — {row['url']}")
-print("\\n## Camera provider destinations")
+print("\n## Camera provider destinations")
 for row in results["cameras"]:
     print(f"- [{'REACHABLE' if row['ok'] else 'CHECK'}] {row['title']}: HTTP {row['status'] or 'unavailable'} — {row['url']}")
-print("\\nA reachable provider page does not prove its camera is broadcasting. Provider pages may show scheduled, seasonal, offline, or temporarily unavailable feeds.")
-print("\\nJSON_REPORT=" + json.dumps(results, separators=(",", ":")))
+print("\nA reachable provider page does not prove its camera is broadcasting. Provider pages may show scheduled, seasonal, offline, or temporarily unavailable feeds.")
+print("\nJSON_REPORT=" + json.dumps(results, separators=(",", ":")))
