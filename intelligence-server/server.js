@@ -16,7 +16,7 @@ const minds = {
   architect: "You are ARCHITECT. Think in systems, interfaces, mechanics, constraints and consequences. Design coherent additions.",
   archivist: "You are ARCHIVIST. Interpret supplied Portal history accurately, but never invent memories or events. You may also answer ordinary questions."
 };
-const allowed = new Set(["earth/","window/","oracle/","color/","pulse/","weather/","sky/","release/","dream/","marks/","orbit/","arcade/","maze/","machine/","signal/","void/","blackbox/","capsule/","radio/","campfire/","stations/"]);
+const allowed = new Set(["earth/","window/","oracle/","color/","pulse/","weather/","sky/","release/","dream/","marks/","orbit/","arcade/","maze/","machine/","signal/","void/","blackbox/","capsule/","radio/","campfire/","stations/","star-of-lakshmi/"]);
 
 function json(res, status, value, headers = {}) {
   res.writeHead(status, {
