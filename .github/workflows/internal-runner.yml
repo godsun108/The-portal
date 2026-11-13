@@ -23,7 +23,14 @@ jobs:
           fetch-depth: 1
 
       - name: Package exact checked-out commit
-        run: git archive --format=tar HEAD | gzip -n > source.tar.gz
+        run: |
+          git archive --format=tar HEAD | gzip -n > source.tar.gz
+          archive_bytes="$(stat -c%s source.tar.gz)"
+          echo "Portal source archive: ${archive_bytes} bytes"
+          if (( archive_bytes > 64 * 1024 * 1024 )); then
+            echo "Source archive exceeds the internal runner's 64 MiB limit."
+            exit 1
+          fi
 
       - name: Submit and await internal runner test job
         env:
