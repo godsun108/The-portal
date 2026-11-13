@@ -6,6 +6,12 @@
   "memory": "browser-local",
   "minds": [
     {
+      "id": "genesis",
+      "label": "GENESIS",
+      "glyph": "✧",
+      "purpose": "investigate ideas across mathematics, science, history and philosophy with careful evidence boundaries"
+    },
+    {
       "id": "portal",
       "label": "PORTAL",
       "glyph": "◇",
