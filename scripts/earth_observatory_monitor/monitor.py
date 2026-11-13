@@ -31,10 +31,10 @@ def fetch(url):
 source = fetch(RAW)
 if not source["ok"]:
     raise SystemExit(f"Cannot read camera registry from GitHub: {source.get('error', source['status'])}")
-match = re.search(r"const cameras=\\{(.*?)\\n\\};\\nconst title", source["body"], re.S)
+match = re.search(r"const cameras=\{(.*?)\n\};\nconst title", source["body"], re.S)
 if not match:
     raise SystemExit("Could not locate camera registry in earth-observatory/index.html")
-cameras = re.findall(r'([a-zA-Z0-9_]+):\\{.*?title:"([^"]+)".*?url:"(https?://[^"]+)"', match.group(1), re.S)
+cameras = re.findall(r'([a-zA-Z0-9_]+):\{.*?title:"([^"]+)".*?url:"(https?://[^"]+)"', match.group(1), re.S)
 if not cameras:
     raise SystemExit("No camera entries were parsed from the registry")
 
