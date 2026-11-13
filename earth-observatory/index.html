@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07110d"><meta name="description" content="Explore live windows into Earth's wild places.">
+<title>EARTH OBSERVATORY // THE PORTAL</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#19392b 0,#0a1712 42%,#050807 85%);color:#e5f1e8;font-family:ui-monospace,SFMono-Regular,monospace;padding:20px}.back{position:fixed;z-index:5;top:max(18px,env(safe-area-inset-top));left:18px;color:#a2bba8;text-decoration:none;font-size:10px;letter-spacing:.14em}.shell{width:min(1160px,100%);margin:auto;padding:58px 0 36px}.eyebrow{font-size:9px;letter-spacing:.3em;color:#8aaa96}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:15px 0 26px}h1{font:900 clamp(44px,9vw,88px)/.88 Arial,sans-serif;letter-spacing:-.075em;margin:0}h1 span{color:#8eb89a}.hero p{max-width:360px;color:#9bb2a1;font-size:11px;line-height:1.8;margin:0}.map-wrap{position:relative;border:1px solid #355344;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#0b2019,#07110d);box-shadow:0 24px 90px #0008}.map-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 18px;border-bottom:1px solid #294536;color:#a9c4b0;font-size:9px;letter-spacing:.13em}.map-top span:last-child{color:#708c79}.map{display:block;width:100%;height:auto;min-height:230px}.land{fill:#183a2b;stroke:#39614a;stroke-width:1.4;stroke-linejoin:round}.gridline{stroke:#234332;stroke-width:.7;fill:none;opacity:.8}.pin{cursor:pointer;outline:none}.pin circle.outer{fill:#8bc79b;opacity:.18}.pin circle.core{fill:#a8e6b4;stroke:#07110d;stroke-width:2}.pin.active circle.core{fill:#fff;stroke:#8bc79b;stroke-width:3}.pin text{font:9px ui-monospace,monospace;fill:#d8ecdd;paint-order:stroke;stroke:#07110d;stroke-width:3px;stroke-linejoin:round}.pin:focus circle.core{stroke:#fff;stroke-width:4}.map-caption{padding:0 18px 16px;color:#779180;font-size:9px;line-height:1.7}.feature{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:18px}.feature-main,.feature-side{border:1px solid #355344;border-radius:16px;background:#0b1711;padding:22px}.feature-main{background:linear-gradient(145deg,#14291d,#09120d)}.tag{font-size:8px;letter-spacing:.2em;color:#8eb89a}.feature h2{font:800 clamp(27px,5vw,42px)/1 Arial,sans-serif;letter-spacing:-.05em;margin:13px 0 8px}.feature p{font-size:10px;line-height:1.8;color:#9bb2a1}.meta{font-size:9px;color:#7f9c88;letter-spacing:.1em;margin:16px 0}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #5a8066;border-radius:9px;padding:12px 15px;background:#173323;color:#e5f1e8;text-decoration:none;font:inherit;font-size:9px;letter-spacing:.1em}.btn.secondary{background:transparent;border-color:#355344;color:#a9c4b0}.btn:hover{border-color:#b0d8b8}.feature-side{display:flex;flex-direction:column;justify-content:space-between}.feature-side h3{font:700 20px Arial,sans-serif;margin:0 0 10px}.list{display:grid;gap:8px;margin-top:12px}.cam{width:100%;text-align:left;border:1px solid #294536;border-radius:10px;padding:12px;background:#0d1c14;color:#bcd4c2;cursor:pointer;font:inherit}.cam[aria-pressed=true]{border-color:#8eb89a;background:#14271c}.cam strong{display:block;font-size:10px}.cam small{display:block;color:#789480;font-size:9px;margin-top:5px;line-height:1.5}.cam:hover{border-color:#6d9878}.foot{margin-top:22px;color:#718579;font-size:9px;line-height:1.9}.foot a{color:#a5c6ad}
+@media(max-width:700px){body{padding:14px}.shell{padding-top:58px}.hero{display:block}.hero p{margin-top:15px}.map-wrap{border-radius:14px}.map{min-height:180px}.feature{grid-template-columns:1fr}.feature-main,.feature-side{padding:18px}.map-top{font-size:8px}}
+</style>
+</head>
+<body>
+<a class="back" href="../live-stream/">← NATURE WINDOWS</a>
+<main class="shell">
+<div class="eyebrow">THE PORTAL · PLANETARY VIEWING ROOM</div>
+<header class="hero"><div><h1>EARTH <span>OBSERVATORY</span></h1></div><p>One planet. Countless living stories. Choose a point on the map and open a window into a place unfolding right now.</p></header>
+<section class="map-wrap" aria-label="Interactive world map of nature camera locations">
+<div class="map-top"><span>GLOBAL CAMERA ATLAS</span><span>SELECT A GLOWING MARKER TO EXPLORE</span></div>
+<svg class="map" viewBox="0 0 1000 480" role="img" aria-label="Stylized world map with camera locations in North America, Central America, Africa and Europe">
+<defs><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".65" fill="#31533f"/></pattern></defs>
+<path class="gridline" d="M0 120H1000M0 240H1000M0 360H1000M166 0V480M333 0V480M500 0V480M666 0V480M833 0V480"/>
+<g class="land">
+<path d="M65 104 96 70 151 54 185 66 211 57 241 78 266 84 281 111 270 132 249 140 241 164 221 175 213 204 192 219 177 246 154 249 141 226 125 212 116 185 91 174 81 148 57 137Z"/>
+<path d="m224 235 28 9 20 27 2 30-17 23-7 33-17 18-11-31-17-29 5-37Z"/>
+<path d="m294 74 34-19 48 7 28 22 44 1 25 22-17 22-38 4-24 18-29-8-22-23-30-7Z"/>
+<path d="m470 122 35-20 48 5 25 19 48-5 28 19 46 3 30 21-17 23-41 0-22 22-31-8-29 22-23 0-23 25-22-9-7-35-24-15-13-31-25-16Z"/>
+<path d="m475 230 28-12 31 10 20 26-5 34-24 35-10 44-25 26-20-20-5-37-18-31 4-43Z"/>
+<path d="m645 260 37-19 53 10 36 28 13 34-28 20-34-9-28 15-35-14-27-29Z"/>
+<path d="m770 102 31-21 50 9 28 22-10 26-34 7-18 25-31-8-18-27Z"/>
+<path d="m840 277 40-17 49 12 20 30-22 26-44 8-31-19Z"/>
+<path d="m901 182 19-10 20 17-8 22-23-2Z"/>
+</g>
+<g fill="url(#dots)" opacity=".45"><path d="M65 104 96 70 151 54 185 66 211 57 241 78 266 84 281 111 270 132 249 140 241 164 221 175 213 204 192 219 177 246 154 249 141 226 125 212 116 185 91 174 81 148 57 137Z"/><path d="m470 122 35-20 48 5 25 19 48-5 28 19 46 3 30 21-17 23-41 0-22 22-31-8-29 22-23 0-23 25-22-9-7-35-24-15-13-31-25-16Z"/></g>
+<g class="pin active" data-id="yellowstone" tabindex="0" role="button" aria-label="Yellowstone Old Faithful"><circle class="outer" cx="190" cy="133" r="17"/><circle class="core" cx="190" cy="133" r="5"/><text x="202" y="128">YELLOWSTONE</text></g>
+<g class="pin" data-id="monterey" tabindex="0" role="button" aria-label="Monterey Bay Aquarium"><circle class="outer" cx="150" cy="187" r="17"/><circle class="core" cx="150" cy="187" r="5"/><text x="92" y="207">MONTEREY</text></g>
+<g class="pin" data-id="honduras" tabindex="0" role="button" aria-label="Utila reef camera"><circle class="outer" cx="264" cy="260" r="17"/><circle class="core" cx="264" cy="260" r="5"/><text x="274" y="254">UTILA REEF</text></g>
+<g class="pin" data-id="florida" tabindex="0" role="button" aria-label="Florida manatee and wildlife cameras"><circle class="outer" cx="239" cy="207" r="17"/><circle class="core" cx="239" cy="207" r="5"/><text x="250" y="199">FLORIDA</text></g>
+<g class="pin" data-id="africa" tabindex="0" role="button" aria-label="African wildlife cameras"><circle class="outer" cx="519" cy="304" r="17"/><circle class="core" cx="519" cy="304" r="5"/><text x="530" y="300">AFRICA</text></g>
+<g class="pin" data-id="aurora" tabindex="0" role="button" aria-label="Fairbanks aurora camera"><circle class="outer" cx="245" cy="82" r="17"/><circle class="core" cx="245" cy="82" r="5"/><text x="257" y="77">AURORA</text></g>
+<g class="pin" data-id="panama" tabindex="0" role="button" aria-label="Panama rainforest wildlife"><circle class="outer" cx="287" cy="283" r="17"/><circle class="core" cx="287" cy="283" r="5"/><text x="298" y="279">PANAMA</text></g>
+</svg>
+<div class="map-caption">Illustrative map · markers open the camera provider's page. Some locations have multiple cameras; camera availability and daylight vary.</div>
+</section>
+<section class="feature">
+<article class="feature-main" aria-live="polite">
+<div class="tag" id="featureTag">FEATURED WINDOW · WYOMING, USA</div>
+<h2 id="featureTitle">Old Faithful</h2>
+<p id="featureDesc">Watch the geyser field and Upper Geyser Basin in Yellowstone National Park. The National Park Service distinguishes its continuous livestream from its periodically refreshed still webcams.</p>
+<div class="meta" id="featureMeta">OFFICIAL PARK CAMERA · LIVE VIDEO</div>
+<div class="actions"><a class="btn" id="openCamera" href="https://www.nps.gov/yell/learn/photosmultimedia/webcams.htm" target="_blank" rel="noopener">OPEN CAMERA ↗</a><button class="btn secondary" id="rotateBtn" type="button">PAUSE ROTATION</button></div>
+</article>
+<aside class="feature-side">
+<div><div class="tag">EXPLORE THE PLANET</div><h3>Choose a window</h3><p>Each marker opens a curated destination. External broadcasters host the actual streams, so the original camera owners receive the visit and control playback.</p></div>
+<div class="list" id="cameraList">
+<button class="cam" data-id="yellowstone" aria-pressed="true"><strong>01 · Yellowstone</strong><small>Geyser basin · United States</small></button>
+<button class="cam" data-id="monterey" aria-pressed="false"><strong>02 · Monterey Bay</strong><small>Ocean life · California</small></button>
+<button class="cam" data-id="honduras" aria-pressed="false"><strong>03 · Utila Reef</strong><small>Underwater reef · Honduras</small></button>
+<button class="cam" data-id="florida" aria-pressed="false"><strong>04 · Florida wildlife</strong><small>Manatees and wetlands · Florida</small></button>
+<button class="cam" data-id="africa" aria-pressed="false"><strong>05 · African wilderness</strong><small>Wildlife and watering holes · Africa</small></button>
+<button class="cam" data-id="aurora" aria-pressed="false"><strong>06 · Northern skies</strong><small>Aurora cameras · Alaska</small></button>
+<button class="cam" data-id="panama" aria-pressed="false"><strong>07 · Panama rainforest</strong><small>Birds and tropical wildlife · Panama</small></button>
+</div>
+</aside>
+</section>
+<div class="foot">CAMERA SOURCES: <a href="https://www.nps.gov/yell/learn/photosmultimedia/webcams.htm" target="_blank" rel="noopener">NATIONAL PARK SERVICE</a> · <a href="https://www.montereybayaquarium.org/cams-videos/live-cams" target="_blank" rel="noopener">MONTEREY BAY AQUARIUM</a> · <a href="https://explore.org/livecams/currently-live" target="_blank" rel="noopener">EXPLORE.ORG</a><br>Camera feeds are not embedded here because providers may restrict embedding. The Portal opens their official viewing pages instead. Live status is controlled by each provider.</div>
+</main>
+<script>
+const cameras={
+yellowstone:{tag:"FEATURED WINDOW · WYOMING, USA",title:"Old Faithful",desc:"Watch the geyser field and Upper Geyser Basin in Yellowstone National Park. The National Park Service distinguishes its continuous livestream from its periodically refreshed still webcams.",meta:"OFFICIAL PARK CAMERA · LIVE VIDEO",url:"https://www.nps.gov/yell/learn/photosmultimedia/webcams.htm"},
+monterey:{tag:"OCEAN WINDOW · CALIFORNIA, USA",title:"Monterey Bay Aquarium",desc:"Explore sea otters, open ocean, kelp forests, sharks, penguins, jellies, and more through the Aquarium's own live camera collection.",meta:"AQUARIUM CAMERA COLLECTION · LIVE DURING PUBLISHED HOURS",url:"https://www.montereybayaquarium.org/cams-videos/live-cams"},
+honduras:{tag:"REEF WINDOW · UTILa, HONDURAS",title:"Top-of-Wall Underwater Reef",desc:"Look into a tropical reef environment off Utila in the Bay Islands. Explore.org lists this camera among its live nature feeds; availability can change.",meta:"EXPLORE.ORG · LIVE STATUS VARIES",url:"https://explore.org/livecams/currently-live"},
+florida:{tag:"WETLAND WINDOW · FLORIDA, USA",title:"Manatees & Silver Springs",desc:"Explore Florida spring and wetland wildlife cameras, including manatee views when the source camera is online.",meta:"EXPLORE.ORG · LIVE STATUS VARIES",url:"https://explore.org/livecams/currently-live"},
+africa:{tag:"WILDERNESS WINDOW · AFRICA",title:"African River Wildlife",desc:"Open the live nature directory and discover African wildlife cameras, watering holes, elephants, birds, and river habitats when broadcasting.",meta:"EXPLORE.ORG · LIVE STATUS VARIES",url:"https://explore.org/livecams/currently-live"},
+aurora:{tag:"NIGHT SKY WINDOW · ALASKA, USA",title:"Aurora Borealis",desc:"Look for northern lights through current aurora cameras. Visibility depends on darkness, cloud cover, solar activity, and the camera's operating schedule.",meta:"EXPLORE.ORG · NIGHT-SKY CAMERA DIRECTORY",url:"https://explore.org/livecams/currently-live"},
+panama:{tag:"RAINFOREST WINDOW · PANAMA",title:"Panama Rainforest Wildlife",desc:"Explore tropical bird and wildlife cameras from Panama's forest canopy and feeding stations through the live nature directory.",meta:"EXPLORE.ORG · LIVE STATUS VARIES",url:"https://explore.org/livecams/currently-live"}
+};
+const title=document.querySelector("#featureTitle"),desc=document.querySelector("#featureDesc"),tag=document.querySelector("#featureTag"),meta=document.querySelector("#featureMeta"),link=document.querySelector("#openCamera");
+let current="yellowstone",rotation=true,timer;
+function select(id){const c=cameras[id];if(!c)return;current=id;tag.textContent=c.tag;title.textContent=c.title;desc.textContent=c.desc;meta.textContent=c.meta;link.href=c.url;document.querySelectorAll(".cam,.pin").forEach(el=>{const on=el.dataset.id===id;if(el.classList.contains("pin"))el.classList.toggle("active",on);else el.setAttribute("aria-pressed",String(on));});}
+function cycle(){const ids=Object.keys(cameras),i=ids.indexOf(current);select(ids[(i+1)%ids.length]);}
+function start(){clearInterval(timer);if(rotation)timer=setInterval(cycle,10000);}
+document.querySelectorAll("[data-id]").forEach(el=>{el.addEventListener("click",()=>{select(el.dataset.id);start();});if(el.classList.contains("pin"))el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(el.dataset.id);start();}});});
+document.querySelector("#rotateBtn").addEventListener("click",e=>{rotation=!rotation;e.currentTarget.textContent=rotation?"PAUSE ROTATION":"RESUME ROTATION";start();});
+select(current);start();
+</script>
+<script src="../station-nav.js"></script><script type="module">import{installTravelerHUD}from"../traveler-hud.js";installTravelerHUD();</script><script type="module">import{installTransitions}from"../transitions.js";installTransitions("earth-observatory");</script>
+</body></html>
