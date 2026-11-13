@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-11-12",
+  "sources": [
+    {
+      "id": "nist.codata.constants",
+      "title": "CODATA recommended values of the fundamental physical constants",
+      "publisher": "National Institute of Standards and Technology",
+      "source_type": "authoritative_reference_data",
+      "url": "https://physics.nist.gov/cuu/Constants/",
+      "doi": null,
+      "publication_date": null,
+      "accessed": "2026-11-12",
+      "domains": [
+        "fine-structure constant",
+        "fundamental constants"
+      ],
+      "notes": "Primary reference for recommended constants; record the specific CODATA adjustment and value when quoting."
+    },
+    {
+      "id": "cern.standard-model",
+      "title": "The Standard Model",
+      "publisher": "CERN",
+      "source_type": "institutional_science_explainer",
+      "url": "https://home.cern/science/physics/standard-model",
+      "doi": null,
+      "publication_date": null,
+      "accessed": "2026-11-12",
+      "domains": [
+        "particle physics",
+        "gauge interactions",
+        "Higgs"
+      ],
+      "notes": "Authoritative overview; use primary papers/data for precision claims."
+    },
+    {
+      "id": "nasa.universe",
+      "title": "Universe",
+      "publisher": "NASA Science",
+      "source_type": "institutional_science_reference",
+      "url": "https://science.nasa.gov/universe/",
+      "doi": null,
+      "publication_date": null,
+      "accessed": "2026-11-12",
+      "domains": [
+        "cosmology",
+        "Big Bang",
+        "CMB"
+      ],
+      "notes": "Institutional background and mission context; seek original mission papers for quantitative claims."
+    },
+    {
+      "id": "nasa.astrobiology",
+      "title": "Astrobiology",
+      "publisher": "NASA",
+      "source_type": "institutional_science_reference",
+      "url": "https://science.nasa.gov/astrobiology/",
+      "doi": null,
+      "publication_date": null,
+      "accessed": "2026-11-12",
+      "domains": [
+        "origin of life",
+        "astrobiology"
+      ],
+      "notes": "Research context; not evidence for any single origin-of-life pathway."
+    },
+    {
+      "id": "nobel.quantum-entanglement",
+      "title": "The Nobel Prize in Physics 2022",
+      "publisher": "Nobel Prize",
+      "source_type": "authoritative_award_and_background",
+      "url": "https://www.nobelprize.org/prizes/physics/2022/summary/",
+      "doi": null,
+      "publication_date": "2022-10-04",
+      "accessed": "2026-11-12",
+      "domains": [
+        "Bell inequalities",
+        "entanglement",
+        "quantum foundations"
+      ],
+      "notes": "Background on recognized experiments; consult original papers for detailed experimental claims."
+    },
+    {
+      "id": "mathworld.golden-angle",
+      "title": "Golden Angle",
+      "publisher": "Wolfram MathWorld",
+      "source_type": "mathematical_reference",
+      "url": "https://mathworld.wolfram.com/GoldenAngle.html",
+      "doi": null,
+      "publication_date": null,
+      "accessed": "2026-11-12",
+      "domains": [
+        "golden ratio",
+        "phyllotaxis"
+      ],
+      "notes": "Mathematical reference for the idealized angle; biological claims require botanical literature."
+    }
+  ]
+}

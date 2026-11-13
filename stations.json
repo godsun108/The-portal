@@ -153,8 +153,20 @@
       "status": "live",
       "rooms": [
         [
+          "REALITY ATLAS",
+          "137/worlds/"
+        ],
+        [
+          "137 OBSERVATORY",
+          "137/observatory/"
+        ],
+        [
           "THE 137 EXHIBIT",
           "137/"
+        ],
+        [
+          "137 RESEARCH DESK",
+          "137/research/"
         ]
       ]
     },
