@@ -55,7 +55,7 @@ try {
   run("node", ["--test", ...genesisTests]);
 
   const arrival = await readFile("earthchain-test/sovereign-operator/arrival-portable.html", "utf8");
-  const scripts = [...arrival.matchAll(/<script>([\\s\\S]*?)<\\/script>/g)];
+  const scripts = [...arrival.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   if (scripts.length !== 1) throw new Error("Expected exactly one inline script in portable Arrival.");
   const arrivalScript = path.join(temp, "arrival-portable.js");
   await writeFile(arrivalScript, scripts[0][1], "utf8");
