@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-14T06:27:27.231Z",
+  "generatedAt": "2026-11-14T18:07:38.571Z",
   "note": "Server-side manifest reachability is NOT proof of playback, authorization, geography or device compatibility.",
   "summary": {
     "checked": 5,
-    "reachable": 4
+    "reachable": 5
   },
   "channels": [
     {
@@ -12,7 +12,7 @@
       "url": "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 1177,
+      "latencyMs": 514,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -21,25 +21,25 @@
       "url": "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 1079,
+      "latencyMs": 439,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
     {
       "title": "France 24 English — Live World News (test)",
       "url": "https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_2300.m3u8",
-      "manifestStatus": "manifest_unconfirmed",
-      "http": 404,
-      "latencyMs": 929,
+      "manifestStatus": "manifest_reachable",
+      "http": 200,
+      "latencyMs": 149,
       "deviceConfirmed": true,
-      "detail": "HTTP 404"
+      "detail": "HTTP response received"
     },
     {
       "title": "NHK WORLD-JAPAN — Live TV",
       "url": "https://media-tyo.hls.nhkworld.jp/hls/w/live/master.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 1018,
+      "latencyMs": 188,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     },
@@ -48,7 +48,7 @@
       "url": "https://i24newsenglish-cdn.encoders.immergo.tv/master.m3u8",
       "manifestStatus": "manifest_reachable",
       "http": 200,
-      "latencyMs": 887,
+      "latencyMs": 406,
       "deviceConfirmed": true,
       "detail": "HTTP response received"
     }
