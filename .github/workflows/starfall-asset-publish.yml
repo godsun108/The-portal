@@ -29,7 +29,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Validate staged assets and prepare proposal
         env:
           HULL: ${{ inputs.hull }}

@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Apply rights admission gate
         run: node tv-open-curator.cjs
       - name: Validate generated library

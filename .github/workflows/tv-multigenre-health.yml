@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Validate probe syntax
         run: node --check tv-multigenre-health-probe.cjs
       - name: Probe 25 cross-genre candidate manifests

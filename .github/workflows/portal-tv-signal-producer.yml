@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Inspect broadcaster manifests
         run: node tv-signal-producer.mjs
       - name: Publish health snapshot only when changed

@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Check admitted catalog, cinema player contract and evidence
         run: node scripts/verify-cinema.mjs
       - name: Check Wikimedia Commons movie sources (non-fatal network failures)

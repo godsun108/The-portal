@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - name: Check animation and atlas math
         run: node --test games/starfall/animation-engine.test.mjs games/starfall/sprite-atlas.test.mjs games/starfall/assets/intake-contract.test.mjs
       - name: Validate shipped atlas files

@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - run: node --check scripts/build-cinema-publication-proposal.mjs
       - run: node scripts/test-cinema-publication-gate.mjs
       - run: node scripts/build-cinema-publication-proposal.mjs

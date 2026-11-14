@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - run: node --check scripts/probe-world-tv-streams.mjs
       - run: node scripts/probe-world-tv-streams.mjs
       - name: Install FFmpeg probing tools

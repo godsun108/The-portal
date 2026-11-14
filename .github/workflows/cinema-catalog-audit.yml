@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22.15.1"
       - run: node --check scripts/audit-cinema-catalog.mjs
       - run: node scripts/audit-cinema-catalog.mjs
       - uses: actions/upload-artifact@v4

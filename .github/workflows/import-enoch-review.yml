@@ -20,7 +20,7 @@ jobs:
           ref: feature/living-scriptures-v1
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "22.15.1"
       - name: Fetch Project Gutenberg source
         run: |
           curl --fail --location --retry 3 --output /tmp/enoch.txt https://www.gutenberg.org/cache/epub/77935/pg77935.txt
