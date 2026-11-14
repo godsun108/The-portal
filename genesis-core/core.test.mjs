@@ -31,3 +31,28 @@ test("Genesis Core rejects malformed records",()=>{
   assert.equal(core.create("fixture-alice",{id:"valid",visibility:"private",body:"x".repeat(4097)}).status,400);
  }finally{core.close();}
 });
+
+test("Genesis Core safely transitions private to public to private",()=>{
+ const core=createCore();
+ const secret="ALICE_PRIVATE_SENTINEL";
+ try{
+  assert.equal(core.create("fixture-alice",{id:"transition-1",visibility:"private",body:secret}).status,201);
+  assert.equal(core.read("fixture-alice","transition-1").body,secret);
+  const privateRead=core.read("fixture-bob","transition-1");
+  assert.equal(privateRead.status,403);
+  assert.equal(JSON.stringify(privateRead).includes(secret),false);
+
+  assert.deepEqual(core.changeVisibility("fixture-bob","transition-1","public"),{status:403,error:"forbidden"});
+  assert.equal(core.changeVisibility("wrong-token","transition-1","public").status,401);
+  assert.deepEqual(core.changeVisibility("fixture-alice","transition-1","public"),{status:200,id:"transition-1",visibility:"public"});
+  assert.equal(core.read("fixture-bob","transition-1").body,secret);
+
+  assert.deepEqual(core.changeVisibility("fixture-alice","transition-1","private"),{status:200,id:"transition-1",visibility:"private"});
+  const afterReprivatizing=core.read("fixture-bob","transition-1");
+  assert.equal(afterReprivatizing.status,403);
+  assert.equal(JSON.stringify(afterReprivatizing).includes(secret),false);
+  assert.equal(core.read("fixture-alice","transition-1").body,secret);
+  assert.equal(core.changeVisibility("fixture-alice","transition-1","invalid").status,400);
+  assert.equal(core.changeVisibility("fixture-alice","missing-resource","public").status,404);
+ }finally{core.close();}
+});
