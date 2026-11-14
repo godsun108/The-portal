@@ -21,6 +21,8 @@ jobs:
           node-version: '22'
       - name: Syntax validation
         run: node --check tv-sports-health-probe.cjs
+      - name: Deterministic smoke test (no external streams)
+        run: PORTAL_TV_HEALTH_FIXTURE=1 node tv-sports-health-probe.cjs
       - name: Check sports stream manifests
         run: node tv-sports-health-probe.cjs
       - name: Validate health report invariants
