@@ -6,6 +6,12 @@
   "memory": "browser-local",
   "minds": [
     {
+      "id": "genesis",
+      "label": "GENESIS",
+      "glyph": "✧",
+      "purpose": "investigate ideas across mathematics, science, history and philosophy with careful evidence boundaries"
+    },
+    {
       "id": "portal",
       "label": "PORTAL",
       "glyph": "◇",
@@ -61,7 +67,7 @@
       "capsule/",
       "radio/",
       "campfire/",
-      "stations/"
+      "stations/","star-of-lakshmi/"
     ]
   },
   "research_endpoint": "https://portal-intelligence-production.up.railway.app/research"
