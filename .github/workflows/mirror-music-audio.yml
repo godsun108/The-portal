@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   mirror-audio:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, sovereign]
     steps:
       - uses: actions/checkout@v4
         with:

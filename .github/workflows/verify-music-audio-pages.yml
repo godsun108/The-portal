@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   verify-audio:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, sovereign]
     steps:
       - name: Verify same-origin WAV assets are publicly served
         run: |
