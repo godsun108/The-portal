@@ -1,0 +1,42 @@
+name: Rigveda research preview checks
+on:
+  pull_request:
+    paths:
+      - 'rigveda/**'
+      - 'data/rigveda/**'
+      - 'tests/rigveda*'
+      - 'rigveda.playwright.config.mjs'
+      - '.github/workflows/rigveda.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rigveda:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify no unlicensed text is imported
+        run: node --test tests/rigveda.test.mjs
+      - name: Check existing PORTAL contracts
+        run: node test-contracts.cjs
+      - name: Install browser test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium and WebKit
+        run: npx playwright install --with-deps chromium webkit
+      - name: Start local static server
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 > /tmp/rigveda-site.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8766/rigveda/ -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/rigveda-site.log
+          exit 1
+      - name: Test desktop and simulated iPhone
+        run: npx playwright test --config=rigveda.playwright.config.mjs
+        env:
+          CI: 'true'
