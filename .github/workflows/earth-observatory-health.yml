@@ -14,7 +14,7 @@ permissions:
   contents: read
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, sovereign]
     timeout-minutes: 5
     steps:
       - name: Check out Portal

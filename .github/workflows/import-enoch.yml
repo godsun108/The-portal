@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   import-enoch:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, sovereign]
     steps:
       - name: Check out Living Scriptures development branch
         uses: actions/checkout@v4
