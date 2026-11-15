@@ -8,7 +8,7 @@ async function withServer(options, run) {
   const server = createServer(options);
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const address = server.address();
-  try { await run("http://127.0.0.1:" + address.port); }
+  try { return await run("http://127.0.0.1:" + address.port); }
   finally { await new Promise(resolve => server.close(resolve)); }
 }
 const headers = { "content-type": "application/json", origin: "https://godsun108.github.io" };
