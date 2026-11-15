@@ -38,3 +38,11 @@ test("invalid physical parameters are rejected", () => {
   assert.throws(() => advanceClock(createClock({id:"x"}), -1), RangeError);
   assert.throws(() => synchronizeClocks([createClock({id:"x"})], [], 0.5), RangeError);
 });
+
+test("clock frequency estimate is derived from measured Ramsey population", () => {
+  const clock = createClock({ id: "quadrature", offsetHz: 0.01 });
+  const result = measureClock(clock, { interrogationSeconds: 0.4, atomCount: 5000, contrast: 0.92, seed: 19 });
+  const expected = (0.5 - result.measuredFraction) / (0.92 * Math.PI * 0.4);
+  assert.ok(Math.abs(result.estimatedOffsetHz - expected) < 1e-12);
+  assert.equal(result.estimator, "quadrature-linearized");
+});
