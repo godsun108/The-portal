@@ -158,7 +158,7 @@ if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceW
   book.value=target.book;fillChapters();chapter.value=String(Math.max(1,Math.min(lengths[target.book],target.chapter)));
   sourceUrl();status.textContent='81 books indexed. Select a chapter or resume your last reading.';
   if(params.has('book')||params.has('chapter'))loadChapter();
- }catch(e){if(!books.length){books=[{id:'GEN',chapters:50,short_title:'Genesis'},{id:'JHN',chapters:21,short_title:'John'}];for(const item of books){lengths[item.id]=item.chapters;titles[item.id]=item.short_title;const option=document.createElement('option');option.value=item.id;option.textContent=item.short_title;book.append(option);}book.value='GEN';fillChapters();chapter.value='1';sourceUrl();}status.textContent='The full local index is unavailable in this file preview; use the HTTPS site for all 81 books. '+e.message;}
+ }catch(e){if(!books.length){book.replaceChildren();books=[{id:'GEN',chapters:50,short_title:'Genesis'},{id:'JHN',chapters:21,short_title:'John'}];for(const item of books){lengths[item.id]=item.chapters;titles[item.id]=item.short_title;const option=document.createElement('option');option.value=item.id;option.textContent=item.short_title;book.append(option);}book.value='GEN';fillChapters();chapter.value='1';sourceUrl();}status.textContent='The full local index is unavailable in this file preview; use the HTTPS site for all 81 books. '+e.message;}
 })();
 </script>
 </body></html>
