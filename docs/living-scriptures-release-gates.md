@@ -38,9 +38,12 @@ Never state the project reconstructs the single original Bible. The library shou
 - Public release approval: PENDING.
 
 ## Deployment
-Do not merge PR #297 or turn on a production link until outstanding human acceptance gates are satisfied. The LIBRARY station and staged source content are currently **development-branch only**.
+Do not merge PR #342 or turn on a production link until outstanding human acceptance gates are satisfied. The LIBRARY station and refreshed staged source content are currently **development-branch only**.
 
 ## Current source refresh (2026-11-15)
+
+- Latest upstream refresh: `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`; 64 of 81 book hashes changed and were regenerated on the integration feature branch. The refreshed corpus still validates at 81 books / 1,402 chapters / 38,058 verse markers.
+- Latest source-render audit: 38,058 verse markers, 0 unresolved markup markers, 0 blank projected verses, 1,850 footnotes; status remains `projection-markup-clean-not-editorially-certified`.
 - eBible reissued the source archive. The newly downloaded archive SHA-256 is `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
 - The current archive still audits to 81 books, 1,402 chapters and 38,058 verse markers, but **64 of 81 book-level source hashes differ** from the previously staged corpus.
 - The old corpus must not be represented as current. The integration workflow is being updated to regenerate the chapter JSON on the feature branch only, verify the new archive hash and per-book hashes, and leave production untouched.
