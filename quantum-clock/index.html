@@ -43,9 +43,9 @@ function run(){const d=+det.value,t=+dur.value,n=+atoms.value,phase=2*Math.PI*d*
 import { createClock, advanceClock, measureClock, synchronizeClocks } from "./engine.mjs";
 const $ = id => document.getElementById(id);
 const initial = () => [
- createClock({id:"ALPHA",offsetHz:-0.35,driftHzPerSecond:0.0008,noiseStdHz:0.0002,seed:11}),
- createClock({id:"BETA",offsetHz:0.12,driftHzPerSecond:-0.0004,noiseStdHz:0.0002,seed:22}),
- createClock({id:"GAMMA",offsetHz:0.68,driftHzPerSecond:0.0002,noiseStdHz:0.0002,seed:33})
+ createClock({id:"ALPHA",offsetHz:-0.035,driftHzPerSecond:0.0008,noiseStdHz:0.0002,seed:11}),
+ createClock({id:"BETA",offsetHz:0.012,driftHzPerSecond:-0.0004,noiseStdHz:0.0002,seed:22}),
+ createClock({id:"GAMMA",offsetHz:0.068,driftHzPerSecond:0.0002,noiseStdHz:0.0002,seed:33})
 ];
 let clocks=initial(), readings=[], run=0;
 function render(){
