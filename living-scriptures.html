@@ -15,34 +15,36 @@ h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(42px,8vw,72px
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.card{margin:0}
 button,select{font:inherit;background:#252334;color:#fff;border:1px solid #6c6378;border-radius:9px;padding:12px}
 button{cursor:pointer}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
-iframe{display:block;width:100%;height:72vh;min-height:460px;border:1px solid #514860;border-radius:12px;background:#fff}
+select{max-width:100%;min-width:190px}
 a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #e5c98b;outline-offset:3px}
 .small{font-size:13px;color:#aaa7b8}.status{min-height:1.4em}
+.primary{display:inline-block;background:#e5c98b;color:#171321;padding:13px 18px;border-radius:10px;text-decoration:none;font-weight:650}
+.notice{border-left:3px solid #d6b778;padding-left:14px}
 </style>
 </head>
 <body><main>
 <header><a href="./">← THE PORTAL</a><span class="eyebrow">Sacred Library · Living Scriptures</span></header>
 <h1>The Living<br>Scriptures</h1>
-<p>Read the Bible and explore ancient writings preserved across different traditions. Choose a reading below; the text opens in this page when the source permits embedding, with a direct-source link as a fallback.</p>
+<p>Read the World English Bible and explore ancient writings preserved across different traditions. The reader must never leave you with an empty white panel: scripture opens as a direct reading page, not inside a third-party frame that may refuse to display.</p>
 <section class="grid" aria-label="Reading options">
-<article class="card"><p class="eyebrow">BIBLE</p><h2>World English Bible</h2><p>Choose a book and open its first chapter in the reading panel.</p>
-<div class="row"><label for="bible-book">Book</label><select id="bible-book"><option value="GEN">Genesis</option><option value="EXO">Exodus</option><option value="PSA">Psalms</option><option value="PRO">Proverbs</option><option value="ISA">Isaiah</option><option value="MAT">Matthew</option><option value="MRK">Mark</option><option value="LUK">Luke</option><option value="JHN">John</option><option value="ROM">Romans</option><option value="REV">Revelation</option></select><button id="open-bible" type="button">Read Bible</button></div>
-<a id="bible-source" href="https://ebible.org/eng-web/GEN01.htm" target="_blank" rel="noopener noreferrer">Open Bible text directly ↗</a>
+<article class="card"><p class="eyebrow">BIBLE</p><h2>World English Bible</h2>
+<p>Choose a book and chapter. The text opens directly from the identified eBible source in a new tab, where the source's own reader controls the display.</p>
+<div class="row"><label for="bible-book">Book</label><select id="bible-book">
+<option value="GEN">Genesis</option><option value="EXO">Exodus</option><option value="LEV">Leviticus</option><option value="NUM">Numbers</option><option value="DEU">Deuteronomy</option><option value="JOS">Joshua</option><option value="JDG">Judges</option><option value="RUT">Ruth</option><option value="1SA">1 Samuel</option><option value="2SA">2 Samuel</option><option value="1KI">1 Kings</option><option value="2KI">2 Kings</option><option value="1CH">1 Chronicles</option><option value="2CH">2 Chronicles</option><option value="EZR">Ezra</option><option value="NEH">Nehemiah</option><option value="EST">Esther</option><option value="JOB">Job</option><option value="PSA">Psalms</option><option value="PRO">Proverbs</option><option value="ECC">Ecclesiastes</option><option value="SNG">Song of Solomon</option><option value="ISA">Isaiah</option><option value="JER">Jeremiah</option><option value="LAM">Lamentations</option><option value="EZK">Ezekiel</option><option value="DAN">Daniel</option><option value="HOS">Hosea</option><option value="JOL">Joel</option><option value="AMO">Amos</option><option value="OBA">Obadiah</option><option value="JON">Jonah</option><option value="MIC">Micah</option><option value="NAM">Nahum</option><option value="HAB">Habakkuk</option><option value="ZEP">Zephaniah</option><option value="HAG">Haggai</option><option value="ZEC">Zechariah</option><option value="MAL">Malachi</option><option value="MAT">Matthew</option><option value="MRK">Mark</option><option value="LUK">Luke</option><option value="JHN">John</option><option value="ACT">Acts</option><option value="ROM">Romans</option><option value="1CO">1 Corinthians</option><option value="2CO">2 Corinthians</option><option value="GAL">Galatians</option><option value="EPH">Ephesians</option><option value="PHP">Philippians</option><option value="COL">Colossians</option><option value="1TH">1 Thessalonians</option><option value="2TH">2 Thessalonians</option><option value="1TI">1 Timothy</option><option value="2TI">2 Timothy</option><option value="TIT">Titus</option><option value="PHM">Philemon</option><option value="HEB">Hebrews</option><option value="JAS">James</option><option value="1PE">1 Peter</option><option value="2PE">2 Peter</option><option value="1JN">1 John</option><option value="2JN">2 John</option><option value="3JN">3 John</option><option value="JUD">Jude</option><option value="REV">Revelation</option>
+</select><label for="bible-chapter">Chapter</label><input id="bible-chapter" type="number" min="1" max="150" value="1" style="width:76px;background:#252334;color:#fff;border:1px solid #6c6378;border-radius:9px;padding:12px;font:inherit"><button id="open-bible" type="button">Read Bible ↗</button></div>
+<a class="primary" id="bible-source" href="https://ebible.org/eng-web/GEN01.htm" target="_blank" rel="noopener noreferrer">Open Genesis 1 directly ↗</a>
+<p id="bible-status" class="small" role="status" aria-live="polite">No embedded frame is used, so a provider's frame-blocking policy cannot turn the reading area white.</p>
 </article>
 <article class="card"><p class="eyebrow">ANCIENT WRITINGS</p><h2>1 Enoch</h2><p>Explore the R. H. Charles translation (1917), hosted by Project Gutenberg. 1 Enoch is part of the Ethiopian Orthodox scriptural tradition and is not canonical in most Christian traditions.</p>
-<button id="open-enoch" type="button">Read 1 Enoch here</button><p><a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Edition and source details ↗</a></p>
+<a class="primary" href="https://www.gutenberg.org/cache/epub/77935/pg77935-images.html" target="_blank" rel="noopener noreferrer">Read 1 Enoch ↗</a><p><a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Edition and source details ↗</a></p>
 </article>
 </section>
-<section class="panel" id="reader" aria-label="Reading panel">
-<h2 id="reader-title">Choose a text to begin</h2><p id="reader-status" class="status" role="status" aria-live="polite">The original locally bundled Bible reader and Enoch chapter files are still being restored. This panel loads the cited online text source where embedding is allowed.</p>
-<iframe id="reading-frame" title="Scripture text reading panel" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
-</section>
-<section class="panel"><h2>About this preview</h2><p>The Portal doorway is available. The original offline Bible reader and integrated local Enoch chapter files are not yet restored, so this page uses identified source editions rather than pretending missing text is already bundled.</p></section>
-<footer class="small">PORTAL · Living Scriptures · Bible source: <a href="https://ebible.org/eng-web/">eBible.org</a> · 1 Enoch source: <a href="https://www.gutenberg.org/ebooks/77935">Project Gutenberg</a></footer>
+<section class="panel"><h2>About this release</h2><p class="notice">This live page now avoids the blank embedded reader and provides direct, working source navigation. The complete locally hosted 81-book Bible reader, offline chapter cache, and integrated Enoch text are in the development implementation and are not yet deployed here. We will not claim those features are live until their data and reader are integrated and verified.</p><p class="small">Bible source: <a href="https://ebible.org/eng-web/" target="_blank" rel="noopener noreferrer">eBible.org · World English Bible</a>. 1 Enoch source: <a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Project Gutenberg #77935</a>.</p></section>
+<footer class="small">PORTAL · Living Scriptures</footer>
 </main>
 <script>
-const book=document.getElementById('bible-book'),frame=document.getElementById('reading-frame'),title=document.getElementById('reader-title'),status=document.getElementById('reader-status'),bibleLink=document.getElementById('bible-source');
-function showText(name,url){title.textContent=name;status.textContent='Loading the cited source. If the source blocks in-page display, use the direct-source link below.';frame.hidden=false;frame.src=url;frame.onload=()=>{status.textContent='Source loaded. If the reading area remains blank, open the direct source link.'};bibleLink.href=url;document.getElementById('reader').scrollIntoView({behavior:'smooth',block:'start'});}
-document.getElementById('open-bible').addEventListener('click',()=>{const url='https://ebible.org/eng-web/'+book.value+'01.htm';bibleLink.href=url;showText(book.options[book.selectedIndex].text+' · Chapter 1',url);});
-document.getElementById('open-enoch').addEventListener('click',()=>{showText('1 Enoch · R. H. Charles translation', 'https://www.gutenberg.org/cache/epub/77935/pg77935-images.html');});
+const book=document.getElementById('bible-book'),chapter=document.getElementById('bible-chapter'),link=document.getElementById('bible-source'),status=document.getElementById('bible-status');
+function target(){const n=Math.max(1,Math.min(150,Number(chapter.value)||1));chapter.value=String(n);const code=book.value;const url='https://ebible.org/eng-web/'+code+String(n).padStart(2,'0')+'.htm';link.href=url;link.textContent='Open '+book.options[book.selectedIndex].text+' '+n+' directly ↗';return url;}
+document.getElementById('open-bible').addEventListener('click',()=>{const url=target();status.textContent='Opening the World English Bible source in a new tab.';window.open(url,'_blank','noopener,noreferrer');});
+book.addEventListener('change',target);chapter.addEventListener('change',target);target();
 </script></body></html>
