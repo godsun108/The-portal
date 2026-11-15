@@ -11,7 +11,7 @@
     "source_format": "USFM",
     "source_archive_label": "eng-web_usfm.zip",
     "original_language": "English translation",
-    "import_status": "refresh_required_upstream_source_changed",
+    "import_status": "staged_structurally_validated_editorial_review_pending",
     "content_sha256": "107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152",
     "verified_at": "2026-11-15"
   },
@@ -23,10 +23,10 @@
     }
   ],
   "notes": [
-    "The current eBible archive was downloaded and structurally audited on 2026-11-15.",
-    "The current archive SHA-256 is 107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152.",
-    "The source audit found 81 books, 1,402 chapters and 38,058 verse markers; 64 of 81 per-book source hashes differ from the previously staged corpus.",
-    "The staged chapter corpus must be regenerated from this exact archive before release. This does not constitute editorial approval.",
+    "The current eBible archive was downloaded, source-audited and imported on 2026-11-15.",
+    "The current archive SHA-256 is 107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152; it is recorded in data/web-chapters/manifest.json.",
+    "The staged corpus contains 81 books, 1,402 chapters and 38,058 verse markers. The upstream refresh changed 64 of 81 per-book source hashes; the corpus was regenerated on the integration feature branch.",
+    "Structural and projection audits are not editorial approval. Human comparison against the official source remains required.",
     "The edition includes an ecumenical collection beyond the 66-book Protestant canon.",
     "Keep original USFM and source hashes; never present structural validation as proof of textual accuracy."
   ]
