@@ -1,6 +1,6 @@
 # Living Scriptures — release gate evidence
 
-Status: **DRAFT / NOT APPROVED FOR PUBLIC DEPLOYMENT**
+Status: **PUBLIC PREVIEW ELIGIBLE AFTER CI; FULL EDITORIAL RELEASE NOT APPROVED**
 
 ## Verified automated evidence
 - World English Bible archive pinned to SHA-256 `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
@@ -38,7 +38,9 @@ Never state the project reconstructs the single original Bible. The library shou
 - Public release approval: PENDING.
 
 ## Deployment
-Do not merge PR #342 or turn on a production link until outstanding human acceptance gates are satisfied. The LIBRARY station and refreshed staged source content are currently **development-branch only**.
+- Preview-only deployment is permitted after the latest automated checks pass; the home page, Bible reader, 1 Enoch reader and research catalog must carry a visible status notice.
+- Full public-release approval remains pending physical iPhone Safari/VoiceOver/offline checks, editorial review and final UX acceptance.
+A clearly labeled **public preview** may be merged after automated checks pass, provided every reader surface displays the preview/editorial-status notice and the About the texts section remains intact. This is not final editorial or accessibility certification. Do not describe the corpus as a critically edited or universally canonical edition. Full release approval remains blocked on the human gates above.
 
 ## Current source refresh (2026-11-15)
 
