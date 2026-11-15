@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
 const local = name => pathToFileURL(resolve(process.cwd(), name)).href;
 
 test('Landing page opens the Bible, ancient writings and comparison spaces', async ({page}) => {
@@ -110,6 +111,16 @@ test('Reading appearance preferences persist safely', async ({page}) => {
 });
 
 test('1 Enoch reader exposes all 108 chapters and loads real source text', async ({page}) => {
+  const chapter1=readFileSync(resolve(process.cwd(),'data/extra-scriptures/1-enoch/001.json'),'utf8');
+  const chapter108=readFileSync(resolve(process.cwd(),'data/extra-scriptures/1-enoch/108.json'),'utf8');
+  await page.addInitScript(({chapter1,chapter108})=>{
+    const nativeFetch=window.fetch.bind(window);
+    window.fetch=async(input,init)=>{
+      const url=String(input);
+      if(url.includes('/data/extra-scriptures/1-enoch/')) return new Response(url.endsWith('/108.json')?chapter108:chapter1,{status:200,headers:{'Content-Type':'application/json'}});
+      return nativeFetch(input,init);
+    };
+  },{chapter1,chapter108});
   await page.goto(local('1-enoch.html'));
   await expect(page.locator('#chapter option')).toHaveCount(108);
   await expect(page.locator('#text')).toContainText('The words of the blessing of Enoch');
