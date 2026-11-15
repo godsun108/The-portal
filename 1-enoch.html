@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10131c">
+<meta name="description" content="Read the 108-chapter R. H. Charles 1917 edition of 1 Enoch, with chapter navigation and offline saving.">
+<title>1 Enoch | Living Scriptures</title>
+<style>
+:root{color-scheme:dark;--bg:#10131c;--panel:#191e29;--ink:#f5eedf;--muted:#b9b5ae;--gold:#d8b978;--line:#3b414c;font-family:system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#373144 0,var(--bg) 55%);color:var(--ink)}a{color:var(--gold)}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+main{max-width:1000px;margin:auto;padding:22px 16px 90px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.top a{text-decoration:none}.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.hero{padding:38px 0 24px}.hero h1{font:400 clamp(44px,8vw,76px)/1 Georgia,serif;margin:12px 0}.hero p{max-width:720px;color:var(--muted);line-height:1.7}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:14px;align-items:start}.panel{background:linear-gradient(145deg,#1c2230,#171c26);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+label{display:block;font-size:13px;margin:14px 0 7px;color:#ded5c4}select,button{width:100%;font:inherit;background:#252c39;color:var(--ink);border:1px solid #5b606a;border-radius:10px;padding:12px}button{cursor:pointer;margin-top:9px}.primary{background:var(--gold);color:#171717;border-color:var(--gold);font-weight:700}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions button{margin:0}.status{min-height:22px;color:var(--gold);font-size:13px;line-height:1.5}.hint{color:var(--muted);font-size:12px;line-height:1.6}
+.reading h2{font:400 30px Georgia,serif;margin:0 0 18px;border-bottom:1px solid var(--line);padding-bottom:14px}
+#text{white-space:pre-wrap;overflow-wrap:anywhere;font:21px/1.85 Georgia,serif;color:#f3ecdf;max-width:72ch;margin:auto}
+.notice{margin-top:14px;border-left:3px solid #a78f60;padding:12px 14px;background:#211f2a;border-radius:0 10px 10px 0}.notice p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}
+@media(max-width:700px){main{padding:16px 12px 70px}.layout{grid-template-columns:1fr}.panel{padding:15px}.hero{padding-top:28px}}
+.preview-note{margin:14px 0 20px;padding:13px 16px;border:1px solid #796b4d;border-left:4px solid var(--gold,#d8b978);border-radius:12px;background:rgba(216,185,120,.08);color:var(--ink,#f5eedf);font-size:14px;line-height:1.55}.preview-note strong{display:block;color:var(--gold,#d8b978);margin-bottom:3px}</style></head>
+<body><main>
+<header class="top"><a href="./living-scriptures.html">← Sacred Library</a><span class="eyebrow">Ancient writings · Reading edition</span></header><aside class="preview-note" role="note"><strong>Public preview · Source-validated, not editorially certified.</strong> This reader preserves the identified source editions and has passed automated structure and browser checks. Text display, canon boundaries and historical interpretations remain subject to human review. Your browser controls offline storage, which may be cleared.</aside>
+<section class="hero"><div class="eyebrow">Second Temple Jewish literature</div><h1>1 Enoch</h1><p>Explore the 108-chapter R. H. Charles English translation (1917). 1 Enoch is part of the Ethiopian Orthodox scriptural tradition; its place differs across religious communities.</p></section>
+<div class="layout">
+<aside class="panel" aria-label="1 Enoch reading controls">
+<label for="chapter">Chapter</label><select id="chapter" aria-label="Chapter"></select>
+<div class="actions" style="margin-top:10px"><button id="prev" type="button">← Previous</button><button id="next" type="button">Next →</button></div>
+<button id="offline" class="primary" type="button">Save all 108 chapters offline</button>
+<p id="status" class="status" role="status" aria-live="polite">Preparing the reading text…</p>
+<p class="hint">Offline copies are stored by this browser and may be evicted by iOS or the browser. Re-save before travelling.</p>
+<a href="https://www.gutenberg.org/ebooks/77935" target="_blank" rel="noopener noreferrer">Edition and source details ↗</a>
+</aside>
+<section class="panel reading" aria-label="1 Enoch text">
+<h2 id="heading" tabindex="-1">Chapter 1</h2><article id="text"></article>
+</section>
+</div>
+<section class="notice"><p><strong>Editorial note:</strong> This is the R. H. Charles 1917 translation, not a new translation or reconstructed manuscript. The source import flags 1 Enoch 91:12–17 for human review because of a source-dislocation issue. The reader preserves the imported chapter text; editorial approval remains pending.</p></section>
+</main>
+<script>
+const base='./data/extra-scriptures/1-enoch/',select=document.getElementById('chapter'),status=document.getElementById('status'),body=document.getElementById('text'),heading=document.getElementById('heading');
+for(let i=1;i<=108;i++){const option=document.createElement('option');option.value=String(i);option.textContent='Chapter '+i;select.append(option);}
+let current=Math.max(1,Math.min(108,Number(new URLSearchParams(location.search).get('chapter'))||1));select.value=String(current);
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./scripture-sw.js',{scope:'./'}).catch(()=>{});
+async function load(){
+ current=Number(select.value);heading.textContent='1 Enoch · Chapter '+current;body.textContent='';status.textContent='Loading chapter…';history.replaceState(null,'','?chapter='+current);
+ const path=base+String(current).padStart(3,'0')+'.json';
+ try{
+  let response;try{response=await fetch(path);if(!response.ok)throw Error('Network request failed.');}
+  catch(error){if(!('caches' in window))throw error;response=await caches.match(new URL(path,location.href).href);if(!response)throw Error('This chapter is not saved on this device.');}
+  const data=await response.json();if(data.chapter!==current||data.work!=='1-enoch'||typeof data.text!=='string'||!data.text.trim())throw Error('Chapter data did not pass validation.');
+  body.textContent=data.text;try{localStorage.setItem('living-scriptures-enoch-last',String(current));}catch{}
+  status.textContent='R. H. Charles · 1917 translation · Chapter '+current+' loaded.';
+ }catch(error){status.textContent='This chapter could not be loaded or verified: '+error.message+' No placeholder text is shown.';}
+}
+select.addEventListener('change',load);
+document.getElementById('prev').addEventListener('click',()=>{select.value=String(Math.max(1,current-1));load();});
+document.getElementById('next').addEventListener('click',()=>{select.value=String(Math.min(108,current+1));load();});
+document.getElementById('offline').addEventListener('click',async()=>{
+ const button=document.getElementById('offline');button.disabled=true;let saved=0;status.textContent='Saving all 108 chapters…';
+ try{const cache=await caches.open('living-scriptures-v2');
+  for(let i=1;i<=108;i++){const path=base+String(i).padStart(3,'0')+'.json';const response=await fetch(path,{cache:'no-store'});if(!response.ok)throw Error('Chapter '+i+' could not be fetched.');const data=await response.clone().json();if(data.work!=='1-enoch'||data.chapter!==i||typeof data.text!=='string'||!data.text.trim())throw Error('Chapter '+i+' failed validation.');await cache.put(new URL(path,location.href).href,response);saved++;}
+  status.textContent='All 108 chapters saved for offline reading on this device.';
+ }catch(error){status.textContent='Saved '+saved+' of 108 chapters. A complete offline copy is not confirmed. '+error.message;}
+ finally{button.disabled=false;}
+});
+load();
+</script></body></html>
