@@ -67,7 +67,7 @@ $("networkSync").addEventListener("click",()=>{
  $("networkConsensus").textContent=result.consensusHz.toFixed(5)+" Hz";
  $("networkStatus").textContent="CORRECTION APPLIED";
  $("networkDetail").textContent="Ensemble median · gain 0.65 · no UTC authority";
- readings=[];render();
+ lastConsensus=result.consensusHz;readings=[];render();
 });
 $("networkReset").addEventListener("click",()=>{clocks=initial();readings=[];run=0;lastConsensus=null;render()});
 render();
