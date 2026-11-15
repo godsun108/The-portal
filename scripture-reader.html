@@ -24,7 +24,7 @@ a{color:var(--gold)}button,input,select{font:inherit}a:focus-visible,button:focu
 </style>
 </head>
 <body>
-<a class="skip" href="#verses">Skip to scripture</a>
+<a class="skip" href="#heading">Skip to scripture</a>
 <main class="shell">
 <header class="top"><a href="./living-scriptures.html">← Sacred Library</a><span class="eyebrow">THE PORTAL · READER</span></header>
 <section class="hero"><div class="eyebrow">A quiet place to read</div><h1>Open the Scriptures.</h1><p>Read the World English Bible from locally hosted chapter files. Choose a book, move through chapters, adjust the page to your eyes, and save a whole book to this device for offline reading.</p></section>
@@ -35,15 +35,15 @@ a{color:var(--gold)}button,input,select{font:inherit}a:focus-visible,button:focu
 <div class="field"><label for="chapter">Chapter</label><select id="chapter" disabled><option>—</option></select></div>
 <div class="actions">
 <button class="btn primary" id="load" type="button">Read chapter</button>
-<button class="btn" id="resume" type="button">Resume reading</button>
+<button class="btn" id="resume" type="button">Resume last reading</button>
 <button class="btn" id="previous" type="button">← Previous</button>
 <button class="btn" id="next" type="button">Next →</button>
-<button class="btn" id="offline" type="button">Save book offline</button>
+<button class="btn" id="offline" type="button">Save this book offline</button>
 <a class="btn" id="source" href="https://ebible.org/eng-web/" target="_blank" rel="noopener noreferrer" style="text-align:center;text-decoration:none">Official source ↗</a>
 </div>
 <p id="status" class="status" role="status" aria-live="polite">Preparing the verified chapter index…</p>
 <div class="tools" aria-label="Reading appearance">
-<div class="field"><label for="text-size">Text size</label><select id="text-size"><option value="small">Compact</option><option value="medium" selected>Comfortable</option><option value="large">Large</option><option value="extra-large">Extra large</option></select></div>
+<div class="field"><label for="text-size">Reading text size</label><select id="text-size"><option value="small">Compact</option><option value="medium" selected>Comfortable</option><option value="large">Large</option><option value="extra-large">Extra large</option></select></div>
 <div class="field"><label for="line-spacing">Line spacing</label><select id="line-spacing"><option value="compact">Compact</option><option value="comfortable" selected>Comfortable</option><option value="spacious">Spacious</option></select></div>
 </div>
 <div class="searchbar"><input id="chapter-find" type="search" placeholder="Find in this chapter…" aria-label="Find in this chapter" autocomplete="off"><button class="btn" id="clear-find" type="button">Clear</button></div>
@@ -89,7 +89,7 @@ function filterVerses(){
 }
 $('chapter-find').addEventListener('input',filterVerses);
 $('clear-find').addEventListener('click',()=>{$('chapter-find').value='';filterVerses();$('chapter-find').focus();});
-function makeVerse(entry){
+function cleanSourceNote(note){return note.replace(/\\f\\s+|\\f\\*/g,'').replace(/\\(?:fr|ft|fq|fqa|fk|fl|fp|fv)\\s*/g,' ').replace(/\\\\\\+?(?:w|wh|wg)\\s+([^|\\\\]*?)\\|[^\\\\]*?\\\\\\+?(?:w|wh|wg)\\*/g,'$1').replace(/\\\\[+a-zA-Z][a-zA-Z0-9]*\\*?/g,'').replace(/\\s+/g,' ').trim();}\nfunction makeVerse(entry){
  const p=document.createElement('p');p.className='verse';
  const sup=document.createElement('sup');sup.textContent=entry.number;sup.setAttribute('aria-label','Verse '+entry.number);
  const span=document.createElement('span');span.className='verse-text';
@@ -97,7 +97,7 @@ function makeVerse(entry){
  if(projection.notes.length||projection.has_unresolved_markup){
   const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');
   summary.textContent='Source notes and original formatting';pre.textContent=entry.raw_usfm;details.append(summary);
-  if(projection.notes.length){const note=document.createElement('p');note.textContent=projection.notes.length+' source footnote(s) retained in the original marker text below.';details.append(note);}
+  if(projection.notes.length){const noteBox=document.createElement('div');noteBox.className='source-notes';const label=document.createElement('strong');label.textContent=projection.notes.length===1?'Footnote':'Footnotes';noteBox.append(label);for(const item of projection.notes){const line=document.createElement('p');line.textContent=cleanSourceNote(item);noteBox.append(line);}details.append(noteBox);}
   details.append(pre);p.append(details);
  }
  return p;
@@ -120,7 +120,7 @@ async function loadChapter(){
   verses.replaceChildren(fragment);filterVerses();$('verse-count').textContent=data.verses.length+' verse markers';
   try{localStorage.setItem('living-scriptures-last-v2',JSON.stringify({book:selected,chapter:num}));}catch{}
   status.textContent='Chapter loaded from the source-preserving local corpus.';
- }catch(e){if(id!==requestId)return;verses.replaceChildren();status.textContent=e.message+' Use the official source link if you need to read this passage now.';}
+ }catch(e){if(id!==requestId)return;verses.replaceChildren();status.textContent='This chapter is unavailable or could not be verified locally. '+e.message+' Use the official source link if you need to read this passage now.';}
 }
 book.addEventListener('change',()=>{requestId++;fillChapters();sourceUrl();verses.replaceChildren();heading.textContent=titles[book.value]||book.value;status.textContent='Choose a chapter, then select Read chapter.';});
 chapter.addEventListener('change',()=>{requestId++;sourceUrl();});
