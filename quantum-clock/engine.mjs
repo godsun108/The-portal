@@ -57,9 +57,17 @@ export function measureClock(clock, { interrogationSeconds = 0.5, atomCount = 10
     detuningHz: trueOffsetHz, interrogationSeconds, atomCount, contrast,
     phaseOffsetRad: Math.PI / 2, seed
   });
-  const random = seededRandom((Number(seed) ^ clock.randomState) >>> 0);
-  const estimatedOffsetHz = trueOffsetHz + gaussian(random) * measurement.frequencyUncertaintyHz;
-  return { clockId: clock.id, trueOffsetHz, estimatedOffsetHz, uncertaintyHz: measurement.frequencyUncertaintyHz, measuredFraction: measurement.measuredFraction };
+  // At the Ramsey quadrature point, dP/d(delta-f) = -contrast * pi * T.
+  // Linearize around resonance and infer detuning from the measured population,
+  // so projection noise in the atom counts actually drives the frequency estimate.
+  const estimatedOffsetHz = (0.5 - measurement.measuredFraction) /
+    (contrast * Math.PI * interrogationSeconds);
+  return {
+    clockId: clock.id, trueOffsetHz, estimatedOffsetHz,
+    uncertaintyHz: measurement.frequencyUncertaintyHz,
+    measuredFraction: measurement.measuredFraction,
+    estimator: "quadrature-linearized"
+  };
 }
 export function synchronizeClocks(clocks, measurements, gain = 0.5) {
   finite(gain, "gain");
