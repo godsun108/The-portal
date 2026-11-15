@@ -11,9 +11,9 @@
     "source_format": "USFM",
     "source_archive_label": "eng-web_usfm.zip",
     "original_language": "English translation",
-    "import_status": "not_imported",
-    "content_sha256": null,
-    "verified_at": null
+    "import_status": "refresh_required_upstream_source_changed",
+    "content_sha256": "107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152",
+    "verified_at": "2026-11-15"
   },
   "verified_chapter_links": [
     {
@@ -23,8 +23,11 @@
     }
   ],
   "notes": [
+    "The current eBible archive was downloaded and structurally audited on 2026-11-15.",
+    "The current archive SHA-256 is 107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152.",
+    "The source audit found 81 books, 1,402 chapters and 38,058 verse markers; 64 of 81 per-book source hashes differ from the previously staged corpus.",
+    "The staged chapter corpus must be regenerated from this exact archive before release. This does not constitute editorial approval.",
     "The edition includes an ecumenical collection beyond the 66-book Protestant canon.",
-    "A verified corpus import must record the downloaded archive hash, exact book/chapter counts and verse source fidelity.",
-    "This manifest describes the intended source, not completed offline coverage."
+    "Keep original USFM and source hashes; never present structural validation as proof of textual accuracy."
   ]
 }
