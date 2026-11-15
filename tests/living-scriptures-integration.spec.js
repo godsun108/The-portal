@@ -61,3 +61,19 @@ test('Genesis, Psalms and John render readable source words',async({page})=>{
  }
  await expect(page.locator('#source')).toHaveAttribute('href',/JHN03\.htm/);
 });
+
+test('1 Enoch can be saved and reopened offline, including a chapter URL',async({page,context})=>{
+ test.setTimeout(60000);
+ await page.goto(BASE+'1-enoch.html');
+ await expect(page.locator('#status')).toContainText('Chapter 1 loaded');
+ await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
+ await page.getByRole('button',{name:'Save all 108 chapters offline'}).click();
+ await expect(page.locator('#status')).toContainText('All 108 chapters saved',{timeout:30000});
+ await context.setOffline(true);
+ await page.locator('#chapter').selectOption('108');
+ await expect(page.locator('#text')).toContainText('Another book which Enoch wrote');
+ await page.reload();
+ await expect(page.locator('#status')).toContainText('Chapter 108 loaded');
+ await expect(page.locator('#text')).toContainText('Another book which Enoch wrote');
+ await context.setOffline(false);
+});
