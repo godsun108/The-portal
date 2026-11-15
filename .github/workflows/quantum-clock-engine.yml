@@ -17,5 +17,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Test deterministic clock engine
-        run: node --test quantum-clock/tests/engine.test.mjs
+      - name: Test deterministic clock engines
+        run: node --test quantum-clock/tests/*.test.mjs
