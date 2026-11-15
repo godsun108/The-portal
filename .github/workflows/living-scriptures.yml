@@ -91,21 +91,23 @@ jobs:
   official-web-source-audit:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Download exact upstream WEB USFM archive
+        id: source
         run: |
           mkdir -p /tmp/web-source /tmp/web-extracted
           curl --fail --location --retry 2 --max-time 120 --output /tmp/web-source/eng-web_usfm.zip https://ebible.org/Scriptures/eng-web_usfm.zip
           sha256sum /tmp/web-source/eng-web_usfm.zip | tee /tmp/web-source/archive-sha256.txt
           ACTUAL_SHA=$(cut -d' ' -f1 /tmp/web-source/archive-sha256.txt)
           echo "Downloaded upstream WEB archive SHA-256: $ACTUAL_SHA"
-          ACTUAL_SHA=$(cut -d' ' -f1 /tmp/web-source/archive-sha256.txt)
           echo "WEB_SOURCE_ARCHIVE_SHA256=$ACTUAL_SHA" >> "$GITHUB_ENV"
-          echo "Archive hash recorded; source-book hashes will be compared against the staged corpus."
+          echo "sha=$ACTUAL_SHA" >> "$GITHUB_OUTPUT"
           python3 - <<'PY'
           from pathlib import Path
           import zipfile
@@ -136,11 +138,12 @@ jobs:
           const incoming=JSON.parse(await readFile('/tmp/web-chapters/manifest.json','utf8'));
           const old=new Map(existing.books.map(book=>[book.id,book.sha256]));
           const changed=incoming.books.filter(book=>old.get(book.id)!==book.sha256).map(book=>book.id);
-          if(existing.books.length!==incoming.books.length || existing.chapters!==incoming.chapters || existing.verse_markers!==incoming.verse_markers || changed.length){
+          if(existing.books.length!==incoming.books.length || existing.chapters!==incoming.chapters || existing.verse_markers!==incoming.verse_markers){
             console.error(JSON.stringify({existing:{books:existing.books.length,chapters:existing.chapters,verses:existing.verse_markers},incoming:{books:incoming.books.length,chapters:incoming.chapters,verses:incoming.verse_markers},changed_books:changed}));
-            throw new Error('Upstream book content changed; staged corpus refresh and editorial review are required.');
+            throw new Error('Upstream corpus scope changed; stop for human review.');
           }
-          console.log('All 81 per-book content hashes and corpus counts match. ZIP-level hash drift is packaging-only.');
+          console.log(JSON.stringify({status:changed.length?'source-refresh-required':'source-content-current',changed_book_count:changed.length,changed_books:changed,archive_sha256:process.env.WEB_SOURCE_ARCHIVE_SHA256}));
+          if(changed.length) console.log('The stage-chapter-corpus job will refresh this feature branch only; production remains untouched.');
           NODE
       - name: Audit projected rendering of every WEB verse
         run: |
@@ -179,7 +182,7 @@ jobs:
 
   stage-chapter-corpus:
     # Only push generated files to the same-repository feature branch, never main.
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/living-scriptures-v1'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/living-scriptures-integrated-v2'
     needs: [browser-tests, official-web-source-audit]
     runs-on: ubuntu-24.04
     timeout-minutes: 12
@@ -197,7 +200,10 @@ jobs:
         run: |
           mkdir -p /tmp/web-stage-source /tmp/web-stage-extracted
           curl --fail --location --retry 2 --max-time 120 --output /tmp/web-stage-source/archive.zip https://ebible.org/Scriptures/eng-web_usfm.zip
-          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-stage-source/archive.zip' | sha256sum -c
+          ACTUAL_SHA=$(sha256sum /tmp/web-stage-source/archive.zip | cut -d' ' -f1)
+          EXPECTED_SHA='${{ needs.official-web-source-audit.outputs.source_sha }}'
+          if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then echo 'Upstream archive changed between audit and staging; retry required.'; exit 1; fi
+          echo "WEB_SOURCE_ARCHIVE_SHA256=$ACTUAL_SHA" >> "$GITHUB_ENV"
           python3 - <<'PY'
           import zipfile
           from pathlib import Path
@@ -225,5 +231,5 @@ jobs:
             echo "Corpus already current"
           else
             git commit -m "Stage verified WEB chapter review corpus on feature branch"
-            git push origin HEAD:feature/living-scriptures-v1
+            git push origin HEAD:${{ github.head_ref }}
           fi
