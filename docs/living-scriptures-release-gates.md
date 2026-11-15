@@ -3,7 +3,7 @@
 Status: **DRAFT / NOT APPROVED FOR PUBLIC DEPLOYMENT**
 
 ## Verified automated evidence
-- World English Bible archive pinned to SHA-256 `1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0`.
+- World English Bible archive pinned to SHA-256 `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
 - Source checks cover 81 scripture-book files, 1,402 chapters and 38,058 verse markers in the selected source archive. These are edition-specific counts, not a claim about all biblical canons.
 - Every staged chapter JSON file is now structurally checked against the source manifest, including edition/book/chapter consistency and nonempty verse records.
 - Chromium unit, browser and real-data offline tests have passed in prior CI runs.
@@ -39,3 +39,9 @@ Never state the project reconstructs the single original Bible. The library shou
 
 ## Deployment
 Do not merge PR #297 or turn on a production link until outstanding human acceptance gates are satisfied. The LIBRARY station and staged source content are currently **development-branch only**.
+
+## Current source refresh (2026-11-15)
+- eBible reissued the source archive. The newly downloaded archive SHA-256 is `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
+- The current archive still audits to 81 books, 1,402 chapters and 38,058 verse markers, but **64 of 81 book-level source hashes differ** from the previously staged corpus.
+- The old corpus must not be represented as current. The integration workflow is being updated to regenerate the chapter JSON on the feature branch only, verify the new archive hash and per-book hashes, and leave production untouched.
+- Editorial comparison is still required after refresh; the new source is not automatically approved for public reading.
