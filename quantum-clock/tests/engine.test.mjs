@@ -27,7 +27,10 @@ test("network consensus pulls independent clock estimates toward median", () => 
   const measurements = [{clockId:"a",estimatedOffsetHz:0.1},{clockId:"b",estimatedOffsetHz:0.2},{clockId:"c",estimatedOffsetHz:0.8}];
   const result = synchronizeClocks(clocks, measurements, 0.5);
   assert.equal(result.consensusHz, 0.2);
-  assert.deepEqual(result.clocks.map(c=>c.correctionHz), [0.05,0,-0.3]);
+  const corrections = result.clocks.map(c=>c.correctionHz);
+  assert.ok(Math.abs(corrections[0] - 0.05) < 1e-12);
+  assert.ok(Math.abs(corrections[1]) < 1e-12);
+  assert.ok(Math.abs(corrections[2] + 0.3) < 1e-12);
   assert.equal(result.absoluteTimeAuthority, false);
 });
 test("invalid physical parameters are rejected", () => {
