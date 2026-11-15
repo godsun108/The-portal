@@ -72,7 +72,10 @@ async function callModel({ env, fetchImpl, messages, temperature = 0.4, response
       body: JSON.stringify({ model: env.MODEL_NAME || undefined, messages, temperature, ...(responseFormat ? { response_format: responseFormat } : {}) }),
       signal: controller.signal
     });
-    if (!response.ok) throw new Error("upstream_error");
+    if (!response.ok) {
+      console.error("portal_model_upstream_http_status=" + response.status);
+      throw new Error("upstream_error");
+    }
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content ?? data.message?.content;
     if (!safeString(content, 24_000)) throw new Error("empty_model_response");
