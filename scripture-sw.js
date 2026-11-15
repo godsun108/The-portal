@@ -25,7 +25,7 @@ self.addEventListener('activate',event=>{event.waitUntil((async()=>{
 self.addEventListener('fetch',event=>{
  const request=event.request;if(request.method!=='GET'||!qualifies(request.url))return;
  event.respondWith((async()=>{
-  const cache=await caches.open(VERSION),cached=await cache.match(request);if(cached)return cached;
+  const cache=await caches.open(VERSION),cached=await cache.match(request,{ignoreSearch:true});if(cached)return cached;
   try{const response=await fetch(request);if(response.ok&&response.type==='basic')await cache.put(request,response.clone());return response;}
   catch{return new Response('This scripture file is not stored on this device.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});}
  })());
