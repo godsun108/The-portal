@@ -19,7 +19,7 @@ test("feedback controller applies bounded correction and retains integral state"
 });
 test("Allan deviation is computed from adjacent fractional-frequency samples",()=>{
  assert.equal(allanDeviation([1,1,1]),0);
- assert.ok(Math.abs(allanDeviation([0,1,0])-1)<1e-12);
+ assert.ok(Math.abs(allanDeviation([0,1,0])-Math.sqrt(0.5))<1e-12);
  assert.equal(allanDeviation([1]),null);
  assert.throws(()=>allanDeviation([0,NaN]),TypeError);
 });
