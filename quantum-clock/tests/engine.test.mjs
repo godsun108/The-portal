@@ -37,6 +37,7 @@ test("invalid physical parameters are rejected", () => {
   assert.throws(() => createClock({id:"x",noiseStdHz:-1}), RangeError);
   assert.throws(() => advanceClock(createClock({id:"x"}), -1), RangeError);
   assert.throws(() => synchronizeClocks([createClock({id:"x"})], [], 0.5), RangeError);
+  assert.throws(() => measureClock(createClock({id:"x"}), {contrast:0}), RangeError);
 });
 
 test("clock frequency estimate is derived from measured Ramsey population", () => {
