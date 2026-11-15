@@ -103,7 +103,9 @@ jobs:
           sha256sum /tmp/web-source/eng-web_usfm.zip | tee /tmp/web-source/archive-sha256.txt
           ACTUAL_SHA=$(cut -d' ' -f1 /tmp/web-source/archive-sha256.txt)
           echo "Downloaded upstream WEB archive SHA-256: $ACTUAL_SHA"
-          echo '1298c07ccd62fe8ebab6d0cc94ab75a88dd95272d7fe618faeb7a8f6d632c6e0  /tmp/web-source/eng-web_usfm.zip' | sha256sum -c
+          ACTUAL_SHA=$(cut -d' ' -f1 /tmp/web-source/archive-sha256.txt)
+          echo "WEB_SOURCE_ARCHIVE_SHA256=$ACTUAL_SHA" >> "$GITHUB_ENV"
+          echo "Archive hash recorded; source-book hashes will be compared against the staged corpus."
           python3 - <<'PY'
           from pathlib import Path
           import zipfile
@@ -126,6 +128,20 @@ jobs:
           node -e "const a=require('/tmp/web-chapters/manifest.json'); if(a.books.length!==81 || a.chapters!==1402 || a.verse_markers!==38058 || a.books.find(b=>b.id==='GEN')?.title==='GEN' || a.books.find(b=>b.id==='EXO')?.title==='EXO') process.exit(1); console.log('Chapter counts validated')"
       - name: Validate every generated chapter and verse
         run: node scripts/validate-web-chapters.mjs /tmp/web-chapters
+      - name: Compare upstream book content with staged source
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFile} from 'node:fs/promises';
+          const existing=JSON.parse(await readFile('data/web-chapters/manifest.json','utf8'));
+          const incoming=JSON.parse(await readFile('/tmp/web-chapters/manifest.json','utf8'));
+          const old=new Map(existing.books.map(book=>[book.id,book.sha256]));
+          const changed=incoming.books.filter(book=>old.get(book.id)!==book.sha256).map(book=>book.id);
+          if(existing.books.length!==incoming.books.length || existing.chapters!==incoming.chapters || existing.verse_markers!==incoming.verse_markers || changed.length){
+            console.error(JSON.stringify({existing:{books:existing.books.length,chapters:existing.chapters,verses:existing.verse_markers},incoming:{books:incoming.books.length,chapters:incoming.chapters,verses:incoming.verse_markers},changed_books:changed}));
+            throw new Error('Upstream book content changed; staged corpus refresh and editorial review are required.');
+          }
+          console.log('All 81 per-book content hashes and corpus counts match. ZIP-level hash drift is packaging-only.');
+          NODE
       - name: Audit projected rendering of every WEB verse
         run: |
           node scripts/audit-web-render.mjs /tmp/web-chapters > /tmp/web-source/render-audit.json
