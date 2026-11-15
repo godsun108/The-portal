@@ -1,0 +1,21 @@
+name: Quantum Clock Engine
+on:
+  pull_request:
+    paths:
+      - "quantum-clock/**"
+      - ".github/workflows/quantum-clock-engine.yml"
+  push:
+    branches: [main]
+    paths:
+      - "quantum-clock/**"
+      - ".github/workflows/quantum-clock-engine.yml"
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test deterministic clock engine
+        run: node --test quantum-clock/tests/engine.test.mjs
