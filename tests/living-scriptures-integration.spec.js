@@ -33,8 +33,7 @@ test('chapter navigation and resume bookmark work with the real corpus',async({p
  await page.locator('#book').selectOption('GEN');await page.locator('#chapter').selectOption('1');
  await page.getByRole('button',{name:'Read chapter'}).click();await expect(page.locator('#verses .verse').first()).toBeVisible();
  await page.getByRole('button',{name:/Next/}).click();await expect(page.locator('#heading')).toHaveText('Genesis 2');
- const last=await page.evaluate(()=>JSON.parse(localStorage.getItem('living-scriptures-last-v2')));
- expect(last).toEqual({book:'GEN',chapter:2});
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('living-scriptures-last-v2')))).toEqual({book:'GEN',chapter:2});
  await page.getByRole('button',{name:/Previous/}).click();await expect(page.locator('#heading')).toHaveText('Genesis 1');
 });
 test('manifest supplies 81 titled books and the reader opens non-Genesis passages',async({page})=>{
