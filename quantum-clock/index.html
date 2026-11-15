@@ -24,7 +24,8 @@
 </div><div class="actions"><button class="primary" id="run">Run Ramsey measurement</button><button id="zero">Zero detuning</button></div><div class="status" id="status" role="status" aria-live="polite">READY · Awaiting experiment</div></section>
 <section class="panel"><h2>Measurement results</h2><p class="sub">Simulated projective readout · binomial shot noise</p><div class="readout"><div class="metric"><small>EXCITED-STATE FRACTION</small><strong id="fraction">—</strong><em id="counts">No measurement yet</em></div><div class="metric"><small>IDEAL FREQUENCY RESOLUTION</small><strong id="resolution">—</strong><em>1 / (2πT√N)</em></div><div class="metric"><small>MODELLED PROBABILITY</small><strong id="probability">—</strong><em>Ramsey fringe</em></div><div class="metric"><small>PHASE ACCUMULATED</small><strong id="phase">—</strong><em>2π × detuning × T</em></div></div><canvas id="fringe" class="visual" width="640" height="220" aria-label="Ramsey fringe probability curve with current operating point"></canvas><div class="legend"><span><i class="key"></i>Ideal Ramsey fringe</span><span>● Measured operating point</span></div></section>
 <section class="panel wide"><h2>What the clock is doing</h2><div class="steps"><div class="step"><b>01 · PREPARE</b><span>A π/2 pulse creates a superposition of two atomic energy states.</span></div><div class="step"><b>02 · EVOLVE</b><span>The state accumulates phase during a controlled free-evolution interval.</span></div><div class="step"><b>03 · INTERROGATE</b><span>A second π/2 pulse converts phase difference into a measurable population.</span></div><div class="step"><b>04 · CORRECT</b><span>A feedback loop can steer a local oscillator toward the atomic resonance.</span></div></div><div class="formula">P(e) = ½ [1 + cos(2π · Δf · T)]</div><p class="footnote">This simplified Ramsey model assumes ideal pulses, a two-level system, and no decoherence. The ideal projection-noise-limited frequency scale shown is δf ≈ 1/(2πT√N); it is a model benchmark, not a certified accuracy claim. Real clocks require atomic preparation, laser or microwave control, environmental correction, calibration, and traceability.</p></section>
-</div><footer class="bar" style="margin-top:24px"><span>PORTAL QUANTUM EMULATION · V1</span><span>NO NETWORK REQUESTS · NO DATA UPLOAD</span></footer>
+</div><section class="panel wide" id="networkLab" style="margin-top:14px"><h2>Quantum Clock Network · v2</h2><p class="sub">Three independent simulated oscillators · ensemble-median consensus · local-only experiment</p><div class="readout"><div class="metric"><small>NETWORK CONSENSUS</small><strong id="networkConsensus">—</strong><em>Median measured frequency offset</em></div><div class="metric"><small>ALIGNMENT STATUS</small><strong id="networkStatus">READY</strong><em id="networkDetail">No network run yet</em></div></div><div style="overflow-x:auto;margin-top:14px"><table style="width:100%;border-collapse:collapse;font:12px ui-monospace,monospace"><thead><tr style="color:#9aa9bc;text-align:left"><th style="padding:10px;border-bottom:1px solid #34445a">CLOCK</th><th style="padding:10px;border-bottom:1px solid #34445a">ELAPSED</th><th style="padding:10px;border-bottom:1px solid #34445a">EST. OFFSET</th><th style="padding:10px;border-bottom:1px solid #34445a">CORRECTION</th></tr></thead><tbody id="clockRows"><tr><td colspan="4" style="padding:12px">Initializing…</td></tr></tbody></table></div><div class="actions"><button class="primary" id="networkMeasure">Measure all clocks</button><button id="networkSync">Apply consensus correction</button><button id="networkReset">Reset experiment</button></div><p class="footnote" style="margin-top:12px">Consensus aligns the simulated clocks to their ensemble median; it does not establish UTC, prove accuracy, or create an external time authority. Each reading includes simulated projection noise. This model intentionally makes no network calls.</p></section>
+<footer class="bar" style="margin-top:24px"><span>PORTAL QUANTUM EMULATION · V1</span><span>NO NETWORK REQUESTS · NO DATA UPLOAD</span></footer>
 </main>
 <script>
 (()=>{'use strict';
@@ -38,4 +39,37 @@ function drawFringe(){const c=$('fringe'),x=c.getContext('2d'),w=c.width,h=c.hei
 function run(){const d=+det.value,t=+dur.value,n=+atoms.value,phase=2*Math.PI*d*t,p=.5*(1+Math.cos(phase));let excited=0;for(let i=0;i<n;i++)if(Math.random()<p)excited++;last={detuning:d,duration:t,atoms:n,phase,probability:p};const f=excited/n,res=1/(2*Math.PI*t*Math.sqrt(n));$('fraction').textContent=fmt(f*100,2)+'%';$('counts').textContent=excited.toLocaleString()+' / '+n.toLocaleString()+' excited';$('resolution').textContent=fmt(res,5)+' Hz';$('probability').textContent=fmt(p*100,2)+'%';$('phase').textContent=fmt(phase,3)+' rad';$('phaseRead').textContent=fmt(phase,2)+' rad';$('status').textContent='MEASUREMENT COMPLETE · '+new Date().toLocaleTimeString();drawBloch();drawFringe()}
 [det,dur,atoms].forEach(el=>el.addEventListener('input',controls));$('run').addEventListener('click',run);$('zero').addEventListener('click',()=>{det.value='0';controls();run()});refreshClock();setInterval(refreshClock,250);controls();run();
 })();
-</script></body></html>
+</script><script type="module">
+import { createClock, advanceClock, measureClock, synchronizeClocks } from "./engine.mjs";
+const $ = id => document.getElementById(id);
+const initial = () => [
+ createClock({id:"ALPHA",offsetHz:-0.35,driftHzPerSecond:0.0008,noiseStdHz:0.0002,seed:11}),
+ createClock({id:"BETA",offsetHz:0.12,driftHzPerSecond:-0.0004,noiseStdHz:0.0002,seed:22}),
+ createClock({id:"GAMMA",offsetHz:0.68,driftHzPerSecond:0.0002,noiseStdHz:0.0002,seed:33})
+];
+let clocks=initial(), readings=[], run=0;
+function render(){
+ const rows=clocks.map(c=>{const m=readings.find(x=>x.clockId===c.id);return '<tr><td style="padding:11px;border-bottom:1px solid #263449;color:#83ded7">'+c.id+'</td><td style="padding:11px;border-bottom:1px solid #263449">'+c.elapsedSeconds.toFixed(1)+' s</td><td style="padding:11px;border-bottom:1px solid #263449">'+(m?m.estimatedOffsetHz.toFixed(5)+' Hz':'—')+'</td><td style="padding:11px;border-bottom:1px solid #263449">'+c.correctionHz.toFixed(5)+' Hz</td></tr>'}).join("");
+ $("clockRows").innerHTML=rows;
+ if(readings.length){const spread=Math.max(...readings.map(x=>x.estimatedOffsetHz))-Math.min(...readings.map(x=>x.estimatedOffsetHz));$("networkConsensus").textContent=readings.map(x=>x.estimatedOffsetHz).sort((a,b)=>a-b)[1].toFixed(5)+" Hz";$("networkStatus").textContent="MEASURED";$("networkDetail").textContent="Observed spread "+spread.toFixed(5)+" Hz · run "+run}
+ else{$("networkConsensus").textContent="—";$("networkStatus").textContent="READY";$("networkDetail").textContent="No network run yet"}
+}
+function measure(){
+ run++;
+ clocks=clocks.map(c=>advanceClock(c,5));
+ readings=clocks.map((c,i)=>measureClock(c,{interrogationSeconds:.4,atomCount:5000,contrast:.92,seed:100+run*10+i}));
+ render();
+}
+$("networkMeasure").addEventListener("click",measure);
+$("networkSync").addEventListener("click",()=>{
+ if(readings.length!==clocks.length){$("networkStatus").textContent="MEASURE FIRST";return}
+ const result=synchronizeClocks(clocks,readings,.65);clocks=result.clocks;
+ $("networkConsensus").textContent=result.consensusHz.toFixed(5)+" Hz";
+ $("networkStatus").textContent="CORRECTION APPLIED";
+ $("networkDetail").textContent="Ensemble median · gain 0.65 · no UTC authority";
+ readings=[];render();
+});
+$("networkReset").addEventListener("click",()=>{clocks=initial();readings=[];run=0;render()});
+render();
+</script>
+</body></html>
