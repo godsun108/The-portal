@@ -89,7 +89,8 @@ function filterVerses(){
 }
 $('chapter-find').addEventListener('input',filterVerses);
 $('clear-find').addEventListener('click',()=>{$('chapter-find').value='';filterVerses();$('chapter-find').focus();});
-function cleanSourceNote(note){return note.replace(/\\f\\s+|\\f\\*/g,'').replace(/\\(?:fr|ft|fq|fqa|fk|fl|fp|fv)\\s*/g,' ').replace(/\\\\\\+?(?:w|wh|wg)\\s+([^|\\\\]*?)\\|[^\\\\]*?\\\\\\+?(?:w|wh|wg)\\*/g,'$1').replace(/\\\\[+a-zA-Z][a-zA-Z0-9]*\\*?/g,'').replace(/\\s+/g,' ').trim();}\nfunction makeVerse(entry){
+function cleanSourceNote(note){return note.replace(/\\f\s+|\\f\*/g,'').replace(/\\(?:fr|ft|fq|fqa|fk|fl|fp|fv)\s*/g,' ').replace(/\\[+a-zA-Z][a-zA-Z0-9]*\*?/g,'').replace(/\s+/g,' ').trim();}
+function makeVerse(entry){
  const p=document.createElement('p');p.className='verse';
  const sup=document.createElement('sup');sup.textContent=entry.number;sup.setAttribute('aria-label','Verse '+entry.number);
  const span=document.createElement('span');span.className='verse-text';
