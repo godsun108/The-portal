@@ -2,7 +2,7 @@ name: Living Scriptures checks
 on:
   push:
     branches:
-      - feature/living-scriptures-v1
+      - 'feature/living-scriptures-*'
     paths:
       - 'scripts/build-full-scripture-offline.mjs'
       - 'scripture-reader.html'
