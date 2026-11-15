@@ -52,6 +52,7 @@ export function simulateRamseyMeasurement({ detuningHz, interrogationSeconds, at
   return { phaseRad, probability, excitedCount, atomCount, measuredFraction, frequencyUncertaintyHz };
 }
 export function measureClock(clock, { interrogationSeconds = 0.5, atomCount = 1000, contrast = 1, seed = 7 } = {}) {
+  if (contrast <= 0) throw new RangeError("contrast must be greater than zero for frequency estimation");
   const trueOffsetHz = clock.offsetHz + clock.driftHzPerSecond * clock.elapsedSeconds + clock.correctionHz;
   const measurement = simulateRamseyMeasurement({
     detuningHz: trueOffsetHz, interrogationSeconds, atomCount, contrast,
