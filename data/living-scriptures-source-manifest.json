@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "collection": "The Living Scriptures",
+  "edition": {
+    "id": "eng-web",
+    "name": "World English Bible Classic",
+    "publisher": "eBible.org",
+    "license": "Public domain (text); World English Bible name is a trademark",
+    "official_page": "https://ebible.org/eng-web/",
+    "download_page": "https://ebible.org/find/details.php?id=eng-web",
+    "source_format": "USFM",
+    "source_archive_label": "eng-web_usfm.zip",
+    "original_language": "English translation",
+    "import_status": "not_imported",
+    "content_sha256": null,
+    "verified_at": null
+  },
+  "verified_chapter_links": [
+    {
+      "book": "Genesis",
+      "chapter": 1,
+      "url": "https://ebible.org/eng-web/GEN01.htm"
+    }
+  ],
+  "notes": [
+    "The edition includes an ecumenical collection beyond the 66-book Protestant canon.",
+    "A verified corpus import must record the downloaded archive hash, exact book/chapter counts and verse source fidelity.",
+    "This manifest describes the intended source, not completed offline coverage."
+  ]
+}
