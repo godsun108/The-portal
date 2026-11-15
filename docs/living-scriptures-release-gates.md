@@ -6,9 +6,9 @@ Status: **DRAFT / NOT APPROVED FOR PUBLIC DEPLOYMENT**
 - World English Bible archive pinned to SHA-256 `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
 - Source checks cover 81 scripture-book files, 1,402 chapters and 38,058 verse markers in the selected source archive. These are edition-specific counts, not a claim about all biblical canons.
 - Every staged chapter JSON file is now structurally checked against the source manifest, including edition/book/chapter consistency and nonempty verse records.
-- Chromium unit, browser and real-data offline tests have passed in prior CI runs.
+- Chromium unit, browser and real-data offline tests passed in prior CI runs; the latest rerun is checking the refreshed corpus and the expanded 1 Enoch offline test.
 - Existing PORTAL contracts have passed.
-- Simulated mobile WebKit browsing, real-data chapter loading, local chapter offline reading, book navigation and resume have passed in CI. Linux WebKit full offline page reload can return an internal navigation error, so physical iOS offline reopening is still unverified.
+- Simulated mobile WebKit browsing, real-data chapter loading, local chapter offline reading, book navigation and resume have passed in CI. Full offline reopen is tested in Chromium; Playwright's Linux WebKit reload crashes internally when the context is forced offline, so that specific automation case is skipped in WebKit and must be verified on physical iOS Safari. Linux WebKit full offline page reload can return an internal navigation error, so physical iOS offline reopening is still unverified.
 - Latest verified complete pass after keyboard skip link, accessible verse labels, narrow-screen text-scaling and source-note disclosure: https://github.com/godsun108/The-portal/actions/runs/40151585590 (official-web-source-audit, browser-tests, stage-chapter-corpus all succeeded).
 
 ## Fixed scope for completion
@@ -46,5 +46,5 @@ Do not merge PR #342 or turn on a production link until outstanding human accept
 - Latest source-render audit: 38,058 verse markers, 0 unresolved markup markers, 0 blank projected verses, 1,850 footnotes; status remains `projection-markup-clean-not-editorially-certified`.
 - eBible reissued the source archive. The newly downloaded archive SHA-256 is `107c0c220a67b9e43baa18e849e19076d41b8e169a0c71d4b9fd2d77db94c152`.
 - The current archive still audits to 81 books, 1,402 chapters and 38,058 verse markers, but **64 of 81 book-level source hashes differ** from the previously staged corpus.
-- The old corpus must not be represented as current. The integration workflow is being updated to regenerate the chapter JSON on the feature branch only, verify the new archive hash and per-book hashes, and leave production untouched.
-- Editorial comparison is still required after refresh; the new source is not automatically approved for public reading.
+- The refreshed chapter corpus has been regenerated on this feature branch from the exact archive above. Its source manifest records the new archive hash and per-book hashes; production remains untouched.
+- The source refresh is structurally validated but not editorially certified. Editorial comparison remains a release gate; do not imply scholarly certification.
