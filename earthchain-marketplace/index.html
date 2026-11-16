@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EarthChain Card Market — ECTEST</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#e9fff2;background:#071b14;color-scheme:dark}
+body{max-width:650px;margin:auto;padding:20px}header{display:flex;justify-content:space-between;align-items:center;gap:12px}h1{font-size:1.65rem}small,.muted{color:#a4c5b5}section{border:1px solid #356c55;border-radius:18px;padding:18px;margin:16px 0;background:#102c20}
+label{display:block;margin:12px 0 5px}input,select,button{box-sizing:border-box;width:100%;font:inherit;padding:12px;border-radius:10px;border:1px solid #52866d;background:#0c231a;color:#fff}
+button{background:#b0f5ca;color:#062013;font-weight:700;cursor:pointer;margin-top:12px}button:disabled{opacity:.45;cursor:not-allowed}#cardPreview{display:none;max-width:220px;max-height:300px;object-fit:contain;border-radius:12px;margin-top:10px}.secondary{background:#173d2c;color:#e9fff2}
+.row{display:flex;gap:12px;justify-content:space-between;align-items:center}.row>*{min-width:0}.tag{padding:5px 9px;background:#204e38;border-radius:12px;font-size:.8rem}
+#status{white-space:pre-wrap;min-height:22px}ul{padding-left:18px}li{margin:9px 0}
+</style>
+<header><div><small>EarthChain · Marketplace</small><h1>Card Exchange</h1></div><span class="tag">ECTEST ONLY</span></header>
+<p class="muted">An interactive, locally saved demonstration. No real EarthCoins, USD, payment processing, blockchain transfers or shipping.</p>
+<section><div class="row"><strong>Buyer wallet</strong><strong id="buyerBalance">0 ECTEST</strong></div><div class="row"><span>Seller wallet</span><strong id="sellerBalance">0 ECTEST</strong></div>
+<button id="acquire">Acquire 100 ECTEST credits (demo only)</button></section>
+<section><h2>List a Yu-Gi-Oh! card</h2>
+<form id="listingForm"><label for="cardPhoto">Card photo (optional, local preview only)</label><input id="cardPhoto" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"><img id="cardPreview" alt="Local preview of selected card photograph"><small>Image stays on this device; it is not uploaded or saved with the listing.</small><label for="card">Card name</label><input id="card" required maxlength="120" placeholder="Dark Magician">
+<label for="set">Set / edition (optional)</label><input id="set" maxlength="80" placeholder="LOB-005">
+<label for="condition">Condition</label><select id="condition"><option>Near Mint</option><option>Lightly Played</option><option>Moderately Played</option><option>Heavily Played</option><option>Damaged</option></select>
+<label for="price">Price (ECTEST)</label><input id="price" type="number" min="1" max="1000000" step="1" value="75" required>
+<button type="submit">Create test listing</button></form></section>
+<section><h2>Browse cards</h2><div id="listings" class="muted">No cards listed yet.</div></section>
+<section><h2>Order fulfillment</h2><div id="orders" class="muted">No orders yet.</div></section>
+<section><h2>Activity</h2><ul id="activity"></ul></section>
+<p role="status" id="status" aria-live="polite"></p>
+<script type="module">
+import {acquireTestCoins,listCard,purchaseCard,shipCard,releaseTestCoins,refundTestOrder,balance} from './simulator.mjs';
+import {loadDemo,saveDemo,SNAPSHOT_KEY} from './local-snapshot.mjs';
+import {previewCardPhoto} from './card-photo.mjs';
+let market;let seq=0;
+try{market=loadDemo(localStorage)}catch{localStorage.removeItem(SNAPSHOT_KEY);market=loadDemo(localStorage)}
+seq=market.events.length+market.listings.size+market.orders.size;
+const EXODIA_ID='earthchain-exodia-lcyw-en306-demo';
+function seedExodia(){if(!market.listings.has(EXODIA_ID)){listCard(market,{id:EXODIA_ID,seller:'seller',name:'Exodia the Forbidden One',setCode:'LCYW-EN306',condition:'Near Mint',price:75});persist()} }
+
+function persist(){try{saveDemo(market,localStorage)}catch{message('Storage unavailable; demo changes will not survive a refresh.')}}
+const el=id=>document.getElementById(id);
+const next=prefix=>prefix+'-'+String(++seq).padStart(8,'0');
+function message(text){el('status').textContent=text}
+function button(text,fn){const b=document.createElement('button');b.textContent=text;b.addEventListener('click',()=>{try{fn();persist();render()}catch(e){message(e.message)}});return b}
+function render(){
+ el('buyerBalance').textContent=balance(market,'buyer')+' ECTEST';
+ el('sellerBalance').textContent=balance(market,'seller')+' ECTEST';
+ const listings=el('listings');listings.replaceChildren();
+ if(!market.listings.size)listings.textContent='No cards listed yet.';
+ for(const listing of market.listings.values()){
+  const box=document.createElement('div');const title=document.createElement('p');
+  title.textContent=[listing.name,listing.setCode,listing.condition].filter(Boolean).join(' · ')+' — '+listing.price+' ECTEST ('+listing.status+')';box.append(title);
+  if(listing.status==='active')box.append(button('Buy with ECTEST',()=>{if(!confirm('Approve a simulated purchase? No real money or coins will move.'))return;purchaseCard(market,{listingId:listing.id,buyer:'buyer',orderId:next('order'),approved:true});message('Test purchase placed.')}));listings.append(box);
+ }
+ const orders=el('orders');orders.replaceChildren();if(!market.orders.size)orders.textContent='No orders yet.';
+ for(const order of market.orders.values()){
+  const box=document.createElement('div'),label=document.createElement('p');label.textContent=order.orderId+' · '+order.status;box.append(label);
+  if(order.status==='awaiting_shipment')box.append(button('Mark shipped (simulation)',()=>{shipCard(market,order.orderId,{tracking:next('DEMO-TRACK')});message('Shipment simulated.')}));
+  if(['awaiting_shipment','shipped'].includes(order.status))box.append(button('Refund test credits',()=>{if(!confirm('Refund the buyer in this simulated order?'))return;refundTestOrder(market,order.orderId,{approved:true});message('Test credits refunded.')}));
+  if(order.status==='shipped')box.append(button('Approve test release to seller',()=>{if(!confirm('Simulate releasing test credits to the seller?'))return;releaseTestCoins(market,order.orderId,{approved:true});message('Seller credited with ECTEST.')}));orders.append(box);
+ }
+ const activity=el('activity');activity.replaceChildren();for(const event of market.events){const li=document.createElement('li');li.textContent=event.type+' · '+(event.amount??event.credits)+' ECTEST';activity.append(li)}
+}
+el('acquire').addEventListener('click',()=>{try{acquireTestCoins(market,{buyer:'buyer',credits:100,requestId:next('acquire')});message('100 valueless ECTEST credits added.');persist();render()}catch(e){message(e.message)}});
+el('listingForm').addEventListener('submit',e=>{e.preventDefault();try{const name=el('card').value.trim();const price=Number(el('price').value);const set=el('set').value.trim(),condition=el('condition').value;listCard(market,{id:next('listing'),seller:'seller',name,price,setCode:set,condition});message('Test listing created.');persist();e.target.reset();render()}catch(err){message(err.message)}});
+let photoUrl=null;
+el('cardPhoto').addEventListener('change',e=>{if(photoUrl){URL.revokeObjectURL(photoUrl);photoUrl=null}const file=e.target.files?.[0];const preview=el('cardPreview');preview.style.display='none';preview.removeAttribute('src');if(!file)return;try{photoUrl=previewCardPhoto(file);preview.src=photoUrl;preview.style.display='block';message('Card photo preview ready. It has not been uploaded.')}catch(err){e.target.value='';message(err.message)}});
+seedExodia();
+render();
+</script></html>

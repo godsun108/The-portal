@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {isSupportedCardPhoto,previewCardPhoto} from './card-photo.mjs';
+test('accepts camera JPEG within size limit',()=>{assert.equal(isSupportedCardPhoto({type:'image/jpeg',size:1024}),true);assert.equal(previewCardPhoto({type:'image/jpeg',size:1024},{createObjectURL:()=> 'blob:demo'}),'blob:demo')});
+test('rejects unsupported and oversized images',()=>{assert.equal(isSupportedCardPhoto({type:'image/svg+xml',size:100}),false);assert.equal(isSupportedCardPhoto({type:'image/png',size:9*1024*1024}),false);assert.throws(()=>previewCardPhoto({type:'image/svg+xml',size:100}),/Choose/)});
