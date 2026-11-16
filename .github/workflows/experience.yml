@@ -49,6 +49,8 @@ jobs:
           done
           cat /tmp/experience-server.log
           exit 1
+      - name: Assemble offline review preview from staged corpus
+        run: node scripts/build-scripture-review.mjs data/web-chapters dist/living-scriptures-review.html
       - name: Chromium production journey
         run: npx playwright test --project=chromium
       - name: WebKit production journey
