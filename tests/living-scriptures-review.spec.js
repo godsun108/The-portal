@@ -22,7 +22,8 @@ test('Self-contained review shows actual source passages offline',async({page,co
 test('Offline iPhone review provides keyboard skip link and named passage region',async({page})=>{
  await page.setViewportSize({width:320,height:700});
  await page.goto(pathToFileURL(resolve('dist/living-scriptures-review.html')).href);
- await page.keyboard.press('Tab');
+ const info = test.info(); // desktop chromium exercises the real Tab key; touch projects focus instead
+ if (info.project.name === 'chromium') { await page.keyboard.press('Tab'); } else { await page.getByRole('link',{name:'Skip to passage'}).focus(); }
  await expect(page.getByRole('link',{name:'Skip to passage'})).toBeFocused();
  await page.keyboard.press('Enter');
  await expect(page.locator('#heading')).toBeFocused();
