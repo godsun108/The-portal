@@ -40,6 +40,15 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium webkit
+      - name: Start local scripture test site
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/experience-server.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/data/web-chapters/GEN/001.json -o /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/experience-server.log
+          exit 1
       - name: Chromium production journey
         run: npx playwright test --project=chromium
       - name: WebKit production journey
