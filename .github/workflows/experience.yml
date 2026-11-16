@@ -44,7 +44,7 @@ jobs:
         run: npx playwright test --project=chromium
       - name: WebKit production journey
         if: always()
-        run: npx playwright test --project=webkit
+        run: npx playwright test --project=mobile-webkit
       - name: Upload browser failure evidence
         if: always()
         uses: actions/upload-artifact@v4
