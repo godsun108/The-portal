@@ -2,15 +2,17 @@
 import {DatabaseSync} from "node:sqlite";
 import {authorize} from "../earthchain-genesis/permissions.mjs";
 const identities=new Map([["fixture-alice",{id:"alice",authenticated:true}],["fixture-bob",{id:"bob",authenticated:true}]]);
+const VISIBILITIES=["public","private","members","followers"];
 export function createCore(databasePath=":memory:"){
  const db=new DatabaseSync(databasePath);
  db.exec("PRAGMA foreign_keys=ON; CREATE TABLE IF NOT EXISTS resources(id TEXT PRIMARY KEY, owner_id TEXT NOT NULL, visibility TEXT NOT NULL CHECK(visibility IN ('public','followers','members','private')), body TEXT NOT NULL);");
  const insert=db.prepare("INSERT INTO resources(id,owner_id,visibility,body) VALUES(?,?,?,?)");
  const select=db.prepare("SELECT id,owner_id,visibility,body FROM resources WHERE id=?");
- const create=(token,{id,visibility,body})=>{
+ const updateVisibility=db.prepare("UPDATE resources SET visibility=? WHERE id=?");
+ const create=(token,{id,visibility,body}={})=>{
   const actor=identities.get(token);
   if(!actor)return {status:401,error:"authentication-required"};
-  if(typeof id!=="string"||!/^[a-z0-9_-]{1,128}$/.test(id)||!["public","private","members","followers"].includes(visibility)||typeof body!=="string"||body.length>4096)return {status:400,error:"invalid-resource"};
+  if(typeof id!=="string"||!/^[a-z0-9_-]{1,128}$/.test(id)||!VISIBILITIES.includes(visibility)||typeof body!=="string"||body.length>4096)return {status:400,error:"invalid-resource"};
   try{insert.run(id,actor.id,visibility,body);return {status:201,id};}
   catch{return {status:409,error:"resource-conflict"};}
  };
@@ -24,5 +26,16 @@ export function createCore(databasePath=":memory:"){
   if(!authorize({actor,resource,action:"content:read"}).allowed)return {status:403,error:"forbidden"};
   return {status:200,id:record.id,body:record.body};
  };
- return {create,read,close:()=>db.close()};
+ // Test-fixture owner operation. Production callers must use trusted server identity.
+ const changeVisibility=(token,id,visibility)=>{
+  const actor=identities.get(token);
+  if(!actor)return {status:401,error:"authentication-required"};
+  if(typeof id!=="string"||!/^[a-z0-9_-]{1,128}$/.test(id)||!VISIBILITIES.includes(visibility))return {status:400,error:"invalid-visibility-change"};
+  const record=select.get(id);
+  if(!record)return {status:404,error:"not-found"};
+  if(record.owner_id!==actor.id)return {status:403,error:"forbidden"};
+  updateVisibility.run(visibility,id);
+  return {status:200,id,visibility};
+ };
+ return {create,read,changeVisibility,close:()=>db.close()};
 }

@@ -6,12 +6,16 @@ on:
       - 'genesis-core/**'
       - 'earthchain-genesis/earthid-*.mjs'
       - 'earthchain-genesis/earthid-*.html'
+      - 'earthchain-genesis/http-isolation*'
+      - 'earthchain-genesis/permissions.mjs'
       - '.github/workflows/earthid-device-lab.yml'
   pull_request:
     paths:
       - 'genesis-core/**'
       - 'earthchain-genesis/earthid-*.mjs'
       - 'earthchain-genesis/earthid-*.html'
+      - 'earthchain-genesis/http-isolation*'
+      - 'earthchain-genesis/permissions.mjs'
       - '.github/workflows/earthid-device-lab.yml'
   workflow_dispatch:
 
@@ -31,5 +35,7 @@ jobs:
         run: npm install --prefix genesis-core --no-package-lock --ignore-scripts
       - name: Run integrated cryptographic and HTTP fixture tests
         run: node --test genesis-core/*.test.mjs
+      - name: Run Genesis HTTP visibility-isolation tests
+        run: node --test earthchain-genesis/http-isolation.test.mjs
       - name: Verify the lab never presents a false production sign-in
         run: node --test genesis-core/device-lab.test.mjs
