@@ -42,3 +42,27 @@ test("loopback registration options bind to session and disallow cross-session v
   registry.close();
  }
 });
+test("HTTP pending ceremony bindings expire and are capped",async()=>{
+ let now=1000;
+ const sessions=createSessionStore(),alice=sessions.issue("alice"),registry=createCredentialRegistry();
+ registry.addAccount("alice");
+ const {server}=createLoopbackRegistrationAPI({
+  sessions,accountLookup:async id=>({id,userName:id}),
+  challengeStore:createChallengeStore(),credentialRegistry:registry,sessionStore:sessions,
+  origin:"https://id.example.org",rpID:"id.example.org",now:()=>now
+ });
+ server.listen(0,"127.0.0.1");await once(server,"listening");
+ const base="http://127.0.0.1:"+server.address().port;
+ const post=(route,body={})=>fetch(base+route,{method:"POST",
+  headers:{Cookie:"__Host-earthid="+alice.token,Origin:"https://id.example.org","Content-Type":"application/json"},
+  body:JSON.stringify(body)});
+ try{
+  for(let i=0;i<256;i++)assert.equal((await post("/reauth/options")).status,200);
+  assert.equal((await post("/reauth/options")).status,429);
+  now+=120000;
+  assert.equal((await post("/reauth/options")).status,200);
+ }finally{
+  await new Promise((resolve,reject)=>server.close(err=>err?reject(err):resolve()));
+  registry.close();
+ }
+});
