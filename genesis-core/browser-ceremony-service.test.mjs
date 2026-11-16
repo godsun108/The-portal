@@ -40,3 +40,39 @@ test("login ceremony is single-use, purpose-bound, expiry-bound, no client-selec
   assert.deepEqual(await service.finishAuthentication({handle:expired.handle,response:{id:"x"},accountId:"bob"}),{authenticated:false});
  }finally{credentialRegistry.close();}
 });
+
+test("parallel redemption of one registration handle is consumed once",async()=>{
+ const challengeStore=createChallengeStore(),credentialRegistry=createCredentialRegistry();
+ try{
+  credentialRegistry.addAccount("alice");
+  const service=createBrowserCeremonyService({challengeStore,credentialRegistry,
+   sessionStore:{issue(){throw Error("no session expected")}},
+   expectedOrigin:origin,rpID:"id.example.org"});
+  const begin=await service.beginRegistration({trustedAccountId:"alice",trustedUserName:"Alice"});
+  const forged={id:"parallel-forgery",rawId:"YQ",type:"public-key",
+   response:{clientDataJSON:"!!!",attestationObject:"!!!"}};
+  const results=await Promise.all([
+   service.finishRegistration({handle:begin.handle,response:forged}),
+   service.finishRegistration({handle:begin.handle,response:forged})
+  ]);
+  assert.deepEqual(results,[{registered:false},{registered:false}]);
+  assert.equal(credentialRegistry.getCredential("parallel-forgery"),null);
+ }finally{credentialRegistry.close();}
+});
+
+test("pending ceremony handles are bounded and expired entries are pruned",async()=>{
+ let now=1000;
+ const challengeStore=createChallengeStore({now:()=>now,ttlMs:100});
+ const credentialRegistry=createCredentialRegistry();
+ try{
+  credentialRegistry.addAccount("alice");
+  const service=createBrowserCeremonyService({challengeStore,credentialRegistry,
+   sessionStore:{issue(){throw Error("no session expected")}},
+   expectedOrigin:origin,rpID:"id.example.org",now:()=>now,ttlMs:50,maxPendingCeremonies:1});
+  await service.beginAuthentication({trustedAccountId:"alice"});
+  await assert.rejects(()=>service.beginAuthentication({trustedAccountId:"alice"}),/capacity reached/);
+  now=1050;
+  const next=await service.beginAuthentication({trustedAccountId:"alice"});
+  assert.equal(next.handle.length,43);
+ }finally{credentialRegistry.close();}
+});

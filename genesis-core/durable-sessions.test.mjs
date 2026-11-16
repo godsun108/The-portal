@@ -4,6 +4,8 @@ import {mkdtempSync,readFileSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {createDurableSessionStore} from "./durable-sessions.mjs";
+import {createCredentialRegistry} from "./credentials.mjs";
+import {createCredentialRevocationCoordinator} from "./credential-revocation.mjs";
 import {createLocalEarthIDService} from "./local-http-service.mjs";
 import {once} from "node:events";
 
@@ -38,6 +40,56 @@ test("expiry and account-wide revocation fail closed",()=>{
   assert.throws(()=>sessions.issue("not a valid id"));
  }finally{sessions.close();}
 });
+test("device-bound revocation invalidates only that account's sessions for that device",()=>{
+ const sessions=createDurableSessionStore();
+ const phone="A".repeat(32),tablet="B".repeat(32);
+ try{
+  const phoneA=sessions.issue("alice",{deviceId:phone});
+  const phoneB=sessions.issue("alice",{deviceId:phone});
+  const tabletA=sessions.issue("alice",{deviceId:tablet});
+  const other=sessions.issue("bob",{deviceId:phone});
+  assert.deepEqual(sessions.resolve(phoneA.token),{subject:"alice",verified:true,deviceId:phone});
+  assert.equal(sessions.revokeDevice("alice",phone),2);
+  assert.equal(sessions.resolve(phoneA.token),null);
+  assert.equal(sessions.resolve(phoneB.token),null);
+  assert.deepEqual(sessions.resolve(tabletA.token),{subject:"alice",verified:true,deviceId:tablet});
+  assert.deepEqual(sessions.resolve(other.token),{subject:"bob",verified:true,deviceId:phone});
+  assert.equal(sessions.revokeDevice("alice","wrong"),0);
+  assert.throws(()=>sessions.issue("alice",{deviceId:"not-a-device"}));
+ }finally{sessions.close();}
+});
+test("legacy session database migrates and keeps unbound sessions valid",()=>{
+ const dir=mkdtempSync(join(tmpdir(),"earthid-session-migrate-")),databasePath=join(dir,"sessions.db");
+ try{
+  let sessions=createDurableSessionStore({databasePath});
+  const {token}=sessions.issue("alice");
+  sessions.close();
+  sessions=createDurableSessionStore({databasePath});
+  assert.deepEqual(sessions.resolve(token),{subject:"alice",verified:true});
+  const device="C".repeat(32),bound=sessions.issue("alice",{deviceId:device});
+  assert.equal(sessions.revokeDevice("alice",device),1);
+  assert.equal(sessions.resolve(bound.token),null);
+  assert.deepEqual(sessions.resolve(token),{subject:"alice",verified:true});
+  sessions.close();
+ }finally{rmSync(dir,{recursive:true,force:true});}
+});
+test("credential-bound sessions fail closed if credential is revoked while session row remains",()=>{
+ const dir=mkdtempSync(join(tmpdir(),"earthid-session-credential-active-")),databasePath=join(dir,"identity.db");
+ const sessions=createDurableSessionStore({databasePath});
+ const credentials=createCredentialRegistry(databasePath);
+ try{
+  credentials.addAccount("alice");
+  credentials.addVerifiedWebAuthnCredential({id:"alice_key_1",accountId:"alice",publicKey:new Uint8Array([1,2,3])});
+  const bound=sessions.issue("alice",{credentialId:"alice_key_1"});
+  assert.deepEqual(sessions.resolve(bound.token),{subject:"alice",verified:true,credentialId:"alice_key_1"});
+  credentials.revokeCredential("alice_key_1","alice");
+  // Deliberately leave the session row behind: resolution itself must check
+  // credential state, not rely exclusively on the revocation cleanup path.
+  assert.equal(sessions.resolve(bound.token),null);
+ }finally{
+  sessions.close();credentials.close();rmSync(dir,{recursive:true,force:true});
+ }
+});
 test("loopback private resource denies revoked durable session",async()=>{
  const sessions=createDurableSessionStore();
  const token=sessions.issue("alice").token;
@@ -54,5 +106,21 @@ test("loopback private resource denies revoked durable session",async()=>{
  }finally{
   await new Promise((resolve,reject)=>server.close(e=>e?reject(e):resolve()));
   closeDatabase();sessions.close();
+ }
+});
+
+test("credential revocation that wins before issuance prevents session creation",()=>{
+ const dir=mkdtempSync(join(tmpdir(),"earthid-revoke-before-issue-")),databasePath=join(dir,"identity.db");
+ const sessions=createDurableSessionStore({databasePath});
+ const credentials=createCredentialRegistry(databasePath);
+ const revocations=createCredentialRevocationCoordinator({databasePath});
+ try{
+  credentials.addAccount("alice");
+  credentials.addVerifiedWebAuthnCredential({id:"alice_key_1",accountId:"alice",publicKey:new Uint8Array([1,2,3])});
+  const revoked=revocations.revokeCredential("alice","alice_key_1");
+  assert.deepEqual(revoked,{revoked:true,sessionsRevoked:0});
+  assert.throws(()=>sessions.issue("alice",{credentialId:"alice_key_1"}),{message:"credential_not_active"});
+ }finally{
+  revocations.close();sessions.close();credentials.close();rmSync(dir,{recursive:true,force:true});
  }
 });

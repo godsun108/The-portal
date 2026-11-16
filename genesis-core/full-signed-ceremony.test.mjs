@@ -22,7 +22,6 @@ function authenticator(){
   const clientData=client("webauthn.create",challenge,claimedOrigin);
   const credentialLength=Buffer.alloc(2);credentialLength.writeUInt16BE(credentialId.length);
   const authData=Buffer.concat([hash(Buffer.from(rpID)),Buffer.from([0x45]),Buffer.alloc(4),Buffer.alloc(16),credentialLength,credentialId,cose]);
-  // CBOR map {fmt:"none",attStmt:{},authData:<bytes>} using definite-length encoding.
   const length=Buffer.alloc(2);length.writeUInt16BE(authData.length);
   const attestationObject=Buffer.concat([
    Buffer.from([0xa3,0x63,0x66,0x6d,0x74,0x64,0x6e,0x6f,0x6e,0x65]),
@@ -55,7 +54,7 @@ test("synthetic authenticator completes verified registration then signed login"
   const authChallenge=challenges.issue({accountId:"alice",ceremony:"authentication"});
   const result=await auth.completeAuthentication({accountId:"alice",challenge:authChallenge,response:device.assertion(authChallenge)});
   assert.equal(result.authenticated,true);
-  assert.deepEqual(sessions.resolve(result.session.token),{subject:"alice",verified:true});
+  assert.deepEqual(sessions.resolve(result.session.token),{subject:"alice",verified:true,credentialId:device.id});
   assert.equal(registry.getWebAuthnCredential(device.id,"alice").counter,1);
   assert.equal(sessions.revoke(result.session.token),true);
   assert.equal(sessions.resolve(result.session.token),null);
