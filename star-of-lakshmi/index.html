@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100d1c">
+<title>Star of Lakshmi · THE PORTAL</title>
+<style>
+:root{color-scheme:dark;--bg:#100d1c;--panel:#1b1728;--line:#594866;--gold:#e9c77b;--cream:#f5edda;--muted:#c1b6ca;--rose:#d88ca5;--teal:#8ccbc0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#46304c 0,#171326 44%,var(--bg) 78%);color:var(--cream);font:16px/1.6 system-ui,-apple-system,sans-serif}
+a{color:var(--teal)}main{max-width:1100px;margin:auto;padding:clamp(14px,3vw,30px)}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}header a{text-decoration:none}.eyebrow{letter-spacing:3px;font-size:11px;color:var(--gold)}h1{font:500 clamp(34px,7vw,68px)/1.02 Georgia,serif;letter-spacing:-1.5px;margin:22px 0 10px}h2{font:500 27px Georgia,serif;margin:0 0 8px}h3{font:600 17px Georgia,serif;margin:0 0 6px}p{color:var(--muted);margin:8px 0 14px}.intro{max-width:760px;font-size:18px}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:16px;margin-top:20px}.panel{background:#1b1728dd;border:1px solid #594866;border-radius:18px;padding:17px;box-shadow:0 16px 50px #0003}.stage{min-height:360px;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle,#49304b 0,#211a32 48%,#141122 80%);border-radius:14px;position:relative}svg{width:min(100%,520px);height:auto;overflow:visible}.star-line{fill:none;stroke:var(--gold);stroke-width:2.1;stroke-linejoin:round}.square{fill:#e9c77b0b;stroke:#e9c77b88;stroke-width:1.4}.octagon{fill:#d88ca51c;stroke:var(--rose);stroke-width:1.5}.ray{stroke:#8ccbc088;stroke-width:1;stroke-dasharray:4 5}.center-dot{fill:var(--cream)}.point{fill:var(--gold);stroke:#fff0cf;stroke-width:1}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}button,select{font:inherit;color:var(--cream);background:#2b233b;border:1px solid #78638a;border-radius:11px;padding:10px 13px;min-height:44px}button{cursor:pointer}button[aria-pressed=true],button.primary{background:#59415d;border-color:var(--gold)}button:focus-visible,a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{padding:10px;background:#ffffff08;border:1px solid #ffffff18;border-radius:12px}.stat b{display:block;color:var(--gold);font:22px Georgia,serif}.tabs{display:flex;gap:7px;overflow:auto;padding:4px 0 12px}.tabs button{white-space:nowrap}.forms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.form{padding:12px;background:#ffffff08;border:1px solid #ffffff18;border-radius:13px}.form small{color:var(--gold);letter-spacing:1px}.form p{font-size:14px;margin:4px 0 0}.note{border-left:3px solid var(--teal);padding:8px 12px;background:#8ccbc00d;color:var(--muted);font-size:14px}.history{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.history article{background:#ffffff08;border:1px solid #ffffff18;border-radius:13px;padding:13px}.history p{font-size:14px;margin-bottom:0}.foot{font-size:13px;border-top:1px solid #594866;margin-top:24px;padding-top:16px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.stage{min-height:300px}.forms,.history{grid-template-columns:1fr 1fr}}@media(max-width:420px){.forms,.history{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(prefers-reduced-motion:no-preference){.orbit{transform-origin:200px 200px;animation:turn 70s linear infinite}@keyframes turn{to{transform:rotate(360deg)}}}
+</style>
+</head>
+<body><main>
+<header><a href="../index.html">← THE PORTAL</a><span class="eyebrow">INQUIRY / SACRED GEOMETRY 001</span></header>
+<h1>Star of Lakshmi</h1>
+<p class="intro">A living study of an eight-pointed geometric form, the eight expressions of Lakshmi, directional cosmology, and the ways similar patterns appear across cultures.</p>
+<p class="note">A careful distinction: geometry can be compared across traditions, but visual similarity alone does not prove a shared origin, direct influence, or identical meaning.</p>
+<div class="layout">
+<section class="panel">
+<div class="eyebrow">01 / THE GEOMETRY</div><h2>Two squares. Eight points.</h2>
+<p>Explore a common eight-pointed construction: two equal squares, one rotated 45°. The overlap creates a central octagon. This is a geometric study of an octagram-like form, not a claim that every traditional Lakshmi yantra uses this exact construction.</p>
+<div class="stage">
+<svg viewBox="0 0 400 400" role="img" aria-label="Eight pointed star constructed from two overlapping squares with a central octagon">
+<g class="orbit" id="orbit">
+<line class="ray" x1="200" y1="18" x2="200" y2="382"/><line class="ray" x1="18" y1="200" x2="382" y2="200"/>
+<line class="ray" x1="71" y1="71" x2="329" y2="329"/><line class="ray" x1="329" y1="71" x2="71" y2="329"/>
+<rect class="square" x="108.6" y="108.6" width="182.8" height="182.8"/>
+<rect class="square" x="108.6" y="108.6" width="182.8" height="182.8" transform="rotate(45 200 200)"/>
+<polygon class="octagon" points="162.2,108.6 237.8,108.6 291.4,162.2 291.4,237.8 237.8,291.4 162.2,291.4 108.6,237.8 108.6,162.2"/>
+<polygon class="star-line" points="200,18 237.8,108.6 382,200 291.4,237.8 200,382 162.2,291.4 18,200 108.6,162.2"/>
+<circle class="center-dot" cx="200" cy="200" r="4"/>
+<g id="points"><circle class="point" cx="200" cy="18" r="5"/><circle class="point" cx="329" cy="71" r="5"/><circle class="point" cx="382" cy="200" r="5"/><circle class="point" cx="329" cy="329" r="5"/><circle class="point" cx="200" cy="382" r="5"/><circle class="point" cx="71" cy="329" r="5"/><circle class="point" cx="18" cy="200" r="5"/><circle class="point" cx="71" cy="71" r="5"/></g>
+</g></svg></div>
+<div class="controls"><button id="rotate" aria-pressed="false">Pause rotation</button><button id="showSquares" aria-pressed="true">Hide squares</button><button id="showOctagon" aria-pressed="true">Hide center</button><button id="reset">Reset view</button></div>
+<div class="stats"><div class="stat"><b>8</b><span>outer points</span></div><div class="stat"><b>45°</b><span>angular interval</span></div><div class="stat"><b>8</b><span>fold symmetry</span></div></div>
+<p id="geometryStatus" aria-live="polite">The construction is shown with both squares and the central octagon.</p>
+</section>
+<section class="panel">
+<div class="eyebrow">02 / EIGHT EXPRESSIONS</div><h2>Ashtalakshmi</h2>
+<p>Eight forms traditionally express different dimensions of flourishing. Select one to explore its symbolism.</p>
+<div class="forms" id="forms">
+<button class="form" data-form="0"><small>01</small><h3>Adi Lakshmi</h3><p>Primordial and spiritual abundance.</p></button>
+<button class="form" data-form="1"><small>02</small><h3>Dhana Lakshmi</h3><p>Material wealth and resources.</p></button>
+<button class="form" data-form="2"><small>03</small><h3>Dhanya Lakshmi</h3><p>Food, crops and nourishment.</p></button>
+<button class="form" data-form="3"><small>04</small><h3>Gaja Lakshmi</h3><p>Royal fortune, dignity and power.</p></button>
+<button class="form" data-form="4"><small>05</small><h3>Santana Lakshmi</h3><p>Family, children and continuity.</p></button>
+<button class="form" data-form="5"><small>06</small><h3>Veera Lakshmi</h3><p>Courage, resilience and strength.</p></button>
+<button class="form" data-form="6"><small>07</small><h3>Vijaya Lakshmi</h3><p>Victory and achievement.</p></button>
+<button class="form" data-form="7"><small>08</small><h3>Vidya Lakshmi</h3><p>Knowledge, learning and wisdom.</p></button>
+</div>
+<div class="note" id="formDetail" aria-live="polite" style="margin-top:12px">Choose a form above. These are devotional associations; traditions and lists can vary.</div>
+</section>
+</div>
+<section class="panel" style="margin-top:16px">
+<div class="eyebrow">03 / COSMIC COMPASS</div><h2>The eight directions</h2>
+<p>Ashta Dikpalas are directional guardians in Hindu cosmological traditions. This compass presents a commonly used set of associations; names and iconographic details can vary by text and region.</p>
+<div class="stage" style="min-height:250px"><svg viewBox="0 0 400 300" role="img" aria-label="Eight direction compass with guardians">
+<circle cx="200" cy="150" r="108" fill="none" stroke="#e9c77b88" stroke-width="1.5"/><circle cx="200" cy="150" r="65" fill="#d88ca514" stroke="#d88ca588"/>
+<g stroke="#8ccbc0" stroke-width="1.5"><path d="M200 26V274M76 150H324M112 62L288 238M288 62L112 238"/></g>
+<g fill="#f5edda" font-size="12" text-anchor="middle"><text x="200" y="18">NORTH · KUBERA</text><text x="200" y="292">SOUTH · YAMA</text><text x="28" y="154">WEST · VARUNA</text><text x="372" y="154">EAST · INDRA</text><text x="91" y="48">NW · VAYU</text><text x="309" y="48">NE · ISHANA</text><text x="91" y="265">SW · NIRRITI</text><text x="309" y="265">SE · AGNI</text></g><text x="200" y="146" fill="#e9c77b" text-anchor="middle" font-size="13">CENTER</text><text x="200" y="164" fill="#c1b6ca" text-anchor="middle" font-size="9">orientation</text></svg></div>
+<div class="note">The compass is schematic, not a ritual floor plan or a substitute for a tradition-specific Vastu or mandala diagram.</div>
+</section>
+<section class="panel" style="margin-top:16px">
+<div class="eyebrow">04 / COMPARATIVE HISTORY</div><h2>One shape, many histories</h2>
+<div class="history">
+<article><h3>South Asia · Lakshmi</h3><p>Lakshmi is associated with auspiciousness, flourishing, fertility, beauty and prosperity. Ashtalakshmi traditions articulate eight forms of abundance. Do not assume every eight-pointed star is specifically her emblem.</p></article>
+<article><h3>Ancient Mesopotamia · Ishtar</h3><p>An eight-rayed star is associated with Ishtar and the planet Venus in Mesopotamian visual culture. This is a documented cultural symbol, distinct from Lakshmi's traditions.</p></article>
+<article><h3>Islamic geometric art</h3><p>Eightfold stars and interlaced polygons occur widely in architectural and decorative geometry. Their roles are often mathematical and ornamental, and vary by place and period.</p></article>
+<article><h3>Across later traditions</h3><p>Eight-pointed forms also occur in Christian, Byzantine, Persian and other decorative settings. Similar geometry does not by itself establish a common religious source.</p></article>
+</div>
+</section>
+<section class="panel" style="margin-top:16px">
+<div class="eyebrow">05 / LEARNING WITH GENESIS</div><h2>Ask better questions</h2>
+<p>Talk directly with the Portal intelligence service using its existing verified chat contract. The connection is loaded from the Portal intelligence registry; no provider key is stored in this page. Replies appear only when the server returns a verified response.</p>
+<div id="genesisStatus" class="note" role="status">Checking the Genesis connection…</div>
+<div id="genesisLog" aria-live="polite" style="margin-top:12px;max-height:360px;overflow:auto;display:grid;gap:9px"></div>
+<form id="genesisForm" style="margin-top:12px"><label for="genesisInput"><strong>Ask Genesis about the Star of Lakshmi</strong></label><textarea id="genesisInput" rows="3" maxlength="8000" placeholder="Ask about the geometry, Lakshmi traditions, directional guardians, or historical evidence…" style="display:block;width:100%;margin-top:8px;padding:12px;border-radius:11px;background:#211a32;color:var(--cream);border:1px solid #78638a;font:inherit"></textarea><div class="controls"><button class="primary" id="genesisSend" type="submit" disabled>Ask Genesis</button><button type="button" id="genesisClear">Clear this conversation</button></div></form>
+<div class="controls"><button class="prompt" data-prompt="Explain how to construct a regular octagram from two rotated squares, and derive its angles and central octagon.">Ask about the mathematics</button><button class="prompt" data-prompt="Compare Ashtalakshmi and the eight directional guardians, distinguishing textual evidence from modern interpretation.">Ask about Hindu cosmology</button><button class="prompt" data-prompt="Compare the Mesopotamian star of Ishtar with eight-pointed forms in South Asian art. What is documented and what is speculation?">Ask about ancient history</button></div>
+<p id="promptStatus" aria-live="polite">Choose a suggested question to place it in the message field.</p>
+</section>
+<footer class="foot"><p><strong>Research standard:</strong> devotional meaning, mathematical description, and historical evidence are labeled separately. This is an educational prototype, not a ritual instruction or a claim of scientific proof for spiritual interpretations.</p><p><a href="../137/">Explore the 137 exhibit</a> · <a href="../living-scriptures.html">Living Scriptures</a> · <a href="../index.html">Return to THE PORTAL</a></p><p>STAR OF LAKSHMI · PORTAL INQUIRY SERIES · v1</p></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);let rotating=true,squares=true,center=true;
+const orbit=$('orbit');const rotate=$('rotate');
+rotate.addEventListener('click',()=>{rotating=!rotating;orbit.style.animationPlayState=rotating?'running':'paused';rotate.textContent=rotating?'Pause rotation':'Resume rotation';rotate.setAttribute('aria-pressed',String(!rotating));});
+$('showSquares').addEventListener('click',e=>{squares=!squares;document.querySelectorAll('.square').forEach(x=>x.style.opacity=squares?'1':'0');e.currentTarget.textContent=squares?'Hide squares':'Show squares';e.currentTarget.setAttribute('aria-pressed',String(squares));});
+$('showOctagon').addEventListener('click',e=>{center=!center;document.querySelector('.octagon').style.opacity=center?'1':'0';e.currentTarget.textContent=center?'Hide center':'Show center';e.currentTarget.setAttribute('aria-pressed',String(center));});
+$('reset').addEventListener('click',()=>{rotating=true;squares=true;center=true;orbit.style.animationPlayState='running';document.querySelectorAll('.square').forEach(x=>x.style.opacity='1');document.querySelector('.octagon').style.opacity='1';rotate.textContent='Pause rotation';rotate.setAttribute('aria-pressed','false');$('showSquares').textContent='Hide squares';$('showSquares').setAttribute('aria-pressed','true');$('showOctagon').textContent='Hide center';$('showOctagon').setAttribute('aria-pressed','true');$('geometryStatus').textContent='View reset.';});
+const details=[
+['Adi Lakshmi','Often presented as a primordial or sustaining form of Lakshmi. Explore how spiritual grounding and auspicious beginnings are described in devotional traditions.'],
+['Dhana Lakshmi','Associated with wealth and material resources. A useful prompt is how traditions distinguish prosperity from accumulation alone.'],
+['Dhanya Lakshmi','Associated with grain, food and agricultural abundance: the nourishment that sustains communities.'],
+['Gaja Lakshmi','Often depicted with elephants and associated with royal fortune, dignity, sovereignty and auspicious abundance.'],
+['Santana Lakshmi','Associated with children, family and continuity across generations.'],
+['Veera Lakshmi','Associated with courage, fortitude and the strength to meet difficulty.'],
+['Vijaya Lakshmi','Associated with victory, accomplishment and success in worthy endeavors.'],
+['Vidya Lakshmi','Associated with learning, knowledge and wisdom.']
+];
+document.querySelectorAll('[data-form]').forEach(b=>b.addEventListener('click',()=>{const d=details[Number(b.dataset.form)];$('formDetail').innerHTML='<strong>'+d[0]+': </strong>'+d[1];document.querySelectorAll('[data-form]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
+
+document.querySelectorAll('.prompt').forEach(b=>b.addEventListener('click',()=>{$('genesisInput').value=b.dataset.prompt;$('genesisInput').focus();$('promptStatus').textContent='Question ready. Press Ask Genesis to send it.';}));
+let genesisEndpoint=null,genesisHistory=[],genesisBusy=false;
+const genesisStatus=$('genesisStatus'),genesisLog=$('genesisLog'),genesisSend=$('genesisSend');
+function genesisLine(role,content){const item=document.createElement('div');item.style.cssText='padding:11px 13px;border:1px solid #ffffff20;border-radius:12px;background:#ffffff08;white-space:pre-wrap;overflow-wrap:anywhere';const who=document.createElement('strong');who.textContent=role==='user'?'YOU':'GENESIS / PORTAL';who.style.color=role==='user'?'var(--teal)':'var(--gold)';const body=document.createElement('div');body.textContent=content;body.style.marginTop='4px';item.append(who,body);genesisLog.append(item);genesisLog.scrollTop=genesisLog.scrollHeight;}
+fetch('../intelligence/config.json',{cache:'no-store'}).then(async r=>{if(!r.ok)throw Error('registry unavailable');return r.json()}).then(c=>{if(c.schema!=='portal.intelligence.v1'||c.mode!=='live'||typeof c.endpoint!=='string'||!c.endpoint.startsWith('https://'))throw Error('no live intelligence endpoint is configured');genesisEndpoint=c.endpoint;genesisStatus.textContent='Connected to the configured Portal intelligence gateway. Replies will be checked for verification.';genesisSend.disabled=false;}).catch(e=>{genesisStatus.textContent='Genesis connection unavailable: '+e.message+'. The geometry exhibit still works offline.';});
+$('genesisForm').addEventListener('submit',async e=>{e.preventDefault();if(genesisBusy||!genesisEndpoint)return;const message=$('genesisInput').value.trim();if(!message)return;genesisBusy=true;genesisSend.disabled=true;$('genesisInput').value='';genesisHistory.push({role:'user',content:message});genesisLine('user',message);genesisStatus.textContent='Waiting for a verified intelligence response…';try{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);let response;try{response=await fetch(genesisEndpoint,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'portal.chat.v1',mind:'genesis',messages:genesisHistory.slice(-12),world:{room:'star-of-lakshmi/',subject:'Star of Lakshmi sacred geometry',context:'Explore the eight-pointed construction, Ashtalakshmi, Ashta Dikpalas, and comparative history. Distinguish devotional tradition, mathematical facts, and historical evidence. Do not infer shared origins from visual similarity.'}}),signal:controller.signal});}finally{clearTimeout(timer)}const data=await response.json();if(!response.ok||data.schema!=='portal.chat.v1'||data.verified!==true||data.message?.role!=='assistant'||typeof data.message.content!=='string'||!data.message.content.trim())throw Error(data.error||'response was not verified');const reply=data.message.content.trim();genesisHistory.push({role:'assistant',content:reply});genesisHistory=genesisHistory.slice(-12);genesisLine('assistant',reply);genesisStatus.textContent='Verified response received. Conversation remains in this page session.';}catch(err){genesisHistory.pop();genesisStatus.textContent='No verified reply received: '+(err.name==='AbortError'?'request timed out':err.message)+'. Your question was not answered by a simulated fallback.';}finally{genesisBusy=false;genesisSend.disabled=!genesisEndpoint;}});
+$('genesisClear').addEventListener('click',()=>{genesisHistory=[];genesisLog.replaceChildren();genesisStatus.textContent=genesisEndpoint?'Connected. Conversation cleared from this page session.':'Offline. Conversation cleared.';});
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){rotating=false;orbit.style.animation='none';rotate.textContent='Rotation disabled by device preference';rotate.disabled=true;}
+})();
+</script></body></html>
