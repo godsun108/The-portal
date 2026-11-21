@@ -351,3 +351,86 @@ Before deployment or data integration, document:
 Data sensitivity can increase as information moves through the pipeline: an isolated reading may become a persistent pattern; a pattern may become identity-linked; and an inferred risk score may trigger a consequential action. A privacy review must therefore assess not only what each sensor collects, but also what can be inferred after data are retained and combined.
 
 **Evidence boundary:** the One Health article proposes a broad integrated architecture; NIST provides device cybersecurity guidance. Neither source demonstrates that every proposed sensor type is deployed, that the systems share a common database, or that a particular government or company can access all such data.
+
+
+## Institutional data access and legal framework (research update, 2026-11-20)
+
+This section distinguishes documented data-access rules from speculation about whether particular agencies receive data from the research programs described elsewhere in this exhibit. A sensor's technical ability to collect or transmit information does not establish that an institution owns the resulting data, has legal authority to obtain it, or may reuse it for a different purpose.
+
+### 1. Federal health information: HIPAA public-health pathway
+
+The HHS HIPAA Privacy Rule summary states that covered entities may disclose protected health information to public-health authorities legally authorized to receive it for disease prevention and control. This is a purpose- and recipient-specific permission, not blanket access for any government agency, contractor, laboratory or research team. Other HIPAA pathways, state confidentiality laws and the facts of the disclosure also matter.
+
+Source: https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html
+
+The CDC Field Epidemiology Manual explains that states generally have broader public-health authority within their jurisdictions, while federal public-health activity must fit within federal constitutional and statutory powers. Both levels remain subject to constitutional constraints, including Fourth Amendment and due-process protections. The manual also explains that HIPAA's public-health disclosure provision is permissive and that state law and data-sharing agreements may matter.
+
+Source: https://www.cdc.gov/field-epi-manual/php/chapters/legal.html
+
+### 2. CDC-funded program data stewardship
+
+CDC's Data Sharing and Collection Principles and Standards for NCHHSTP-funded programs call for:
+- A legitimate and clearly specified public-health purpose.
+- Collection of the minimum personally identifiable information needed.
+- Named responsible data stewards and defined access roles.
+- Secure storage and transmission.
+- Sharing identifiable information only with a justifiable public-health need.
+- Risk/benefit review before sharing identifiable data for a purpose beyond the original one.
+- Equivalent safeguards at recipient programs and procedures for breach reporting.
+
+These are published standards for the identified CDC program context; they should not be generalized into a claim that every CDC dataset or every sensor network follows the same procedure.
+
+Source: https://www.cdc.gov/program-collaboration-service-integration/php/data-security/principles.html
+
+### 3. Defense Health Agency: documented Data Sharing Agreement process
+
+The Military Health System's Research Streamlining Initiative describes a formal DHA Data Sharing Agreement (DSA) application and review process for researchers, contractors and non-DOD public-health officials seeking access to DHA-managed data. The FAQ says an MOU or MOA cannot substitute for the DSA. It describes review for HIPAA, Privacy Act and DOD privacy/security requirements, with additional review when DHA data would be stored on a non-federal information system.
+
+This is a concrete example of institutional data access being mediated by a data steward, sponsor, privacy office and documented approval. It concerns DHA-managed health data; it is not evidence that DHA receives data from cyborg-insect, mosquito, Smart Dust or One Health research.
+
+Source: https://www.health.mil/Military-Health-Topics/Privacy-and-Civil-Liberties/Research-Streamlining-Initiative?type=FAQs
+
+### 4. Florida: Department of Health records and public access
+
+Florida Statutes §119.0712(1) makes personally identifying information in records held by the Florida Department of Health relating to an individual's personal health or eligibility for health-related services confidential and exempt from general public-records disclosure, subject to specified exceptions. The statute identifies exceptions including express written consent, a medical emergency, court order, and disclosure to a health research entity under an approved research protocol and a purchase/data-use agreement. Such agreements must restrict identifying disclosures and limit use to the approved protocol.
+
+Florida's general public-records policy in §119.01 favors public access to state and local government records, but the statute expressly preserves records that are confidential or exempt by law. Therefore, public-records access, agency collection authority and research data access are separate legal questions.
+
+Sources:
+- Florida Statutes, Chapter 119, especially §§119.01 and 119.0712: https://www.flsenate.gov/Laws/Statutes/2026/Chapter119/All
+
+### 5. Florida Digital Bill of Rights: important scope limits
+
+The Florida Digital Bill of Rights (FDBR), Part V of Chapter 501, is not a universal privacy law covering every organization or government data system. Section 501.703 excludes state agencies and political subdivisions, nonprofits, postsecondary education institutions, and HIPAA-regulated covered entities/business associates, among others. Section 501.704 separately exempts categories including health records, qualifying identifiable human-subject research information and information used only for authorized public-health activities.
+
+The FDBR's definitions include genetic or biometric data processed for unique identification within its sensitive-data category, but the law's scope and exclusions must be checked before applying it to a particular institution or dataset. Exclusion from the FDBR does not mean that no other privacy, confidentiality, research or constitutional rule applies.
+
+Sources:
+- §501.703, applicability: https://www.flsenate.gov/Laws/Statutes/2026/501.703
+- §501.704, exemptions: https://www.flsenate.gov/Laws/Statutes/2026/501.704
+- §501.702, definitions: https://www.flsenate.gov/Laws/Statutes/2026/501.702
+
+### 6. Evidence required to establish an actual data-sharing relationship
+
+To establish that a specific agency receives, can access or reuses a specific sensor dataset, seek primary documentation such as:
+- A named dataset, system or system-of-records notice.
+- A data-use or data-sharing agreement identifying the recipient and purpose.
+- A contract, grant work plan or statement of work identifying the data flow.
+- A privacy impact assessment, protocol or agency authorization.
+- Procurement records identifying the platform, data custodian and service provider.
+- Retention, deletion, onward-sharing and audit provisions.
+
+A grant award, institutional collaboration, patent, technical radio capability or general public-health authority is not, by itself, proof of a data-sharing relationship.
+
+### Current findings and boundaries
+
+| Question | Finding |
+|---|---|
+| Are there lawful pathways for public-health authorities to receive certain health information? | Yes, including HIPAA's authorized public-health disclosure pathway, subject to scope and applicable law. |
+| Does CDC publish data stewardship and secondary-use standards? | Yes, for the specified NCHHSTP-funded program context. |
+| Does DHA document a formal approval process for access to DHA-managed data? | Yes, including a DSA process. |
+| Does Florida protect identifying personal-health information held by its Department of Health? | Yes, subject to statutory exceptions. |
+| Does the Florida Digital Bill of Rights apply to state agencies or local governments? | No; §501.703 expressly excludes them. |
+| Do these authorities prove that CDC, DHA or Florida receives insect telemetry, mosquito-derived human DNA or Smart Dust data? | No such connection has been established in the reviewed sources. |
+
+**Research conclusion:** documented institutions have different legal authorities, custodianship rules and data-sharing procedures. The next proof step is to identify named systems, agreements, contracts and actual data recipients—not infer access from technical capability or institutional proximity.
