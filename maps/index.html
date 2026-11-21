@@ -15,6 +15,8 @@
 <section class="panel" aria-label="Map controls">
 <div class="controls"><input class="field" id="coords" inputmode="decimal" autocomplete="off" placeholder="Latitude, longitude (e.g. 27.2730, -80.3580)" aria-label="Latitude and longitude"><button id="show" type="button">SHOW ON MAP</button><button class="secondary" id="locate" type="button">USE MY LOCATION</button></div>
 <div class="controls" style="margin-top:10px"><input class="field" id="placeQuery" type="search" placeholder="Search a place or address" aria-label="Search a place or address"><button class="secondary" id="searchPlaces" type="button">SEARCH PLACES</button></div>
+<div class="grid" id="placeResults" style="margin-top:12px" aria-live="polite"></div>
+<div class="panel" style="margin-top:12px"><div class="tag">ROUTE PLANNER · PREVIEW</div><div class="controls" style="margin-top:10px"><input class="field" id="routeOrigin" readonly placeholder="Choose a search result as start" aria-label="Route origin"><input class="field" id="routeDestination" readonly placeholder="Choose a search result as destination" aria-label="Route destination"><select class="field" id="routeMode" aria-label="Travel mode"><option value="driving">Driving</option><option value="walking">Walking</option><option value="cycling">Cycling</option></select><button id="calculateRoute" type="button">CALCULATE ROUTE</button></div><p class="mapstatus" id="routeStatus" role="status" aria-live="polite">Route calculation becomes available when an EarthChain Maps routing service is connected. You can still open external directions.</p></div>
 <div class="actions"><a id="searchLink" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Search places on OpenStreetMap ↗</a><a id="directionsLink" href="https://www.openstreetmap.org/directions" target="_blank" rel="noopener">Open directions ↗</a></div>
 <iframe class="mapframe" id="map" title="OpenStreetMap geographic map" loading="lazy" referrerpolicy="no-referrer" src="https://www.openstreetmap.org/export/embed.html?bbox=-81.2%2C26.5%2C-79.5%2C28.1&layer=mapnik"></iframe>
 <p class="mapstatus" id="status" role="status" aria-live="polite">Map opened to a neutral Florida example view. Enter coordinates or choose Use My Location to center it.</p>
@@ -36,7 +38,7 @@ function setView(lat,lon,label){
  $("#directionsLink").href="https://www.openstreetmap.org/directions?to="+encodeURIComponent(lat+","+lon);
  status.textContent="Showing "+current.label+". Map content is supplied by OpenStreetMap.";
 }
-$("#searchPlaces").onclick=()=>{const q=$("#placeQuery").value.trim();if(!q){status.textContent="Enter a place or address to search.";return}window.open("https://www.openstreetmap.org/search?query="+encodeURIComponent(q),"_blank","noopener");status.textContent="Place search opened on OpenStreetMap. Choose a result there, then copy its coordinates into this map."};
+
 $("#show").onclick=()=>{const m=coords.value.trim().match(/^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/);if(!m){status.textContent="Enter coordinates as latitude, longitude.";return}setView(Number(m[1]),Number(m[2]));};
 $("#locate").onclick=()=>{if(!navigator.geolocation){status.textContent="Location is not available in this browser.";return}status.textContent="Waiting for your one-time location permission…";navigator.geolocation.getCurrentPosition(p=>setView(p.coords.latitude,p.coords.longitude,"Your current location"),e=>{status.textContent=e.code===1?"Location permission was not granted. You can still enter coordinates.":"Could not determine location. You can still enter coordinates."},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})};
 function getSaved(){try{return JSON.parse(localStorage.getItem("earthchain.maps.saved.v1")||"[]")}catch{return []}}
@@ -44,6 +46,45 @@ function renderSaved(){const xs=getSaved(),root=$("#savedList");root.replaceChil
 $("#save").onclick=()=>{if(!current){status.textContent="Choose a map location before saving.";return}const name=$("#placeName").value.trim()||current.label;const xs=getSaved();if(xs.some(x=>x.lat===current.lat&&x.lon===current.lon)){status.textContent="That location is already saved.";return}xs.unshift({name,lat:current.lat,lon:current.lon});localStorage.setItem("earthchain.maps.saved.v1",JSON.stringify(xs.slice(0,100)));$("#placeName").value="";renderSaved();status.textContent="Saved "+name+" in this browser."};
 fetch("./camera-sources.json").then(r=>{if(!r.ok)throw Error("camera registry unavailable");return r.json()}).then(data=>{const root=$("#cameras");data.sources.forEach(source=>{const c=document.createElement("article");c.className="camera";const t=document.createElement("span");t.className="tag";t.textContent=source.region+" · "+source.provider;const h=document.createElement("strong");h.textContent=source.name;const d=document.createElement("small");d.textContent=source.statusMeaning;const m=document.createElement("small");m.textContent="STATUS "+source.status.toUpperCase()+" · COORDINATES "+(source.coordinates?"VERIFIED":"NOT YET VERIFIED");const a=document.createElement("a");a.href=source.url;a.target="_blank";a.rel="noopener";a.textContent="Open provider page ↗";c.append(t,h,d,m,a);root.append(c)})}).catch(()=>{$("#cameras").textContent="Camera directory could not be loaded. Open the Earth Observatory page directly."});
 renderSaved();
+</script>
+<script type="module">
+import { createMapsClient } from "./maps-client.mjs";
+const mapsClient = createMapsClient();
+const byId = id => document.getElementById(id);
+let routeOrigin = null, routeDestination = null;
+function renderPlaceResults(places) {
+ const root=byId("placeResults"); root.replaceChildren();
+ if(!places.length){const p=document.createElement("p");p.className="empty";p.textContent="No matching places were returned.";root.append(p);return}
+ for(const place of places){
+  const card=document.createElement("article");card.className="saved";
+  const title=document.createElement("strong");title.textContent=place.name;
+  const address=document.createElement("small");address.textContent=place.formattedAddress||place.category;
+  const source=document.createElement("small");source.textContent="Source: "+place.source+(place.attribution?" · "+place.attribution:"");
+  const actions=document.createElement("div");actions.className="actions";
+  const show=document.createElement("button");show.className="secondary";show.textContent="SHOW ON MAP";show.onclick=()=>{setView(place.latitude,place.longitude,place.name)};
+  const start=document.createElement("button");start.className="secondary";start.textContent="SET AS START";start.onclick=()=>{routeOrigin=place;byId("routeOrigin").value=place.name};
+  const end=document.createElement("button");end.className="secondary";end.textContent="SET AS DESTINATION";end.onclick=()=>{routeDestination=place;byId("routeDestination").value=place.name};
+  actions.append(show,start,end);card.append(title,address,source,actions);root.append(card);
+ }
+}
+byId("searchPlaces").addEventListener("click",async()=>{
+ const query=byId("placeQuery").value.trim();
+ if(query.length<2){status.textContent="Enter at least two characters to search.";return}
+ status.textContent="Searching through the EarthChain Maps service…";
+ try{const places=await mapsClient.searchPlaces(query);renderPlaceResults(places);status.textContent=places.length+" place result(s) returned by the EarthChain Maps service."}
+ catch(error){status.textContent=error.code==="NOT_CONFIGURED"?"Integrated place search is not connected yet. Use the external OpenStreetMap search link for now.":error.message;byId("placeResults").replaceChildren()}
+});
+byId("calculateRoute").addEventListener("click",async()=>{
+ const routeStatus=byId("routeStatus");
+ if(!routeOrigin||!routeDestination){routeStatus.textContent="Choose a start and destination from place search results first.";return}
+ routeStatus.textContent="Requesting route from EarthChain Maps…";
+ try{
+  const route=await mapsClient.getRoute({origin:{latitude:routeOrigin.latitude,longitude:routeOrigin.longitude},destination:{latitude:routeDestination.latitude,longitude:routeDestination.longitude},mode:byId("routeMode").value});
+  const km=(route.summary.distanceMeters/1000).toFixed(1),mins=Math.round(route.summary.durationSeconds/60);
+  routeStatus.textContent=km+" km · about "+mins+" min · "+route.freshness+" · "+route.source+(route.attribution?" · "+route.attribution:"");
+  byId("directionsLink").href="https://www.openstreetmap.org/directions?from="+encodeURIComponent(routeOrigin.latitude+","+routeOrigin.longitude)+"&to="+encodeURIComponent(routeDestination.latitude+","+routeDestination.longitude);
+ }catch(error){routeStatus.textContent=error.code==="NOT_CONFIGURED"?"EarthChain routing is not connected yet. Open external directions to continue.":error.message}
+});
 </script>
 <script src="../station-nav.js"></script><script type="module">import{installTravelerHUD}from"../traveler-hud.js";installTravelerHUD();</script>
 </body></html>
