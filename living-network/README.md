@@ -291,3 +291,63 @@ Source:
 | One Health integration | Conceptual framework linking human, animal and environmental observations | Governance and interoperability remain explicit prerequisites |
 
 **Evidence boundary:** the sources support several real research programs with adjacent capabilities. They do not establish a single system combining Smart Dust, insect swarms, microbial biosensors, human DNA collection and identity surveillance. A unified architecture would require demonstrated interfaces, power, localization, communications, routing, access controls, data governance and field validation—not merely the existence of each separate component.
+
+
+## Data lifecycle, privacy and governance (research update, 2026-11-20)
+
+### Integrated sensing as a proposal, not an established global network
+
+Ding et al., “Integrated sensing networks for One Health monitoring,” *Nature Sensors* 1, 485–493 (published May 18, 2026), proposes connecting observations across human, animal, plant and environmental domains. It describes multimodal data archives, AI-driven processing and integrated sensing/communications, and explicitly identifies secure interoperable infrastructure, privacy, governance, data sovereignty and public engagement as prerequisites. It is a perspective and proposed roadmap—not evidence that a global operational network already exists.
+
+Source: https://www.nature.com/articles/s44460-026-00075-7
+
+### Data lifecycle and risk boundaries
+
+A useful review model separates six stages:
+
+1. **Collection:** raw physiological, movement, acoustic, chemical, biological or environmental observations.
+2. **Edge processing:** local filtering or feature extraction; local processing may reduce transmission but does not automatically anonymize the output.
+3. **Transport:** device authentication, access control, encryption and integrity protection for data in transit and at rest.
+4. **Aggregation:** joining datasets can create new inferences and re-identification risks even when individual inputs appear innocuous.
+5. **Analysis:** AI outputs require provenance, uncertainty, validation context, model-version tracking and safeguards against treating predictions as direct observations.
+6. **Action:** an alert should not itself confer authority to intervene; decision rights, proportionality, review and challenge mechanisms must be explicit.
+
+### NIST IoT cybersecurity guidance
+
+NIST published IR 8259 Revision 1 in April 2026, superseding the earlier IR 8259. The revision describes manufacturer cybersecurity activities spanning pre-market design and post-market support. It is guidance, not certification that a particular device or network is secure.
+
+Sources:
+- NIST IR 8259 Rev. 1: https://csrc.nist.gov/pubs/ir/8259/r1/final
+- NIST IoT technical capabilities catalog: https://pages.nist.gov/IoT-Device-Cybersecurity-Requirement-Catalogs/technical/
+- NISTIR 8259A: https://nvlpubs.nist.gov/nistpubs/ir/2020/NIST.IR.8259a.pdf
+
+The NIST catalog's seven technical capability areas are:
+- Device identification
+- Device configuration
+- Data protection
+- Logical access to interfaces
+- Software update
+- Cybersecurity state awareness
+- Device security
+
+These capabilities help protect devices and their data. They do not establish that a data-collection purpose is lawful, proportionate or ethically justified. Security, privacy and legitimate authority are distinct layers.
+
+### Governance checklist for any distributed sensing system
+
+Before deployment or data integration, document:
+- Specific purpose and legal authority for collection.
+- Data minimization and why each sensor field is necessary.
+- Responsible data steward and affected people/communities.
+- Access roles for raw observations, derived features and identity-linking keys.
+- Encryption, authentication, secure updates and audit logging.
+- Retention periods, deletion rules and limits on secondary use.
+- Provenance, model uncertainty, validation limits and human review.
+- Incident reporting, correction and challenge processes.
+- Explicit decision authority and proportionality constraints for any intervention.
+- Independent oversight and public transparency appropriate to the use case.
+
+### Core analytical warning
+
+Data sensitivity can increase as information moves through the pipeline: an isolated reading may become a persistent pattern; a pattern may become identity-linked; and an inferred risk score may trigger a consequential action. A privacy review must therefore assess not only what each sensor collects, but also what can be inferred after data are retained and combined.
+
+**Evidence boundary:** the One Health article proposes a broad integrated architecture; NIST provides device cybersecurity guidance. Neither source demonstrates that every proposed sensor type is deployed, that the systems share a common database, or that a particular government or company can access all such data.
