@@ -1,0 +1,90 @@
+{
+  "schema": "earthchain.maps.camera-sources.v1",
+  "version": 1,
+  "statusVocabulary": [
+    "unknown",
+    "provider-page-reachable",
+    "verified-live",
+    "offline",
+    "restricted"
+  ],
+  "sources": [
+    {
+      "id": "yellowstone-old-faithful",
+      "name": "Old Faithful",
+      "region": "Wyoming, United States",
+      "provider": "National Park Service",
+      "url": "https://www.nps.gov/yell/learn/photosmultimedia/webcams.htm",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "A provider destination is listed; current broadcast state has not been verified."
+    },
+    {
+      "id": "monterey-bay-aquarium",
+      "name": "Monterey Bay Aquarium cameras",
+      "region": "California, United States",
+      "provider": "Monterey Bay Aquarium",
+      "url": "https://www.montereybayaquarium.org/cams-videos/live-cams",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Camera collection and published viewing hours are controlled by the provider."
+    },
+    {
+      "id": "utila-reef",
+      "name": "Top-of-Wall Underwater Reef",
+      "region": "Utila, Honduras",
+      "provider": "Explore.org",
+      "url": "https://explore.org/livecams/utopia-village",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Provider schedule and availability may change."
+    },
+    {
+      "id": "homosassa-manatees",
+      "name": "Homosassa Springs Manatees",
+      "region": "Florida, United States",
+      "provider": "Explore.org",
+      "url": "https://explore.org/livecams/oceans/homosassa-springs-underwater-manatees",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Provider schedule and availability may change."
+    },
+    {
+      "id": "african-river-wildlife",
+      "name": "African River Wildlife",
+      "region": "Kenya",
+      "provider": "Explore.org",
+      "url": "https://explore.org/livecams/currently-live/african-river-wildlife-camera",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Provider schedule and availability may change."
+    },
+    {
+      "id": "fairbanks-aurora",
+      "name": "Aurora Borealis",
+      "region": "Alaska, United States",
+      "provider": "Explore.org",
+      "url": "https://explore.org/livecams/aurora-cam",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Visibility and camera operation depend on conditions and provider availability."
+    },
+    {
+      "id": "panama-fruit-feeder",
+      "name": "Panama Fruit Feeder",
+      "region": "El Valle de Antón, Panama",
+      "provider": "Explore.org",
+      "url": "https://explore.org/livecams/panama-canopy",
+      "coordinates": null,
+      "access": "provider-hosted public page; in-app embedding permission not established",
+      "status": "unknown",
+      "statusMeaning": "Provider schedule and availability may change."
+    }
+  ]
+}
