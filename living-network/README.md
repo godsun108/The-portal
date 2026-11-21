@@ -401,7 +401,7 @@ Sources:
 
 ### 5. Florida Digital Bill of Rights: important scope limits
 
-The Florida Digital Bill of Rights (FDBR), Part V of Chapter 501, is not a universal privacy law covering every organization or government data system. Section 501.703 excludes state agencies and political subdivisions, nonprofits, postsecondary education institutions, and HIPAA-regulated covered entities/business associates, among others. Section 501.704 separately exempts categories including health records, qualifying identifiable human-subject research information and information used only for authorized public-health activities.
+The Florida Digital Bill of Rights (FDBR), Part V of Chapter 501, is not a universal privacy law covering every organization or government data system. Section 501.703 excludes state agencies and political subdivisions, nonprofits, postsecondary education institutions, and HIPAA-regulated covered entities/business associates, among others. The statute's definition of a covered controller also sets a $1 billion global-revenue threshold plus at least one specified business-model criterion (such as certain advertising, smart-speaker or app-store activity). Section 501.704 separately exempts categories including health records, qualifying identifiable human-subject research information and information used only for authorized public-health activities.
 
 The FDBR's definitions include genetic or biometric data processed for unique identification within its sensitive-data category, but the law's scope and exclusions must be checked before applying it to a particular institution or dataset. Exclusion from the FDBR does not mean that no other privacy, confidentiality, research or constitutional rule applies.
 
