@@ -42,6 +42,15 @@ test("all registered app and related destinations resolve inside the Portal tree
   }
 });
 
+test("Maps launcher opens the geographic preview and preserves the legacy discovery map", () => {
+  const maps = registry.apps.find((app) => app.id === "maps");
+  assert.ok(maps, "Maps app is missing");
+  assert.equal(maps.entry, "../maps/");
+  assert.equal(maps.owner.path, "maps/index.html");
+  assert.ok(maps.related.some((item) => item.href === "../map/"), "legacy discovery map should remain separately reachable");
+  assert.ok(maps.related.some((item) => item.href === "../maps/#cameras"), "camera directory should be linked separately");
+});
+
 test("Portal APPS station points to the registry-backed launcher", () => {
   const station = stations.stations.find((item) => item.id === "apps");
   assert.ok(station, "APPS station is missing");
