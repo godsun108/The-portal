@@ -31,7 +31,10 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 
 - UC Berkeley Smart Dust project: https://www-bsac.eecs.berkeley.edu/~pister/SmartDust/
 - Kris Pister research projects / synthetic insects: https://www-bsac.eecs.berkeley.edu/~pister/projects.html
-- JST Moonshot biological-cyborg project: https://www.jst.go.jp/moonshot/en/program/goal3/appeal/3A_morishima_ap01.html
+- Original Berkeley presentation, *Synthetic Insects (Smart Dust with Legs)*: https://people.eecs.berkeley.edu/~pister/presentations/Mitre0303.pdf
+- JST Moonshot biological-cyborg project: https://www.jst.go.jp/moonshot/en/program/goal3/3A_morishima.html
+- JST Moonshot grant register: https://www.jst.go.jp/moonshot/en/form/grant.html
+- NTU cyborg insect assembly paper (Nature Communications, 2025): https://www.nature.com/articles/s41467-025-60779-1
 - NTU automated cyborg-insect assembly: https://www.ntu.edu.sg/news/detail/ai-powered-robot-assembles-search-and-rescue-cyborg-insects
 - Nature Communications cyborg-insect swarm paper: https://doi.org/10.1038/s41467-024-55197-8
 - DARPA HyBRIDS: https://www.darpa.mil/research/programs/hybrids
@@ -45,7 +48,9 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 ## Known distinctions and limits
 
 - Berkeley's original Smart Dust project page says the project finished in 2001. The cubic-millimeter mote was the target; larger macro-motes were the demonstrated systems.
-- Kris Pister explicitly described synthetic insects as “Smart Dust with legs.” This is a documented conceptual connection, not evidence that a later living-insect program descended from Smart Dust.
+- Kris Pister explicitly described synthetic insects as “Smart Dust with legs,” and an original Berkeley presentation uses the title *Synthetic Insects (Smart Dust with Legs)*. This is a documented conceptual connection, not evidence that a later living-insect program descended from Smart Dust.
+- A direct funding relationship is documented between JST Moonshot project JPMJMS223A and NTU's 2025 cyborg-insect assembly paper: the paper's acknowledgements name the JST Moonshot R&D Program grant JPMJMS223A and identify H.S. (Hirotaka Sato) for funding acquisition. This is stronger than a thematic resemblance; it does not imply that all other insect or Smart Dust programs are part of the same project.
+- DARPA HyBRIDS is a separate US program. No direct institutional, personnel or funding chain between HyBRIDS and JST JPMJMS223A has been established in this initial trace.
 - JST's biological-cyborg project describes groups of organisms with miniature sensors, communications and behavior-control units, analyzed to develop an AI self-organizing platform.
 - The 2025 cyborg-insect swarm paper reports a 20-cockroach experiment. The experimental setup used centralized VICON motion capture; fully decentralized position sensing was not demonstrated in that experiment.
 - NTU reported an automated assembly prototype and a March 30, 2025 humanitarian deployment of ten cyborg cockroaches in Myanmar.
@@ -59,6 +64,8 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 3. Expand the biosensor gallery with primary experimental papers and clearly label laboratory versus field validation.
 4. Expand the human-data/privacy gallery with laws, oversight mechanisms and documented surveillance programs; do not infer a connection without evidence.
 5. Add a source record for each new claim before updating the convergence map.
+6. Trace the Moonshot grant acknowledgement through other NTU papers, project reports and JST close-out documentation.
+7. Check whether Berkeley synthetic-insect publications cite or share personnel with later biohybrid insect projects; do not infer descent from the phrase alone.
 
 ## Technical notes
 
