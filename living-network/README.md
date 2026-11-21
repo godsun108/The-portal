@@ -72,6 +72,15 @@ The available papers support several distinct device-to-console architectures. T
 | 2025 20-cockroach swarm experiment | Each backpack includes a Sub-1 GHz antenna, controller and LiPo battery | A decentralized control algorithm was proposed, but the authors explicitly state that experimental position data came from centralized VICON motion capture. They propose IMU + UWB as future decentralized localization. | Demonstrated fully decentralized sensing in that experiment, or proof that the insects exchanged packets directly with one another. |
 | 2026 implanted controller | 10 × 10 × 3 mm implanted unit; sub-1 GHz radio; electrical stimulation output | The public paper establishes remote wireless stimulation for locomotion control. | A return telemetry channel, continuous physiological-data upload, peer mesh, or global receiver infrastructure. |
 
+### Range, operating time and data-access disclosures
+
+- The 2026 fully implanted controller paper reports a **26 m** communication distance between the implanted controller and its central board, and actual operation of **32.05 ± 1.00 minutes (N = 4)**. The 9-mAh battery's theoretical estimate was 38.14 minutes. These are controlled test measurements, not a general-purpose coverage guarantee.
+- The 2024 Osaka study uses an nRF24L01 radio module; a related 2023 paper from the same research line identifies the nRF24L01 SMD module as a **2.4 GHz** transceiver. The 2024 backpack reports approximately 25 minutes of continuous battery operation.
+- The 2023 NTU paper specifies Bluetooth 5.1 at 2.4 GHz and a 120-mAh LiPo battery. Its measured motion-capture feedback packets were sent at 30-ms intervals in the described setup. It does not report a production network's range or security policy.
+- The reviewed publications do not provide a complete radio-security specification: encryption, device authentication, key management and a production access-control model are not fully disclosed. This is an evidence gap, not proof that encryption or security controls were absent.
+- Data availability differs by publication. The 2025 assembly paper says supporting data and code are available within the article and supplementary files. The 2026 implanted-controller paper says supporting data are available from the corresponding author upon reasonable request. The JST close-out report says the Moonshot project's task leads maintained private repositories and experimental data were non-public due to confidentiality.
+- These publication-level statements do not reveal all institutional access permissions, retention periods, onward sharing agreements or operational deployments.
+
 ### Architecture interpretation
 
 - **Hub-and-spoke is documented:** the 2023 and 2024 studies describe an insect-mounted backpack communicating with a receiver/central station and PC.
