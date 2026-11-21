@@ -154,6 +154,69 @@ These are individual public award records, not a complete program-wide award inv
 
 **Bottom line:** there are genuine, separately documented research and funding programs in this field. The evidence supports a conceptual lineage inside Berkeley, a clearly defined Japanese JST/Osaka/NTU biological-cyborg project, and separate US DARPA HyBRIDS awards. It does not currently support treating them as one coordinated international program or a single operational network.
 
+## Patents, autonomy and oversight (research update, 2026-11-20)
+
+### 2026 Insect Synergy Circuit (ISC): important advance, still a laboratory system
+
+The May 12, 2026 ROBOMECH Journal paper, *Perception-driven control strategy for bio-intelligent cyborg insect*, is by a University of Osaka team led by Keisuke Morishima. It acknowledges JST Moonshot grant **JPMJMS223A** and JSPS KAKENHI grant 22H04951.
+
+The system used a Madagascar hissing cockroach with a 5 g Bluetooth 5.0 backpack (40 mAh LiPo), low-frequency neural amplitude measurements, heartbeat sensing and an IMU. The sensor stream was used by a pre-trained machine-learning model to infer environment-associated internal state; outputs gated UV-A or vibration stimulation. The authors call the broader concept the Insect Synergy Circuit. Its aspirational figure describes insects as possible connectors among organisms and AI, but the demonstrated work is a cockroach in a controlled multi-chamber maze—not a multi-species or ecosystem-wide communications network.
+
+Important measured constraints:
+- Closed-loop evaluation: **4 insects, 40 trials**; baseline natural behavior: 8 insects, 80 trials.
+- Offline classification accuracy: **93.0%**; real-time classification accuracy: **65.22%**.
+- The motion-capture system was used for post-experiment trajectory analysis, not the real-time control loop; online control used onboard sensing and wireless transmission.
+- The authors identify small sample size, structured test environment, motion artifacts, signal drift and limited neural signal resolution as limitations.
+- The paper's data-availability statement says: “No datasets were generated or analysed during the current study.” This is unusual beside the reported experimental analysis; the statement should be quoted as published rather than interpreted as proof that no measurements were collected.
+
+Primary paper: https://link.springer.com/article/10.1186/s40648-026-00344-7
+
+### Patent trail associated with Hirotaka Sato's group
+
+1. **US20260283111A1 — Device for Insect Stimulation Using Electrodes.** US application 19/477,068, filed April 19, 2024, published September 24, 2026. Inventors include Hirotaka Sato and the NTU cyborg-insect research team. The disclosed system covers detachable, mechanically coupled fixtures, electrodes, insect-computer hybrid systems, controllers, optional communications modules, localization, data collection and neurostimulation. This is a hardware/attachment and stimulation patent application—not evidence of a deployed insect mesh or human surveillance network. Google Patents: https://patents.google.com/patent/US20260283111A1/en
+2. **WO2024220038A1 — Device for Insect Stimulation Using Electrodes.** Related PCT publication, priority date April 21, 2023; inventors include Sato and collaborators; listed applicants include NTU and KLASS Engineering & Solutions. https://patents.google.com/patent/WO2024220038A1/en
+3. **US12420090B2 — Method of controlling movement of hybrid robot and animal locomotion stimulation system thereof.** Granted September 23, 2025; assigned to NTU and KLASS Engineering & Solutions. The abstract describes position/orientation-based stimulation, motion monitoring and stopping stimulation under a specified movement condition. It is a control method, not proof of peer-to-peer insect communications. https://patents.google.com/patent/US12420090B2/en
+
+The 2026 NTU–Waseda underwater cyborg-insect suit is a separate project and has its own patent filing; it should not be conflated with the Moonshot grant or the electrode patent family.
+
+### Is the insect swarm actually decentralized?
+
+The 2025 Nature Communications paper *Swarm navigation of cyborg-insects in unknown obstructed soft terrain* tested a leader/follower swarm of 20 Madagascar hissing cockroaches. Its authors explicitly state that the algorithm was theoretically decentralized, but the experiment supplied position data from a centralized VICON motion-capture system. They proposed future hybrid IMU + UWB localization so insects could estimate their positions without external motion capture.
+
+This is a real multi-agent swarm-control demonstration, but it is not yet a demonstrated autonomous radio mesh. Local neighbor sensing in the algorithm and independent peer-to-peer network routing are different things.
+
+Paper: https://www.nature.com/articles/s41467-024-55197-8
+
+### DARPA HyBRIDS: what award records do and do not show
+
+The DARPA public program page describes a broad effort to integrate biological and synthetic components. DARPA itself says many biohybrid systems remain laboratory proof-of-concepts with limited practical applicability and that real-world feasibility, characterization and scaling remain difficult. The solicitation closed April 7, 2025, and the topic remains within its period of performance.
+
+USAspending confirms HyBRIDS award records to Cornell University and BlueHalo LLC. However, the public award summaries accessible in this review expose recipient, dates, obligated amounts and broad program descriptions—not detailed statements of work, named biological platforms, sensor payloads, radio topology, or field deployment. Therefore, it is not responsible to infer what each recipient is building from award summaries alone.
+
+Sources:
+- DARPA HyBRIDS: https://www.darpa.mil/research/programs/hybrids
+- Cornell FAIN HR00112530227: https://www.usaspending.gov/award/ASST_NON_HR00112530227_097
+- Cornell FAIN HR00112530231: https://www.usaspending.gov/award/ASST_NON_HR00112530231_097
+- BlueHalo FAIN HR00112530201: https://www.usaspending.gov/award/ASST_NON_HR00112530201_097
+
+### Animal ethics, privacy and governance
+
+The 2026 ISC paper reports approval by the University of Osaka animal experimental committee (approval **2023-5-0**). JST's project outline explicitly says the team seeks to quantify a proxy for “living vitality,” taking assumed pleasure and discomfort into account, while acknowledging that researchers cannot know organisms' true emotions. This is a real animal-welfare consideration in the program's design.
+
+That approval is not a comprehensive governance framework for privacy, cybersecurity, field release, or human biological data. The reviewed cyborg-insect papers describe animal physiological/behavioral signals and environmental sensing; they do not demonstrate collection of human DNA, personal identity matching, or a human surveillance database. Equally, publication-level disclosure is not a complete audit of all project data practices.
+
+### Evidence status update
+
+| Question | Current finding |
+|---|---|
+| Does the research use living insects with electronic systems? | **Yes — demonstrated.** |
+| Can internal physiological signals influence AI-assisted insect control? | **Yes — laboratory demonstration, small sample and modest online accuracy.** |
+| Has a group of cyborg insects been coordinated as a swarm? | **Yes — 20-insect experiment.** |
+| Has a fully decentralized insect-to-insect radio mesh been demonstrated? | **Not in the reviewed experiments.** Centralized VICON localization remained in the 2025 swarm experiment. |
+| Do patents cover insect electrode fixtures and locomotion control? | **Yes.** |
+| Do these records establish global deployment, human DNA sampling, or a human surveillance network? | **No.** |
+| Are animal ethics approvals documented? | **Yes, for the 2026 ISC study.** A comprehensive public privacy/security governance audit was not found. |
+
 ## Next research tasks
 
 1. Continue tracing citations, personnel, patent inventors and technical work packages; initial institutional/funding map is now documented above.
