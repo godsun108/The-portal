@@ -235,3 +235,59 @@ That approval is not a comprehensive governance framework for privacy, cybersecu
 - Search and source-type filtering run locally in the page.
 - Existing Living Scriptures page remains untouched.
 - Portal station directory links to this exhibit under INQUIRY.
+
+
+## Cross-program technical comparison (research update, 2026-11-20)
+
+This comparison separates adjacent technical directions. They may be composable in principle, but the sources reviewed do not establish one deployed system combining them.
+
+### 1. Smart Dust: miniature electronic nodes
+
+Berkeley's DARPA/MTO-supported Smart Dust project explored autonomous sensing and communication at very small scales. The project page reports working “macro motes” in a cubic-inch package with sensors, a bidirectional radio, processor and battery, and a 20-metre communication range. The cubic-millimeter complete system was the science/engineering goal; the project page distinguishes that target from the larger demonstrated devices. Patrick Pannuto's 2020 Berkeley dissertation says millimeter-scale self-contained sensing/computing/communication devices had become realizable, but most were one-off systems rather than a ubiquitous population numbering millions.
+
+Sources:
+- Berkeley Smart Dust project: https://www-bsac.eecs.berkeley.edu/~pister/SmartDust/
+- Pannuto, *The Design & Implementation of Modular Smart Dust* (2020): https://www2.eecs.berkeley.edu/Pubs/TechRpts/2020/EECS-2020-208.html
+
+### 2. Unattended ground sensors: event-driven low-power electronics
+
+DARPA's completed Near Zero Power RF and Sensor Operations (N-ZERO) program pursued sensors that remain dormant or consume near-zero power until an external trigger or selected signature activates a conventional sensor suite. The stated motivation was to extend unattended sensor lifetime from weeks or months toward years while reducing maintenance and redeployment. A separate Department of Defense topic sought very small, inexpensive RF sensors distributable in quantity to observe the cyber-electromagnetic environment. These are electronic unattended-sensor architectures, not biological platforms.
+
+Sources:
+- DARPA N-ZERO: https://www.darpa.mil/research/programs/near-zero-rf-and-sensor-operations
+- DoD topic A20-118: https://media.defense.gov/2022/Mar/25/2002963824/-1/-1/0/DOD_20.2_FULL.PDF
+
+### 3. Cyborg insects: mobile biohybrid platforms
+
+A 2025 *npj Robotics* study proposed an IMU-based localization and exploration strategy for an insect-machine hybrid search-and-rescue platform. The authors reported two-dimensional position error of 1 metre or less (about 5%) in their indoor and outdoor arenas. This is a meaningful step toward onboard localization without external motion capture in those experiments. It does not establish insect-to-insect radio routing, a large-scale autonomous mesh, or covert population deployment.
+
+Source:
+- https://www.nature.com/articles/s44182-025-00037-0
+
+A different 2025 20-insect swarm experiment used centralized VICON positions despite a theoretically decentralized movement algorithm. The two studies represent different autonomy milestones and should not be collapsed into one result.
+
+### 4. DARPA Convergence: engineered microbial sensing
+
+DARPA's 2026 Convergence program describes non-pathogenic microbial consortia as biological platforms for remote, distributed detection of environmental hazards, including chemical analytes and pharmaceutical agents. The public program architecture moves from component design to integrated payloads and a proposed deployable platform subject to safety and regulatory testing. This is a separate microbial-sensor program; it does not describe cyborg insects, mosquito DNA collection or human identity matching.
+
+Source:
+- https://www.darpa.mil/research/programs/convergence
+
+### 5. One Health: integrated sensing as a proposed architecture
+
+A 2026 *Nature Sensors* perspective proposes connecting sensing platforms across human, animal and environmental domains, from wearable and ingestible devices to remote and environmental sensors. It explicitly identifies interoperable infrastructure, privacy, security, governance and stakeholder engagement as requirements. This is a research perspective and architecture proposal, not evidence that one global operational network already exists.
+
+Source:
+- https://www.nature.com/articles/s44460-026-00075-7
+
+### Comparative conclusion
+
+| Research direction | Primary capability | Key limitation in the reviewed evidence |
+|---|---|---|
+| Smart Dust | Miniature electronic sensing, computation and communication | Cubic-millimeter ubiquitous deployment remains distinct from early macro-mote demonstrations |
+| Unattended ground sensors | Persistent, low-power event detection | Electronic sensor network, not biological sensing |
+| Cyborg insects | Mobile living platform with electronic sensing/control | Autonomy and networking vary by study; swarm coordination is not automatically peer-to-peer routing |
+| Microbial biosensors | Biological recognition of selected environmental analytes | Convergence remains a program development path with safety/regulatory gates |
+| One Health integration | Conceptual framework linking human, animal and environmental observations | Governance and interoperability remain explicit prerequisites |
+
+**Evidence boundary:** the sources support several real research programs with adjacent capabilities. They do not establish a single system combining Smart Dust, insect swarms, microbial biosensors, human DNA collection and identity surveillance. A unified architecture would require demonstrated interfaces, power, localization, communications, routing, access controls, data governance and field validation—not merely the existence of each separate component.
