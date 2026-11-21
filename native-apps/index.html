@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08110f">
+<meta name="description" content="EarthChain Native Apps — first-party app launcher preview.">
+<title>EarthChain Native Apps</title>
+<style>
+:root{color-scheme:dark;--bg:#08110f;--panel:#101d19;--line:#294338;--text:#edf5ef;--muted:#9bb0a3;--accent:#b9e0c5}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% -15%,#1c3b2c 0,var(--bg) 58%);color:var(--text);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}
+header,main{width:min(980px,100% - 32px);margin:auto}
+header{padding:calc(26px + env(safe-area-inset-top)) 0 24px}
+.back{display:inline-block;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:28px}
+.eyebrow{font:11px ui-monospace,monospace;letter-spacing:.2em;color:var(--accent)}
+h1{font-size:clamp(38px,9vw,68px);line-height:.98;letter-spacing:-.06em;margin:10px 0}
+.lede{max-width:660px;color:var(--muted);margin:14px 0 0}
+.notice{margin:22px 0 0;padding:13px 15px;border:1px solid var(--line);border-radius:13px;background:#0c1814;color:#c2d3c8;font-size:13px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+input,select{min-height:46px;border:1px solid var(--line);border-radius:11px;background:#0b1713;color:var(--text);padding:0 13px;font:inherit}
+input{flex:1;min-width:180px}
+select{min-width:150px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding-bottom:38px}
+.app{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:17px;background:linear-gradient(155deg,#14251e,#0d1713);padding:17px;min-height:245px}
+.app-top{display:flex;align-items:center;gap:12px}
+.glyph{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:14px;background:#1c3529;color:var(--accent);font-size:25px}
+h2{font-size:19px;letter-spacing:-.02em;margin:0}
+.category{color:var(--muted);font-size:12px;margin-top:2px}
+.status{display:inline-flex;align-self:flex-start;margin:14px 0 8px;border:1px solid #496b57;border-radius:999px;padding:3px 9px;color:#c7e4cf;font-size:11px;letter-spacing:.02em}
+.status.planned{border-color:#635c43;color:#e3d6a8}
+p{margin:0;color:#c0cec5;font-size:13px}
+.scope{margin-top:10px;color:#82998b;font-size:11px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:16px}
+.open,.related{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 13px;border-radius:10px;border:1px solid #648b70;background:#1a3627;color:#f1fff4;text-decoration:none;font-size:12px}
+.related{background:transparent;border-color:var(--line);color:#b8c9be}
+.disabled{display:inline-flex;align-items:center;min-height:42px;padding:9px 13px;border:1px dashed #4a5146;border-radius:10px;color:#9b9f8e;font-size:12px}
+.empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center;border:1px dashed var(--line);border-radius:14px}
+footer{padding:0 0 36px;color:#71877a;font-size:11px}
+@media(max-width:620px){header,main{width:min(100% - 24px,980px)}.grid{grid-template-columns:1fr}.app{min-height:0}.toolbar{display:grid;grid-template-columns:1fr}.toolbar input,.toolbar select{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<a class="back" href="../">← THE PORTAL</a>
+<div class="eyebrow">EARTHCHAIN · FIRST-PARTY EXPERIENCE LAYER</div>
+<h1>Native Apps</h1>
+<p class="lede">Everyday tools and personal spaces, brought together under one app shell. This is the first registry-backed launcher preview, not a claim that every app is finished.</p>
+<div class="notice" role="note"><strong>Readiness matters.</strong> Each app shows its current evidence-backed status. Existing prototypes may have limited features, local-only data or test-only security. Planned apps are shown without pretending they are available.</div>
+</header>
+<main>
+<div class="toolbar">
+<input id="search" type="search" placeholder="Find an app…" aria-label="Search apps">
+<select id="category" aria-label="Filter by category"><option value="">All categories</option></select>
+</div>
+<section id="apps" class="grid" aria-live="polite" aria-label="Native apps"></section>
+<footer id="footnote">Loading the Native Apps Registry…</footer>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+let registry=null,category="";
+const labels={"prototype":"Prototype","reader-preview":"Reader preview","camera-test":"Camera test","planned":"Planned"};
+function node(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el}
+function link(label,href,cls){const a=node("a",cls,label);a.href=href;return a}
+function render(){
+ const q=$("search").value.trim().toLowerCase(),host=$("apps");host.replaceChildren();
+ const apps=(registry?.apps||[]).filter(a=>(!category||a.category===category)&&(!q||(a.name+" "+a.summary+" "+a.category).toLowerCase().includes(q)));
+ if(!apps.length){host.append(node("div","empty","No apps match that search."));return}
+ for(const app of apps){
+  const card=node("article","app"),top=node("div","app-top"),glyph=node("div","glyph",app.glyph||"◇"),heading=node("div");
+  heading.append(node("h2","",app.name),node("div","category",app.category));
+  top.append(glyph,heading);card.append(top);
+  card.append(node("span","status "+(app.status==="planned"?"planned":""),labels[app.status]||app.status));
+  card.append(node("p","",app.summary));
+  if(app.dataScope)card.append(node("div","scope","DATA SCOPE · "+app.dataScope));
+  const actions=node("div","actions");
+  if(app.entry)actions.append(link("Open app ↗",app.entry,"open"));
+  else actions.append(node("span","disabled","Not available yet"));
+  for(const item of app.related||[])actions.append(link(item.label,item.href,"related"));
+  card.append(actions);host.append(card);
+ }
+}
+async function init(){
+ try{
+  const response=await fetch("./registry.json",{cache:"no-store"});if(!response.ok)throw Error("Registry unavailable ("+response.status+")");
+  registry=await response.json();if(registry.schema!=="earthchain.native-apps.v1"||!Array.isArray(registry.apps))throw Error("Unsupported registry schema");
+  const categories=[...new Set(registry.apps.map(a=>a.category).filter(Boolean))].sort();
+  for(const name of categories){const option=node("option","",name);option.value=name;$("category").append(option)}
+  $("search").addEventListener("input",render);$("category").addEventListener("change",()=>{category=$("category").value;render()});
+  render();$("footnote").textContent=registry.apps.length+" registered apps · "+registry.version+" registry version · availability labels reflect current source evidence.";
+ }catch(error){$("apps").replaceChildren(node("div","empty","The app registry could not be loaded. No app status has been assumed."));$("footnote").textContent=error.message}
+}
+init();
+</script>
+</body>
+</html>

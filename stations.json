@@ -236,6 +236,19 @@
       ]
     },
     {
+      "id": "apps",
+      "label": "APPS",
+      "glyph": "▦",
+      "line": "everyday tools and private spaces, gathered in one place",
+      "status": "preview",
+      "rooms": [
+        [
+          "NATIVE APPS",
+          "native-apps/"
+        ]
+      ]
+    },
+    {
       "id": "economy",
       "label": "ECONOMY",
       "glyph": "⌬",
