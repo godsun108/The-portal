@@ -150,6 +150,19 @@
       ]
     },
     {
+      "id": "training",
+      "label": "TRAINING",
+      "glyph": "✧",
+      "line": "train human potential — investigate the extraordinary with care",
+      "status": "preview",
+      "rooms": [
+        [
+          "SUPERPOWER TRAINING",
+          "superpower-training/"
+        ]
+      ]
+    },
+    {
       "id": "inquiry",
       "label": "INQUIRY",
       "glyph": "∴",
