@@ -14,19 +14,26 @@
       "category": "Explore",
       "glyph": "⌖",
       "status": "prototype",
-      "entry": "../map/",
+      "entry": "../maps/",
       "owner": {
         "repository": "godsun108/The-portal",
-        "path": "map/index.html"
+        "path": "maps/index.html"
       },
-      "summary": "An experimental Portal discovery map. It is not yet a conventional geographic map, live traffic service or turn-by-turn navigation system.",
-      "dataScope": "Browser-local Portal discovery state.",
-      "permissions": [],
+      "summary": "Geographic map preview with coordinate positioning, user-triggered location, external place-search and directions handoffs, and browser-local saved places. Routing, live traffic, weather overlays and integrated geocoding are not yet available.",
+      "dataScope": "One-time location only after user action; saved places stored in this browser only. No account sync or Genesis access.",
+      "permissions": [
+        "Location permission only after explicit user action."
+      ],
       "related": [
         {
-          "label": "Earth Observatory camera atlas",
-          "href": "../earth-observatory/",
-          "note": "Separate nature-camera atlas; coverage and feed status vary by source."
+          "label": "Earth Observatory camera directory",
+          "href": "../maps/#cameras",
+          "note": "Provider-hosted camera destinations; source coordinates and live status are not yet verified."
+        },
+        {
+          "label": "Legacy Portal discovery map",
+          "href": "../map/",
+          "note": "Separate experimental discovery experience."
         }
       ]
     },
