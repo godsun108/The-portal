@@ -111,9 +111,52 @@ Primary sources:
 - Mosquito forensic DNA research depends on laboratory extraction/amplification/sequencing workflows. It does not establish autonomous DNA analysis or network transmission by mosquitoes.
 - No reliable evidence in this initial archive establishes a mosquito-based human-DNA surveillance network, mosquito quantum computer, or system for targeting named people.
 
+## Institutional and funding map (research update, 2026-11-20)
+
+### Directly documented Japanese project structure
+
+JST's official Goal 3 page identifies **JPMJMS223A, “New World of Inspiration by Co-evolution of Humans, AI Robots, and Biological Cyborgs,”** as a FY2022–FY2023 project managed by **Keisuke Morishima (Osaka University)**. The official project roster names **Hirotaka Sato (Nanyang Technological University)** and **Naoki Wakamiya (Osaka University)** among the project leaders. Its stated research direction explicitly includes biological cyborgs, miniature sensors, communication devices, behavior-control units and AI-driven self-organization.
+
+JST's official FY2023 evaluation says the team developed a miniature backpack board and achieved coordinated movement of multiple biological cyborgs. The same evaluation records that the stage-gate review found the longer-term goal was not yet sufficiently assured. This is an important qualification: the project achieved meaningful prototypes and group movement, but the official evaluation does not describe a mature, fully autonomous operational network.
+
+Primary records:
+- JST project page: https://www.jst.go.jp/moonshot/en/program/goal3/3A_morishima.html
+- JST project evaluation: https://www.jst.go.jp/moonshot/program/pdf/ms3_r5_jigo_pj.pdf
+- JST project roster/overview PDF: https://www.jst.go.jp/moonshot/en/program/goal3/files/3A_morishima_ap.pdf
+
+### Funding links and publication acknowledgements
+
+- NTU's 2025 cyborg-insect assembly paper acknowledges JST Moonshot grant **JPMJMS223A** and identifies Hirotaka Sato in the funding statement. This is a direct funding acknowledgement connecting the NTU paper to the JST project.
+- The 2026 implanted-controller paper also acknowledges **JPMJMS223A**, alongside **JPMJMS2238**. A later publication acknowledgement does not change the official end date of the FY2022–FY2023 JPMJMS223A project and does not prove that all later work is part of that original project.
+- JST's final project report says the project chose not to file patents for its own results after considering cost-effectiveness and confidentiality. This statement is limited to the Moonshot project's reported outputs; it does not mean no related patents exist in other projects.
+
+### DARPA HyBRIDS: public award trail
+
+DARPA describes HyBRIDS as a separate program addressing the engineering barriers to biohybrid systems that combine biological and synthetic components. Its official program page cautions that many existing biohybrid systems remain laboratory proof-of-concepts with limited real-world applicability.
+
+Public USAspending records located in this pass identify at least three HyBRIDS-related award records:
+- **Cornell University, FAIN HR00112530227:** award summary lists $233,586.12 obligated; period Aug 19, 2025–Aug 18, 2026. https://www.usaspending.gov/award/ASST_NON_HR00112530227_097
+- **Cornell University, FAIN HR00112530231:** award summary lists $280,784 obligated; period Aug 13, 2025–Aug 12, 2026. The detailed federal-account section displays a conflicting negative amount, so this figure should not be treated as a reconciled final expenditure. https://www.usaspending.gov/award/ASST_NON_HR00112530231_097
+- **BlueHalo LLC, FAIN HR00112530201:** award summary lists $231,134.19 obligated; period Jun 20, 2025–Jun 19, 2026. https://www.usaspending.gov/award/ASST_NON_HR00112530201_097
+
+These are individual public award records, not a complete program-wide award inventory. The records identify recipients, dates and program descriptions; they do not, by themselves, identify each recipient's exact insect species, technical payload, communication architecture or field deployment. Do not infer those details.
+
+### Relationship assessment
+
+| Proposed connection | Evidence status | Interpretation |
+|---|---|---|
+| Berkeley Smart Dust → Berkeley synthetic insects | **Direct conceptual connection** | Kris Pister explicitly described synthetic insects as “Smart Dust with legs.” This is within the same researcher's Berkeley work. |
+| JST Moonshot JPMJMS223A → Osaka University / NTU | **Direct project relationship** | Official JST roster and project documentation identify Morishima, Sato and Wakamiya. |
+| JST JPMJMS223A → NTU assembly research | **Direct grant acknowledgement** | The 2025 paper acknowledges the grant and identifies Sato in the funding statement. |
+| DARPA → Cornell / BlueHalo HyBRIDS awards | **Direct public award relationship** | USAspending records explicitly identify the DARPA HyBRIDS opportunity. |
+| Berkeley Smart Dust → JST Moonshot | **Not established** | No direct shared personnel, grant, project transfer or citation chain was identified in this public-source pass. |
+| DARPA HyBRIDS → JST Moonshot | **Not established** | The programs share a broad biohybrid-robotics theme, but no direct joint funding, personnel or project relationship was established. |
+
+**Bottom line:** there are genuine, separately documented research and funding programs in this field. The evidence supports a conceptual lineage inside Berkeley, a clearly defined Japanese JST/Osaka/NTU biological-cyborg project, and separate US DARPA HyBRIDS awards. It does not currently support treating them as one coordinated international program or a single operational network.
+
 ## Next research tasks
 
-1. Trace citations, personnel, patent inventors and funding links among Berkeley Smart Dust/synthetic insects, JST Moonshot, NTU and DARPA HyBRIDS.
+1. Continue tracing citations, personnel, patent inventors and technical work packages; initial institutional/funding map is now documented above.
 2. Add exact hardware specifications and autonomy limits for each published biohybrid-insect platform.
 3. Expand the biosensor gallery with primary experimental papers and clearly label laboratory versus field validation.
 4. Expand the human-data/privacy gallery with laws, oversight mechanisms and documented surveillance programs; do not infer a connection without evidence.
