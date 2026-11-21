@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c1022"><title>Rigveda | PORTAL Living Scriptures</title>
+<style>
+:root{color-scheme:dark;background:#0c1022;color:#f5eee1;font:16px/1.6 system-ui,-apple-system,sans-serif}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#302b4e,#0c1022 65%);min-height:100vh}main{max-width:920px;margin:auto;padding:28px 18px 100px}a{color:#e6ce97}h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(44px,9vw,84px);line-height:1.12;margin:30px 0 12px}p{color:#cfcbd3}.eyebrow{color:#e6ce97;letter-spacing:.19em;font-size:12px;text-transform:uppercase}.panel{background:#181a2c;border:1px solid #494459;padding:22px;border-radius:18px;margin:20px 0}.row{display:flex;gap:16px;flex-wrap:wrap}.row>*{flex:1;min-width:230px}select,input,button{font:inherit;background:#28273b;color:#fff;border:1px solid #766b87;border-radius:10px;padding:12px;width:100%}button{cursor:pointer}label{display:block;margin-bottom:6px}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #e6ce97;outline-offset:3px}.notice{border-left:3px solid #d9b874;padding-left:16px}.small{font-size:14px}.source{padding:12px 0;border-bottom:1px solid #484153}.source:last-child{border:0}.source strong{display:block}.status{font-size:14px;color:#e6ce97}#position{font:20px Georgia,serif;color:#fff}.cols{display:grid;grid-template-columns:1fr 1fr;gap:15px}.empty{min-height:110px;border:1px dashed #615c71;border-radius:12px;padding:15px}@media(max-width:580px){.cols{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important}}
+</style></head><body><main>
+<a href="../living-scriptures.html">← Living Scriptures</a><div class="eyebrow">PORTAL · Living Scriptures · Research preview</div>
+<h1>Ṛgveda<br><span lang="sa">ऋग्वेद</span></h1>
+<p>The hymns of the Rigveda, approached through their living tradition, their language, and the history of their interpretation.</p>
+<p class="notice"><strong>Source-navigation preview, not a verified full-text edition.</strong> No Sanskrit transcription, English verses, chant recordings or passage alignments have been imported. Historical translations and digital transcriptions require separate provenance and rights checks.</p>
+<section class="panel" aria-labelledby="browse-heading"><h2 id="browse-heading">Explore the ten maṇḍalas</h2>
+<div class="row"><div><label for="mandala">Maṇḍala (book)</label><select id="mandala"></select></div><div><label for="sukta">Sūkta (hymn reference)</label><input id="sukta" type="number" min="1" step="1" value="1" inputmode="numeric"></div></div>
+<p id="position" aria-live="polite"></p><p id="status" role="status" aria-live="polite" class="status"></p>
+<p class="small">The hymn selector records a reference only; it does not certify that a specific hymn is present or render unlicensed text.</p></section>
+<section class="cols" aria-label="Future parallel text"><div class="panel"><h2>Vedic Sanskrit</h2><p class="empty" id="sanskrit">Verified source transcription not yet imported.</p></div>
+<div class="panel"><h2>English translation</h2><p class="empty" id="english">Verified translation data not yet imported.</p></div></section>
+<section class="panel"><h2>Research sources</h2><div id="sources"></div></section>
+<section class="panel"><h2>Our editorial commitments</h2><p>Every recension, transcript, translation and recording must have its own provenance. Sanskrit accents, meter, sandhi and oral recitation are not interchangeable with a plain English rendering. We will distinguish historical scholarship from living practices and will never create or label synthetic chanting as an authentic traditional recording.</p></section>
+<footer class="small">Zero-cost development preview · No external sources copied · No deployed reading corpus</footer>
+</main>
+<script>
+const mandala=document.getElementById('mandala'),sukta=document.getElementById('sukta'),position=document.getElementById('position'),status=document.getElementById('status'),sources=document.getElementById('sources');
+for(let i=1;i<=10;i++){const option=document.createElement('option');option.value=String(i);option.textContent='Maṇḍala '+i;mandala.append(option);}
+function update(){const n=Number(sukta.value),m=Number(mandala.value);
+ if(!Number.isSafeInteger(n)||n<1||!Number.isSafeInteger(m)||m<1||m>10){position.textContent='';status.textContent='Enter a valid positive hymn number and maṇḍala.';return;}
+ position.textContent='RV '+m+'.'+n;status.textContent='Reference only — text and hymn limits have not been independently validated.';}
+mandala.addEventListener('change',update);sukta.addEventListener('input',update);update();
+(async()=>{try{const r=await fetch('../data/rigveda/source-manifest.json');if(!r.ok)throw Error('Source manifest unavailable');
+ const data=await r.json();if(data.schema!=='portal.rigveda.sources.v1'||!Array.isArray(data.sources))throw Error('Unexpected manifest');
+ for(const item of data.sources){if(!/^https:\/\//.test(item.url)||item.import_status!=='blocked')throw Error('Unreviewed source');
+ const block=document.createElement('div');block.className='source';const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=item.title;
+ const p=document.createElement('p');p.className='small';p.textContent=item.role+' · '+item.rights;block.append(a,p);sources.append(block);}
+ }catch{sources.textContent='Source registry unavailable; no scripture text will be substituted.';}})();
+</script></body></html>

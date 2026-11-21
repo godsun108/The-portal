@@ -1,0 +1,52 @@
+{
+  "schema": "portal.rigveda.sources.v1",
+  "collection": "Rigveda / Ṛgveda",
+  "recension": "Śākala",
+  "structure": {
+    "mandalas": 10,
+    "suktas": 1028,
+    "mantras": 10552,
+    "authority": "https://vedicheritage.gov.in/Samhitas/",
+    "note": "Counts are specific to the customary Śākala presentation and source indexing; no text ingested."
+  },
+  "sources": [
+    {
+      "id": "vedic-heritage",
+      "title": "Vedic Heritage Portal — Saṃhitās",
+      "role": "structural-reference",
+      "language": "English / Sanskrit",
+      "url": "https://vedicheritage.gov.in/Samhitas/",
+      "rights": "Link only; permission to redistribute text or recordings not established",
+      "import_status": "blocked"
+    },
+    {
+      "id": "gretil",
+      "title": "GRETIL — Ṛgveda Sanskrit electronic text",
+      "role": "sanskrit-transcription",
+      "language": "Vedic Sanskrit",
+      "url": "https://gretil.sub.uni-goettingen.de/gret_utfbk.htm",
+      "rights": "GRETIL archive states scholarly reference only and excludes commercial use. Do not import or republish without express rights review.",
+      "import_status": "blocked"
+    },
+    {
+      "id": "griffith",
+      "title": "Ralph T. H. Griffith (1896) English translation",
+      "role": "historical-english-translation",
+      "language": "English",
+      "url": "https://sacred-texts.com/hin/rigveda/",
+      "rights": "Historical translation is public domain; independent rights/provenance verification of this website's transcription and presentation required before copying.",
+      "import_status": "blocked"
+    },
+    {
+      "id": "unesco-chant",
+      "title": "UNESCO — Tradition of Vedic chanting",
+      "role": "living-tradition-context",
+      "language": "English",
+      "url": "https://ich.unesco.org/en/RL/tradition-of-vedic-chanting-00062",
+      "rights": "Link only; no audio/video redistribution rights established.",
+      "import_status": "blocked"
+    }
+  ],
+  "offline_corpus": false,
+  "public_release": false
+}
