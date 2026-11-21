@@ -15,6 +15,7 @@ The browser never receives provider credentials. Research data is sent only afte
 - `MODEL_URL` — OpenAI-compatible chat-completions endpoint (required to answer).
 - `MODEL_NAME` — model identifier when required.
 - `MODEL_KEY` — optional bearer credential; keep it in Railway variables, never in GitHub Pages.
+- `GENESIS_BRIDGE_KEY` — separate 32+ character shared secret for the private Genesis specialist gateway; configure only on the gateway service and trusted Genesis host. Never expose it to browsers or commit it.
 - `PORTAL_ORIGIN` — exact allowed browser origin; defaults to `https://godsun108.github.io`.
 - `PORT` — assigned automatically by Railway.
 

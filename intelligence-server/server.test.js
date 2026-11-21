@@ -8,7 +8,7 @@ async function withServer(options, run) {
   const server = createServer(options);
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const address = server.address();
-  try { await run("http://127.0.0.1:" + address.port); }
+  try { return await run("http://127.0.0.1:" + address.port); }
   finally { await new Promise(resolve => server.close(resolve)); }
 }
 const headers = { "content-type": "application/json", origin: "https://godsun108.github.io" };
@@ -115,5 +115,68 @@ test("self-test does not claim success for a non-matching model response", async
     assert.equal(r.status, 200);
     assert.equal(d.verified, false);
     assert.equal(d.passed, false);
+  });
+});
+
+
+test("Genesis specialist gateway requires its independent bearer credential", async () => {
+  let calls = 0;
+  const env = { MODEL_URL: "https://model.example/v1/chat/completions", GENESIS_BRIDGE_KEY: "a".repeat(48) };
+  await withServer({ env, fetchImpl: async () => { calls++; throw new Error("must not call"); } }, async base => {
+    const payload = { model: "genesis", messages: [{ role: "system", content: "Return JSON." }, { role: "user", content: "{}" }] };
+    const denied = await fetch(base + "/genesis/v1/chat/completions", { method: "POST", headers, body: JSON.stringify(payload) });
+    assert.equal(denied.status, 401);
+    assert.equal(calls, 0);
+    const unconfigured = await withServer({ env: { MODEL_URL: env.MODEL_URL }, fetchImpl: async () => { calls++; } }, async inner => {
+      return fetch(inner + "/genesis/v1/chat/completions", { method: "POST", headers, body: JSON.stringify(payload) });
+    });
+    assert.equal(unconfigured.status, 503);
+  });
+});
+
+test("Genesis gateway forwards bounded structured inference and returns OpenAI-compatible output", async () => {
+  const key = "b".repeat(48);
+  let forwarded;
+  const fetchImpl = async (url, options) => {
+    forwarded = { url, body: JSON.parse(options.body) };
+    return new Response(JSON.stringify({ choices: [{ message: { content: '{"summary":"Evidence-based result","evidenceRefs":[]}' } }] }), { status: 200 });
+  };
+  await withServer({ env: { MODEL_URL: "https://model.example/v1/chat/completions", MODEL_NAME: "configured-genesis", GENESIS_BRIDGE_KEY: key }, fetchImpl }, async base => {
+    const payload = {
+      model: "genesis-specialist",
+      temperature: 0.2,
+      response_format: { type: "json_object" },
+      messages: [{ role: "system", content: "Return only JSON." }, { role: "user", content: '{"agentId":"forge"}' }],
+      tools: []
+    };
+    const r = await fetch(base + "/genesis/v1/chat/completions", {
+      method: "POST",
+      headers: { ...headers, authorization: "Bearer " + key },
+      body: JSON.stringify(payload)
+    });
+    const data = await r.json();
+    assert.equal(r.status, 200);
+    assert.equal(data.object, "chat.completion");
+    assert.equal(data.model, "configured-genesis");
+    assert.equal(JSON.parse(data.choices[0].message.content).summary, "Evidence-based result");
+    assert.equal(forwarded.url, "https://model.example/v1/chat/completions");
+    assert.deepEqual(forwarded.body.response_format, { type: "json_object" });
+    assert.equal(forwarded.body.model, "configured-genesis");
+  });
+});
+
+test("Genesis gateway rejects tool escalation and invalid message roles before inference", async () => {
+  let calls = 0;
+  const key = "c".repeat(48);
+  await withServer({ env: { MODEL_URL: "https://model.example/v1/chat/completions", GENESIS_BRIDGE_KEY: key }, fetchImpl: async () => { calls++; } }, async base => {
+    const authHeaders = { ...headers, authorization: "Bearer " + key };
+    for (const payload of [
+      { messages: [{ role: "system", content: "x" }, { role: "user", content: "y" }], tools: [{ type: "function" }] },
+      { messages: [{ role: "system", content: "x" }, { role: "tool", content: "y" }] }
+    ]) {
+      const r = await fetch(base + "/genesis/v1/chat/completions", { method: "POST", headers: authHeaders, body: JSON.stringify(payload) });
+      assert.equal(r.status, 400);
+    }
+    assert.equal(calls, 0);
   });
 });
