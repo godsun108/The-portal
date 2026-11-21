@@ -1,0 +1,166 @@
+{
+  "schema": "earthchain.native-apps.v1",
+  "version": 1,
+  "statusVocabulary": [
+    "prototype",
+    "reader-preview",
+    "camera-test",
+    "planned"
+  ],
+  "apps": [
+    {
+      "id": "maps",
+      "name": "Maps",
+      "category": "Explore",
+      "glyph": "⌖",
+      "status": "prototype",
+      "entry": "../map/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "map/index.html"
+      },
+      "summary": "An experimental Portal discovery map. It is not yet a conventional geographic map, live traffic service or turn-by-turn navigation system.",
+      "dataScope": "Browser-local Portal discovery state.",
+      "permissions": [],
+      "related": [
+        {
+          "label": "Earth Observatory camera atlas",
+          "href": "../earth-observatory/",
+          "note": "Separate nature-camera atlas; coverage and feed status vary by source."
+        }
+      ]
+    },
+    {
+      "id": "weather",
+      "name": "Weather",
+      "category": "Explore",
+      "glyph": "☼",
+      "status": "prototype",
+      "entry": "../weather/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "weather/index.html"
+      },
+      "summary": "Weather Elsewhere prototype using Open-Meteo current conditions for a selected sample of world locations.",
+      "dataScope": "Selected place coordinates and weather response; browser-local preference state.",
+      "permissions": [
+        "Network access to the configured weather data provider."
+      ],
+      "related": []
+    },
+    {
+      "id": "clock",
+      "name": "Clock",
+      "category": "Time",
+      "glyph": "◷",
+      "status": "prototype",
+      "entry": "../clock/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "clock/index.html"
+      },
+      "summary": "Local world clock and browser-local Portal event chamber. Fictional events are explicitly labeled; this is not a trusted precision-time service.",
+      "dataScope": "Device clock and local Portal event/history state.",
+      "permissions": [],
+      "related": []
+    },
+    {
+      "id": "notes",
+      "name": "Notes",
+      "category": "Personal",
+      "glyph": "✎",
+      "status": "planned",
+      "entry": null,
+      "owner": {
+        "repository": null,
+        "path": null
+      },
+      "summary": "A fast private notes, lists and drafts app. No canonical Notes implementation was identified in this bounded Portal audit.",
+      "dataScope": "To be defined; private by default with explicit sharing scopes.",
+      "permissions": [],
+      "related": []
+    },
+    {
+      "id": "journal",
+      "name": "Journal",
+      "category": "Personal",
+      "glyph": "▤",
+      "status": "planned",
+      "entry": null,
+      "owner": {
+        "repository": null,
+        "path": null
+      },
+      "summary": "A private-by-default personal journal. Genesis access must be explicit, scoped and revocable.",
+      "dataScope": "Private personal records; no cross-capacity or cross-app access by default.",
+      "permissions": [],
+      "related": []
+    },
+    {
+      "id": "library",
+      "name": "Library",
+      "category": "Learn",
+      "glyph": "▥",
+      "status": "reader-preview",
+      "entry": "../earthchain-genesis/books/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "earthchain-genesis/books/index.html"
+      },
+      "summary": "EarthChain Books reader preview with a bundled public-domain text and local plain-text ebook opening. Not yet a general synchronized personal library.",
+      "dataScope": "Book text and reading position stored in this browser.",
+      "permissions": [
+        "Local file selection only when the user chooses an ebook."
+      ],
+      "related": [
+        {
+          "label": "Living Scriptures",
+          "href": "../living-scriptures.html",
+          "note": "Existing Portal scripture/library experience."
+        }
+      ]
+    },
+    {
+      "id": "photos",
+      "name": "Photos",
+      "category": "Create",
+      "glyph": "▧",
+      "status": "prototype",
+      "entry": "../vision/pro/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "vision/pro/index.html"
+      },
+      "summary": "VISION PRO includes a temporary capture gallery and an encrypted local vault prototype. Validate backup, recovery, device-loss and key-management behavior before relying on it for important photos.",
+      "dataScope": "Temporary in-memory captures and locally encrypted IndexedDB records.",
+      "permissions": [
+        "Camera permission only when starting capture; local browser storage for vault records."
+      ],
+      "related": []
+    },
+    {
+      "id": "camera",
+      "name": "Camera",
+      "category": "Create",
+      "glyph": "◎",
+      "status": "camera-test",
+      "entry": "../vision/camera/",
+      "owner": {
+        "repository": "godsun108/The-portal",
+        "path": "vision/camera/index.html"
+      },
+      "summary": "VISION camera iPhone smoke test. Its README states captures are temporary and in-memory; it has no encryption, uploads or persistence.",
+      "dataScope": "Live camera stream and temporary in-memory capture only.",
+      "permissions": [
+        "Camera permission after explicit user action."
+      ],
+      "related": [
+        {
+          "label": "VISION PRO",
+          "href": "../vision/pro/",
+          "note": "Separate camera/gallery and local encrypted-vault prototype."
+        }
+      ]
+    }
+  ]
+}
