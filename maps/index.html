@@ -38,6 +38,7 @@ function setView(lat,lon,label){
  $("#directionsLink").href="https://www.openstreetmap.org/directions?to="+encodeURIComponent(lat+","+lon);
  status.textContent="Showing "+current.label+". Map content is supplied by OpenStreetMap.";
 }
+window.EarthChainMaps = { setView };
 
 $("#show").onclick=()=>{const m=coords.value.trim().match(/^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/);if(!m){status.textContent="Enter coordinates as latitude, longitude.";return}setView(Number(m[1]),Number(m[2]));};
 $("#locate").onclick=()=>{if(!navigator.geolocation){status.textContent="Location is not available in this browser.";return}status.textContent="Waiting for your one-time location permission…";navigator.geolocation.getCurrentPosition(p=>setView(p.coords.latitude,p.coords.longitude,"Your current location"),e=>{status.textContent=e.code===1?"Location permission was not granted. You can still enter coordinates.":"Could not determine location. You can still enter coordinates."},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})};
@@ -61,7 +62,7 @@ function renderPlaceResults(places) {
   const address=document.createElement("small");address.textContent=place.formattedAddress||place.category;
   const source=document.createElement("small");source.textContent="Source: "+place.source+(place.attribution?" · "+place.attribution:"");
   const actions=document.createElement("div");actions.className="actions";
-  const show=document.createElement("button");show.className="secondary";show.textContent="SHOW ON MAP";show.onclick=()=>{setView(place.latitude,place.longitude,place.name)};
+  const show=document.createElement("button");show.className="secondary";show.textContent="SHOW ON MAP";show.onclick=()=>{window.EarthChainMaps.setView(place.latitude,place.longitude,place.name)};
   const start=document.createElement("button");start.className="secondary";start.textContent="SET AS START";start.onclick=()=>{routeOrigin=place;byId("routeOrigin").value=place.name};
   const end=document.createElement("button");end.className="secondary";end.textContent="SET AS DESTINATION";end.onclick=()=>{routeDestination=place;byId("routeDestination").value=place.name};
   actions.append(show,start,end);card.append(title,address,source,actions);root.append(card);
