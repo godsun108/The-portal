@@ -39,6 +39,9 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 - 2026 implanted miniature radio controller paper: https://spj.science.org/doi/10.34133/cbsystems.0589
 - NTU 2026 cyborg-insect underwater suit research: https://www.ntu.edu.sg/research/research-at-ntu/detail/3d-printed-suit-for-cyborg-insects-extends-operations-underwater
 - Hirotaka Sato Group publication list: https://hirosatontu.wordpress.com/publications/
+- NTU 2023 onboard human-detection paper: https://doi.org/10.1002/aisy.202200319
+- 2024 cyborg-cockroach sensor and wireless reporting paper: https://doi.org/10.1016/j.heliyon.2024.e26987
+- 2026 physiology-informed perception paper: https://doi.org/10.1186/s40648-026-00344-7
 - NTU cyborg insect assembly paper (Nature Communications, 2025): https://www.nature.com/articles/s41467-025-60779-1
 - NTU automated cyborg-insect assembly: https://www.ntu.edu.sg/news/detail/ai-powered-robot-assembles-search-and-rescue-cyborg-insects
 - Nature Communications cyborg-insect swarm paper: https://doi.org/10.1038/s41467-024-55197-8
@@ -49,6 +52,14 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 - Insect-derived biosensors review (2026): https://link.springer.com/article/10.1186/s44510-026-00007-2
 - Insect odorant-binding protein review (2026): https://doi.org/10.1002/biof.70066
 - DNA data-storage similarity search (2021): https://doi.org/10.1038/s41467-021-22277-y
+
+## Data-flow findings
+
+- JST's JPMJMS223A final report documents synchronized time-series collection of cockroach internal biological information, physical measurements and environmental information. It specifically discusses neural excitation, muscle electrical activity, heartbeat, body motion and field measurements.
+- The same final report says teams exchanged data and devices when needed, and that each project task lead maintained experimental data and source code in private repositories. Experimental data were treated as non-public due to confidentiality. The report does not provide a complete external telemetry architecture, radio protocol, destination list, retention schedule or access-control roster.
+- A separate NTU-led 2023/2024 search-and-rescue research line demonstrates onboard human-presence classification using thermal sensors, with sensor measurements and classification results wirelessly sent to a remote PC. The published task is presence detection for rescue, not identifying a named person. Do not attribute every capability in these papers to JPMJMS223A unless the paper itself identifies that funding.
+- A 2026 perception paper combines insect neural features, heartbeat and body-motion data to estimate the insect's environmental perception. These are measurements of the insect's own state, not human DNA or a human identity profile.
+- Distinguish onboard sensing, local classification, wireless reporting, external motion capture and cross-team research data exchange. Evidence for one does not prove the others are all part of a single deployed network.
 
 ## Known distinctions and limits
 
@@ -73,7 +84,8 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 3. Expand the biosensor gallery with primary experimental papers and clearly label laboratory versus field validation.
 4. Expand the human-data/privacy gallery with laws, oversight mechanisms and documented surveillance programs; do not infer a connection without evidence.
 5. Add a source record for each new claim before updating the convergence map.
-6. Trace the Moonshot grant acknowledgement through other NTU papers, project reports and JST close-out documentation. Completed initial pass: the JST FY2022 progress report and final close-out report are now included in the exhibit source archive; continue tracing additional publications and contributors.
+6. Trace the Moonshot grant acknowledgement through other NTU papers, project reports and JST close-out documentation. Initial pass completed; add new outputs as they are verified.
+7. Map data pathways by separating on-insect sensing, onboard inference, wireless telemetry, external tracking and research data sharing. Record protocols, recipients and retention only where primary sources disclose them.
 7. Check whether Berkeley synthetic-insect publications cite or share personnel with later biohybrid insect projects; do not infer descent from the phrase alone. Initial public-source searches have not identified a direct Berkeley-to-JST/NTU citation or personnel chain; this is a bounded search result, not proof that no connection exists.
 
 ## Technical notes
