@@ -61,6 +61,31 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 - A 2026 perception paper combines insect neural features, heartbeat and body-motion data to estimate the insect's environmental perception. These are measurements of the insect's own state, not human DNA or a human identity profile.
 - Distinguish onboard sensing, local classification, wireless reporting, external motion capture and cross-team research data exchange. Evidence for one does not prove the others are all part of a single deployed network.
 
+## Communications architecture: what the papers actually show
+
+The available papers support several distinct device-to-console architectures. They do not establish one unified network.
+
+| Study | Insect-side hardware / radio | Data path disclosed | What it does not establish |
+|---|---|---|---|
+| NTU 2023 search-and-rescue prototype | Backpack with IMU, 32 × 32 thermal array, environmental sensors; Bluetooth 5.1 at 2.4 GHz | Backpack ↔ central station ↔ PC. In motion-capture mode, Vicon position data went PC → central station → backpack in 30 ms packets. Onboard human-presence results were wirelessly sent to the PC; thermal images were stored onboard and retrieved later. | Peer-to-peer insect networking, global internet routing or a deployed surveillance network. |
+| Osaka 2024 feedback-control prototype | IMU, ToF distance sensor, 8 × 8 thermopile; nRF24L01 radio module | Backpack ↔ wireless transmitter/receiver ↔ PC UI. IMU/ToF measurements and derived thermal features/classification results were sent to the PC. The study reports about 25 minutes of battery operation. | Named-person identity, DNA collection, or insect-to-insect mesh communications. |
+| 2025 20-cockroach swarm experiment | Each backpack includes a Sub-1 GHz antenna, controller and LiPo battery | A decentralized control algorithm was proposed, but the authors explicitly state that experimental position data came from centralized VICON motion capture. They propose IMU + UWB as future decentralized localization. | Demonstrated fully decentralized sensing in that experiment, or proof that the insects exchanged packets directly with one another. |
+| 2026 implanted controller | 10 × 10 × 3 mm implanted unit; sub-1 GHz radio; electrical stimulation output | The public paper establishes remote wireless stimulation for locomotion control. | A return telemetry channel, continuous physiological-data upload, peer mesh, or global receiver infrastructure. |
+
+### Architecture interpretation
+
+- **Hub-and-spoke is documented:** the 2023 and 2024 studies describe an insect-mounted backpack communicating with a receiver/central station and PC.
+- **Local swarm logic is not the same as peer radio networking:** the 2025 algorithm uses neighbor-relative information, but the experiment's localization depended on a centralized VICON system. The authors identify IMU/UWB decentralized localization as future work.
+- **A radio band or antenna is not a complete network description:** Sub-1 GHz or 2.4 GHz does not, by itself, disclose protocol details, range, routing, encryption, recipient identity, retention or internet connectivity.
+- **Remote control is not necessarily two-way telemetry:** the 2026 implanted controller paper demonstrates a remote stimulation path. Its abstract does not establish that the device also streams sensor data back.
+- **The Moonshot repository statement is about research-data governance:** private task repositories and inter-team data exchange are not evidence of a live insect telemetry network.
+
+Primary sources:
+- 2023 NTU paper: https://doi.org/10.1002/aisy.202200319
+- 2024 Osaka paper: https://doi.org/10.1016/j.heliyon.2024.e26987
+- 2025 swarm paper: https://doi.org/10.1038/s41467-024-55197-8
+- 2026 implanted-controller paper: https://doi.org/10.34133/cbsystems.0589
+
 ## Known distinctions and limits
 
 - Berkeley's original Smart Dust project page says the project finished in 2001. The cubic-millimeter mote was the target; larger macro-motes were the demonstrated systems.
