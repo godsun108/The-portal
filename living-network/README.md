@@ -34,6 +34,8 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 - Original Berkeley presentation, *Synthetic Insects (Smart Dust with Legs)*: https://people.eecs.berkeley.edu/~pister/presentations/Mitre0303.pdf
 - JST Moonshot biological-cyborg project: https://www.jst.go.jp/moonshot/en/program/goal3/3A_morishima.html
 - JST Moonshot grant register: https://www.jst.go.jp/moonshot/en/form/grant.html
+- JST JPMJMS223A FY2022 progress report: https://www.jst.go.jp/moonshot/program/goal3/files/3A_morishima_report2022.pdf
+- JST JPMJMS223A final close-out report: https://www.jst.go.jp/moonshot/program/goal3/files/3A_morishima_f_report.pdf
 - NTU cyborg insect assembly paper (Nature Communications, 2025): https://www.nature.com/articles/s41467-025-60779-1
 - NTU automated cyborg-insect assembly: https://www.ntu.edu.sg/news/detail/ai-powered-robot-assembles-search-and-rescue-cyborg-insects
 - Nature Communications cyborg-insect swarm paper: https://doi.org/10.1038/s41467-024-55197-8
@@ -52,6 +54,8 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 - A direct funding relationship is documented between JST Moonshot project JPMJMS223A and NTU's 2025 cyborg-insect assembly paper: the paper's acknowledgements name the JST Moonshot R&D Program grant JPMJMS223A and identify H.S. (Hirotaka Sato) for funding acquisition. This is stronger than a thematic resemblance; it does not imply that all other insect or Smart Dust programs are part of the same project.
 - DARPA HyBRIDS is a separate US program. No direct institutional, personnel or funding chain between HyBRIDS and JST JPMJMS223A has been established in this initial trace.
 - JST lists JPMJMS223A as a Goal 3 project selected in FY2022 and completed in FY2023. Its official description covers groups of organisms with miniature sensors, communications and behavior-control units, analyzed to develop an AI self-organizing platform. Later publications can still acknowledge the grant after the project period.
+- The FY2022 progress report documents a 15 × 15 mm backpack design, wireless communication, electrical stimulation and early work on Madagascar hissing cockroaches. The final report records a 10 × 10 mm unit, fully implanted electronics, and a 20-cockroach formation-movement experiment.
+- The final report states that project experimental data and source code were held in private repositories and treated as non-public due to confidentiality. It also states that the project chose not to file patents for its results after considering cost-effectiveness and confidentiality. This is a statement about this project’s reported outputs, not a claim that no related patents exist elsewhere.
 - The 2025 cyborg-insect swarm paper reports a 20-cockroach experiment. The experimental setup used centralized VICON motion capture; fully decentralized position sensing was not demonstrated in that experiment.
 - NTU reported an automated assembly prototype and a March 30, 2025 humanitarian deployment of ten cyborg cockroaches in Myanmar.
 - Mosquito forensic DNA research depends on laboratory extraction/amplification/sequencing workflows. It does not establish autonomous DNA analysis or network transmission by mosquitoes.
@@ -64,7 +68,7 @@ A patent is not proof of implementation. A grant is not proof of deployment. Sim
 3. Expand the biosensor gallery with primary experimental papers and clearly label laboratory versus field validation.
 4. Expand the human-data/privacy gallery with laws, oversight mechanisms and documented surveillance programs; do not infer a connection without evidence.
 5. Add a source record for each new claim before updating the convergence map.
-6. Trace the Moonshot grant acknowledgement through other NTU papers, project reports and JST close-out documentation.
+6. Trace the Moonshot grant acknowledgement through other NTU papers, project reports and JST close-out documentation. Completed initial pass: the JST FY2022 progress report and final close-out report are now included in the exhibit source archive; continue tracing additional publications and contributors.
 7. Check whether Berkeley synthetic-insect publications cite or share personnel with later biohybrid insect projects; do not infer descent from the phrase alone.
 
 ## Technical notes
