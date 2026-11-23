@@ -1,0 +1,38 @@
+name: ASCENSION friend-run tests
+on:
+  pull_request:
+    paths:
+      - 'games/ascension/**'
+      - '.github/workflows/ascension-friend-run.yml'
+  push:
+    branches:
+      - feature/ascension-vertical-arcade-v1
+    paths:
+      - 'games/ascension/**'
+      - '.github/workflows/ascension-friend-run.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: games/ascension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+  deploy-staging:
+    needs: test
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/feature/ascension-vertical-arcade-v1') || (github.event_name == 'pull_request' && github.event.action == 'synchronize' && github.event.pull_request.head.ref == 'feature/ascension-vertical-arcade-v1')
+    runs-on: ubuntu-latest
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Deploy existing ASCENSION staging service
+        if: env.RAILWAY_TOKEN != ''
+        run: npx --yes @railway/cli up --ci --project a08e3701-1f77-402b-8f5b-ef077a638004 --environment staging --service ascension-preview
