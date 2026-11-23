@@ -21,11 +21,21 @@ export function drawNebula(ctx,time){
  }ctx.restore();
 }
 export function drawGuardian(ctx,x,y,time,hp){
+ const ratio=Math.max(0,Math.min(1,hp/65));
+ const phase=ratio>2/3?1:ratio>1/3?2:3;
+ const palette=phase===1?{core:'#865c9f',edge:'#f8c7e4',aura:'#eaa4d2'}:phase===2?{core:'#a14e79',edge:'#ffc2a5',aura:'#ff805f'}:{core:'#b44754',edge:'#ffe18a',aura:'#ffcf65'};
  ctx.save();ctx.translate(x,105);
- const beat=1+.045*Math.sin(time/240);ctx.scale(beat,beat);
- ctx.shadowBlur=15;ctx.shadowColor='#eaa4d2';
- ctx.fillStyle='#865c9f';ctx.beginPath();ctx.moveTo(0,-38);ctx.lineTo(-64,-18);ctx.lineTo(-52,34);ctx.lineTo(-15,18);ctx.lineTo(0,36);ctx.lineTo(15,18);ctx.lineTo(52,34);ctx.lineTo(64,-18);ctx.closePath();ctx.fill();
- ctx.strokeStyle='#f8c7e4';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-45,-8);ctx.lineTo(-15,5);ctx.lineTo(0,-20);ctx.lineTo(15,5);ctx.lineTo(45,-8);ctx.stroke();
- ctx.fillStyle='#ffe2b0';ctx.beginPath();ctx.arc(0,0,12,0,Math.PI*2);ctx.fill();ctx.restore();
- ctx.fillStyle='#ffd096';ctx.fillRect(x-50,64,100*Math.max(0,hp)/65,4);
+ const beat=1+.045*Math.sin(time/240);
+ ctx.scale(beat,beat);
+ ctx.shadowBlur=phase===3?28:18;ctx.shadowColor=palette.aura;
+ ctx.strokeStyle=palette.aura;ctx.globalAlpha=.5+.2*Math.sin(time/180);
+ ctx.lineWidth=phase===3?5:3;ctx.beginPath();ctx.ellipse(0,0,76+Math.sin(time/170)*5,49+Math.cos(time/210)*4,0,0,Math.PI*2);ctx.stroke();
+ ctx.globalAlpha=1;ctx.fillStyle=palette.core;
+ ctx.beginPath();ctx.moveTo(0,-38);ctx.lineTo(-64,-18);ctx.lineTo(-52,34);ctx.lineTo(-15,18);ctx.lineTo(0,36);ctx.lineTo(15,18);ctx.lineTo(52,34);ctx.lineTo(64,-18);ctx.closePath();ctx.fill();
+ ctx.strokeStyle=palette.edge;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-45,-8);ctx.lineTo(-15,5);ctx.lineTo(0,-20);ctx.lineTo(15,5);ctx.lineTo(45,-8);ctx.stroke();
+ ctx.fillStyle=phase===3?'#fff1b0':'#ffe2b0';ctx.beginPath();ctx.arc(0,0,phase===3?15:12,0,Math.PI*2);ctx.fill();
+ ctx.restore();
+ ctx.fillStyle='#172a31';ctx.fillRect(x-50,64,100,5);
+ ctx.fillStyle=palette.aura;ctx.fillRect(x-50,64,100*ratio,5);
+ ctx.fillStyle='#d7e8e1';ctx.font='10px system-ui';ctx.textAlign='center';ctx.fillText('PHASE '+phase,x,57);
 }
