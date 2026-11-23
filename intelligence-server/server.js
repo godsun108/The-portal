@@ -1,4 +1,5 @@
 import http from "node:http";
+import { timingSafeEqual } from "node:crypto";
 
 const DEFAULT_ORIGIN = "https://godsun108.github.io";
 const MAX_BODY = 160_000;
@@ -43,20 +44,38 @@ function validMessages(messages) {
   if (!messages.some(m => m && m.role === "user" && safeString(m.content, MAX_MESSAGE_CHARS))) return false;
   return messages.every(m => m && ["user","assistant"].includes(m.role) && safeString(m.content, MAX_MESSAGE_CHARS));
 }
+function validGenesisMessages(messages) {
+  return Array.isArray(messages) && messages.length >= 2 && messages.length <= 24 &&
+    messages.some(m => m?.role === "system") &&
+    messages.some(m => m?.role === "user") &&
+    messages.every(m => m && ["system", "user", "assistant"].includes(m.role) &&
+      safeString(m.content, 16_000));
+}
+function validBridgeAuthorization(req, key) {
+  if (typeof key !== "string" || key.length < 32) return false;
+  const header = req.headers.authorization || "";
+  if (!header.startsWith("Bearer ")) return false;
+  const supplied = Buffer.from(header.slice(7));
+  const expected = Buffer.from(key);
+  return supplied.length === expected.length && timingSafeEqual(supplied, expected);
+}
 function modelHeaders(key) {
   return { "content-type": "application/json", ...(key ? { authorization: "Bearer " + key } : {}) };
 }
-async function callModel({ env, fetchImpl, messages, temperature = 0.4 }) {
+async function callModel({ env, fetchImpl, messages, temperature = 0.4, responseFormat }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 60_000);
   try {
     const response = await fetchImpl(env.MODEL_URL, {
       method: "POST",
       headers: modelHeaders(env.MODEL_KEY || ""),
-      body: JSON.stringify({ model: env.MODEL_NAME || undefined, messages, temperature }),
+      body: JSON.stringify({ model: env.MODEL_NAME || undefined, messages, temperature, ...(responseFormat ? { response_format: responseFormat } : {}) }),
       signal: controller.signal
     });
-    if (!response.ok) throw new Error("upstream_error");
+    if (!response.ok) {
+      console.error("portal_model_upstream_http_status=" + response.status);
+      throw new Error("upstream_error");
+    }
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content ?? data.message?.content;
     if (!safeString(content, 24_000)) throw new Error("empty_model_response");
@@ -103,7 +122,7 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
         research: Boolean(env.MODEL_URL)
       }, corsHeaders);
     }
-    if (req.method !== "POST" || !["/chat","/research","/self-test"].includes(req.url)) {
+    if (req.method !== "POST" || !["/chat","/research","/self-test","/genesis/v1/chat/completions"].includes(req.url)) {
       return json(res, 404, { error: "not_found" }, corsHeaders);
     }
 
@@ -117,6 +136,11 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
     if (!String(req.headers["content-type"] || "").toLowerCase().includes("application/json")) {
       return json(res, 415, { error: "content_type_required" }, corsHeaders);
     }
+    const genesisRoute = req.url === "/genesis/v1/chat/completions";
+    if (genesisRoute && !validBridgeAuthorization(req, env.GENESIS_BRIDGE_KEY)) {
+      const configured = typeof env.GENESIS_BRIDGE_KEY === "string" && env.GENESIS_BRIDGE_KEY.length >= 32;
+      return json(res, configured ? 401 : 503, { error: configured ? "unauthorized" : "bridge_not_configured" }, corsHeaders);
+    }
     if (!env.MODEL_URL) {
       const schema = req.url === "/chat" ? "portal.chat.v1" : req.url === "/self-test" ? "portal.self-test.result.v1" : "portal.research.analysis.v1";
       return json(res, 503, { schema, verified: false, error: "engine_dormant" }, corsHeaders);
@@ -126,6 +150,28 @@ export function createServer({ env = process.env, fetchImpl = fetch, clock = Dat
     if (!body || typeof body !== "object" || Array.isArray(body)) return json(res, 400, { error: "invalid_json" }, corsHeaders);
 
     try {
+      if (genesisRoute) {
+        if (!validGenesisMessages(body.messages) ||
+            (body.tools !== undefined && (!Array.isArray(body.tools) || body.tools.length !== 0)) ||
+            body.tool_choice !== undefined ||
+            (body.response_format !== undefined && body.response_format?.type !== "json_object") ||
+            (body.temperature !== undefined && (typeof body.temperature !== "number" || body.temperature < 0 || body.temperature > 1)) ||
+            (body.model !== undefined && !safeString(body.model, 160))) {
+          return json(res, 400, { error: "invalid_genesis_completion_request" }, corsHeaders);
+        }
+        const content = await callModel({
+          env, fetchImpl,
+          messages: body.messages,
+          temperature: body.temperature ?? 0.2,
+          responseFormat: body.response_format
+        });
+        return json(res, 200, {
+          id: "genesis-" + now.toString(36),
+          object: "chat.completion",
+          model: env.MODEL_NAME || body.model || "configured-model",
+          choices: [{ index: 0, message: { role: "assistant", content }, finish_reason: "stop" }]
+        }, corsHeaders);
+      }
       if (req.url === "/self-test") {
         if (body.schema !== "portal.self-test.v1") return json(res, 400, { schema: "portal.self-test.result.v1", verified: false, passed: false, error: "invalid_request" }, corsHeaders);
         const marker = "PORTAL_GENESIS_LINK_OK";
