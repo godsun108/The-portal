@@ -47,6 +47,12 @@ This is preliminary engineering / feasibility definition. It is not a process si
 - `../research/BIOCHAR-GRAPHENE-MATERIALS.md` — biochar/graphene separation and research gates.
 - `../research/REGENERATIVE-CAMPUS-ARCHITECTURE.md` — campus zoning and material allocation.
 
+## Phase Zero evidence controls
+- `SEB-001-G0-001` defines representative lot sampling, chain of custody, assay scope, decortication trial measurements and G0 exit criteria.
+- `SEB-001-G0-002` compares cross-current, countercurrent and relevant fractionation route families using evidence-only scoring; unknowns remain blank.
+- `SEB-001-G0-003` provides a stream register template. Populate only with measured or vendor-verified data.
+- `SEB-001-G0-004` sequences the work to a G0/G1 decision package and preserves owner approval over all spending and commitments.
+
 ## Open items at issue
 - OI-001: Confirm legal entity, project owner, document approvers, and engineering authority.
 - OI-002: Confirm exact site parcel and jurisdiction; “near Sacred Earth Center 001” is a siting relationship, not a selected parcel.
