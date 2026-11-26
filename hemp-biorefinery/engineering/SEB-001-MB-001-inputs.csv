@@ -1,0 +1,31 @@
+Parameter,Value,Units,Status,Notes
+Incoming whole-stalk dry feed,1000,kg/day,OWNER BASIS,Initial nominal capacity
+Operating hours,16,h/day,OWNER BASIS,Initial schedule
+Operating days,250,day/year,OWNER BASIS,Planning assumption
+Calculated dry feed rate,=B2/B3,kg/h,CALCULATED,1000 kg/day divided by 16 h/day
+Calculated annual dry feed,=B2*B4,kg/year,CALCULATED,250 operating days/year
+Calculated annual dry feed,=B6/1000,t/year,CALCULATED,Metric tonnes
+Expansion module 1,5,dry t/day,OWNER BASIS,Intermediate module
+Expansion module 2,10,dry t/day,OWNER BASIS,Intermediate module
+Expansion module 3,25,dry t/day,OWNER BASIS,Ultimate planning module
+Annual feed at 5 t/day,=B8*B4,t/year,CALCULATED,At 250 days/year
+Annual feed at 10 t/day,=B9*B4,t/year,CALCULATED,At 250 days/year
+Annual feed at 25 t/day,=B10*B4,t/year,CALCULATED,At 250 days/year
+Hurd cellulose composition benchmark,0.4566,kg/kg dry hurd,LITERATURE BENCHMARK,One reported sample only; not whole stalk and not recovery
+Hurd hemicellulose composition benchmark,0.2457,kg/kg dry hurd,LITERATURE BENCHMARK,One reported sample only
+Hurd lignin composition benchmark,0.2167,kg/kg dry hurd,LITERATURE BENCHMARK,One reported sample only
+Hurd other composition by difference,0.0810,kg/kg dry hurd,LITERATURE BENCHMARK,One reported sample only
+Measured whole-stalk moisture,,fraction,TBD,Obtain representative lab data
+Measured bast split,,fraction of dry stalk,TBD,Decortication trial required
+Measured hurd split,,fraction of dry stalk,TBD,Decortication trial required
+Measured fines/loss split,,fraction of dry stalk,TBD,Decortication trial required
+Measured cellulose recovery,,fraction,TBD,Pilot test required
+Measured xylose recovery,,kg/kg polymer,TBD,Hydrolysis and purification data required
+Measured lignin recovery,,fraction,TBD,Analytical recovery required
+Measured biochar yield,,kg/kg dry eligible feed,TBD,Thermal pilot data required
+Graphene-like carbon yield,,kg/kg carbon feed,TBD,Separate R&D route; no yield assumed
+Process water demand,,m3/t dry feed,TBD,Vendor/pilot data required
+Electricity demand,,kWh/t dry feed,TBD,Vendor data required
+Thermal energy demand,,MJ/t dry feed,TBD,Vendor/pilot data required
+Wastewater flow,,m3/day,TBD,Water balance required
+Mass closure,,fraction,TBD,Target 0.95–1.05 for pilot total balance
